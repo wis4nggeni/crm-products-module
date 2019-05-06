@@ -7,6 +7,13 @@ use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Nette\Database\Table\ActiveRow;
 
+/**
+ * Widget used in payments listing.
+ * Renders single payment item list item.
+ * Used in foreach.
+ *
+ * @package Crm\ProductsModule\Components
+ */
 class ProductItemsListWidget extends BaseWidget
 {
     private $templateName = 'product_items_list_widget.latte';
