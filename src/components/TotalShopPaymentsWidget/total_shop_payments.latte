@@ -1,0 +1,11 @@
+<hr>
+
+<span class="text-success" style="font-size:1.5em">
+    <strong>{$meta['product_payments_amount']|price}</strong>
+</span>
+
+{_payments.admin.component.total_user_payments.for}
+<span class="text-success" style="font-size:1.2em">
+    <strong>{$meta['product_payments']}</strong>
+</span>
+{_products.admin.total_user_payments.for_shop_payments, $meta['product_payments']}<br>

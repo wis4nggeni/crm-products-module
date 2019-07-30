@@ -1,0 +1,90 @@
+{block #title}{_products.frontend.shop.title}{/block}
+
+{block #content}
+
+{snippet productList}
+
+<div class="row filter">
+    <div class="col-xs-12">
+
+        <h1 class="text-center" style="margin-top:20px; margin-bottom:50px;">{_products.frontend.shop.default.header}</h1>
+
+        <strong>{_products.frontend.shop.default.filter}:</strong>
+        <label class="checkbox-inline">
+                <input type="checkbox" n:attr="checked => empty($selectedTags)" data-signal="{link clearTags!}">
+                {_products.frontend.shop.default.all} ({$productsCount})</label>
+        <label class="checkbox-inline" n:foreach="$tags as $tag" n:ifset="$tagCounts[$tag->id]">
+                <input type="checkbox" value="{$tag->id}" data-code="{$tag->code}" n:attr="checked => in_array($tag->id, $selectedTags)">
+                {$tag->code} ({$tagCounts[$tag->id]})</label>
+    </div>
+    <script type="text/javascript">
+        $(function() {
+            $('.filter [type="checkbox"]').on('change', function() {
+                var url, data = {};
+                $.nette.ext('loader', null);
+                if ($(this).data('signal')) {
+                    url = $(this).data('signal')
+                } else if ($(this).is(':checked')) {
+                    url = {link addTag!};
+                    data["tag"] = $(this).val();
+                    data["code"] = $(this).data("code");
+                } else {
+                    url = {link removeTag!};
+                    data["tag"] = $(this).val();
+                }
+                $.nette.ajax({
+                    url: url,
+                    data: data
+                });
+            })
+        })
+    </script>
+</div>
+
+<div class="products">
+    <div class="row">
+        <div n:foreach="$products as $product" class="col-xs-12 col-sm-6 col-md-4">
+            <div class="product">
+                <div class="product-image">
+                    <a n:href="show $product"><img src="{$product->image_url}" alt="{$product->name}" class="img-responsive"></a>
+                    <div class="image-tags" n:inner-foreach="$product->related('product_tags') as $productTag">
+                        <a n:href="default, 'tags' => [$productTag->tag_id => $productTag->tag->code]">
+                            <div class="image-tag" n:if="$productTag->tag->visible">
+                                {if $productTag->tag->icon == 'dennikn'}
+                                    <img src="{$basePath}/layouts/dennikn/images/shop/n.svg">
+                                {else}
+                                    <i class="fa {$productTag->tag->icon}"></i>
+                                {/if}
+                                {$productTag->tag->code}
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="product-caption">
+                    <h2><a n:href="show $product">{$product->name}</a></h2>
+                    <span n:foreach="$product->related('product_properties') as $property" n:if="$property->product_template_property->default">{$property->value}</span>
+                    <div n:if="$product->stock > 0" class="price-row">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="price">
+                                        <span class="catalog-price" n:if="$product->catalog_price != $product->price">{$product->catalog_price|price}</span>
+                                        {$product->price|price}
+                                    </div>
+                                </td>
+                                <td>
+                                    <a n:href="addCart! $product->id" class="btn add-cart" data-ajax-off="unique" role="button"><i class="fa fa-shopping-cart"></i> {_products.frontend.shop.default.add_to_cart}</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div n:if="$product->stock <= 0" class="price-row out-of-stock">
+                        <a n:href="show $product" class="btn">{_products.frontend.shop.default.sold_out}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/snippet}

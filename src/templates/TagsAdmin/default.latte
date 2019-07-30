@@ -1,0 +1,40 @@
+{block #title}{_products.admin.tags.default.header}{/block}
+
+{block #content}
+
+<div class="row">
+
+  <div class="col-md-12">
+    <h1>
+      {_products.admin.tags.default.header}
+      <a n:href="new" class="btn btn-success btn-lg pull-right"><i class="fa fa-sliders-h"></i> {_products.admin.tags.default.new}</a>
+    </h1>
+    <hr>
+  </div>
+
+  <div class="col-md-12">
+    <table class="table table-striped table-hover table-bordered">
+      <thead>
+        <tr>
+          <th>{_products.data.tags.fields.code}</th>
+          <th>{_products.data.tags.fields.visible}</th>
+          <th>{_products.data.tags.fields.products}</th>
+          <th>{_system.actions}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {foreach $tags as $tag}
+          <tr>
+            <td><a n:href="Edit $tag->id"><i class="fa {$tag->icon}"></i> {$tag->code}</a></td>
+            <td>{$tag->visible|YesNo}</a></td>
+            <td>{$tag->related('product_tags')->count('*')}</a></td>
+            <td style="white-space: nowrap">
+                <a n:href="Edit $tag->id" class="btn btn-sm btn-primary" title="{_system.edit}"><i class="fa fa-edit"></i> </a>
+            </td>
+          </tr>
+        {/foreach}
+      </tbody>
+    </table>
+  </div>
+
+</div>

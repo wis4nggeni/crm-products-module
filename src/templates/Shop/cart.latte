@@ -1,0 +1,121 @@
+{block #title}{_products.frontend.shop.cart.title}{/block}
+
+{block #scripts}
+    <script>
+        $.event.trigger('crm:shop:show:cart');
+
+        $('.increase-cart-amount').click(function () {
+            $.event.trigger('crm:shop:action:add-to-cart');
+        });
+    </script>
+{/block}
+
+{block #content}
+<h1>{_products.frontend.shop.cart.header}</h1>
+
+{snippet cart}
+    <div class="cart">
+        {foreach $flashes as $flash}
+            <div n:if="$flash->type == 'add-cart'" class="row-fluid add-cart-message">
+                <div class="col-xs-12">
+                    {_products.frontend.shop.cart.messages.item_added_to_cart, [name => $flash->message]|noescape}
+                    <a n:href="default" style="text-decoration: underline;">{_products.frontend.shop.cart.continue_with_shopping}</a>.
+                </div>
+                <script>
+                    $.event.trigger('crm:shop:action:add-to-cart');
+                </script>
+            </div>
+
+            <div n:if="$flash->type == 'product-not-available'" class="row-fluid add-cart-message">
+                <div class="col-xs-12">
+                    {_products.frontend.shop.cart.messages.item_not_available, [name => $flash->message]|noescape}
+                </div>
+            </div>
+
+            <div n:if="$flash->type == 'product-exists'" class="row-fluid add-cart-message">
+                <div class="col-xs-12">
+                    {_products.frontend.shop.cart.messages.item_already_purchased, [name => $flash->message, link => "https://predplatne.dennikn.sk/products/orders/library"]|noescape}
+                </div>
+            </div>
+
+            <div n:if="$flash->type == 'product-removed'" class="row-fluid add-cart-message">
+                <div class="col-xs-12">
+                    {_products.frontend.shop.cart.messages.items_removed_from_cart, [name => $flash->message, link => "https://predplatne.dennikn.sk/products/orders/library"]|noescape}
+                </div>
+            </div>
+
+            <div n:if="$flash->type == 'product-out-of-stock'" class="row-fluid add-cart-message">
+                <div class="col-xs-12">
+                    {_products.frontend.shop.cart.messages.items_removed_from_cart_reason_sold_out, [name => $flash->message]|noescape}
+                </div>
+            </div>
+        {/foreach}
+        {if !empty($products)}
+            <div class="_cart">
+                <div class="_head">
+                    <div class="_product"><div class="_pad">{_products.frontend.shop.cart.product}:</div></div>
+                    <div class="_price"><div class="_pad">{_products.frontend.shop.cart.price}:</div></div>
+                    <div class="_amount"><div class="_pad">{_products.frontend.shop.cart.amount}:</div></div>
+                    <div class="_total"><div class="_pad">{_products.frontend.shop.cart.together}:</div></div>
+                </div>
+                <div class="_body">
+                    {var $amount = 0}
+                    <div class="_item" n:foreach="$products as $product">
+                        <div class="_image"><div class="_pad">
+                                <img src="{$product->image_url}" alt="{$product->name}" class="img-responsive">
+                        </div></div>
+                        <div class="_title"><div class="_pad"><a n:href="show $product">{$product->name}</a></div></div>
+                        <div class="_price"><div class="_pad">{$product->price|price}</div></div>
+                        <div class="_amount"><div class="_pad">
+                                <div class="input-group">
+                                    <a n:if="!$product->unique_per_user" class="input-group-addon ajax decrease-cart-amount" data-ajax-off="unique" n:href="removeCart! $product->id"><i class="fa fa-minus"></i></a>
+                                    <input type="text" class="form-control text-center" value="{$cartProducts[$product->id]}" disabled="disabled">
+                                    <a n:if="!$product->unique_per_user" class="input-group-addon ajax increase-cart-amount" data-ajax-off="unique" n:href="addCart! $product->id"><i class="fa fa-plus"></i></a>
+                                </div>
+                            </div></div>
+                        <div class="_total"><div class="_pad">
+                                {var $amount += ($product->price * $cartProducts[$product->id])}
+                                {($product->price * $cartProducts[$product->id])|price}
+                            </div></div>
+                        <div class="_remove"><div class="_pad">
+                                <a class="btn ajax" data-ajax-off="unique" n:href="removeProductCart! $product->id"><i class="fa fa-times"></i></a>
+                        </div></div>
+                    </div>
+
+                    {if !empty($freeProducts)}
+                        <div class="_item" n:foreach="$freeProducts as $product">
+                            <div class="_image"><div class="_pad">
+                                    <img src="{$product->image_url}" alt="{$product->name}" class="img-responsive">
+                            </div></div>
+                            <div class="_title"><div class="_pad"><a n:href="show $product">{$product->name}</a></div></div>
+                            <div class="_price"><div class="_pad"><strike>{$product->price|price}</strike> {0|price}</div></div>
+                            <div class="_amount"><div class="_pad">{_products.frontend.shop.checkout.for_free}</div></div>
+                            <div class="_total"><div class="_pad"> </div></div>
+                            <div class="_remove"><div class="_pad">
+                                    <a class="btn disabled" data-ajax-off="unique" n:href="removeProductCart! $product->id"><i class="fa fa-times disabled"></i></a>
+                            </div></div>
+                        </div>
+                    {/if}
+                </div>
+                <div class="_foot">
+                    <div class="_label"><div class="_pad">{_products.frontend.shop.cart.price_with_vat}:</div></div>
+                    <div class="_together"><div class="_pad">{$amount|price}</div></div>
+                </div>
+            </div>
+
+
+            <div class="row button-row">
+                <div class="col-xs-12 col-md-6 left"><a n:href="default" class="btn">{_products.frontend.shop.cart.continue_with_shopping}</a></div>
+                <div class="col-xs-12 col-md-6 right"><a n:href="checkout" class="btn">{_products.frontend.shop.cart.order}</a></div>
+            </div>
+        {else}
+            <div class="row cart-empty">
+                <div class="col-xs-12">{_products.frontend.shop.cart.empty_cart}</div>
+            </div>
+
+            <div class="row button-row">
+                <div class="col-xs-12 left"><a n:href="default" class="btn">{_products.frontend.shop.cart.continue_with_shopping}</a></div>
+            </div>
+        {/if}
+    </div>
+{/snippet}

@@ -1,0 +1,13 @@
+{if $paymentItem->type === \Crm\ProductsModule\PaymentItem\ProductPaymentItem::TYPE}
+
+    <a href="{plink :Products:ProductsAdmin:Show $paymentItem->product_id}">
+        {$paymentItem->name} <small>({$paymentItem->count} x {$paymentItem->amount|price})</small>
+    </a>
+
+{elseif $paymentItem->type === \Crm\ProductsModule\PaymentItem\PostalFeePaymentItem::TYPE}
+
+    <div>
+        {$paymentItem->name} <small>({$paymentItem->count} x {$paymentItem->amount|price})</small>
+    </div>
+
+{/if}

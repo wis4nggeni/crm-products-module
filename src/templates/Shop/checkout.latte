@@ -1,0 +1,384 @@
+{block #title}{_products.frontend.shop.checkout.title}{/block}
+
+{block #scripts}
+    <script>
+        $.event.trigger('crm:shop:show:checkout');
+
+        Nette.addEvent($('form')[0], 'submit', function(e) {
+            if (Nette.validateForm(e.target, true)) {
+                $.event.trigger('crm:shop:action:complete-order');
+            }
+        });
+    </script>
+{/block}
+
+{block #content}
+<h1>{_products.frontend.shop.checkout.order}</h1>
+{form checkoutForm}
+    {input cart}
+    {input action}
+    <div class="checkout">
+        <div class="row">
+            <div class="col-xs-12">
+                <div n:if="$form->getErrors()" n:inner-foreach="$form->getErrors() as $error" class="alert alert-danger" role="alert">
+                    {$error}<br>
+                </div>
+                <fieldset id="payment-methods">
+                    <legend>{_products.frontend.shop.checkout.payment_method}</legend>
+                    {foreach $form['payment_gateway']->items as $id => $gatewayCode}
+                        <div class="form-group">
+                            <label class="radio-inline payment-type {$gatewayCode}"><input required type="radio" name="payment_gateway" value="{$id}" {if $iterator->first}checked{/if}><span>{$gatewayLabel($gatewayCode)}</span></label>
+                        </div>
+                    {/foreach}
+                </fieldset>
+                <fieldset id="user">
+                    <legend>{_products.frontend.shop.checkout.contact_information}</legend>
+                    {formContainer user}
+                        {if $user->isLoggedIn()}
+                            <h2>
+                                {$user->getIdentity()->email}<br/>
+                                <a style="font-size: 0.8em; font-weight: normal" n:href=":Users:Sign:out back => $back">({_products.frontend.shop.checkout.sign_under_different_account})</a>
+                            </h2>
+                            {input email}
+                            <input type="hidden" name="user[password]" value="" />
+                        {else}
+                            <div class="form-group">
+                                {label email /}
+                                {input email}
+                                <span id="email-help-block" class="help-block">{_products.frontend.shop.checkout.warnings.invalid_email}</span>
+                            </div>
+                            <div id="password">
+                                <span class="help-block" id="password-help-block">{_products.frontend.shop.checkout.warnings.email_registered}(<a href="https://predplatne.dennikn.sk/users/users/request-password" target="_blank">{_products.frontend.shop.checkout.forgot_password}</a>)</span>
+                                <div class="form-group">
+                                    {label password /}
+                                    {input password}
+                                    <span class="error password-error" n:ifcontent>{$form['user']['password']->error}</span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="{_products.frontend.shop.checkout.login}" class="btn btn-primary">
+                                </div>
+                            </div>
+                        {/if}
+                    {/formContainer}
+                    {formContainer contact}
+                        <div class="form-group" id="phone-number">
+                            {label phone_number /}
+                            {input phone_number}
+                        </div>
+                    {/formContainer}
+                </fieldset>
+                {ifset $control['checkoutForm']['shipping_address']}
+                <fieldset id="shipping-address">
+                    <legend>{_products.frontend.shop.checkout.shipping_address}</legend>
+                    {formContainer shipping_address}
+                        <div class="form-group">
+                            {label first_name /}
+                            {input first_name}
+                        </div>
+                        <div class="form-group">
+                            {label last_name /}
+                            {input last_name}
+                        </div>
+                        <div class="form-group">
+                            {label address /}
+                            {input address}
+                        </div>
+                        <div class="form-group">
+                            {label number /}
+                            {input number}
+                        </div>
+                        <div class="form-group">
+                            {label city /}
+                            {input city}
+                        </div>
+                        <div class="form-group">
+                            {label zip /}
+                            {input zip}
+                        </div>
+                        <div class="form-group">
+                            {label country_id /}
+                            {input country_id}
+                        </div>
+                    {/formContainer}
+                </fieldset>
+                {/ifset}
+                {ifset $control['checkoutForm']['licence_address']}
+                <fieldset id="licence-address">
+                    <legend>{_products.frontend.shop.checkout.license_address}</legend>
+                    {formContainer licence_address}
+                        <div class="form-group">
+                            {label first_name /}
+                            {input first_name}
+                        </div>
+                        <div class="form-group">
+                            {label last_name /}
+                            {input last_name}
+                        </div>
+                    {/formContainer}
+                </fieldset>
+                {/ifset}
+                {ifset $control['checkoutForm']['coupon']}
+                    <fieldset id="coupon">
+                        <legend>Darčekový poukaz</legend>
+                        {formContainer coupon}
+                            <div class="form-group">
+                                {label coupon_note /}
+                                {input coupon_note}
+                            </div>
+                        {/formContainer}
+                    </fieldset>
+                {/ifset}
+                {ifset $control['checkoutForm']['coupons']}
+                    <fieldset id="coupons">
+                        <legend>{_products.frontend.shop.checkout.gift_coupon}</legend>
+
+                        <p style="font-size: 12px; font-weight: 300;">{_products.frontend.shop.checkout.enter_gift_coupon_details}</p>
+
+                        {formContainer coupons}
+                            {foreach $formContainer->getComponents() as $containerName => $productContainer}
+                                {formContainer $productContainer}
+
+                                    <h5>{$products[explode('_', $containerName)[1]]->name}</h5>
+
+                                    {foreach $formContainer->getComponents() as $itemContainer}
+                                        {formContainer $itemContainer}
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-md-6">
+                                                        {label email /}
+                                                        {input email}
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        {label date /}
+                                                        {input date class => flatpickr, flatpickr_mindate => today}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {/formContainer}
+                                    {/foreach}
+                                {/formContainer}
+                            {/foreach}
+                        {/formContainer}
+                    </fieldset>
+                {/ifset}
+                {snippet postalFeesSnippet}
+                    {ifset $control['checkoutForm']['shipping_address']}
+                        <fieldset id="postal-fees">
+                            <legend>{_products.frontend.shop.checkout.shipping_method}</legend>
+                            <div class="form-group" n:foreach="$control['checkoutForm']['postal_fee']->items as $id => $fee">
+                                <label class="radio-inline shipping-type"><input {if $fee->id == $control['checkoutForm']['postal_fee']->value} checked="checked"{/if} required type="radio" name="postal_fee" value="{$id}">{$fee->title} (<span>{$fee->amount|price}</span>)</label>
+                            </div>
+                        </fieldset>
+                    {else}
+                        {input $control['checkoutForm']['postal_fee']}
+                    {/ifset}
+                {/snippet}
+                <div id="invoice">
+                    {formContainer invoice}
+                        <div class="form-group">
+                            {input add_invoice}
+                            {input same_shipping}
+                        </div>
+                    {/formContainer}
+                </div>
+                <fieldset id="billing-address">
+                    <legend>{_products.frontend.shop.checkout.billing_address}</legend>
+                    {formContainer billing_address}
+                        <div class="form-group">
+                            {label company_name /}
+                            {input company_name}
+                        </div>
+                        <div class="form-group">
+                            {label address /}
+                            {input address}
+                        </div>
+                        <div class="form-group">
+                            {label number /}
+                            {input number}
+                        </div>
+                        <div class="form-group">
+                            {label city /}
+                            {input city}
+                        </div>
+                        <div class="form-group">
+                            {label zip /}
+                            {input zip}
+                        </div>
+                        <div class="form-group">
+                            {label country_id /}
+                            {input country_id}
+                        </div>
+                        <div class="form-group">
+                            {label company_id /}
+                            {input company_id}
+                        </div>
+                        <div class="form-group">
+                            {label company_tax_id /}
+                            {input company_tax_id}
+                        </div>
+                        <div class="form-group">
+                            {label company_vat_id /}
+                            {input company_vat_id}
+                        </div>
+                    {/formContainer}
+                </fieldset>
+            </div>
+        </div>
+
+        {snippet cart}
+        {var $amount = 0}
+        <div class="row-fluid hidden-xs hidden-sm cart-header">
+            <div class="col-sm-6 col-md-8">{_products.frontend.shop.cart.product}:</div>
+            <div class="col-sm-6 col-md-4">
+                <div class="row">
+                    <div class="col-sm-4 text-center">{_products.frontend.shop.cart.price}:</div>
+                    <div class="col-sm-4 text-center">{_products.frontend.shop.cart.amount}:</div>
+                    <div class="col-sm-4 text-center">{_products.frontend.shop.cart.together}:</div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid cart-product" n:foreach="$products as $product">
+            <div class="col-sm-6 col-md-8">{$product->name}</div>
+            <div class="col-sm-6 col-md-4">
+                <div class="row">
+                    <div class="hidden-xs hidden-sm col-sm-4 text-right">{$product->price|price}</div>
+                    <div class="hidden-xs hidden-sm col-sm-4 text-right">{$cartProducts[$product->id]}</div>
+                    <div class="col-sm-4 text-right">
+                        {var $amount += ($product->price * $cartProducts[$product->id])}
+                        {($product->price * $cartProducts[$product->id])|price}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {if count($freeProducts)}
+            <div class="row-fluid cart-product" n:foreach="$freeProducts as $product">
+                <div class="col-sm-6 col-md-8">{$product->name}</div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="row">
+                        <div class="hidden-xs hidden-sm col-sm-4 text-right"><strike>{$product->price|price}</strike> {0|price}</div>
+                        <div class="hidden-xs hidden-sm col-sm-4 text-right">1</div>
+                        <div class="col-sm-4 text-right">
+                            Zadarmo
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {/if}
+        <div class="row-fluid cart-product" n:if="$control['checkoutForm']['postal_fee'] instanceof Nette\Forms\Controls\RadioList">
+            <div class="col-sm-6 col-md-8">Poštovné - {$control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->title}</div>
+            <div class="col-sm-6 col-md-4">
+                <div class="row">
+                    <div class="hidden-xs hidden-sm col-sm-4 text-right">&nbsp</div>
+                    <div class="hidden-xs hidden-sm col-sm-4 text-right">&nbsp</div>
+                    <div class="col-sm-4 text-right">{$control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->amount|price}</div>
+                    {var amount += $control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->amount}
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid cart-summary">
+            <div class="col-xs-8">{_products.frontend.shop.cart.price_with_vat}:</div>
+            <div class="col-xs-4 text-right">{$amount|price}</div>
+        </div>
+        {/snippet}
+
+
+        <div class="row button-row">
+            <div class="col-sm-12 col-md-4 left"><a n:href="default" class="btn">{_products.frontend.shop.cart.continue_with_shopping}</a></div>
+            <div class="col-sm-12 col-md-8 right text-right">
+                {input toc1}
+                <input type="submit" value="{_products.frontend.shop.cart.confirm_order}" id="complete-order" class="btn"></div>
+        </div>
+    </div>
+{/form}
+{block script}
+    <script>
+        $(document).ready(function () {
+            if ($('#{$form['user']['password']->getHtmlId()|noescape}').hasClass('error')) {
+                $('#password').show();
+                $('#{$form['user']['password']->getHtmlId()|noescape}').focus();
+                $('#phone-number, #postal-fees, #shipping-address, #licence-address, #coupon, #invoice, #billing-address, .button-row .right').hide();
+            }
+
+            function checkEmail(callback) {
+                $('#preloader').css('visibility', 'visible');
+
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/v1/users/email',
+                    data: { email: $('#{$form['user']['email']->getHtmlId()|noescape}').val() },
+                    timeout: 20000
+                }).done(function (response) {
+                    callback(response);
+                }).fail(function (jqXHR, textStatus) {
+                    if (textStatus === 'timeout') {
+                        alert('Nastala chyba :-( Zdá sa že naše servery sú preťažené');
+                    } else {
+                        alert('Nastala neočakávaná chyba :-( Prosím skúste neskôr');
+                    }
+                }).always(function () {
+                    $('#preloader').css('visibility', 'hidden');
+                });
+            }
+
+            $('#{$form['user']['email']->getHtmlId()|noescape}').change(function () {
+                checkEmail(function (response) {
+                    if (response.status === 'error' && response.code === 'invalid_email') {
+                        $('#email-help-block').show().closest('.form-group').addClass('has-error');
+                    } else {
+                        $('#email-help-block').hide().closest('.form-group').removeClass('has-error');
+                    }
+
+                    if (response.status && response.status === 'taken') {
+                        $('input[name="_action"]').val('login');
+                        $('#password').show();
+                        $('#frm-checkoutForm-user-password').focus();
+                        $('#phone-number, #postal-fees, #shipping-address, #licence-address, #coupon, #invoice, #billing-address, .button-row .right').hide();
+                    } else {
+                        $('input[name="_action"]').val('checkout');
+                        $('#password').hide();
+                        $('#phone-number, #postal-fees, #shipping-address, #licence-address, #coupon, #invoice, .button-row .right').show();
+                        if (!$('#frm-checkoutForm-invoice-same_shipping').is(':checked')) {
+                            $('#billing-address').show();
+                        }
+                    }
+                });
+            }).change();
+
+            Nette.addEvent($('form')[0], 'submit', function(e) {
+                if (Nette.validateForm(e.target, true)) {
+                    $(this).find('input[type="submit"]').prop("disabled", true);
+                    return true;
+                }
+                if (e && e.stopPropagation) {
+                    e.stopPropagation();
+                }
+                return false;
+            });
+
+            {ifset $control['checkoutForm']['shipping_address']}
+            $('#{$form['shipping_address']['country_id']->getHtmlId()|noescape}').on('change', function () {
+                $.nette.ext('loader', null);
+                $.nette.ajax({
+                    type: 'GET',
+                    url: {link countryChange!},
+                    data: {
+                        'value': $(this).val()
+                    }
+                });
+            }).change();
+
+            $('body').on('change', '#postal-fees input[type="radio"]', function () {
+                $.nette.ext('loader', null);
+                $.nette.ajax({
+                    type: 'POST',
+                    url: {link postalFeeChange!},
+                    data: {
+                        'value': $(this).val(),
+                        'shipping_address': { 'country_id': $('#{$form['shipping_address']['country_id']->getHtmlId()|noescape}').val() }
+                    }
+                });
+            });
+            {/ifset}
+        });
+    </script>
+{/block}

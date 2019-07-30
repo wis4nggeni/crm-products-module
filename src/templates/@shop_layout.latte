@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="sk" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>{ifset #title}{include title|striptags} | {/ifset}{$siteTitle}</title>
+	<meta n:if="$siteDescription" name="description" content="{$siteDescription}">
+
+	<script>
+        document.domain = {$jsDomain};
+	</script>
+
+	<link rel="stylesheet" href="{$basePath}/layouts/default/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{$basePath}/layouts/default/js/jquery-ui.css">
+	<link rel="stylesheet" href="{$basePath}/layouts/dennikn/css/shop.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<script src="{$basePath}/layouts/default/js/jquery-1.11.2.js"></script>
+	<script src="{$basePath}/layouts/default/js/bootstrap.min.js"></script>
+	<script src="{$basePath}/layouts/admin/js/netteForms.js"></script>
+
+    {control snippet 'shop-html_head'}
+
+    {ifset $headerCode}{$headerCode|noescape}{/ifset}
+
+    {block head}{/block}
+
+    {block beforeTagManager}{/block}
+
+    {block afterTagManager}{/block}
+
+	<style>
+		.head .claim {
+			height: 48px;
+			padding-top: 13px;
+			float: left;
+			padding-left: 15px;
+		}
+	</style>
+</head>
+<body>
+<div id="top" class="s s_container">
+
+	{control snippet 'shop-header'}
+
+	<div class="s s_content">
+		{foreach $flashes as $flash}
+			{if $flash->type == 'info'}
+				<div class="alert alert-success">
+					<strong>Úspech!</strong> {$flash->message|noescape}
+				</div>
+			{elseif $flash->type == 'error'}
+				<div class="alert alert-danger">
+					<strong>Chyba!</strong> {$flash->message|noescape}
+				</div>
+			{else}
+				<div class="alert alert-warning">
+					<strong>Pozor!</strong> {$flash->message|noescape}
+				</div>
+			{/if}
+		{/foreach}
+
+        {include content}
+
+		<div class="clearfix">
+            {control snippet 'contact'}
+		</div>
+
+	</div>
+
+    {control snippet 'shop-footer'}
+
+</div>
+
+{block scripts}{/block}
+
+<script src="/layouts/admin/js/nette-ajax/nette.ajax.js"></script>
+<script>
+    $(function () {
+        $.nette.init();
+
+        $.nette.ext('loader', {
+            before: function (xhr, settings) {
+                settings.type = 'POST';
+                var el = $(settings.nette.el);
+
+                if (!el.hasClass('btn-disabled')) {
+                    el.addClass('btn-disabled', true);
+                    el.find('i.fa').hide();
+                    el.prepend('<i class="fa fa-refresh fa-spin"></i>');
+                }
+            }
+        });
+
+        $(document).ajaxStop(function () {
+            $('i.fa-spin:not(#preloader)').each(function () {
+                var button = $(this).parent();
+                var icon = $(this).parent().find('i.fa');
+
+                $(this).remove();
+                button.removeClass('btn-disabled');
+                icon.show();
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

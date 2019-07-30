@@ -1,0 +1,22 @@
+{block #title}{_products.admin.tags.edit.title}{/block}
+
+{block #content}
+
+<div class="row">
+  <div class="col-md-12">
+    <a n:href="Default"><i class="fa fa-angle-left"></i> {_products.admin.tags.edit.back}</a>
+    <div class="page-header">
+      <h1>
+        {_products.admin.tags.edit.title}
+        <small>[{$tag->id}]</small>
+        {$tag->code}
+      </h1>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    {control tagsForm}
+  </div>
+</div>

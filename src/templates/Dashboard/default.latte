@@ -1,0 +1,30 @@
+{block #title}{_products.admin.dashboard.title}{/block}
+
+{block #content}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>{_products.admin.dashboard.title}</h1>
+    </div>
+</div>
+
+<div class="row text-center">
+    <div class="col-md-12">
+        {control dateFilterForm}
+    </div>
+</div>
+
+<hr/>
+
+<div class="row">
+    <hr>
+    <div class="col-md-12">
+        {control googleProductsStatsGraph}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {control tableProductsStatsGraph}
+    </div>
+</div>

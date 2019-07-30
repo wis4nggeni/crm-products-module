@@ -1,0 +1,84 @@
+<?php
+
+namespace Crm\ProductsModule\Distribution;
+
+use Nette\Database\Context;
+
+class AmountSpentDistribution implements DistributionInterface
+{
+    public function distribution(Context $database, int $productId, array $levels): array
+    {
+        $levelCount = count($levels);
+        $result = array_fill(0, $levelCount, 0);
+
+        $levelSelect = '';
+        foreach ($levels as $i => $level) {
+            if ($i+1 == count($levels)) {
+                $levelSelect .= "\n  SUM(CASE WHEN amount >= {$level} THEN 1 ELSE 0 END) level{$i}";
+                break;
+            }
+            $levelSelect .= "\n  SUM(CASE WHEN amount >= {$level} AND amount < {$levels[$i+1]} THEN 1 ELSE 0 END) level{$i},";
+        }
+
+        $sql = <<<SQL
+SELECT $levelSelect FROM (
+    SELECT first_product_payment.user_id, SUM(coalesce(previous_payments.amount, 0)) AS amount FROM (
+        SELECT payments.user_id, MIN(payments.paid_at) as paid_at
+        FROM payments
+        INNER JOIN payment_items 
+          ON payment_items.payment_id = payments.id
+          AND payment_items.product_id = {$productId}
+        WHERE payments.status = 'paid'
+        GROUP BY payments.user_id
+    ) first_product_payment
+    LEFT JOIN payments previous_payments 
+      ON previous_payments.status = 'paid'
+      AND previous_payments.paid_at < first_product_payment.paid_at
+      AND previous_payments.user_id = first_product_payment.user_id
+    GROUP BY first_product_payment.user_id
+) levels
+SQL;
+
+        $res = $database->query($sql)->fetch();
+        foreach ($levels as $i => $level) {
+            $result[$i] = (int)$res['level'.$i];
+        }
+
+        return $result;
+    }
+
+    public function distributionList(Context $database, int $productId, float $fromLevel, float $toLevel = null): array
+    {
+        if ($toLevel === 0.0) {
+            $having = 'amount = 0';
+        } else {
+            $having = 'amount >= ' . $fromLevel;
+            if ($toLevel !== null) {
+                $having .= ' AND amount < ' . $toLevel;
+            }
+        }
+
+        $sql = <<<SQL
+SELECT users.* FROM (
+    SELECT first_product_payment.user_id, SUM(coalesce(previous_payments.amount, 0)) AS amount FROM (
+        SELECT payments.user_id, MIN(payments.paid_at) as paid_at
+        FROM payments
+        INNER JOIN payment_items 
+          ON payment_items.payment_id = payments.id
+          AND payment_items.product_id = {$productId}
+        WHERE payments.status = 'paid'
+        GROUP BY payments.user_id
+    ) first_product_payment
+    LEFT JOIN payments previous_payments 
+      ON previous_payments.status = 'paid'
+      AND previous_payments.paid_at < first_product_payment.paid_at
+      AND previous_payments.user_id = first_product_payment.user_id
+    GROUP BY first_product_payment.user_id
+    HAVING $having
+) levels
+LEFT JOIN users ON users.id = levels.user_id
+SQL;
+
+        return $database->query($sql)->fetchAll();
+    }
+}

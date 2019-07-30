@@ -1,0 +1,108 @@
+{block #title}{_products.frontend.shop.success.title}{/block}
+
+{block #scripts}
+    <script type="text/javascript">
+        ga('ecommerce:addTransaction', {
+            'id': {$payment->variable_symbol},
+            'affiliation': 'Obchod DennikN',
+            'revenue': {$payment->amount},
+            'shipping': {$order->postal_fee_id ? $order->postal_fee->amount : 0},
+            'currency': 'EUR'
+        });
+
+        ga('globalTracker.ecommerce:addTransaction', {
+            'id': {$payment->variable_symbol},
+            'affiliation': 'Obchod DennikN',
+            'revenue': {$payment->amount},
+            'shipping': {$order->postal_fee_id ? $order->postal_fee->amount : 0},
+            'currency': 'EUR'
+        });
+
+        {foreach $payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\PaymentItem\ProductPaymentItem::TYPE) as $paymentItem}
+            {if $paymentItem->product->product_template}
+                {var $category = $paymentItem->product->product_template->name}
+            {elseif $paymentItem->product->bundle}
+                {var $category = 'bundle'}
+            {else}
+                {var $category = 'product'}
+            {/if}
+
+            ga('ecommerce:addItem', {
+                'id': {$payment->variable_symbol},
+                'name': {$paymentItem->name},
+                'sku': {$paymentItem->product_id},
+                'category': {$category},
+                'price': {$paymentItem->amount},
+                'quantity': {$paymentItem->count},
+                'currency': 'EUR'
+            });
+
+            ga('globalTracker.ecommerce:addItem', {
+                'id': {$payment->variable_symbol},
+                'name': {$paymentItem->name},
+                'sku': {$paymentItem->product_id},
+                'category': {$category},
+                'price': {$paymentItem->amount},
+                'quantity': {$paymentItem->count},
+                'currency': 'EUR'
+            });
+        {/foreach}
+
+        ga('ecommerce:send');
+        ga('globalTracker.ecommerce:send');
+    </script>
+
+    {if $ENV == 'dennikn'}
+    <!-- Facebook Pixel Code -->
+    <script>
+		!function(f,b,e,v,n,t,s) { if(f.fbq)return;n=f.fbq=function() { n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+			'https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '1998209073758405');
+		fbq('track', 'PageView');
+		fbq('track', 'Purchase', { value: {$payment->amount|number:2}, currency:'EUR' });
+    </script>
+    <noscript>
+        <img height="1" width="1"
+             src="https://www.facebook.com/tr?id=1998209073758405&ev=PageView
+&noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+    {/if}
+{/block}
+
+{block #content}
+<div class="row">
+    <div class="col-xs-12">
+        <h1>{_products.frontend.shop.success.header}</h1>
+        <p>{_products.frontend.shop.success.payment_successful}</p>
+    </div>
+</div>
+{if count($ebooks) > 0}
+    <h4>{_products.frontend.shop.success.list_of_books_to_download}</h4>
+    <style type="text/css">
+        .table>tbody>tr>td.ebooks {
+            vertical-align: middle;
+        }
+    </style>
+    <table cellspacing="4" cellpadding="4" class="table table-striped">
+        <tbody>
+        {foreach $ebooks as $ebook}
+            <tr>
+                <td class="ebooks">
+                    <strong>{$ebook['product']->name}</strong>
+                </td>
+                <td n:inner-foreach="$ebook['links'][$ebook['product']->distribution_center] as $format => $link" align="right" class="ebooks">
+                    <a href="{$link}" class="btn btn-primary"><i class="fa fa-download"></i> {$fileFormatMap[$ebook['product']->distribution_center][$format]}</a>
+                </td>
+            </tr>
+        {/foreach}
+        </tbody>
+    </table>
+
+    {control snippet 'products-success-ebook'}
+{/if}

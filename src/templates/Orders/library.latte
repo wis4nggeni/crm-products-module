@@ -1,0 +1,56 @@
+{block #content}
+
+<div class="page-header">
+    <h1 n:block=title>{_products.frontend.orders.my_books}</h1>
+</div>
+
+{capture $shopUrl}<a class="link" n:href=":Products:Shop:default">{$shopHost}</a>{/capture}
+<div class="row">
+    <div class="col-md-12">
+        {if count($ebooks) > 0}
+        <style type="text/css">
+            .table>tbody>tr>td.ebooks {
+                vertical-align: middle;
+            }
+        </style>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{_products.frontend.orders.title}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $ebooks as $ebook}
+                <tr>
+                    <td class="ebooks">
+                        <strong>{$ebook['product']->name}</strong>
+                    </td>
+                    <td n:inner-foreach="$ebook['links'][$ebook['product']->distribution_center] as $format => $link" align="right" class="ebooks">
+                        <a href="{$link|noescape}" class="btn btn-primary download-link"><i class="fa fa-download"></i> {$fileFormatMap[$ebook['product']->distribution_center][$format]}</a>
+                    </td>
+                </tr>
+            {/foreach}
+            </tbody>
+        </table>
+
+        <p>
+            {_products.frontend.orders.visit_eshop_ebooks, [shop_url => $shopUrl]|noescape}
+        </p>
+        {else}
+        <blockquote>
+            <p class="lead">
+                {_products.frontend.orders.visit_eshop_ebooks, [shop_url => $shopUrl]|noescape}
+            </p>
+        </blockquote>
+        {/if}
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $('.download-link').on('click', function() {
+            $(this).addClass('disabled').text({_products.frontend.orders.preparing_download});
+        });
+    });
+</script>
