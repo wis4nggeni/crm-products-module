@@ -1,0 +1,352 @@
+menu:
+	shop: Obchod
+	products: Produkty
+	tags: Tagy
+	orders: Objednávky
+	stats: Obchod
+	books: Knihy
+data:
+	products:
+		fields:
+			name: Název
+			code: Identifikátor
+			price: Prodejní cena s DPH
+			catalog_price: Ceníková cena
+			vat: DPH
+			user_label: Veřejný popis
+			shop: Umístit na shop
+			sorting: Produkt zařadit na
+			tags: Tagy
+			description: Popis
+			ean: EAN kód
+			image_url: URL Fotky
+			og_image_url: OG:image URL
+			images: Fotogalerie
+			distribution_center: Distribuční centrum
+			visible: Umístit na titulku
+			unique_per_user: Unikátní pro uživatele
+			has_delivery: Přidat poštovné
+			template_id: Šablona
+			bundle: Balík
+			bundle_items: Položky balíku
+			bundles: Balíky
+			created_at: Vytvořené
+			stock: Počet kusú na slade
+		placeholder:
+			name: např. Bambusové tričko
+			code: např. bambusove-tricko
+			user_label: např. Bambusové tričko
+			price: např. 13.99
+			catalog_price: např. 15.99
+			sorting: Na první pozici
+			description: např. Tento produkt je super
+			ean: např. 8580000000000
+			image_url: napr. http://dennikn.sk/images/shop.jpg
+			og_image_url: např. http://dennikn.sk/images/shop.jpg
+			images: např. http://dennikn.sk/images/shop.jpg
+			distribution_center: Zvol distribuční centrum
+		descriptions:
+			user_label: Používá se jen na faktuře
+			image_url: Prosím dodržujte velikost obrázku 856px * 565px
+			images: Seznam URL fotek. Každá URL na novém řádku.
+		errors:
+			name: Položka 'Název' je povinná
+			code: Položka 'Identifikátor' je povinná
+			description: Položka 'Popis' je povinná
+			image_url: Položka 'URL Fotky' je povinná
+			og_image_url: Položka 'OG:image URL' je povinná
+			price_with_vat: Položka 'Cena s DPH' je povinná
+			ean: Položka 'EAN kód' je povinná
+			ean13: EAN kód musí mít 13 znaků
+			distribution_center: Položka 'Distribuční centrum' je povinná
+			template_property: Položka '%s' je povinná
+	tags:
+		fields:
+			code: Název
+			icon: Ikona
+			visible: Umístit na titulku
+			products: Počet produktů
+			sorting: Produkt zařadit za
+		placeholder:
+			code: SuperTag
+			icon: fa-tag
+			sorting: Na první pozici
+		descriptions:
+			icon: Vyber z FontAwesome. Pre logo Nka použi dennikn.
+		errors:
+			code: Položka 'Název' je povinná
+			icon: Položka 'Ikona' je povinná
+admin:
+	products:
+		default:
+			header: Produkty
+			new: Vytvoriť produkt
+		new:
+			title: Nový produkt
+			back: Spať na zoznam
+		show:
+			back: Naspäť na zoznam
+			edit: Upraviť produkt
+			sold_count: Počet prodaných kusů
+			distribution:
+				label: Distribuce
+				amountSpent: Kolik zaplatil před zakoupením tohoto produktu
+				paymentCounts: Kolik plateb provedl před zakoupením tohoto produktu
+				shopCounts: Kolik objednávek v obchodě provedl před zakoupením tohoto produktu
+				shopDays: "Kdy naposledy nakoupil v obchodě (počet dní před prvním nákupem tohoto produktu)"
+				neverBoughtShop: Nikdy nenakoupil v obchodě
+		edit:
+			title: Upravit produkt
+			back: Zpět na seznam
+		messages:
+			no_bundles_message: Tento produkt není součástí žádného balíčku
+			no_bundle_items_message: Balík neobsahuje žádné produkty
+			product_not_found: Zvolená produkt neexistuje
+			product_created: Produkt byl vytvořen
+			product_updated: Produkt byl aktualizovaný
+		users_list:
+			back: Zpět
+			email: Email
+			source: Zdroj
+			state: Stav
+			created_at: Vytvořený
+			invoice: Faktura
+			institution: Instituce
+			admin: Administrátor
+		stats:
+			product: Produkt
+			today: Dnes
+			yesterday: Včera
+			seven_days: 7 dní
+			this_month: Tento měsíc
+			last_month: Minulý měsíc
+			all_stats: Všechny
+			sold_products: Prodané produkty
+			sold_products_in_time: Prodané produkty v rámci času
+	tags:
+		default:
+			header: Tagy
+			new: Vytvořit tag
+		new:
+			title: Nový tag
+			back: Zpět na seznam
+		edit:
+			title: Upravit tag
+			back: Zpět na seznam
+		messages:
+			tag_created: Tag byl vytvořen
+			tag_updated: Tag byl aktualizován
+	orders:
+		default:
+			header: Objednávky
+			totalCount: celkem
+			filteredCount: vyfiltrovaných
+			empty: "Nebyly nalezeny žádné záznamy, které by odpovídaly filtru"
+			fields:
+				variable_symbol: Variabilní symbol
+				products: Produkty
+				sum: Částka
+				email: Email
+				order_state: Stav Objednávky
+				payments: Platby
+				created_at: Vytvořená
+				actions: Akce
+				filter: Filter
+				cancel_filter: Zruš filter
+				order_id_vs: 'OrderID / VS'
+				payment_state: Stav Platby
+			warnings:
+				order_for_payment_exists: 'Objednávka k platbě již existuje, přesměrovali jsme Vás na objednávku.'
+		new:
+			header: Nová objednávka
+			for_payment: k platbě
+			contact_details: Kontaktní údaje
+			shipping_option: Způsob dopravy
+			shipping_address: Adresa doručení
+			license_data: Licenční údaje
+			gift_coupon: Dárkový poukaz
+			billing_address: Fakturační adresa
+			product: Produkt
+			price: Částka
+			amount: Množství
+			together: Spolu
+			price_with_vat: Cena celkově s dph
+			sum_on_payment: Částka na platbě
+			warnings:
+				payment_sum_not_equal: "Částka na platbě není shodná se součtem částek produktů a poštovného."
+				order_will_override_sum_on_payment: "Vytvořením objednávky se přepíše částka na platbě na"
+			create_order: Vytvořit objednávku
+		show:
+			header: Objednávka
+			back: Nazpět
+			shipping_address: Poštovní adresa
+			licence_address: Licenční adresa
+			billing_address: Fakturační adresa
+			fields:
+				created_at: Vytvořená
+				amount: Cena
+				email: Uživatel
+				status: Stav
+				payment_status: Stav platby
+				coupon_note: Data pro dárkovou poukázku
+				address:
+					name: Jméno
+					street: Ulice
+					city: Město
+					zip: PSČ
+					company_name: Název společnosti
+					ico: IČO
+					dic: DIČ
+					icdph: IČ DPH
+			products:
+				header: Objednané produkty
+				fields:
+					name: Název
+					price: Cena
+					count: Počet
+	distribution:
+		shopCounts: Kolik objednávek v obchodě provedl před zakoupením prostřednictvím tohoto okna
+		shopDays: "Kdy naposledy nakoupil v obchodě (počet dní před platbou v okně)"
+		neverBoughtShop: Nikdy nenakoupil v obchodě
+		email: E-mail
+		source: Zdroj
+		status: Stav
+		invoice: Faktura
+		created_at: Vytvořený
+		back_to_funnel: Zpět na okno
+
+	gift_coupons:
+		button_title: Darované předplatné
+		modal_title: Darované předplatné
+		email: E-mail
+		start_at: Start
+		sent: Odeslán
+		subscription: Předplatné
+		yes: ano
+		no: ne
+		not_created: nevytvořené
+
+	total_user_payments:
+		for_shop_payments: "{1}platbu v obchodě|[2,4]platby v obchodě|[5,Inf]plateb v obchodě"
+
+	dashboard:
+		title: Štatistiky obchodu
+
+frontend:
+	shop:
+		title: "Knihy Denníku N - prodáváme to, co sami čteme"
+		cart:
+			title: 'Nákupní košík: Obchod Denníku N - prodáváme jen to, co sami čteme'
+			header: Nákupní košík
+			product: Produkt
+			price: Cena
+			amount: Množství
+			together: Spolu
+			price_with_vat: Cena celkově s DPH
+			continue_with_shopping: Pokračovat v nákupu
+			order: objednat
+			empty_cart: Váš nákupní košík je prázdný.
+			confirm_order: Závazně objednat
+			messages:
+				item_added_to_cart: "Položka <strong>%name%</strong> byla přidána do košíku."
+				item_not_available: "Položka <strong>%name%</strong> není dostupná."
+				item_already_purchased: 'Položku <strong>%name%</strong> jste si již jednou zakoupili. Link ke stažení najdete ve <a href="%link%">svém kontě</a>.'
+				items_removed_from_cart: 'Některé položky (<strong>%name%</strong>) byly odstraněny z košíku. Link ke stažení najdete ve <a href="%link%">svém kontě</a>.'
+				items_removed_from_cart_reason_sold_out: 'Některé položky (<strong>%name%</strong>) boli odstranené z košíka, nakoľko sú vypredané.'
+		checkout:
+			title: 'Objednávka : Obchod Denníku N - prodáváme jen to, co sami čteme'
+			order: Objednávka
+			payment_method: Způsob platby
+			contact_information: Kontaktní údaje
+			sign_under_different_account: "přihlásit se pod jiným účtem?"
+			forgot_password: "zapomněli jste heslo?"
+			login: Přihlásit
+			shipping_address: Adresa doručení
+			license_address: Licenční údaje
+			gift_coupon: Dárkový poukaz
+			enter_gift_coupon_details: "Prosím, zadejte přesnou emailovou adresu toho, komu chcete předplatné darovat a datum a čas, kdy má dostat přihlašovací údaje k předplatnému."
+			shipping_method: Způsob dopravy
+			billing_address: Fakturační adresa
+			for_free: Zadarmo
+			choose_payment_method: Vyber způsob platby.
+			fields:
+				email_required: Položka Email je povinná.
+				pass_required: Položka Heslo je povinná.
+				account_exists: 'Účet se zadaným emailem již existuje, prosím přihlaste se pomocí hesla'
+				phone_number: 'Telefonní číslo (pomůže nám při doručování)'
+				phone_number_placeholder: 'Napr. 0908 123 456'
+				phone_number_required: 'Položka Telefonní číslo je povinná.'
+				phone_number_min_length: 'Telefónne číslo musí mať aspon 6 znakov.'
+				want_invoice: Chci fakturu
+				same_shipping: 'Fakturační adresa stejná jako poštovní adresa'
+				choose_shipping_method: 'Vyber způsob doručení.'
+				first_name: Jméno
+				first_name_required: 'Položka Jméno je povinná.'
+				last_name: Příjmení
+				last_name_required: 'Položka Příjmení je povinná.'
+				street: Ulice
+				street_required: 'Položka Ulice je povinná.'
+				street_min_length: 'Ulice musí mít alespoň 3 znaky'
+				number: Číslo
+				number_required: 'Položka Číslo je povinná.'
+				city: Město
+				city_required: 'Položka Město je povinná.'
+				zip_code: PSČ
+				zip_code_required: 'Položka PSČ je povinná.'
+				country: Krajina
+				coupon_note: 'Prosím, zadejte <br /> <span> 1. přesnou emailovou adresu toho, komu chcete předplatné darovat <br /> 2. datum, kdy má dostat přihlašovací údaje k předplatnému (například 25. prosince) </span>'
+				coupon_note_required: 'Prosím vyplňte udaje potřebné k dárkové poukázce.'
+				company_name: 'Jméno / Název společnosti'
+				company_name_required: 'Položka Jméno / Název společnosti je povinná.'
+				company_id: 'IČ0'
+				company_id_placeholder: 'Např. 12345678'
+				company_tax_id: 'DIČ'
+				company_tax_id_placeholder: 'Např. 2020123456'
+				company_vat_id: 'IČ DPH'
+				company_vat_id_placeholder: 'Např. SK2020123456'
+				toc: 'Souhlasím s <a href="%link%" class="link" target="_blank"> podmínkami používání </a>'
+				toc_required: 'Musíte souhlasit s podmínkami používání'
+				login: Přihlásit
+				user_email: Email uživatele
+				user_email_required: 'Položka Email je povinná.'
+				user_email_wrong_format: 'Nesprávný formát emailové adresy'
+				user_email_doesnt_exist: "Emailová adresa %value neexistuje."
+				subscription_start: 'Začátek předplatného'
+				subscription_start_required: 'Položka Začátek předplatného je povinná.'
+			warnings:
+				unable_to_login_with_password: 'Nepodařilo se přihlásit s zadaným heslem'
+				unable_to_create_user: 'Nelze vytvořit uživatele.'
+				invalid_email: "Tento email není platný."
+				email_registered: "E-mail už je zaregistrován, prosím, zadejte heslo."
+		default:
+			header: "Prodáváme jen to, co se nám nejvíce líbí."
+			filter: Vyfiltrovat
+			all: Všechno
+			add_to_cart: do košíku
+			sold_out: vyprodáno
+		error:
+			title: 'Chyba : Obchod Denníku N - prodáváme jen to, co sami čteme'
+		success:
+			title: 'Děkujeme! : Obchod Denníku N - prodáváme jen to, co sami čteme'
+			header: "Děkujeme!"
+			payment_successful: "Vaše platba byla úspěšná."
+			list_of_books_to_download: "Seznam knih ke stažení"
+		show:
+			title: '%product_name% : Obchod Denníku N - prodáváme jen to, co sami čteme'
+			add_to_cart: vložit do košíku
+			sold_out: vyprodáno
+	orders:
+		my_orders: Moje objednávky
+		my_books: Moje knihy
+		day: Dne
+		order_number: Číslo objednávky
+		price: Cena
+		status: Stav
+		invoices: Faktury
+		postal_fee: Poštovné
+		no_orders: Nemáte žádné objednávky.
+		no_books: Nemáte koupené žádné knihy.
+		visit_eshop: Navštivte náš eshop.
+		visit_eshop_ebooks: "Elektronické knihy můžete nakupovat na% shop_url%, všechny budou dostupné na tomto místě."
+		title: Název
+		preparing_download: Připravuje se stažení

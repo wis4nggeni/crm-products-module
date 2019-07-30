@@ -1,0 +1,17 @@
+{
+  "name": "remp/crm-products-module",
+  "description": "CRM Products Module",
+  "type": "library",
+  "homepage": "https://remp2020.com",
+  "license": "MIT",
+  "require": {
+    "php": "^7.2"
+  },
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "Crm\\ProductsModule\\": "src/"
+    },
+    "classmap": ["src/"]
+  }
+}

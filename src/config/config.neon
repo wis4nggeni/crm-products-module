@@ -1,0 +1,59 @@
+services:
+	moduleManager:
+		setup:
+			- addModule(Crm\ProductsModule\ProductsModule())
+
+	- Crm\ProductsModule\Builder\ProductBuilder
+
+	- Crm\ProductsModule\Commands\ActivatePurchasedGiftCouponsCommand
+	- Crm\ProductsModule\Commands\CalculateAveragesCommand
+
+	- Crm\ProductsModule\Components\DonatedSubscriptionListingWidget
+	- Crm\ProductsModule\Components\GiftCouponsFactoryInterface
+	- Crm\ProductsModule\Components\ProductItemsListWidget
+	- Crm\ProductsModule\Components\ProductStatsFactoryInterface
+	- Crm\ProductsModule\Components\TotalShopPaymentsWidget
+
+	- Crm\ProductsModule\DataProvider\PaymentFormDataProvider
+	- Crm\ProductsModule\DataProvider\PaymentsAdminFilterFormDataProvider
+
+	- Crm\ProductsModule\Distribution\AmountSpentDistribution
+	- Crm\ProductsModule\Distribution\PaymentCountsDistribution
+	- Crm\ProductsModule\Distribution\ProductShopCountsDistribution
+	- Crm\ProductsModule\Distribution\ProductDaysFromLastOrderDistribution
+
+	ebookProvider:
+	    class: Crm\ProductsModule\Ebook\EbookProvider
+
+	- Crm\ProductsModule\Events\PaymentStatusChangeHandler
+
+	checkoutFormFactory:
+		class: Crm\ProductsModule\Forms\CheckoutFormFactory
+	- Crm\ProductsModule\Forms\ProductsFormFactory
+	- Crm\ProductsModule\Forms\TagsFormFactory
+
+	- Crm\ProductsModule\PaymentItem\PaymentItemHelper
+
+	- Crm\ProductsModule\ProductsCache(%redis.host%, %redis.port%)
+
+	- Crm\ProductsModule\Repository\CountryPostalFeesRepository
+	- Crm\ProductsModule\Repository\DistributionCentersRepository
+	- Crm\ProductsModule\Repository\OrdersRepository
+	- Crm\ProductsModule\Repository\PaymentGiftCouponsRepository
+	- Crm\ProductsModule\Repository\PostalFeesRepository
+	- Crm\ProductsModule\Repository\ProductBundlesRepository
+	- Crm\ProductsModule\Repository\ProductPropertiesRepository
+	- Crm\ProductsModule\Repository\ProductsRepository
+	- Crm\ProductsModule\Repository\ProductTemplatesRepository
+	- Crm\ProductsModule\Repository\ProductTemplatePropertiesRepository
+	- Crm\ProductsModule\Repository\ProductTagsRepository
+	- Crm\ProductsModule\Repository\TagsRepository
+
+	- Crm\ProductsModule\Seeders\AddressTypesSeeder
+	- Crm\ProductsModule\Seeders\ConfigsSeeder
+
+	- Crm\ProductsModule\User\OrdersUserDataProvider
+
+	paymentCompleteRedirect:
+	 	setup:
+	 		- registerRedirectResolver(Crm\ProductsModule\Model\ShopPaymentCompleteRedirectResolver(), 400)

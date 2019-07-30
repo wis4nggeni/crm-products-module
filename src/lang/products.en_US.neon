@@ -1,0 +1,355 @@
+menu:
+	shop: Shop
+	products: Products
+	tags: Tags
+	orders: Orders
+	stats: Shop
+	books: Books
+
+data:
+	products:
+		fields:
+			name: Name
+			code: Identifier
+			price: Shop price with VAT
+			catalog_price: Basic price
+			vat: VAT
+			user_label: Label
+			shop: Place on shop
+			sorting: Place after
+			tags: Tags
+			description: Description
+			ean: EAN code
+			image_url: Photo URL
+			og_image_url: OG:image URL
+			images: Photogallery
+			distribution_center: Distribution center
+			visible: Place on homepage
+			unique_per_user: Unique per user
+			has_delivery: Add postal fee
+			template_id: Template
+			bundle: Bundle
+			bundle_items: Bundle items
+			bundles: Bundles
+			created_at: Created at
+			stock: Stock count
+		placeholder:
+			name: eg. Bamboo T-shirt
+			code: eg. bamboo-shirt
+			user_label: eg. Bamboo T-shirt
+			price: eg. 13.99
+			catalog_price: eg. 15.99
+			sorting: First position
+			description: This product is cool
+			ean: eg. 8580000000000
+			image_url: eg. http://dennikn.sk/images/shop.jpg
+			og_image_url: eg. http://dennikn.sk/images/shop.jpg
+			images: eg. http://dennikn.sk/images/shop.jpg
+			distribution_center: select distribution center
+		descriptions:
+			user_label: Used only on invoice
+			image_url: Size of picture 856px * 565px
+			images: List of image URLs. Each URL is on new line.
+		errors:
+			name: Field 'Name' is required
+			code: Field 'Code' is required
+			description: Field 'Description' is required
+			image_url: Field 'Photo URL' is required
+			price_with_vat: Field 'Price with VAT' is required
+			og_image_url: Field 'OG:image URL' is required
+			ean: Field 'EAN code' is required
+			ean13: EAN code must be 13characters
+			distribution_center: Field 'Distribution center' is required
+			template_property: Field '%s' is required
+	tags:
+		fields:
+			code: Name
+			icon: Icon
+			visible: Place on homepage
+			products: Number of products
+			sorting: Place product after
+		placeholder:
+			code: SuperTag
+			icon: fa-tag
+			sorting: To the first position
+		descriptions:
+			icon: Choose from FontAwesome. For N logo use dennikn.
+		errors:
+			code: Field 'Code' is mandatory
+			icon: Field 'Icon' is mandatory
+
+admin:
+	products:
+		default:
+			header: Products
+			new: Create product
+		new:
+			title: New product
+			back: Back to the list
+		show:
+			back: Back to the list
+			edit: Edit product
+			sold_count: Sold count
+			distribution:
+				label: Distribution
+				amountSpent: How much paid before buying the product
+				paymentCounts: How many payment made before buying the product
+				shopCounts: How many orders in shop made before buying the product
+				shopDays: 'When was the last time user made shop order (in days before buying the products)'
+				neverBoughtShop: Never bought anything in shop
+		edit:
+			title: Edit product
+			back: Back to listing
+		messages:
+			no_bundles_message: This product is not assigned to any bundle
+			no_bundle_items_message: This bundle doesn't contain any items
+			product_not_found: Selected product doesn't exist
+			product_created: Product was created
+			product_updated: Produkt was updated
+		users_list:
+			back: Back
+			email: Email
+			source: Source
+			state: State
+			created_at: Created at
+			invoice: Invoice
+			institution: Institution
+			admin: Administrator
+		stats:
+			product: Product
+			today: Today
+			yesterday: Yesterday
+			seven_days: 7 days
+			this_month: This month
+			last_month: Last month
+			all_stats: All
+			sold_products: Sold products
+			sold_products_in_time: Sold products time histogram
+	tags:
+		default:
+			header: Tags
+			new: Create tag
+		new:
+			title: New tag
+			back: Back to the list
+		edit:
+			title: Edit tag
+			back: Back to the list
+		messages:
+			tag_created: Tag was created
+			tag_updated: Tag was updated
+	orders:
+		default:
+			header: Orders
+			totalCount: total
+			filteredCount: filtered
+			empty: There is no records matching the filter
+			fields:
+				variable_symbol: Variable symbol
+				products: Products
+				sum: Sum
+				email: Email
+				order_state: Order State
+				payments: Payments
+				created_at: Created at
+				actions: Actions
+				filter: Filter
+				cancel_filter: Cancel filter
+				order_id_vs: 'OrderID / VS'
+				payment_state: Payment State
+			warnings:
+				order_for_payment_exists: 'Order assigned to payment already exists, we have redirected you to the order.'
+		new:
+			header: New order
+			for_payment: to payment
+			contact_details: Contact details
+			shipping_option: Shipping options
+			shipping_address: Shipping address
+			license_data: License data
+			gift_coupon: Gift coupon
+			billing_address: Billing address
+			product: Product
+			price: Sum
+			amount: Amount
+			together: Total
+			price_with_vat: Price with VAT
+			sum_on_payment: Payment amount
+			warnings:
+				payment_sum_not_equal: "The payment amount is not the same as the sum of the products and shipping charges."
+				order_will_override_sum_on_payment: "Creating an order will overwrite the amount on your payment to"
+			create_order: Create order
+		show:
+			header: Order
+			back: Back
+			shipping_address: Shipping address
+			licence_address: Licence address
+			billing_address: Billing address
+			fields:
+				created_at: Created At
+				amount: Price
+				email: User
+				status: Status
+				payment_status: Payment status
+				coupon_note: Data for coupons
+				address:
+					name: Name
+					street: Street
+					city: City
+					zip: ZIP
+					company_name: Company name
+					ico: Buyer ID
+					dic: Tax ID
+					icdph: Vat ID
+			products:
+				header: Ordered products
+				fields:
+					name: Name
+					price: Price
+					count: Count
+	distribution:
+		shopCounts: How many orders in shop made before the payment
+		shopDays: How many days passed since last order in shop
+		neverBoughtShop: Never bought anything in shop
+		email: E-mail
+		source: Source
+		status: Status
+		invoice: Invoice
+		created_at: Created at
+		back_to_funnel: Back to funnel
+
+	gift_coupons:
+		button_title: Gift subscriptions
+		modal_title: Gift subscription
+		email: E-mail
+		start_at: Start at
+		sent: Sent
+		subscription: Subscription
+		yes: yes
+		no: ne
+		not_created: not created
+
+	total_user_payments:
+		for_shop_payments: "{1}payment in shop|[2,Inf]payments in shop"
+
+	dashboard:
+		title: Shop stats
+
+frontend:
+	shop:
+		title: "E-shop Denník N - we only sell what we read"
+		cart:
+			title: "Cart : E-shop Denník N - we only sell what we read"
+			header: Shopping cart
+			product: Product
+			price: Price
+			amount: Amount
+			together: Total
+			price_with_vat: Price with VAT
+			continue_with_shopping: Back to shopping
+			order: order
+			empty_cart: Shopping cart is empty.
+			confirm_order: Confirm order
+			messages:
+				item_added_to_cart: "Item <strong>%name%</strong> was added to cart."
+				item_not_available: "Item <strong>%name%</strong> is not available."
+				item_already_purchased: 'Item <strong>%name%</strong> has already been purchased. Download link can be found <a href="%link%">in your profile</a>.'
+				items_removed_from_cart: 'Some items (<strong>%name%</strong>) were removed from the cart. Download links can be found <a href="%link%">in your profile</a>'
+				items_removed_from_cart_reason_sold_out: 'Some items (<strong>%name%</strong>) were removed from the cart, since they are sold out.'
+		checkout:
+			title: "Order : E-shop Denník N - we only sell what we read"
+			order: Order
+			payment_method: Payment method
+			contact_information: Contact information
+			sign_under_different_account: "sign in with another account?"
+			forgot_password: "forgot your password?"
+			login: Sign in
+			shipping_address: Shipping address
+			license_address: License address
+			gift_coupon: Gift coupon
+			enter_gift_coupon_details: "Please enter the email address of a person you want to give the subscription, and date and time when you want the subscription to start."
+			shipping_method: Shipping method
+			billing_address: Billing address
+			for_free: For free
+			choose_payment_method: Vyber spôsob platby.
+			fields:
+				email_required: Field Email is required.
+				pass_required: Field Password is required.
+				account_exists: 'Account with entered email already exists, please login with password'
+				phone_number: 'Phone Number'
+				phone_number_placeholder: 'E.g. 0908 123 456'
+				phone_number_required: 'Field Phone Number is required.'
+				phone_number_min_length: 'Phone Number has to be at least 6 characters long.'
+				want_invoice: I want invoice
+				same_shipping: 'Billing address same as shipping address'
+				choose_shipping_method: 'Choose shipping method.'
+				first_name: First Name
+				first_name_required: 'Field First Name is required.'
+				last_name: Last Name
+				last_name_required: 'Field Last Name is required.'
+				street: Street
+				street_required: 'Field Street is required.'
+				street_min_length: 'Field Street has to be at least 3 characters long.'
+				number: Number
+				number_required: 'Field Number is required.'
+				city: City
+				city_required: 'Field City is required.'
+				zip_code: Zip Code
+				zip_code_required: 'Field Zip Code is required.'
+				country: Country
+				coupon_note: 'Please enter<br /><span>1. email address of a person you want to donate subscription to<br />2. date when subscription credentials should be received (e.g. 25th of December)</span>'
+				coupon_note_required: 'Please fill in details required for the gift voucher.'
+				company_name: 'Company Name'
+				company_name_required: 'Field Company Name is required.'
+				company_id: 'Company ID'
+				company_id_placeholder: 'E.g. 12345678'
+				company_tax_id: 'Company Tax ID'
+				company_tax_id_placeholder: 'E.g. 2020123456'
+				company_vat_id: 'Company VAT ID'
+				company_vat_id_placeholder: 'E.g. SK2020123456'
+				toc: 'I agree with <a href="%link%" class="link" target="_blank">terms and conditions</a>'
+				toc_required: 'You have to agree with terms and conditions'
+				login: Log in
+				user_email: User Email
+				user_email_required: 'Field User Email is required.'
+				user_email_wrong_format: 'Wrong format of email address'
+				user_email_doesnt_exist: "Email address %value does not exist."
+				subscription_start: 'Start of Subscription'
+				subscription_start_required: 'Field Start of Subscription is required.'
+			warnings:
+				unable_to_login_with_password: 'Unable to log in using provided password.'
+				unable_to_create_user: 'Unable to create user.'
+				invalid_email: "This email is not valid."
+				email_registered: "E-mail is already registered, please enter your password."
+		default:
+			header: "We only sell what we like most."
+			filter: Filter
+			all: All
+			add_to_cart: add to cart
+			sold_out: sold out
+		error:
+			title: "Error : E-shop Denník N - we only sell what we read"
+		success:
+			title: "Thank you! : E-shop Denník N - we only sell what we read"
+			header: "Thank you!"
+			payment_successful: "Your payment was successful."
+			list_of_books_to_download: "List of books to download"
+		show:
+			title: "%product_name% : E-shop Denník N - we only sell what we read"
+			add_to_cart: add to cart
+			sold_out: sold out
+			
+	orders:
+		my_orders: My orders
+		my_books: My books
+		day: Day
+		order_number: Order number
+		price: Price
+		status: Status
+		invoices: Invoices
+		postal_fee: Postal fee
+		no_orders: You have no orders.
+		no_books: You have no books bought.
+		visit_eshop: Visit our eshop.
+		visit_eshop_ebooks: "You can buy e-books at %shop_url%, all your books will be available here."
+		title: Title
+		preparing_download: Preparing download
