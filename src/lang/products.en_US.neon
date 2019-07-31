@@ -57,8 +57,7 @@ data:
 			image_url: Field 'Photo URL' is required
 			price_with_vat: Field 'Price with VAT' is required
 			og_image_url: Field 'OG:image URL' is required
-			ean: Field 'EAN code' is required
-			ean13: EAN code must be 13characters
+			ean13: EAN code must be 13 characters
 			distribution_center: Field 'Distribution center' is required
 			template_property: Field '%s' is required
 	tags:

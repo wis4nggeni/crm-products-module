@@ -203,8 +203,7 @@ class ProductsFormFactory
         $description->addConditionOn($shop, Form::EQUAL, true)
             ->addRule(Form::FILLED, $this->translator->translate('products.data.products.errors.description'));
 
-        $ean->addConditionOn($shop, Form::EQUAL, true)
-            ->addRule(Form::FILLED, $this->translator->translate('products.data.products.errors.ean'))
+        $ean->addCondition(Form::FILLED)
             ->addRule(Form::LENGTH, $this->translator->translate('products.data.products.errors.ean13'), 13);
 
         $distributionCenter->addConditionOn($shop, Form::EQUAL, true)

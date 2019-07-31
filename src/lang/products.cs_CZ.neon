@@ -56,7 +56,6 @@ data:
 			image_url: Položka 'URL Fotky' je povinná
 			og_image_url: Položka 'OG:image URL' je povinná
 			price_with_vat: Položka 'Cena s DPH' je povinná
-			ean: Položka 'EAN kód' je povinná
 			ean13: EAN kód musí mít 13 znaků
 			distribution_center: Položka 'Distribuční centrum' je povinná
 			template_property: Položka '%s' je povinná
