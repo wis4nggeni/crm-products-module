@@ -192,6 +192,18 @@ CREATE TABLE IF NOT EXISTS `payment_gift_coupons` (
 SQL;
 
         $this->execute($sql);
+
+        // add column product_id to payment_items table
+        if(!$this->table('payment_items')->exists()) {
+            throw new Exception('Cannot find table `payment_items`. Unable to add `product_id` column.');
+        }
+
+        if(!$this->table('payment_items')->hasColumn('product_id')) {
+            $this->table('payment_items')
+                ->addColumn('product_id', 'integer', ['null' => true, 'after' => 'subscription_type_id'])
+                ->addForeignKey('product_id', 'products', 'id', array('delete' => 'RESTRICT', 'update'=> 'NO_ACTION'))
+                ->update();
+        }
     }
 
     public function down()
