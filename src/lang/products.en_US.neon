@@ -45,7 +45,6 @@ data:
 			image_url: eg. http://dennikn.sk/images/shop.jpg
 			og_image_url: eg. http://dennikn.sk/images/shop.jpg
 			images: eg. http://dennikn.sk/images/shop.jpg
-			distribution_center: select distribution center
 		descriptions:
 			user_label: Used only on invoice
 			image_url: Size of picture 856px * 565px
@@ -58,7 +57,6 @@ data:
 			price_with_vat: Field 'Price with VAT' is required
 			og_image_url: Field 'OG:image URL' is required
 			ean13: EAN code must be 13 characters
-			distribution_center: Field 'Distribution center' is required
 			template_property: Field '%s' is required
 	tags:
 		fields:

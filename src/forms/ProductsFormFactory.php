@@ -188,7 +188,7 @@ class ProductsFormFactory
         $distributionCenters = $this->distributionCentersRepository->all()->fetchPairs('code', 'name');
         $distributionCenter = $form->addSelect('distribution_center', $this->translator->translate('products.data.products.fields.distribution_center'), $distributionCenters)
             ->setOption('id', 'distributionCenter')
-            ->setPrompt($this->translator->translate('products.data.products.placeholder.distribution_center'));
+            ->setPrompt('--');
 
         $visible = $form->addCheckbox('visible', $this->translator->translate('products.data.products.fields.visible'))->setOption('id', 'visible');
         $unique = $form->addCheckbox('unique_per_user', $this->translator->translate('products.data.products.fields.unique_per_user'))->setOption('id', 'unique');
@@ -205,12 +205,6 @@ class ProductsFormFactory
 
         $ean->addCondition(Form::FILLED)
             ->addRule(Form::LENGTH, $this->translator->translate('products.data.products.errors.ean13'), 13);
-
-        $distributionCenter->addConditionOn($shop, Form::EQUAL, true)
-            ->addRule(Form::FILLED, $this->translator->translate('products.data.products.errors.distribution_center'));
-
-        $distributionCenter->addConditionOn($shop, Form::EQUAL, true)
-            ->addRule(Form::FILLED, $this->translator->translate('products.data.products.errors.distribution_center'));
 
         $templates = $this->productTemplatesRepository->all();
         $templateId = $form->addSelect('product_template_id', $this->translator->translate('products.data.products.fields.template_id'), $templates->fetchPairs('id', 'name'))

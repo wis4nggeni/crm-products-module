@@ -45,7 +45,6 @@ data:
 			image_url: napr. http://dennikn.sk/images/shop.jpg
 			og_image_url: napr. http://dennikn.sk/images/shop.jpg
 			images: napr. http://dennikn.sk/images/shop.jpg
-			distribution_center: Zvoľ distribučné centrum
 		descriptions:
 			user_label: Používa sa iba na faktúre
 			image_url: Prosím dodržujte veľkosť obrázku 856px * 565px
@@ -58,7 +57,6 @@ data:
 			price_with_vat: Položka 'Cena s DPH' je povinná
 			og_image_url: Položka 'OG:image URL' je povinná
 			ean13: EAN kód musí mať 13 znakov
-			distribution_center: Položka 'Distribučné centrum' je povinná
 			template_property: Položka '%s' je povinná
 	tags:
 		fields:
