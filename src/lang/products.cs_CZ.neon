@@ -353,3 +353,12 @@ data_provider:
 		products_from_eshop: "Produkty z e-shopu:"
 		products_from_eshop_desc: "Pozor: po výběru produktu je třeba zadat ještě počet zakoupených kusů."
 		products_from_eshop_readonly: "Produkty není možné upravit, objednávka již byla vytvořena."
+
+config:
+	category: Obchod
+	shop_host:
+		name: URL obchodu
+		description: 'URL obchodu (v případě, že běží na vlastní doméně; napr. obchod.crm.press)'
+	shop_header_block:
+		name: Kód v hlavičce pro obchod
+		description: 'Libovolný kód (např. Google analytics nebo další), který se má vložit do hlavičky šablony obchodu'

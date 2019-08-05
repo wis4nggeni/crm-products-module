@@ -29,9 +29,10 @@ class ConfigsSeeder implements ISeeder
 
     public function seed(OutputInterface $output)
     {
-        $category = $this->configCategoriesRepository->loadByName('Všeobecne');
+        $categoryName = 'products.config.category';
+        $category = $this->configCategoriesRepository->loadByName($categoryName);
         if (!$category) {
-            $category = $this->configCategoriesRepository->add('Všeobecne', 'fa fa-globe', 100);
+            $category = $this->configCategoriesRepository->add($categoryName, 'fas fa-shopping-cart', 100);
             $output->writeln('  <comment>* config category <info>Všeobecne</info> created</comment>');
         } else {
             $output->writeln('  * config category <info>Všeobecne</info> exists');
@@ -42,8 +43,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Host shopu')
-                ->setDescription('Host URL shopu (v prípade, že beží na vlastnej doméne; napr. obchod.dennikn.sk)')
+                ->setDisplayName('products.config.shop_host.name')
+                ->setDescription('products.config.shop_host.description')
                 ->setType(ApplicationConfig::TYPE_STRING)
                 ->setAutoload(true)
                 ->setConfigCategory($category)
@@ -52,6 +53,13 @@ class ConfigsSeeder implements ISeeder
             $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  * config item <info>$name</info> updated");
+            }
         }
 
         $name = 'shop_header_block';
@@ -59,8 +67,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Kód v hlavičke pre OBCHOD')
-                ->setDescription('Je možné vložiť ľubovoľný kód, ako napríklad Google analytics alebo ďalšie')
+                ->setDisplayName('products.config.shop_header_block.name')
+                ->setDescription('products.config.shop_header_block.description')
                 ->setType(ApplicationConfig::TYPE_TEXT)
                 ->setAutoload(true)
                 ->setConfigCategory($category)
@@ -69,6 +77,13 @@ class ConfigsSeeder implements ISeeder
             $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  * config item <info>$name</info> updated");
+            }
         }
     }
 }
