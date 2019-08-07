@@ -10,14 +10,22 @@ use Nette\Http\Request;
 
 class TagsAdminPresenter extends AdminPresenter
 {
-    /** @var Request @inject */
     public $request;
 
-    /** @var TagsRepository @inject */
     public $tagsRepository;
 
-    /** @var TagsFormFactory @inject */
     public $tagsFormFactory;
+
+    public function __construct (
+        Request $request,
+        TagsRepository $tagsRepository,
+        TagsFormFactory $tagsFormFactory
+    ) {
+        parent::__construct();
+        $this->request = $request;
+        $this->tagsRepository = $tagsRepository;
+        $this->tagsFormFactory = $tagsFormFactory;
+    }
 
     public function renderDefault()
     {

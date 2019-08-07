@@ -26,7 +26,6 @@ class OrdersAdminPresenter extends AdminPresenter
 
     private $productsRepository;
 
-    /** @var CheckoutFormFactory @inject */
     public $checkoutFormFactory;
 
     /** @persistent */
@@ -39,13 +38,15 @@ class OrdersAdminPresenter extends AdminPresenter
         OrdersRepository $ordersRepository,
         PaymentsRepository $paymentsRepository,
         PostalFeesRepository $postalFeesRepository,
-        ProductsRepository $productsRepository
+        ProductsRepository $productsRepository,
+        CheckoutFormFactory $checkoutFormFactory
     ) {
         parent::__construct();
         $this->ordersRepository = $ordersRepository;
         $this->paymentsRepository = $paymentsRepository;
         $this->postalFeesRepository = $postalFeesRepository;
         $this->productsRepository = $productsRepository;
+        $this->checkoutFormFactory = $checkoutFormFactory;
     }
 
     public function renderDefault()
