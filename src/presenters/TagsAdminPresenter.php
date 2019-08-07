@@ -16,7 +16,7 @@ class TagsAdminPresenter extends AdminPresenter
 
     public $tagsFormFactory;
 
-    public function __construct (
+    public function __construct(
         Request $request,
         TagsRepository $tagsRepository,
         TagsFormFactory $tagsFormFactory
