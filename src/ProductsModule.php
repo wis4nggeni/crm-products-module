@@ -162,11 +162,6 @@ class ProductsModule extends CrmModule
                 ]);
             }
 
-            $request = $this->getInstance(\Nette\Http\Request::class);
-            if ($request->url->host === $shopHost) {
-                $router[] = new Route('//' . $shopHost . '/sales-funnel/sales-funnel/<action>[/<id>]', 'SalesFunnel:SalesFunnel:default');
-            }
-
             $router[] = new Route('//' . $shopHost . '/<action>[/<id>[/<code>]]', 'Products:Shop:default');
         }
     }
