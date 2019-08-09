@@ -7,17 +7,20 @@ use Nette\Database\Table\ActiveRow;
 
 class ShopPaymentCompleteRedirectResolver implements PaymentCompleteRedirectResolver
 {
-    public function wantsToRedirect(ActiveRow $payment, string $status): bool
+    public function wantsToRedirect(?ActiveRow $payment, string $status): bool
     {
-        if (in_array($status, [self::PAID, self::ERROR])) {
+        if ($payment && $status === self::PAID) {
             return !empty($payment->related('order')->fetch());
+        }
+        if ($status === self::ERROR) {
+            return true;
         }
         return false;
     }
 
-    public function redirectArgs(ActiveRow $payment, string $status): array
+    public function redirectArgs(?ActiveRow $payment, string $status): array
     {
-        if ($status === self::PAID) {
+        if ($payment && $status === self::PAID) {
             return [
                 ':Products:Shop:Success',
                 ['id' => $payment->variable_symbol],
