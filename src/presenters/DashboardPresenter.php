@@ -7,7 +7,6 @@ use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\ApplicationModule\Components\Graphs\GoogleBarGraphGroupControlFactoryInterface;
 use Crm\ApplicationModule\Graphs\Criteria;
 use Crm\ApplicationModule\Graphs\GraphDataItem;
-use Crm\ProductsModule\Components\ProductStatsFactory;
 use Crm\ProductsModule\Components\ProductStatsFactoryInterface;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Nette\Utils\DateTime;
