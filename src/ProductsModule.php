@@ -55,7 +55,7 @@ class ProductsModule extends CrmModule
     {
         $mainMenu = new MenuItem(
             $this->translator->translate('products.menu.shop'),
-            '#',
+            '#products',
             'fa fa-shekel-sign',
             550
         );
@@ -77,24 +77,10 @@ class ProductsModule extends CrmModule
             'fa fa-paper-plane',
             700
         );
-        $menuItemZlavomat1 = new MenuItem(
-            $this->translator->translate('zlavomat.menu.default'),
-            ':Zlavomat:ZlavomatAdmin:default',
-            'fa fa-list',
-            800
-        );
-        $menuItemZlavomat2 = new MenuItem(
-            $this->translator->translate('zlavomat.menu.used_coupons'),
-            ':Zlavomat:ZlavomatAdmin:used-coupons',
-            'fa fa-list',
-            900
-        );
 
         $mainMenu->addChild($menuItem1);
         $mainMenu->addChild($menuItem2);
         $mainMenu->addChild($menuItem3);
-        $mainMenu->addChild($menuItemZlavomat1);
-        $mainMenu->addChild($menuItemZlavomat2);
 
         $menuContainer->attachMenuItem($mainMenu);
 
