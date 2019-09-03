@@ -350,3 +350,9 @@ frontend:
 		visit_eshop_ebooks: "You can buy e-books at %shop_url%, all your books will be available here."
 		title: Title
 		preparing_download: Preparing download
+
+data_provider:
+	payment_form_data:
+		products_from_eshop: "Products from e-shop:"
+		products_from_eshop_desc: "Warning: after product selection, it's required to enter number of purchased products."
+		products_from_eshop_readonly: "It's not possible to edit products, order has already been created.."

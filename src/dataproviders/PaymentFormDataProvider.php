@@ -9,6 +9,7 @@ use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Events\CartItemAddedEvent;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\ProductsRepository;
+use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
@@ -24,16 +25,20 @@ class PaymentFormDataProvider implements PaymentFormDataProviderInterface
 
     private $emitter;
 
+    private $translator;
+
     public function __construct(
         ProductsRepository $productsRepository,
         PaymentItemsRepository $paymentItemsRepository,
         PaymentsRepository $paymentsRepository,
-        Emitter $emitter
+        Emitter $emitter,
+        Translator $translator
     ) {
         $this->productsRepository = $productsRepository;
         $this->paymentItemsRepository = $paymentItemsRepository;
         $this->paymentsRepository = $paymentsRepository;
         $this->emitter = $emitter;
+        $this->translator = $translator;
     }
 
     public function provide(array $params): Form
@@ -64,11 +69,11 @@ class PaymentFormDataProvider implements PaymentFormDataProviderInterface
 
         $productIdsMultiselect = $container->addMultiSelect(
             'product_ids',
-            'Produkty z eshopu:',
+            $this->translator->translate('products.data_provider.payment_form_data.products_from_eshop'),
             $productPairs
         )->setOption(
             'description',
-            'Pozor: po výbere produktu je potrebné zadať ešte počet zakúpených kusov.'
+            $this->translator->translate('products.data_provider.payment_form_data.products_from_eshop_desc')
         );
         $productIdsMultiselect->getControlPrototype()->addAttributes(['class' => 'select2']);
 
@@ -78,7 +83,7 @@ class PaymentFormDataProvider implements PaymentFormDataProviderInterface
             $productIdsMultiselect->setAttribute('readonly', 'readonly')
                 ->setOption(
                     'description',
-                    'Produkty nie je možné upraviť, objednávka už bola vytvorená.'
+                    $this->translator->translate('products.data_provider.payment_form_data.products_from_eshop_readonly')
                 );
         } else {
             // TODO: revive possibility to create order directly from payment form

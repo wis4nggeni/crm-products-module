@@ -351,3 +351,9 @@ frontend:
 		visit_eshop_ebooks: "Elektronické knihy môžete nakupovať na %shop_url%, všetky budú dostupné na tomto mieste."
 		title: Názov
 		preparing_download: Pripravuje sa stiahnutie
+
+data_provider:
+	payment_form_data:
+		products_from_eshop: "Produkty z e-shopu:"
+		products_from_eshop_desc: "Pozor: po výbere produktu je potrebné zadať ešte počet zakúpených kusov."
+		products_from_eshop_readonly: "Produkty nie je možné upraviť, objednávka už bola vytvorená."
