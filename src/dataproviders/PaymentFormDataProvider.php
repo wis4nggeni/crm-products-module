@@ -9,7 +9,7 @@ use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Events\CartItemAddedEvent;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\ProductsRepository;
-use Kdyby\Translation\Translator;
+use Kdyby\Translation\ITranslator;
 use League\Event\Emitter;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
@@ -32,7 +32,7 @@ class PaymentFormDataProvider implements PaymentFormDataProviderInterface
         PaymentItemsRepository $paymentItemsRepository,
         PaymentsRepository $paymentsRepository,
         Emitter $emitter,
-        Translator $translator
+        ITranslator $translator
     ) {
         $this->productsRepository = $productsRepository;
         $this->paymentItemsRepository = $paymentItemsRepository;
