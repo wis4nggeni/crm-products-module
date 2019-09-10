@@ -20,6 +20,7 @@ use Crm\ProductsModule\Repository\TagsRepository;
 use Nette\Application\BadRequestException;
 use Nette\Forms\Controls\RadioList;
 use Tomaj\Hermes\Emitter;
+use Tracy\Debugger;
 
 class ShopPresenter extends FrontendPresenter
 {
@@ -80,8 +81,6 @@ class ShopPresenter extends FrontendPresenter
         $this->paymentProcessor = $paymentProcessor;
         $this->ebookProvider = $ebookProvider;
         $this->hermesEmitter = $hermesEmitter;
-
-        $this->autoCanonicalize = false;
     }
 
     public function startup()
@@ -122,33 +121,20 @@ class ShopPresenter extends FrontendPresenter
         $this->template->products = $this->productsRepository->getShopProducts(empty($this->tags), true, array_keys($this->tags));
     }
 
-    public function renderShow($id, $code)
+    public function renderShow($id, string $code = null)
     {
         $product = $this->productsRepository->find($id);
         if (!$product || !$product->shop) {
             throw new BadRequestException('Product not found.', 404);
         }
-        if (!$code || $code !== $product->code) {
-            $this->redirect('show', $product);
+
+        if ($code && $code !== $product->code) {
+            Debugger::log("Provided code [{$code}] does not match code of provided product [{$id}].");
         }
 
         $this->template->cartProductSum = $this->cartProductSum;
         $this->template->product = $product;
         $this->template->relatedProducts = $this->productsRepository->relatedProducts($product);
-    }
-
-    public function renderProduct($code)
-    {
-        $product = $this->productsRepository->findBy('code', $code);
-        if (!$product || !$product->shop) {
-            throw new BadRequestException('Product not found.', 404);
-        }
-
-        $this->template->cartProductSum = $this->cartProductSum;
-        $this->template->product = $product;
-        $this->template->relatedProducts = $this->productsRepository->relatedProducts($product);
-
-        $this->template->setFile(__DIR__ . '/../templates/Shop/show.latte');
     }
 
     public function handleAddCart($id, $checkout = false)

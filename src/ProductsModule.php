@@ -131,25 +131,33 @@ class ProductsModule extends CrmModule
             $this->configsCache->add('shop_host', $shopHost);
         }
 
+        // if shop host is not defined, cache routes with `<module>/<presenter>` url `products/shop`
         if ($shopHost) {
-            foreach ($this->productsCache->all() as $product) {
-                $router[] = new Route("//" . $shopHost . "/show/<id {$product->id}>/{$product->code}", [
+            $shopHost = "//" . $shopHost;
+        } else {
+            $shopHost = "products/shop";
+        }
+
+        foreach ($this->productsCache->all() as $product) {
+            $router[] = new Route($shopHost . "/show/<id {$product->id}>[/<code {$product->code}>]", [
                     'module' => 'Products',
                     'presenter' => 'Shop',
                     'action' => 'show',
-                    'code' => $product->code,
                 ]);
 
-                $router[] = new Route("//" . $shopHost . "/product/{$product->code}", [
+            $router[] = new Route(
+                $shopHost . "/product/<code {$product->code}>",
+                [
                     'module' => 'Products',
                     'presenter' => 'Shop',
-                    'action' => 'product',
-                    'code' => $product->code,
-                ]);
-            }
-
-            $router[] = new Route('//' . $shopHost . '/<action>[/<id>[/<code>]]', 'Products:Shop:default');
+                    'action' => 'show',
+                    'id' => $product->id,
+                ],
+                Route::ONE_WAY
+            );
         }
+
+        $router[] = new Route($shopHost . '/<action>[/<id>[/<code>]]', 'Products:Shop:default');
     }
 
     public function cache(OutputInterface $output, array $tags = [])
