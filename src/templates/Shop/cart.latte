@@ -64,7 +64,7 @@
                         <div class="_image"><div class="_pad">
                                 <img src="{$product->image_url}" alt="{$product->name}" class="img-responsive">
                         </div></div>
-                        <div class="_title"><div class="_pad"><a n:href="show $product">{$product->name}</a></div></div>
+                        <div class="_title"><div class="_pad"><a n:href="show $product->id, $product->code">{$product->name}</a></div></div>
                         <div class="_price"><div class="_pad">{$product->price|price}</div></div>
                         <div class="_amount"><div class="_pad">
                                 <div class="input-group">
@@ -87,7 +87,7 @@
                             <div class="_image"><div class="_pad">
                                     <img src="{$product->image_url}" alt="{$product->name}" class="img-responsive">
                             </div></div>
-                            <div class="_title"><div class="_pad"><a n:href="show $product">{$product->name}</a></div></div>
+                            <div class="_title"><div class="_pad"><a n:href="show $product->id, $product->code">{$product->name}</a></div></div>
                             <div class="_price"><div class="_pad"><strike>{$product->price|price}</strike> {0|price}</div></div>
                             <div class="_amount"><div class="_pad">{_products.frontend.shop.checkout.for_free}</div></div>
                             <div class="_total"><div class="_pad"> </div></div>

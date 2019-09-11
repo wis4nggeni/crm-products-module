@@ -5,7 +5,7 @@
     <meta content="{_products.frontend.shop.title}" property="og:site_name">
     <meta content="{$product->name}" property="og:title">
     <meta content="{$product->og_image_url}" property="og:image">
-    <meta content="{plink //Shop:show $product->id}" property="og:url">
+    <meta content="{plink //Shop:show $product->id, $product->code}" property="og:url">
 {/block}
 
 {block #scripts}
@@ -56,7 +56,7 @@
             </table>
         </div>
         <div n:if="$product->stock <= 0" class="price-row out-of-stock">
-            <a n:href="Show $product->id" class="btn">{_products.frontend.shop.show.sold_out}</a>
+            <a n:href="Show $product->id, $product->code" class="btn">{_products.frontend.shop.show.sold_out}</a>
         </div>
         <ul>
             <li n:foreach="$product->related('product_properties') as $property" n:if="!empty($property->value) && $property->product_template_property->visible"><span>{$property->product_template_property->title}:</span> {$property->value}</li>
@@ -71,8 +71,8 @@
     <hr>
     <div n:foreach="$relatedProducts as $relatedProduct" class="col-md-3">
         <div class="product-image">
-            <a n:href="show $relatedProduct"><img src="{$relatedProduct->image_url}" alt="{$relatedProduct->name}" class="img-responsive"></a>
+            <a n:href="show $relatedProduct->id, $relatedProduct->code"><img src="{$relatedProduct->image_url}" alt="{$relatedProduct->name}" class="img-responsive"></a>
         </div>
-        <h4><a n:href="show $relatedProduct">{$relatedProduct->name}</a></h4>
+        <h4><a n:href="show $relatedProduct->id, $relatedProduct->code">{$relatedProduct->name}</a></h4>
     </div>
 </div>
