@@ -139,14 +139,28 @@ class ProductsModule extends CrmModule
         }
 
         foreach ($this->productsCache->all() as $product) {
-            $router[] = new Route($shopHost . "/show/<id {$product->id}>[/<code {$product->code}>]", [
+            $router[] = new Route(
+                $shopHost . "/show/<id {$product->id}>/<code {$product->code}>",
+                [
                     'module' => 'Products',
                     'presenter' => 'Shop',
                     'action' => 'show',
-                ]);
+                ]
+            );
 
             $router[] = new Route(
-                $shopHost . "/product/<code {$product->code}>",
+                $shopHost . "/show/<id {$product->id}>",
+                [
+                    'module' => 'Products',
+                    'presenter' => 'Shop',
+                    'action' => 'show',
+                    'code' => $product->code,
+                ],
+                Route::ONE_WAY
+            );
+
+            $router[] = new Route(
+                $shopHost . "/product[/<id {$product->id}>]/<code {$product->code}>",
                 [
                     'module' => 'Products',
                     'presenter' => 'Shop',

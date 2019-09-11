@@ -121,7 +121,7 @@ class ShopPresenter extends FrontendPresenter
         $this->template->products = $this->productsRepository->getShopProducts(empty($this->tags), true, array_keys($this->tags));
     }
 
-    public function renderShow($id, string $code = null)
+    public function renderShow($id, $code)
     {
         $product = $this->productsRepository->find($id);
         if (!$product || !$product->shop) {
