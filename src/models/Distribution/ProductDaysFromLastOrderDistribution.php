@@ -6,7 +6,14 @@ use Nette\Database\Context;
 
 class ProductDaysFromLastOrderDistribution implements DistributionInterface
 {
-    public function distribution(Context $database, int $productId, array $levels): array
+    private $database;
+
+    public function __construct(Context $database)
+    {
+        $this->database = $database;
+    }
+
+    public function distribution(int $productId, array $levels): array
     {
         $result = [];
         $lastLevel = null;
@@ -25,7 +32,7 @@ SELECT COUNT(*) AS result FROM (
   SELECT DISTINCT first_product_payment.user_id FROM {$skeleton}
 ) AS sub
 SQL;
-            $res = $database->query($query)->fetch();
+            $res = $this->database->query($query)->fetch();
             $result[$level] = $res->result;
             $lastLevel = $i;
         }
@@ -36,13 +43,13 @@ SELECT COUNT(*) AS result FROM (
   SELECT DISTINCT first_product_payment.user_id FROM {$skeleton}
 ) AS sub
 SQL;
-        $res = $database->query($query)->fetch();
+        $res = $this->database->query($query)->fetch();
         $result[-1] = $res->result;
 
         return $result;
     }
 
-    public function distributionList(Context $database, int $productId, float $fromLevel, float $toLevel = null): array
+    public function distributionList(int $productId, float $fromLevel, float $toLevel = null): array
     {
         if ($toLevel === -1.0) {
             $skeleton = $this->getNegativeQuerySkeleton($productId);
@@ -58,7 +65,7 @@ SELECT users.* FROM (
 ) AS sub
 LEFT JOIN users ON sub.user_id = users.id
 SQL;
-        return $database->query($query)->fetchAll();
+        return $this->database->query($query)->fetchAll();
     }
 
     private function getQuerySkeleton($whereCondition, $productId)

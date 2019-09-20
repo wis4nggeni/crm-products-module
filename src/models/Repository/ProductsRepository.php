@@ -99,42 +99,42 @@ class ProductsRepository extends Repository
 
     public function userAmountSpentDistribution($levels, $productId)
     {
-        return $this->amountSpentDistribution->distribution($this->getDatabase(), $productId, $levels);
+        return $this->amountSpentDistribution->distribution($productId, $levels);
     }
 
     public function userAmountSpentDistributionList($fromLevel, $toLevel, $productId)
     {
-        return $this->amountSpentDistribution->distributionList($this->getDatabase(), $productId, $fromLevel, $toLevel);
+        return $this->amountSpentDistribution->distributionList($productId, $fromLevel, $toLevel);
     }
 
     public function userPaymentCountsDistribution($levels, $productId)
     {
-        return $this->paymentCountDistribution->distribution($this->getDatabase(), $productId, $levels);
+        return $this->paymentCountDistribution->distribution($productId, $levels);
     }
 
     public function userPaymentCountsDistributionList($fromLevel, $toLevel, $productId)
     {
-        return $this->paymentCountDistribution->distributionList($this->getDatabase(), $productId, $fromLevel, $toLevel);
+        return $this->paymentCountDistribution->distributionList($productId, $fromLevel, $toLevel);
     }
 
     public function productDaysFromLastOrderDistribution($levels, $productId)
     {
-        return $this->productDaysFromLastOrderDistribution->distribution($this->getDatabase(), $productId, $levels);
+        return $this->productDaysFromLastOrderDistribution->distribution($productId, $levels);
     }
 
     public function productDaysFromLastOrderDistributionList($fromlevel, $toLevel, $productId)
     {
-        return $this->productDaysFromLastOrderDistribution->distributionList($this->getDatabase(), $productId, $fromlevel, $toLevel);
+        return $this->productDaysFromLastOrderDistribution->distributionList($productId, $fromlevel, $toLevel);
     }
 
     public function productShopCountsDistribution($levels, $productId)
     {
-        return $this->productShopCountsDistribution->distribution($this->getDatabase(), $productId, $levels);
+        return $this->productShopCountsDistribution->distribution($productId, $levels);
     }
 
     public function productShopCountsDistributionList($fromlevel, $toLevel, $productId)
     {
-        return $this->productShopCountsDistribution->distributionList($this->getDatabase(), $productId, $fromlevel, $toLevel);
+        return $this->productShopCountsDistribution->distributionList($productId, $fromlevel, $toLevel);
     }
 
     public function decreaseStock(IRow $product, $count = 1)

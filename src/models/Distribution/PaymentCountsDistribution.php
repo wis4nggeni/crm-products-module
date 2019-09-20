@@ -6,7 +6,14 @@ use Nette\Database\Context;
 
 class PaymentCountsDistribution implements DistributionInterface
 {
-    public function distribution(Context $database, int $productId, array $levels): array
+    private $database;
+
+    public function __construct(Context $database)
+    {
+        $this->database = $database;
+    }
+
+    public function distribution(int $productId, array $levels): array
     {
         $levelCount = count($levels);
         $result = array_fill(0, $levelCount, 0);
@@ -39,7 +46,7 @@ SELECT $levelSelect FROM (
 ) levels
 SQL;
 
-        $res = $database->query($sql)->fetch();
+        $res = $this->database->query($sql)->fetch();
         foreach ($levels as $i => $level) {
             $result[$i] = (int)$res['level'.$i];
         }
@@ -47,7 +54,7 @@ SQL;
         return $result;
     }
 
-    public function distributionList(Context $database, int $productId, float $fromLevel, float $toLevel = null): array
+    public function distributionList(int $productId, float $fromLevel, float $toLevel = null): array
     {
         if ($toLevel === 0.0) {
             $having = 'count = 0';
@@ -79,6 +86,6 @@ SELECT users.* FROM (
 LEFT JOIN users ON users.id = levels.user_id
 SQL;
 
-        return $database->query($sql)->fetchAll();
+        return $this->database->query($sql)->fetchAll();
     }
 }
