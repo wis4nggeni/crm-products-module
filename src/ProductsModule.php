@@ -97,7 +97,6 @@ class ProductsModule extends CrmModule
 
     public function registerCommands(CommandsContainerInterface $commandsContainer)
     {
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ProductsModule\Commands\ActivatePurchasedGiftCouponsCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ProductsModule\Commands\CalculateAveragesCommand::class));
     }
 
@@ -225,15 +224,6 @@ class ProductsModule extends CrmModule
         $widgetManager->registerWidget(
             'payments.admin.payment_item_listing',
             $this->getInstance(\Crm\ProductsModule\Components\ProductItemsListWidget::class)
-        );
-        $widgetManager->registerWidgetFactory(
-            'admin.payments.listing.action',
-            $this->getInstance(\Crm\ProductsModule\Components\GiftCouponsFactoryInterface::class),
-            400
-        );
-        $widgetManager->registerWidget(
-            'subscriptions.admin.user_subscriptions_listing.subscription',
-            $this->getInstance(\Crm\ProductsModule\Components\DonatedSubscriptionListingWidget::class)
         );
         $widgetManager->registerWidget(
             'payments.admin.total_user_payments',

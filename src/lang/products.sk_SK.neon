@@ -214,18 +214,6 @@ admin:
 		created_at: Vytvorený
 		back_to_funnel: Návrat na okno
 
-	gift_coupons:
-		button_title: Darované predplatné
-		modal_title: Darované predplatné
-		email: E-mail
-		start_at: Štart
-		sent: Odoslaný
-		subscription: Predplatné
-		yes: áno
-		no: ne
-		not_created: nevytvorené
-		donated_by: Darované od
-
 	total_user_payments:
 		for_shop_payments: "{1}platbu v obchode|[2,4]platby v obchode|[5,Inf]platieb v obchode"
 
@@ -366,3 +354,7 @@ config:
 	shop_header_block:
 		name: Kód v hlavičke pre obchod
 		description: 'Ľubovoľný kód (napr. Google analytics alebo ďalšie), ktorý sa má vložiť do hlavičky šablóny obchodu'
+
+seeders:
+	address_types:
+		gift_subscription_type: Darčekové predplatné
