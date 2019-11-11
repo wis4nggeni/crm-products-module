@@ -32,7 +32,7 @@
                     {/if}<br>
 
                     <strong>{_products.admin.gift_coupons.start_at}:</strong>
-                    {$giftCoupon->starts_at|date:"d.m.y h:i"}<br>
+                    {$giftCoupon->starts_at|date:"d.m.y H:i"}<br>
 
                     <strong>{_products.admin.gift_coupons.sent}:</strong>
                     {if $giftCoupon->status === Crm\ProductsModule\Repository\PaymentGiftCouponsRepository::STATUS_NOT_SENT}{_products.admin.gift_coupons.no}{else}{_products.admin.gift_coupons.yes}{/if}<br>
@@ -41,8 +41,8 @@
                         <h4>{_products.admin.gift_coupons.subscription}:</h4>
                         {if $giftCoupon->subscription_id}
                             <strong>Typ: </strong> {$giftCoupon->subscription->type} <br>
-                            <strong>Od: </strong> {$giftCoupon->subscription->start_time|date:"d.m.y h:i"} <br>
-                            <strong>Do: </strong> {$giftCoupon->subscription->end_time|date:"d.m.y h:i"} <br>
+                            <strong>Od: </strong> {$giftCoupon->subscription->start_time|date:"d.m.y H:i"} <br>
+                            <strong>Do: </strong> {$giftCoupon->subscription->end_time|date:"d.m.y H:i"} <br>
                         {else}
                             {_products.admin.gift_coupons.not_created}
                         {/if}
