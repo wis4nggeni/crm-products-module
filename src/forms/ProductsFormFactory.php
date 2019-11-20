@@ -3,7 +3,9 @@
 namespace Crm\ProductsModule\Forms;
 
 use Crm\ApplicationModule\Config\ApplicationConfig;
+use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ProductsModule\Builder\ProductBuilder;
+use Crm\ProductsModule\DataProvider\ProductsFormDataProviderInterface;
 use Crm\ProductsModule\Events\ProductSaveEvent;
 use Crm\ProductsModule\ProductsCache;
 use Crm\ProductsModule\Repository\DistributionCentersRepository;
@@ -31,6 +33,7 @@ class ProductsFormFactory
     private $productTagsRepository;
     private $distributionCentersRepository;
     private $productsCache;
+    private $dataProviderManager;
 
     private $translator;
 
@@ -54,6 +57,7 @@ class ProductsFormFactory
         ProductTagsRepository $productTagsRepository,
         DistributionCentersRepository $distributionCentersRepository,
         ProductsCache $productsCache,
+        DataProviderManager $dataProviderManager,
         ProductBuilder $productBuilder,
         Translator $translator,
         Emitter $emitter,
@@ -68,6 +72,7 @@ class ProductsFormFactory
         $this->productTagsRepository = $productTagsRepository;
         $this->distributionCentersRepository = $distributionCentersRepository;
         $this->productsCache = $productsCache;
+        $this->dataProviderManager = $dataProviderManager;
         $this->productBuilder = $productBuilder;
         $this->translator = $translator;
         $this->emitter = $emitter;
@@ -268,6 +273,12 @@ class ProductsFormFactory
 
         if ($productId) {
             $form->addHidden('product_id', $productId);
+        }
+
+        /** @var ProductsFormDataProviderInterface[] $providers */
+        $providers = $this->dataProviderManager->getProviders('products.dataprovider.product_form', ProductsFormDataProviderInterface::class);
+        foreach ($providers as $sorting => $provider) {
+            $form = $provider->provide(['form' => $form]);
         }
 
         $form->setDefaults($defaults);
