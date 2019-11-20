@@ -226,9 +226,9 @@ class ProductsModule extends CrmModule
             'payments.admin.payment_item_listing',
             $this->getInstance(\Crm\ProductsModule\Components\ProductItemsListWidget::class)
         );
-        $widgetManager->registerWidgetFactory(
+        $widgetManager->registerWidget(
             'admin.payments.listing.action',
-            $this->getInstance(\Crm\ProductsModule\Components\GiftCouponsFactoryInterface::class),
+            $this->getInstance(\Crm\ProductsModule\Components\GiftCoupons::class),
             400
         );
         $widgetManager->registerWidget(
