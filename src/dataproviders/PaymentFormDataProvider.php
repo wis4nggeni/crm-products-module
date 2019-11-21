@@ -7,7 +7,9 @@ use Crm\PaymentsModule\DataProvider\PaymentFormDataProviderInterface;
 use Crm\PaymentsModule\Repository\PaymentItemsRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Events\CartItemAddedEvent;
+use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
+use Crm\ProductsModule\Repository\PostalFeesRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Kdyby\Translation\ITranslator;
 use League\Event\Emitter;
@@ -23,6 +25,8 @@ class PaymentFormDataProvider implements PaymentFormDataProviderInterface
 
     private $paymentsRepository;
 
+    private $postalFeesRepository;
+
     private $emitter;
 
     private $translator;
@@ -31,12 +35,14 @@ class PaymentFormDataProvider implements PaymentFormDataProviderInterface
         ProductsRepository $productsRepository,
         PaymentItemsRepository $paymentItemsRepository,
         PaymentsRepository $paymentsRepository,
+        PostalFeesRepository $postalFeesRepository,
         Emitter $emitter,
         ITranslator $translator
     ) {
         $this->productsRepository = $productsRepository;
         $this->paymentItemsRepository = $paymentItemsRepository;
         $this->paymentsRepository = $paymentsRepository;
+        $this->postalFeesRepository = $postalFeesRepository;
         $this->emitter = $emitter;
         $this->translator = $translator;
     }
@@ -132,6 +138,23 @@ class PaymentFormDataProvider implements PaymentFormDataProviderInterface
                 $items[] = new ProductPaymentItem($product, $productCounts[$productId]);
 
                 $this->emitter->emit(new CartItemAddedEvent($product));
+            }
+        }
+
+        $paymentItems = Json::decode($values['payment_items']);
+
+        foreach ($paymentItems as $paymentItem) {
+            if ($paymentItem->type === PostalFeePaymentItem::TYPE) {
+                $postalFee = $this->postalFeesRepository->find($paymentItem->postal_fee_id);
+                $postalFeeItem = new PostalFeePaymentItem($postalFee, $paymentItem->vat);
+                $postalFeeItem->forceName(
+                    sprintf(
+                        "%s - %s",
+                        $this->translator->translate('products.frontend.orders.postal_fee'),
+                        $postalFeeItem->name()
+                    )
+                );
+                $items[] = $postalFeeItem;
             }
         }
 
