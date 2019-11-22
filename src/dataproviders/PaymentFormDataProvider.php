@@ -127,10 +127,18 @@ class PaymentFormDataProvider implements PaymentFormDataProviderInterface
         }
         $values = $params['values'];
 
+        $paymentItems = Json::decode($values['payment_items']);
+
         $items = [];
         if (isset($values['products']['product_ids']) && isset($values['products']['product_counts'])) {
             $productIds = [];
             $productCounts = Json::decode($values['products']['product_counts'], Json::FORCE_ARRAY);
+
+            foreach ($paymentItems as $paymentItem) {
+                if ($paymentItem->type === ProductPaymentItem::TYPE) {
+                    $productCounts[$paymentItem->product_id] = $paymentItem->count;
+                }
+            }
 
             foreach ($values['products']['product_ids'] as $productId) {
                 $productIds[$productId] = $productCounts[$productId];
@@ -141,12 +149,10 @@ class PaymentFormDataProvider implements PaymentFormDataProviderInterface
             }
         }
 
-        $paymentItems = Json::decode($values['payment_items']);
-
         foreach ($paymentItems as $paymentItem) {
             if ($paymentItem->type === PostalFeePaymentItem::TYPE) {
                 $postalFee = $this->postalFeesRepository->find($paymentItem->postal_fee_id);
-                $postalFeeItem = new PostalFeePaymentItem($postalFee, $paymentItem->vat);
+                $postalFeeItem = new PostalFeePaymentItem($postalFee, $paymentItem->vat, $paymentItem->count);
                 $postalFeeItem->forceName(
                     sprintf(
                         "%s - %s",
