@@ -1,4 +1,4 @@
-<span style="position: relative; margin-top: 10px;">
+<div style="position: relative; margin-top: 10px;">
     <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="giftCouponsMenu{$payment->id}" data-toggle="dropdown" aria-expanded="true">
         {_products.admin.gift_coupons.button_title}
         <span class="caret"></span>
@@ -10,7 +10,7 @@
             </li>
         {/foreach}
     </ul>
-</span>
+</div>
 
 {foreach $giftCoupons as $giftCoupon}
 <div class="modal fade" id="show-coupon-{$giftCoupon->id}">
