@@ -2,15 +2,14 @@
 
 namespace Crm\ProductsModule\Forms;
 
+use Crm\GiftsModule\Repository\PaymentGiftCouponsRepository;
 use Crm\PaymentsModule\PaymentItem\PaymentItemContainer;
 use Crm\PaymentsModule\Repository\PaymentGatewaysRepository;
-use Crm\ProductsModule\Repository\PaymentGiftCouponsRepository;
 use Crm\PaymentsModule\Repository\PaymentItemsRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\PaymentItem\PaymentItemHelper;
 use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
-use Crm\UsersModule\Repository\AddressChangeRequestsRepository;
 use Crm\ProductsModule\Repository\DistributionCentersRepository;
 use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Repository\PostalFeesRepository;
@@ -20,6 +19,7 @@ use Crm\UsersModule\Auth\Authorizator;
 use Crm\UsersModule\Auth\InvalidEmailException;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Email\EmailValidator;
+use Crm\UsersModule\Repository\AddressChangeRequestsRepository;
 use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\AddressTypesRepository;
 use Crm\UsersModule\Repository\CountriesRepository;
@@ -723,9 +723,9 @@ class CheckoutFormFactory
 
                     $this->paymentGiftCouponsRepository->add(
                         $paymentId,
-                        $productId,
                         $email,
-                        $startsAt
+                        $startsAt,
+                        $productId
                     );
                 }
             }

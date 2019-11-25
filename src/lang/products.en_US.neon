@@ -214,17 +214,6 @@ admin:
 		created_at: Created at
 		back_to_funnel: Back to funnel
 
-	gift_coupons:
-		button_title: Gift subscriptions
-		modal_title: Gift subscription
-		email: E-mail
-		start_at: Start at
-		sent: Sent
-		subscription: Subscription
-		yes: yes
-		no: ne
-		not_created: not created
-
 	total_user_payments:
 		for_shop_payments: "{1}payment in shop|[2,Inf]payments in shop"
 
@@ -356,6 +345,7 @@ data_provider:
 		products_from_eshop: "Products from e-shop:"
 		products_from_eshop_desc: "Warning: after product selection, it's required to enter number of purchased products."
 		products_from_eshop_readonly: "It's not possible to edit products, order has already been created."
+
 config:
 	category: Shop
 	shop_host:
@@ -364,3 +354,7 @@ config:
 	shop_header_block:
 		name: "Code in shop's header"
 		description: 'Any optional code (e.g. Google Analytics) that should be injected to the head of shop layout'
+
+seeders:
+	address_types:
+		gift_subscription_type: Gift subscription

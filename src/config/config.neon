@@ -5,11 +5,8 @@ services:
 
 	- Crm\ProductsModule\Builder\ProductBuilder
 
-	- Crm\ProductsModule\Commands\ActivatePurchasedGiftCouponsCommand
 	- Crm\ProductsModule\Commands\CalculateAveragesCommand
 
-	- Crm\ProductsModule\Components\DonatedSubscriptionListingWidget
-	- Crm\ProductsModule\Components\GiftCoupons
 	- Crm\ProductsModule\Components\ProductItemsListWidget
 	- Crm\ProductsModule\Components\ProductStatsFactoryInterface
 	- Crm\ProductsModule\Components\TotalShopPaymentsWidget
@@ -39,7 +36,6 @@ services:
 	- Crm\ProductsModule\Repository\CountryPostalFeesRepository
 	- Crm\ProductsModule\Repository\DistributionCentersRepository
 	- Crm\ProductsModule\Repository\OrdersRepository
-	- Crm\ProductsModule\Repository\PaymentGiftCouponsRepository
 	- Crm\ProductsModule\Repository\PostalFeesRepository
 	- Crm\ProductsModule\Repository\ProductBundlesRepository
 	- Crm\ProductsModule\Repository\ProductPropertiesRepository
