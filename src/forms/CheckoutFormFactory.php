@@ -542,7 +542,7 @@ class CheckoutFormFactory
         $licenceAddressId = $this->handleLicenceAddress($user, $values);
         $billingAddressId = $this->handleBillingAddress($user, $values);
         $couponNote = $this->handleCouponNote($values);
-        $this->handleCoupons($values, $payment, $cart);
+        $this->handleCoupons($values, $payment->id, $cart);
 
         $this->ordersRepository->add($payment->id, $shippingAddressId, $licenceAddressId, $billingAddressId, $postalFee, $couponNote);
 
@@ -705,7 +705,7 @@ class CheckoutFormFactory
         return $couponNote;
     }
 
-    private function handleCoupons($values, $paymentId, $cart)
+    private function handleCoupons($values, int $paymentId, $cart)
     {
         if (isset($values['coupons'])) {
             foreach ($values['coupons'] as $productIdentification => $items) {
