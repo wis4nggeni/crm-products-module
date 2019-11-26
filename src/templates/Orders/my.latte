@@ -45,7 +45,7 @@
                         {$statusMap[$order->status]}
                     </td>
                     <td>
-                        {control listingWidget 'frontend.payments.listing.receipts', $order->payment}
+                        {control simpleWidget 'frontend.payments.listing.receipts', $order->payment}
                     </td>
                 </tr>
                 <tr n:ifset="$statusMap[$order->status]">
