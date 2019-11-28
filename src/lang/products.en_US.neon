@@ -163,7 +163,6 @@ admin:
 			shipping_option: Shipping options
 			shipping_address: Shipping address
 			license_data: License data
-			gift_coupon: Gift coupon
 			billing_address: Billing address
 			product: Product
 			price: Sum
@@ -251,8 +250,6 @@ frontend:
 			login: Sign in
 			shipping_address: Shipping address
 			license_address: License address
-			gift_coupon: Gift coupon
-			enter_gift_coupon_details: "Please enter the email address of a person you want to give the subscription, and date and time when you want the subscription to start."
 			shipping_method: Shipping method
 			billing_address: Billing address
 			for_free: For free
@@ -282,8 +279,6 @@ frontend:
 				zip_code: Zip Code
 				zip_code_required: 'Field Zip Code is required.'
 				country: Country
-				coupon_note: 'Please enter<br /><span>1. email address of a person you want to donate subscription to<br />2. date when subscription credentials should be received (e.g. 25th of December)</span>'
-				coupon_note_required: 'Please fill in details required for the gift voucher.'
 				company_name: 'Company Name'
 				company_name_required: 'Field Company Name is required.'
 				company_id: 'Company ID'

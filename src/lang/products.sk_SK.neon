@@ -163,7 +163,6 @@ admin:
 			shipping_option: Spôsob dopravy
 			shipping_address: Adresa doručenia
 			license_data: Licenčné údaje
-			gift_coupon: Darčekový poukaz
 			billing_address: Fakturačná adresa
 			product: Produkt
 			price: Suma
@@ -251,8 +250,6 @@ frontend:
 			login: Prihlásiť
 			shipping_address: Adresa doručenia
 			license_address: Licenčné údaje
-			gift_coupon: Darčekový poukaz
-			enter_gift_coupon_details: "Prosím, zadajte presnú e-mailovú adresu toho, komu chcete predplatné darovať a dátum a čas, kedy má dostať prihlasovacie údaje k predplatnému."
 			shipping_method: Spôsob dopravy
 			billing_address: Fakturačná adresa
 			for_free: Zadarmo
@@ -282,8 +279,6 @@ frontend:
 				zip_code: PSČ
 				zip_code_required: 'Položka PSČ je povinná.'
 				country: Krajina
-				coupon_note: 'Prosím, zadajte<br /><span>1. presnú e-mailovú adresu toho, komu chcete predplatné darovať<br />2. dátum, kedy má dostať prihlasovacie údaje k predplatnému (napríklad 25. decembra)</span>'
-				coupon_note_required: 'Prosím vyplňte udaje potrebné k darčekovej poukážke.'
 				company_name: 'Meno / Názov spoločnosti'
 				company_name_required: 'Položka Meno / Názov spoločnosti je povinná.'
 				company_id: 'IČ0'

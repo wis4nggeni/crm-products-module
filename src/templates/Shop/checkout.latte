@@ -117,50 +117,9 @@
                     {/formContainer}
                 </fieldset>
                 {/ifset}
-                {ifset $control['checkoutForm']['coupon']}
-                    <fieldset id="coupon">
-                        <legend>Darčekový poukaz</legend>
-                        {formContainer coupon}
-                            <div class="form-group">
-                                {label coupon_note /}
-                                {input coupon_note}
-                            </div>
-                        {/formContainer}
-                    </fieldset>
-                {/ifset}
-                {ifset $control['checkoutForm']['coupons']}
-                    <fieldset id="coupons">
-                        <legend>{_products.frontend.shop.checkout.gift_coupon}</legend>
 
-                        <p style="font-size: 12px; font-weight: 300;">{_products.frontend.shop.checkout.enter_gift_coupon_details}</p>
+                {control simpleWidget 'products.checkout_form.delivery_data', ['form' => $control['checkoutForm'], 'products' => $products]}
 
-                        {formContainer coupons}
-                            {foreach $formContainer->getComponents() as $containerName => $productContainer}
-                                {formContainer $productContainer}
-
-                                    <h5>{$products[explode('_', $containerName)[1]]->name}</h5>
-
-                                    {foreach $formContainer->getComponents() as $itemContainer}
-                                        {formContainer $itemContainer}
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div class="col-md-6">
-                                                        {label email /}
-                                                        {input email}
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        {label date /}
-                                                        {input date class => flatpickr, flatpickr_mindate => today}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {/formContainer}
-                                    {/foreach}
-                                {/formContainer}
-                            {/foreach}
-                        {/formContainer}
-                    </fieldset>
-                {/ifset}
                 {snippet postalFeesSnippet}
                     {ifset $control['checkoutForm']['shipping_address']}
                         <fieldset id="postal-fees">
