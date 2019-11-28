@@ -293,12 +293,6 @@ frontend:
 				toc: 'Souhlasím s <a href="%link%" class="link" target="_blank"> podmínkami používání </a>'
 				toc_required: 'Musíte souhlasit s podmínkami používání'
 				login: Přihlásit
-				user_email: Email uživatele
-				user_email_required: 'Položka Email je povinná.'
-				user_email_wrong_format: 'Nesprávný formát emailové adresy'
-				user_email_doesnt_exist: "Emailová adresa %value neexistuje."
-				subscription_start: 'Začátek předplatného'
-				subscription_start_required: 'Položka Začátek předplatného je povinná.'
 			warnings:
 				unable_to_login_with_password: 'Nepodařilo se přihlásit s zadaným heslem'
 				unable_to_create_user: 'Nelze vytvořit uživatele.'

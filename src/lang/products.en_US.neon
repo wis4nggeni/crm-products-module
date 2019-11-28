@@ -295,12 +295,6 @@ frontend:
 				toc: 'I agree with <a href="%link%" class="link" target="_blank">terms and conditions</a>'
 				toc_required: 'You have to agree with terms and conditions'
 				login: Log in
-				user_email: User Email
-				user_email_required: 'Field User Email is required.'
-				user_email_wrong_format: 'Wrong format of email address'
-				user_email_doesnt_exist: "Email address %value does not exist."
-				subscription_start: 'Start of Subscription'
-				subscription_start_required: 'Field Start of Subscription is required.'
 			warnings:
 				unable_to_login_with_password: 'Unable to log in using provided password.'
 				unable_to_create_user: 'Unable to create user.'
