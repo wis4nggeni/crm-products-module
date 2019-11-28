@@ -2,10 +2,10 @@
 
 namespace Crm\ProductsModule\Forms;
 
-use Crm\GiftsModule\Repository\PaymentGiftCouponsRepository;
+use Crm\ApplicationModule\DataProvider\DataProviderManager;
+use Crm\PaymentsModule\DataProvider\CheckoutFormDataProviderInterface;
 use Crm\PaymentsModule\PaymentItem\PaymentItemContainer;
 use Crm\PaymentsModule\Repository\PaymentGatewaysRepository;
-use Crm\PaymentsModule\Repository\PaymentItemsRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\PaymentItem\PaymentItemHelper;
 use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;
@@ -13,46 +13,33 @@ use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\DistributionCentersRepository;
 use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Repository\PostalFeesRepository;
-use Crm\ProductsModule\Repository\ProductPropertiesRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\UsersModule\Auth\Authorizator;
 use Crm\UsersModule\Auth\InvalidEmailException;
 use Crm\UsersModule\Auth\UserManager;
-use Crm\UsersModule\Email\EmailValidator;
 use Crm\UsersModule\Repository\AddressChangeRequestsRepository;
 use Crm\UsersModule\Repository\AddressesRepository;
-use Crm\UsersModule\Repository\AddressTypesRepository;
 use Crm\UsersModule\Repository\CountriesRepository;
 use Crm\UsersModule\Repository\UsersRepository;
 use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
-use Nette\Forms\Controls\TextInput;
 use Nette\Http\Request;
 use Nette\Security\AuthenticationException;
 use Nette\Security\User;
-use Nette\Utils\DateTime;
 use Nette\Utils\Html;
 use Nette\Utils\Json;
 
 class CheckoutFormFactory
 {
-    const NO_COUPONS = 0;
-    const HAS_COUPONS = 1;
-    const HAS_COUPONS_WITHOUT_SUBSCRIPTION = 2;
-
     private $gateways = [];
 
     private $paymentsRepository;
 
     private $paymentGatewaysRepository;
 
-    private $paymentItemsRepository;
-
     private $productsRepository;
-
-    private $productPropertiesRepository;
 
     private $user;
 
@@ -61,8 +48,6 @@ class CheckoutFormFactory
     private $userManager;
 
     private $addressesRepository;
-
-    private $addressTypesRepository;
 
     private $addressChangeRequestsRepository;
 
@@ -84,28 +69,22 @@ class CheckoutFormFactory
 
     public $onAuth;
 
-    private $paymentGiftCouponsRepository;
-
-    private $emailValidator;
-
     private $cartFree;
 
     private $paymentItemHelper;
+
+    private $dataProviderManager;
 
     private $emitter;
 
     public function __construct(
         PaymentsRepository $paymentsRepository,
         PaymentGatewaysRepository $paymentGatewaysRepository,
-        PaymentItemsRepository $paymentItemsRepository,
         ProductsRepository $productsRepository,
-        PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
-        ProductPropertiesRepository $productPropertiesRepository,
         User $user,
         UsersRepository $usersRepository,
         UserManager $userManager,
         AddressesRepository $addressesRepository,
-        AddressTypesRepository $addressTypesRepository,
         AddressChangeRequestsRepository $addressChangeRequestsRepository,
         CountriesRepository $countriesRepository,
         OrdersRepository $ordersRepository,
@@ -113,20 +92,17 @@ class CheckoutFormFactory
         Request $request,
         Authorizator $authorizator,
         Translator $translator,
-        EmailValidator $emailValidator,
         PaymentItemHelper $paymentItemHelper,
+        DataProviderManager $dataProviderManager,
         Emitter $emitter
     ) {
         $this->paymentsRepository = $paymentsRepository;
         $this->paymentGatewaysRepository = $paymentGatewaysRepository;
-        $this->paymentItemsRepository = $paymentItemsRepository;
         $this->productsRepository = $productsRepository;
-        $this->productPropertiesRepository = $productPropertiesRepository;
         $this->user = $user;
         $this->usersRepository = $usersRepository;
         $this->userManager = $userManager;
         $this->addressesRepository = $addressesRepository;
-        $this->addressTypesRepository = $addressTypesRepository;
         $this->addressChangeRequestsRepository = $addressChangeRequestsRepository;
         $this->countriesRepository = $countriesRepository;
         $this->ordersRepository = $ordersRepository;
@@ -134,9 +110,8 @@ class CheckoutFormFactory
         $this->request = $request;
         $this->authorizator = $authorizator;
         $this->translator = $translator;
-        $this->paymentGiftCouponsRepository = $paymentGiftCouponsRepository;
-        $this->emailValidator = $emailValidator;
         $this->paymentItemHelper = $paymentItemHelper;
+        $this->dataProviderManager = $dataProviderManager;
         $this->emitter = $emitter;
     }
 
@@ -178,22 +153,12 @@ class CheckoutFormFactory
         $hasDelivery = false;
         $hasLicence = false;
 
-        $hasCoupon = self::NO_COUPONS;
-
-        $flagHandler = function ($product) use (&$hasDelivery, &$hasLicence, &$hasCoupon) {
+        $flagHandler = function ($product) use (&$hasDelivery, &$hasLicence) {
             if ($product->has_delivery) {
                 $hasDelivery = true;
             }
             if ($product->distribution_center == DistributionCentersRepository::DISTRIBUTION_CENTER_DIBUK) {
                 $hasLicence = true;
-            }
-            if ($product->product_template_id && $product->product_template->name == 'coupon') {
-                if ($hasCoupon !== self::HAS_COUPONS_WITHOUT_SUBSCRIPTION) {
-                    $hasCoupon = self::HAS_COUPONS;
-                }
-                if (!$this->productPropertiesRepository->getPropertyByCode($product, 'subscription_type_code')) {
-                    $hasCoupon = self::HAS_COUPONS_WITHOUT_SUBSCRIPTION;
-                }
             }
         };
         foreach ($products as $product) {
@@ -314,23 +279,22 @@ class CheckoutFormFactory
                 ->toggle('billing-address');
         }
 
-        if ($hasCoupon !== self::NO_COUPONS) {
-            if ($hasCoupon === self::HAS_COUPONS_WITHOUT_SUBSCRIPTION) {
-                $coupon = $form->addContainer('coupon');
-                $coupon->addTextArea('coupon_note', Html::el()->setHtml($this->translator->translate('products.frontend.shop.checkout.fields.coupon_note')), null, 5)
-                    ->addConditionOn($action, Form::NOT_EQUAL, 'login')
-                    ->setRequired($this->translator->translate('products.frontend.shop.checkout.fields.coupon_note_required'));
-            } else {
-                $this->addCouponInputs($form, $products, $cart);
-            }
+        if (!$hasDelivery) {
+            $sameShipping->setDisabled(true)
+                ->setDefaultValue(false);
 
-            if (!$hasDelivery) {
-                $sameShipping->setDisabled(true)
-                    ->setDefaultValue(false);
+            $addInvoice->addCondition(Form::EQUAL, true)
+                ->toggle('billing-address');
+        }
 
-                $addInvoice->addCondition(Form::EQUAL, true)
-                    ->toggle('billing-address');
-            }
+        /** @var CheckoutFormDataProviderInterface[] $providers */
+        $providers = $this->dataProviderManager->getProviders('products.dataprovider.checkout_form', CheckoutFormDataProviderInterface::class);
+        foreach ($providers as $sorting => $provider) {
+            $form = $provider->provide([
+                'form' => $form,
+                'action' => $action,
+                'cart' => $cart,
+            ]);
         }
 
         $billingAddress = $form->addContainer('billing_address');
@@ -397,32 +361,6 @@ class CheckoutFormFactory
             throw new \Exception('request for label of gateway not registered in checkout form: ' . $code);
         }
         return $this->gateways[$code];
-    }
-
-    private function addCouponInputs($form, $products, $cart)
-    {
-        $container = $form->addContainer('coupons');
-
-        foreach ($products as $product) {
-            if ($product->product_template_id && $product->product_template->name == 'coupon') {
-                $productContainer = $container->addContainer('product_' . $product->id);
-
-                $productCount = $cart[$product->id];
-                for ($i = 0; $i < $productCount; $i++) {
-                    $itemContainer = $productContainer->addContainer('item_' . $i);
-                    $itemContainer
-                        ->addText('email', $this->translator->translate('products.frontend.shop.checkout.fields.user_email'))
-                        ->addRule(Form::EMAIL, $this->translator->translate('products.frontend.shop.checkout.fields.user_email_wrong_format'))
-                        ->addRule(function (TextInput $control) {
-                            return $this->emailValidator->isValid($control->value);
-                        }, $this->translator->translate('products.frontend.shop.checkout.fields.user_email_doesnt_exist'))
-                        ->setRequired($this->translator->translate('products.frontend.shop.checkout.fields.user_email_required'));
-                    $itemContainer
-                        ->addText('date', $this->translator->translate('products.frontend.shop.checkout.fields.subscription_start'))
-                        ->setRequired($this->translator->translate('products.frontend.shop.checkout.fields.subscription_start_required'));
-                }
-            }
-        }
     }
 
     public function formSucceeded($form, $values)
@@ -541,10 +479,16 @@ class CheckoutFormFactory
         $shippingAddressId = $this->handleShippingAddress($user, $values);
         $licenceAddressId = $this->handleLicenceAddress($user, $values);
         $billingAddressId = $this->handleBillingAddress($user, $values);
-        $couponNote = $this->handleCouponNote($values);
-        $this->handleCoupons($values, $payment->id, $cart);
 
-        $this->ordersRepository->add($payment->id, $shippingAddressId, $licenceAddressId, $billingAddressId, $postalFee, $couponNote);
+        /** @var CheckoutFormDataProviderInterface[] $providers */
+        $providers = $this->dataProviderManager->getProviders('products.dataprovider.checkout_form', CheckoutFormDataProviderInterface::class);
+        foreach ($providers as $sorting => $provider) {
+            [$form, $values] = $provider->formSucceeded($form, $values, [
+                'payment' => $payment,
+            ]);
+        }
+
+        $this->ordersRepository->add($payment->id, $shippingAddressId, $licenceAddressId, $billingAddressId, $postalFee, $values['note']);
 
         $this->onSave->__invoke($payment);
     }
@@ -558,9 +502,16 @@ class CheckoutFormFactory
         $licenceAddressId = $this->handleLicenceAddress($user, $values);
         $billingAddressId = $this->handleBillingAddress($user, $values);
         $postalFee = $this->handlePostalFee($values);
-        $couponNote = $this->handleCouponNote($values);
 
-        $this->ordersRepository->add($payment->id, $shippingAddressId, $licenceAddressId, $billingAddressId, $postalFee, $couponNote);
+        /** @var CheckoutFormDataProviderInterface[] $providers */
+        $providers = $this->dataProviderManager->getProviders('products.dataprovider.checkout_form', CheckoutFormDataProviderInterface::class);
+        foreach ($providers as $sorting => $provider) {
+            [$form, $values] = $provider->formSucceeded($form, $values, [
+                'payment' => $payment,
+            ]);
+        }
+
+        $this->ordersRepository->add($payment->id, $shippingAddressId, $licenceAddressId, $billingAddressId, $postalFee, $values['note']);
         $amount = 0;
         /** @var ActiveRow $paymentItem */
         foreach ($payment->related('payment_items') as $paymentItem) {
@@ -694,41 +645,5 @@ class CheckoutFormFactory
             $postalFee = $this->postalFeesRepository->find($values['postal_fee']);
         }
         return $postalFee;
-    }
-
-    private function handleCouponNote($values)
-    {
-        $couponNote = null;
-        if (isset($values['coupon']['coupon_note'])) {
-            $couponNote = $values['coupon']['coupon_note'];
-        }
-        return $couponNote;
-    }
-
-    private function handleCoupons($values, int $paymentId, $cart)
-    {
-        if (isset($values['coupons'])) {
-            foreach ($values['coupons'] as $productIdentification => $items) {
-                $productId = explode('_', $productIdentification)[1];
-                if (!array_key_exists($productId, $cart)) {
-                    continue;
-                }
-                foreach ($items as $itemName => $itemValues) {
-                    $itemNumber = (int) explode('_', $itemName)[1];
-                    if ($itemNumber < 0 || $itemNumber >= $cart[$productId]) {
-                        continue;
-                    }
-                    $email = $itemValues->email;
-                    $startsAt = DateTime::from(strtotime($itemValues->date));
-
-                    $this->paymentGiftCouponsRepository->add(
-                        $paymentId,
-                        $email,
-                        $startsAt,
-                        $productId
-                    );
-                }
-            }
-        }
     }
 }
