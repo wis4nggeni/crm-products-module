@@ -112,7 +112,7 @@ class ShopPresenter extends FrontendPresenter
         $this->template->cartProductSum = $this->cartProductSum;
         $this->template->tags = $this->tagsRepository->all()->where(['visible' => true]);
         $counts = [];
-        foreach ($this->tagsRepository->counts() as $count) {
+        foreach ($this->tagsRepository->counts()->where(['shop' => true]) as $count) {
             $counts[$count->id] = $count->val;
         }
         $this->template->tagCounts = $counts;
