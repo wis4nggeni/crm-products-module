@@ -187,7 +187,7 @@ admin:
 				email: Užívateľ
 				status: Stav
 				payment_status: Stav platby
-				coupon_note: Data pre darčekovú poukážku
+				note: Poznámka
 				address:
 					name: Meno
 					street: Ulica

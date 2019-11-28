@@ -38,7 +38,7 @@ class OrdersRepository extends Repository
         return $this->getTable()->order('created_at DESC');
     }
 
-    public function add($paymentId, $shippingAddressId, $licenceAddressId, $billingAddressId, $postalFee, $couponNote)
+    public function add($paymentId, $shippingAddressId, $licenceAddressId, $billingAddressId, $postalFee, $note = null)
     {
         return $this->insert([
             'payment_id' => $paymentId,
@@ -46,7 +46,7 @@ class OrdersRepository extends Repository
             'licence_address_id' => $licenceAddressId,
             'billing_address_id' => $billingAddressId,
             'postal_fee_id' => $postalFee ? $postalFee->id : null,
-            'coupon_note' => $couponNote,
+            'note' => $note,
             'status' => static::STATUS_NEW,
             'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),

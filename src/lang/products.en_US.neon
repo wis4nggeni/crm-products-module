@@ -187,7 +187,7 @@ admin:
 				email: User
 				status: Status
 				payment_status: Payment status
-				coupon_note: Data for coupons
+				note: Note
 				address:
 					name: Name
 					street: Street

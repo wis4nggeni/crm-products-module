@@ -185,7 +185,7 @@ admin:
 				email: Uživatel
 				status: Stav
 				payment_status: Stav platby
-				coupon_note: Data pro dárkovou poukázku
+				note: Poznámka
 				address:
 					name: Jméno
 					street: Ulice
