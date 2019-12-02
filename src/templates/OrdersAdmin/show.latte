@@ -32,8 +32,8 @@
             <li class="list-group-item">
                 <b>{_products.admin.orders.show.fields.payment_status}:</b> {$order->payment->status}
             </li>
-            <li class="list-group-item" n:ifset="$order->coupon_note">
-                <b>{_products.admin.orders.show.fields.coupon_note}:</b><br /> {nl2br($order->coupon_note)}
+            <li class="list-group-item" n:ifset="$order->note">
+                <b>{_products.admin.orders.show.fields.note}:</b><br /> {nl2br($order->note)}
             </li>
         </ul>
     </div>

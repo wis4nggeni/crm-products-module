@@ -163,7 +163,6 @@ admin:
 			shipping_option: Spôsob dopravy
 			shipping_address: Adresa doručenia
 			license_data: Licenčné údaje
-			gift_coupon: Darčekový poukaz
 			billing_address: Fakturačná adresa
 			product: Produkt
 			price: Suma
@@ -187,7 +186,7 @@ admin:
 				email: Užívateľ
 				status: Stav
 				payment_status: Stav platby
-				coupon_note: Data pre darčekovú poukážku
+				note: Poznámka
 				address:
 					name: Meno
 					street: Ulica
@@ -213,18 +212,6 @@ admin:
 		invoice: Faktúra
 		created_at: Vytvorený
 		back_to_funnel: Návrat na okno
-
-	gift_coupons:
-		button_title: Darované predplatné
-		modal_title: Darované predplatné
-		email: E-mail
-		start_at: Štart
-		sent: Odoslaný
-		subscription: Predplatné
-		yes: áno
-		no: ne
-		not_created: nevytvorené
-		donated_by: Darované od
 
 	total_user_payments:
 		for_shop_payments: "{1}platbu v obchode|[2,4]platby v obchode|[5,Inf]platieb v obchode"
@@ -263,8 +250,6 @@ frontend:
 			login: Prihlásiť
 			shipping_address: Adresa doručenia
 			license_address: Licenčné údaje
-			gift_coupon: Darčekový poukaz
-			enter_gift_coupon_details: "Prosím, zadajte presnú e-mailovú adresu toho, komu chcete predplatné darovať a dátum a čas, kedy má dostať prihlasovacie údaje k predplatnému."
 			shipping_method: Spôsob dopravy
 			billing_address: Fakturačná adresa
 			for_free: Zadarmo
@@ -294,8 +279,6 @@ frontend:
 				zip_code: PSČ
 				zip_code_required: 'Položka PSČ je povinná.'
 				country: Krajina
-				coupon_note: 'Prosím, zadajte<br /><span>1. presnú e-mailovú adresu toho, komu chcete predplatné darovať<br />2. dátum, kedy má dostať prihlasovacie údaje k predplatnému (napríklad 25. decembra)</span>'
-				coupon_note_required: 'Prosím vyplňte udaje potrebné k darčekovej poukážke.'
 				company_name: 'Meno / Názov spoločnosti'
 				company_name_required: 'Položka Meno / Názov spoločnosti je povinná.'
 				company_id: 'IČ0'
@@ -307,12 +290,6 @@ frontend:
 				toc: 'Súhlasím s <a href="%link%" class="link" target="_blank">podmienkami používania</a>'
 				toc_required: 'Musíte súhlasiť s podmienkami používania'
 				login: Prihlásiť
-				user_email: Email užívatela
-				user_email_required: 'Položka Email je povinná.'
-				user_email_wrong_format: 'Nesprávny formát emailovej adresy'
-				user_email_doesnt_exist: "Emailová adresa %value neexistuje."
-				subscription_start: 'Začiatok predplatného'
-				subscription_start_required: 'Položka Začiatok predplatného je povinná.'
 			warnings:
 				unable_to_login_with_password: 'Nepodarilo sa prihlásiť s zadaným heslom'
 				unable_to_create_user: 'Nepodarilo sa vytvoriť užívateľa.'
@@ -366,3 +343,7 @@ config:
 	shop_header_block:
 		name: Kód v hlavičke pre obchod
 		description: 'Ľubovoľný kód (napr. Google analytics alebo ďalšie), ktorý sa má vložiť do hlavičky šablóny obchodu'
+
+seeders:
+	address_types:
+		gift_subscription_type: Darčekové predplatné

@@ -17,10 +17,13 @@ class PostalFeePaymentItem implements PaymentItemInterface
 
     private $name = false;
 
-    public function __construct(IRow $postalFee, int $vat)
+    private $count;
+
+    public function __construct(IRow $postalFee, int $vat, int $count = 1)
     {
         $this->postalFee = $postalFee;
         $this->vat = $vat;
+        $this->count = $count;
     }
 
     public function forcePrice(float $price): self
@@ -62,7 +65,7 @@ class PostalFeePaymentItem implements PaymentItemInterface
 
     public function count(): int
     {
-        return 1;
+        return $this->count;
     }
 
     public function data(): array

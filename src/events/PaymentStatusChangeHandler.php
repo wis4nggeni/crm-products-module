@@ -136,6 +136,7 @@ class PaymentStatusChangeHandler extends AbstractListener
     private function attachAttachments(ActiveRow $payment, ActiveRow $order, &$templateCode, &$sendHelpdeskEmail, &$attachments)
     {
         $this->paymentItemHelper->unBundleProducts($payment, function ($product) use ($payment, $order, &$templateCode, &$sendHelpdeskEmail, &$attachments) {
+            // TODO: following should be part of module responsible for product_template 'coupon'
             if ($product->product_template_id && $product->product_template->name == 'coupon') {
                 $templateCode = 'new-order-coupon';
 

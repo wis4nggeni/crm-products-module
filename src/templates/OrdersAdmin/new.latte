@@ -126,17 +126,9 @@
                                 {/formContainer}
                             </fieldset>
                         {/ifset}
-                        {ifset $control['checkoutForm']['coupon']}
-                            <fieldset id="coupon">
-                                <legend>{_products.admin.orders.new.gift_coupon}</legend>
-                                {formContainer coupon}
-                                    <div class="form-group">
-                                        {label coupon_note /}
-                                        {input coupon_note}
-                                    </div>
-                                {/formContainer}
-                            </fieldset>
-                        {/ifset}
+
+                        {control simpleWidget 'products.checkout_form.delivery_data', ['form' => $control['checkoutForm'], 'products' => $products]}
+
                         <div id="invoice">
                             {formContainer invoice}
                                 <div class="form-group">

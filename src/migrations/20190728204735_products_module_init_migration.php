@@ -170,25 +170,6 @@ CREATE TABLE IF NOT EXISTS `orders` (
   CONSTRAINT `orders_ibfk_4` FOREIGN KEY (`postal_fee_id`) REFERENCES `postal_fees` (`id`),
   CONSTRAINT `orders_ibfk_5` FOREIGN KEY (`licence_address_id`) REFERENCES `addresses` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-CREATE TABLE IF NOT EXISTS `payment_gift_coupons` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `payment_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `starts_at` datetime NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `sent_at` datetime DEFAULT NULL,
-  `subscription_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `payment_id` (`payment_id`),
-  KEY `product_id` (`product_id`),
-  KEY `subscription_id` (`subscription_id`),
-  CONSTRAINT `payment_gift_coupons_ibfk_1` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`id`),
-  CONSTRAINT `payment_gift_coupons_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  CONSTRAINT `payment_gift_coupons_ibfk_3` FOREIGN KEY (`subscription_id`) REFERENCES `subscriptions` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 SQL;
 
         $this->execute($sql);

@@ -163,7 +163,6 @@ admin:
 			shipping_option: Shipping options
 			shipping_address: Shipping address
 			license_data: License data
-			gift_coupon: Gift coupon
 			billing_address: Billing address
 			product: Product
 			price: Sum
@@ -187,7 +186,7 @@ admin:
 				email: User
 				status: Status
 				payment_status: Payment status
-				coupon_note: Data for coupons
+				note: Note
 				address:
 					name: Name
 					street: Street
@@ -213,17 +212,6 @@ admin:
 		invoice: Invoice
 		created_at: Created at
 		back_to_funnel: Back to funnel
-
-	gift_coupons:
-		button_title: Gift subscriptions
-		modal_title: Gift subscription
-		email: E-mail
-		start_at: Start at
-		sent: Sent
-		subscription: Subscription
-		yes: yes
-		no: ne
-		not_created: not created
 
 	total_user_payments:
 		for_shop_payments: "{1}payment in shop|[2,Inf]payments in shop"
@@ -262,8 +250,6 @@ frontend:
 			login: Sign in
 			shipping_address: Shipping address
 			license_address: License address
-			gift_coupon: Gift coupon
-			enter_gift_coupon_details: "Please enter the email address of a person you want to give the subscription, and date and time when you want the subscription to start."
 			shipping_method: Shipping method
 			billing_address: Billing address
 			for_free: For free
@@ -293,8 +279,6 @@ frontend:
 				zip_code: Zip Code
 				zip_code_required: 'Field Zip Code is required.'
 				country: Country
-				coupon_note: 'Please enter<br /><span>1. email address of a person you want to donate subscription to<br />2. date when subscription credentials should be received (e.g. 25th of December)</span>'
-				coupon_note_required: 'Please fill in details required for the gift voucher.'
 				company_name: 'Company Name'
 				company_name_required: 'Field Company Name is required.'
 				company_id: 'Company ID'
@@ -306,12 +290,6 @@ frontend:
 				toc: 'I agree with <a href="%link%" class="link" target="_blank">terms and conditions</a>'
 				toc_required: 'You have to agree with terms and conditions'
 				login: Log in
-				user_email: User Email
-				user_email_required: 'Field User Email is required.'
-				user_email_wrong_format: 'Wrong format of email address'
-				user_email_doesnt_exist: "Email address %value does not exist."
-				subscription_start: 'Start of Subscription'
-				subscription_start_required: 'Field Start of Subscription is required.'
 			warnings:
 				unable_to_login_with_password: 'Unable to log in using provided password.'
 				unable_to_create_user: 'Unable to create user.'
@@ -356,6 +334,7 @@ data_provider:
 		products_from_eshop: "Products from e-shop:"
 		products_from_eshop_desc: "Warning: after product selection, it's required to enter number of purchased products."
 		products_from_eshop_readonly: "It's not possible to edit products, order has already been created."
+
 config:
 	category: Shop
 	shop_host:
@@ -364,3 +343,7 @@ config:
 	shop_header_block:
 		name: "Code in shop's header"
 		description: 'Any optional code (e.g. Google Analytics) that should be injected to the head of shop layout'
+
+seeders:
+	address_types:
+		gift_subscription_type: Gift subscription
