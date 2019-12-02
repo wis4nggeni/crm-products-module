@@ -14,7 +14,7 @@ data:
 			catalog_price: Ceníková cena
 			vat: DPH
 			user_label: Veřejný popis
-			shop: Umístit na shop
+			shop: Prodávat v obchodě
 			sorting: Produkt zařadit na
 			tags: Tagy
 			description: Popis
@@ -32,6 +32,7 @@ data:
 			bundles: Balíky
 			created_at: Vytvořené
 			stock: Počet kusú na slade
+			shop_settings: Nastavení pro obchod
 		placeholder:
 			name: např. Bambusové tričko
 			code: např. bambusove-tricko
@@ -57,6 +58,7 @@ data:
 			price_with_vat: Položka 'Cena s DPH' je povinná
 			ean13: EAN kód musí mít 13 znaků
 			template_property: Položka '%s' je povinná
+			vat: DPH je povinná
 	tags:
 		fields:
 			code: Název

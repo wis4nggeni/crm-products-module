@@ -15,7 +15,7 @@ data:
 			catalog_price: Basic price
 			vat: VAT
 			user_label: Label
-			shop: Place on shop
+			shop: Sell in shop
 			sorting: Place after
 			tags: Tags
 			description: Description
@@ -33,6 +33,7 @@ data:
 			bundles: Bundles
 			created_at: Created at
 			stock: Stock count
+			shop_settings: Shop settings
 		placeholder:
 			name: eg. Bamboo T-shirt
 			code: eg. bamboo-shirt
@@ -58,6 +59,7 @@ data:
 			og_image_url: Field 'OG:image URL' is required
 			ean13: EAN code must be 13 characters
 			template_property: Field '%s' is required
+			vat: VAT is required
 	tags:
 		fields:
 			code: Name

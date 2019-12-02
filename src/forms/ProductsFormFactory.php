@@ -20,6 +20,7 @@ use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
+use Nette\Utils\Html;
 use Tomaj\Form\Renderer\BootstrapRenderer;
 
 class ProductsFormFactory
@@ -133,102 +134,110 @@ class ProductsFormFactory
 
         $form->addGroup();
 
-        $form->addText('name', $this->translator->translate('products.data.products.fields.name'))
-            ->setRequired($this->translator->translate('products.data.products.errors.name'))
-            ->setAttribute('placeholder', $this->translator->translate('products.data.products.placeholder.name'));
+        $form->addText('name', 'products.data.products.fields.name')
+            ->setRequired('products.data.products.errors.name')
+            ->setAttribute('placeholder', 'products.data.products.placeholder.name');
 
-        $form->addText('code', $this->translator->translate('products.data.products.fields.code'))
-            ->setRequired($this->translator->translate('products.data.products.errors.code'))
-            ->setAttribute('placeholder', $this->translator->translate('products.data.products.placeholder.code'));
+        $form->addText('code', 'products.data.products.fields.code')
+            ->setRequired('products.data.products.errors.code')
+            ->setAttribute('placeholder', 'products.data.products.placeholder.code');
 
-        $form->addText('user_label', $this->translator->translate('products.data.products.fields.user_label'))
-            ->setOption('description', $this->translator->translate('products.data.products.descriptions.user_label'))
-            ->setAttribute('placeholder', $this->translator->translate('products.data.products.placeholder.user_label'));
+        $form->addText('user_label', 'products.data.products.fields.user_label')
+            ->setOption('description', 'products.data.products.descriptions.user_label')
+            ->setAttribute('placeholder', 'products.data.products.placeholder.user_label');
 
-        $form->addText('price', $this->translator->translate('products.data.products.fields.price'))
-            ->setRequired($this->translator->translate('products.data.products.errors.price_with_vat'))
-            ->setAttribute('placeholder', $this->translator->translate('products.data.products.placeholder.price'));
+        $form->addText('price', 'products.data.products.fields.price')
+            ->setRequired('products.data.products.errors.price_with_vat')
+            ->setAttribute('placeholder', 'products.data.products.placeholder.price');
 
-        $form->addText('catalog_price', $this->translator->translate('products.data.products.fields.catalog_price'))
-            ->setAttribute('placeholder', $this->translator->translate('products.data.products.placeholder.catalog_price'));
+        $form->addText('catalog_price', 'products.data.products.fields.catalog_price')
+            ->setAttribute('placeholder', 'products.data.products.placeholder.catalog_price');
 
-        $form->addInteger('vat', $this->translator->translate('products.data.products.fields.vat'));
+        $form->addInteger('vat', 'products.data.products.fields.vat')
+            ->setRequired('products.data.products.errors.vat');
 
-        $form->addText('stock', $this->translator->translate('products.data.products.fields.stock'));
+        $form->addText('stock', 'products.data.products.fields.stock');
 
-        $shop = $form->addCheckbox('shop', $this->translator->translate('products.data.products.fields.shop'));
+        $bundle = $form->addCheckbox('bundle', 'products.data.products.fields.bundle');
+        $bundleItems = $form->addMultiSelect(
+            'bundle_items',
+            'products.data.products.fields.bundle_items',
+            $this->productsRepository->getTable()->where([
+                'bundle' => false,
+            ])->fetchPairs('id', 'name')
+        )->setOption('id', 'bundleItems');
 
-        $sorting = $form->addSelect('sorting', $this->translator->translate('products.data.products.fields.sorting'), $sortingPairs)
+        $bundleItems->getControlPrototype()->addAttributes(['class' => 'select2']);
+        $bundle->addCondition(Form::EQUAL, true)
+            ->toggle($bundleItems->getOption('id'));
+
+        // SHOP SPECIFIC SETTINGS
+
+        $shop = $form->addCheckbox('shop', 'products.data.products.fields.shop');
+
+        $form->addGroup($this->translator->translate('products.data.products.fields.shop_settings'))
+            ->setOption('container', Html::el('div', ['id' => 'shop-container']));
+
+        $sorting = $form->addSelect('sorting', 'products.data.products.fields.sorting', $sortingPairs)
             ->setOption('id', 'sorting')
-            ->setPrompt($this->translator->translate('products.data.products.placeholder.sorting'));
+            ->setPrompt('products.data.products.placeholder.sorting');
 
         $tagPairs = $this->tagsRepository->all()->fetchPairs('id', 'code');
-        $tags = $form->addMultiSelect('tags', $this->translator->translate('products.data.products.fields.tags'), $tagPairs)->setOption('id', 'tags');
+        $tags = $form->addMultiSelect('tags', 'products.data.products.fields.tags', $tagPairs)->setOption('id', 'tags');
         $tags->getControlPrototype()->addAttributes(['class' => 'select2']);
 
-        $description = $form->addTextArea('description', $this->translator->translate('products.data.products.fields.description'))
-            ->setAttribute('placeholder', $this->translator->translate('products.data.products.placeholder.description'))
+        $description = $form->addTextArea('description', 'products.data.products.fields.description')
+            ->setAttribute('placeholder', 'products.data.products.placeholder.description')
             ->setAttribute('rows', 10)
             ->setOption('id', 'description');
 
-        $image = $form->addText('image_url', $this->translator->translate('products.data.products.fields.image_url'))
-            ->setOption('description', $this->translator->translate('products.data.products.descriptions.image_url'))
+        $image = $form->addText('image_url', 'products.data.products.fields.image_url')
+            ->setOption('description', 'products.data.products.descriptions.image_url')
             ->setOption('id', 'image')
-            ->setAttribute('placeholder', $this->translator->translate('products.data.products.placeholder.image_url'));
+            ->setAttribute('placeholder', 'products.data.products.placeholder.image_url');
 
-        $ogImage = $form->addText('og_image_url', $this->translator->translate('products.data.products.fields.og_image_url'))
+        $ogImage = $form->addText('og_image_url', 'products.data.products.fields.og_image_url')
             ->setOption('id', 'ogImage')
-            ->setAttribute('placeholder', $this->translator->translate('products.data.products.placeholder.og_image_url'));
+            ->setAttribute('placeholder', 'products.data.products.placeholder.og_image_url');
 
-        $images = $form->addTextArea('images', $this->translator->translate('products.data.products.fields.images'))
-            ->setAttribute('placeholder', $this->translator->translate('products.data.products.placeholder.images'))
-            ->setOption('description', $this->translator->translate('products.data.products.descriptions.images'))
+        $images = $form->addTextArea('images', 'products.data.products.fields.images')
+            ->setAttribute('placeholder', 'products.data.products.placeholder.images')
+            ->setOption('description', 'products.data.products.descriptions.images')
             ->setOption('id', 'images')
             ->setAttribute('rows', 5);
 
-        $ean = $form->addText('ean', $this->translator->translate('products.data.products.fields.ean'))
+        $ean = $form->addText('ean', 'products.data.products.fields.ean')
             ->setOption('id', 'ean')
-            ->setAttribute('placeholder', $this->translator->translate('products.data.products.placeholder.ean'));
+            ->setAttribute('placeholder', 'products.data.products.placeholder.ean');
 
         $distributionCenters = $this->distributionCentersRepository->all()->fetchPairs('code', 'name');
-        $distributionCenter = $form->addSelect('distribution_center', $this->translator->translate('products.data.products.fields.distribution_center'), $distributionCenters)
+        $distributionCenter = $form->addSelect('distribution_center', 'products.data.products.fields.distribution_center', $distributionCenters)
             ->setOption('id', 'distributionCenter')
             ->setPrompt('--');
 
-        $visible = $form->addCheckbox('visible', $this->translator->translate('products.data.products.fields.visible'))->setOption('id', 'visible');
-        $unique = $form->addCheckbox('unique_per_user', $this->translator->translate('products.data.products.fields.unique_per_user'))->setOption('id', 'unique');
-        $delivery = $form->addCheckbox('has_delivery', $this->translator->translate('products.data.products.fields.has_delivery'))->setOption('id', 'delivery');
+        $visible = $form->addCheckbox('visible', 'products.data.products.fields.visible')->setOption('id', 'visible');
+        $unique = $form->addCheckbox('unique_per_user', 'products.data.products.fields.unique_per_user')->setOption('id', 'unique');
+        $delivery = $form->addCheckbox('has_delivery', 'products.data.products.fields.has_delivery')->setOption('id', 'delivery');
 
         $image->addConditionOn($shop, Form::EQUAL, true)
-            ->addRule(Form::FILLED, $this->translator->translate('products.data.products.errors.image_url'));
+            ->addRule(Form::FILLED, 'products.data.products.errors.image_url');
 
         $ogImage->addConditionOn($shop, Form::EQUAL, true)
-            ->addRule(Form::FILLED, $this->translator->translate('products.data.products.errors.og_image_url'));
+            ->addRule(Form::FILLED, 'products.data.products.errors.og_image_url');
 
         $description->addConditionOn($shop, Form::EQUAL, true)
-            ->addRule(Form::FILLED, $this->translator->translate('products.data.products.errors.description'));
+            ->addRule(Form::FILLED, 'products.data.products.errors.description');
 
         $ean->addCondition(Form::FILLED)
-            ->addRule(Form::LENGTH, $this->translator->translate('products.data.products.errors.ean13'), 13);
+            ->addRule(Form::LENGTH, 'products.data.products.errors.ean13', 13);
 
         $templates = $this->productTemplatesRepository->all();
-        $templateId = $form->addSelect('product_template_id', $this->translator->translate('products.data.products.fields.template_id'), $templates->fetchPairs('id', 'name'))
+        $templateId = $form->addSelect('product_template_id', 'products.data.products.fields.template_id', $templates->fetchPairs('id', 'name'))
             ->setOption('id', 'templateId')
             ->setPrompt('No Template');
 
         $shop->addCondition(Form::EQUAL, true)
-            ->toggle($sorting->getOption('id'))
-            ->toggle($tags->getOption('id'))
-            ->toggle($description->getOption('id'))
-            ->toggle($ean->getOption('id'))
-            ->toggle($image->getOption('id'))
-            ->toggle($images->getOption('id'))
-            ->toggle($ogImage->getOption('id'))
-            ->toggle($distributionCenter->getOption('id'))
-            ->toggle($visible->getOption('id'))
-            ->toggle($unique->getOption('id'))
-            ->toggle($delivery->getOption('id'))
-            ->toggle($templateId->getOption('id'));
+            ->toggle('shop-container');
 
         /**
          * @TODO Refactor this to load template part form by AJAX
@@ -253,18 +262,8 @@ class ProductsFormFactory
             }
         }
 
-        $bundle = $form->addCheckbox('bundle', $this->translator->translate('products.data.products.fields.bundle'));
-        $bundleItems = $form->addMultiSelect(
-            'bundle_items',
-            $this->translator->translate('products.data.products.fields.bundle_items'),
-            $this->productsRepository->getTable()->where([
-                'bundle' => false,
-            ])->fetchPairs('id', 'name')
-        )->setOption('id', 'bundleItems');
-
-        $bundleItems->getControlPrototype()->addAttributes(['class' => 'select2']);
-        $bundle->addCondition(Form::EQUAL, true)
-            ->toggle($bundleItems->getOption('id'));
+        // reset group to default
+        $form->setCurrentGroup();
 
         $form->addSubmit('send', 'system.save')
             ->getControlPrototype()

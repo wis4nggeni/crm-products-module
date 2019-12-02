@@ -15,7 +15,7 @@ data:
 			catalog_price: Cenníková cena
 			vat: DPH
 			user_label: Verejný popis
-			shop: Umiestniť na shop
+			shop: Predávať v obchode
 			sorting: Produkt zaradiť za
 			tags: Tagy
 			description: Popis
@@ -33,6 +33,7 @@ data:
 			bundles: Balíky
 			created_at: Vytvorené
 			stock: Počet kusov na sklade
+			shop_settings: Nastavenia pre obchod
 		placeholder:
 			name: napr. Bambusové tričko
 			code: napr. bambusove-tricko
@@ -58,6 +59,7 @@ data:
 			og_image_url: Položka 'OG:image URL' je povinná
 			ean13: EAN kód musí mať 13 znakov
 			template_property: Položka '%s' je povinná
+			vat: DPH je povinná
 	tags:
 		fields:
 			code: Názov
