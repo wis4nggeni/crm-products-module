@@ -13,7 +13,7 @@ class ShopPaymentCompleteRedirectResolver implements PaymentCompleteRedirectReso
             return !empty($payment->related('order')->fetch());
         }
         if ($status === self::ERROR) {
-            return true;
+            return !empty($payment->related('order')->fetch());
         }
         return false;
     }
