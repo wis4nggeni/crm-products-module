@@ -7,6 +7,13 @@ use Crm\ProductsModule\Repository\ProductsRepository;
 use Nette\Application\UI;
 use Nette\Utils\DateTime;
 
+/**
+ * Nette listing component using bootstrap table.
+ * This component fetches product sales stats
+ * and shows them in table for different time intervals.
+ *
+ * @package Crm\SubscriptionsModule\Components
+ */
 class ProductStats extends UI\Control
 {
     private $templateName = 'products_stats.latte';
