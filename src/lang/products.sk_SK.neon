@@ -60,6 +60,7 @@ data:
 			ean13: EAN kód musí mať 13 znakov
 			template_property: Položka '%s' je povinná
 			vat: DPH je povinná
+			distribution_center: Položka 'Distribučné centrum' je povinná
 	tags:
 		fields:
 			code: Názov
