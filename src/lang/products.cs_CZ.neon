@@ -42,7 +42,7 @@ data:
 			sorting: Na první pozici
 			description: např. Tento produkt je super
 			ean: např. 8580000000000
-			image_url: napr. http://dennikn.sk/images/shop.jpg
+			image_url: např. http://dennikn.sk/images/shop.jpg
 			og_image_url: např. http://dennikn.sk/images/shop.jpg
 			images: např. http://dennikn.sk/images/shop.jpg
 		descriptions:
@@ -259,7 +259,7 @@ frontend:
 				pass_required: Položka Heslo je povinná.
 				account_exists: 'Účet se zadaným emailem již existuje, prosím přihlaste se pomocí hesla'
 				phone_number: 'Telefonní číslo (pomůže nám při doručování)'
-				phone_number_placeholder: 'Napr. 0908 123 456'
+				phone_number_placeholder: 'např. 0908 123 456'
 				phone_number_required: 'Položka Telefonní číslo je povinná.'
 				phone_number_min_length: 'Telefónne číslo musí mať aspon 6 znakov.'
 				want_invoice: Chci fakturu
@@ -338,7 +338,7 @@ config:
 	category: Obchod
 	shop_host:
 		name: URL obchodu
-		description: 'URL obchodu (v případě, že běží na vlastní doméně; napr. obchod.crm.press)'
+		description: 'URL obchodu (v případě, že běží na vlastní doméně; např. obchod.crm.press)'
 	shop_header_block:
 		name: Kód v hlavičce pro obchod
 		description: 'Libovolný kód (např. Google analytics nebo další), který se má vložit do hlavičky šablony obchodu'
