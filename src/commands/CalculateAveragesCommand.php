@@ -76,5 +76,7 @@ SQL
             ON DUPLICATE KEY UPDATE `updated_at`=NOW(), `value`=VALUES(value);
 SQL
         );
+
+        return 0;
     }
 }
