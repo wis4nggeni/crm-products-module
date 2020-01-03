@@ -2,11 +2,11 @@
 
 namespace Crm\ProductsModule\Presenters;
 
+use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroupControlFactoryInterface;
 use Crm\ApplicationModule\Components\VisualPaginator;
 use Crm\ApplicationModule\Graphs\Criteria;
 use Crm\ApplicationModule\Graphs\GraphDataItem;
-use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\PaymentsModule\Repository\PaymentItemsRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Forms\ProductsFormFactory;
@@ -92,7 +92,7 @@ class ProductsAdminPresenter extends AdminPresenter
         return $this->paymentItemsRepository->getTable()
             ->where('product_id', $product->id)
             ->where('payment.status', PaymentsRepository::STATUS_PAID)
-            ->fetchField('COUNT(`count`)');
+            ->fetchField('SUM(`count`)');
     }
 
     public function renderUserList(int $id, string $type, float $fromLevel, float $toLevel = null)
