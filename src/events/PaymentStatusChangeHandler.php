@@ -167,6 +167,7 @@ class PaymentStatusChangeHandler extends AbstractListener
     private function sendMails(ActiveRow $payment, string $templateCode, array $params, $sendHelpdeskEmail, array $attachments)
     {
         $this->emitter->emit(new NotificationEvent(
+            $this->emitter,
             $payment->user,
             $templateCode,
             $params,
@@ -179,6 +180,7 @@ class PaymentStatusChangeHandler extends AbstractListener
                 'email' => $this->applicationConfig->get('contact_email'),
             ]);
             $this->emitter->emit(new NotificationEvent(
+                $this->emitter,
                 $userRow,
                 'notification-new-coupon',
                 $params,
