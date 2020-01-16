@@ -80,6 +80,9 @@ admin:
 		default:
 			header: Produkty
 			new: Vytvoriť produkt
+			admin_filter_form:
+				text:
+					placeholder: 'Název / Identifikátor / Veřejný popis / Cena'
 		new:
 			title: Nový produkt
 			back: Spať na zoznam

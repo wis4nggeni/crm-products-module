@@ -39,9 +39,32 @@ class ProductsRepository extends Repository
         $this->productShopCountsDistribution = $productShopCountsDistribution;
     }
 
-    public function all()
+    public function all(string $search = null)
     {
-        return $this->getTable()->order('-sorting DESC, name ASC');
+        $all = $this->getTable()->order('-sorting DESC, name ASC');
+
+        if (is_null($search) || empty(trim($search))) {
+            return $all;
+        }
+
+        $searchText = "%{$search}%";
+        $conditions = [
+            'name LIKE ?' => $searchText,
+            'code LIKE ?' => $searchText,
+            'user_label LIKE ?' => $searchText,
+        ];
+
+        // check if searched text is number (replace comma with period; otherwise is_numeric won't work)
+        $searchNum = str_replace(',', '.', $search);
+        if (is_numeric($searchNum)) {
+            $searchFloat = floatval($searchNum);
+            $conditions = array_merge($conditions, [
+                'price = ?' => $searchFloat,
+                'catalog_price = ?' => $searchFloat,
+            ]);
+        }
+
+        return $all->whereOr($conditions);
     }
 
     public function getByCode($code)
