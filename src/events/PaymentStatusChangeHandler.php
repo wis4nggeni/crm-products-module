@@ -150,7 +150,7 @@ class PaymentStatusChangeHandler extends AbstractListener
                     $attachment = file_get_contents($attachmentName);
                     if ($attachment !== false) {
                         $attachments[] = [
-                            'filename' => 'coupon.pdf',
+                            'file' => 'coupon.pdf',
                             'content' => $attachment,
                             'mime_type' => 'application/pdf',
                         ];
