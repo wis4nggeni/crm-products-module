@@ -92,7 +92,7 @@ class ProductsAdminPresenter extends AdminPresenter
         return $this->paymentItemsRepository->getTable()
             ->where('product_id', $product->id)
             ->where('payment.status', PaymentsRepository::STATUS_PAID)
-            ->fetchField('SUM(`count`)');
+            ->fetchField('COALESCE(SUM(`count`), 0)');
     }
 
     public function renderUserList(int $id, string $type, float $fromLevel, float $toLevel = null)
