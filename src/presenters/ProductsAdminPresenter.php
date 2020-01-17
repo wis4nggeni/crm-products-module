@@ -2,19 +2,21 @@
 
 namespace Crm\ProductsModule\Presenters;
 
+use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroupControlFactoryInterface;
 use Crm\ApplicationModule\Components\VisualPaginator;
 use Crm\ApplicationModule\Graphs\Criteria;
 use Crm\ApplicationModule\Graphs\GraphDataItem;
-use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\PaymentsModule\Repository\PaymentItemsRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Forms\ProductsFormFactory;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\ProductsRepository;
+use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\IRow;
 use Nette\Http\Request;
+use Tomaj\Form\Renderer\BootstrapInlineRenderer;
 
 class ProductsAdminPresenter extends AdminPresenter
 {
@@ -39,11 +41,16 @@ class ProductsAdminPresenter extends AdminPresenter
         $this->paymentItemsRepository = $paymentItemsRepository;
     }
 
+    public function startup()
+    {
+        parent::startup();
+        $this->text = isset($this->params['text']) ? $this->params['text'] : null;
+    }
+
     public function renderDefault()
     {
-        $products = $this->productsRepository->all();
-
-        $filteredCount = $this->template->filteredCount = $products->count('*');
+        $products = $this->productsRepository->all($this->text);
+        $filteredCount  = $products->count();
 
         $vp = new VisualPaginator();
         $this->addComponent($vp, 'products_vp');
@@ -53,6 +60,9 @@ class ProductsAdminPresenter extends AdminPresenter
 
         $this->template->vp = $vp;
         $this->template->products = $products->limit($paginator->getLength(), $paginator->getOffset());
+
+        $this->template->allProductsCount = $this->productsRepository->all()->count();
+        $this->template->filteredProductsCount = $filteredCount;
     }
 
     public function renderShow($id)
@@ -92,7 +102,7 @@ class ProductsAdminPresenter extends AdminPresenter
         return $this->paymentItemsRepository->getTable()
             ->where('product_id', $product->id)
             ->where('payment.status', PaymentsRepository::STATUS_PAID)
-            ->fetchField('COUNT(`count`)');
+            ->fetchField('COALESCE(SUM(`count`), 0)');
     }
 
     public function renderUserList(int $id, string $type, float $fromLevel, float $toLevel = null)
@@ -167,5 +177,34 @@ class ProductsAdminPresenter extends AdminPresenter
             ->addGraphDataItem($graphDataItem1);
 
         return $control;
+    }
+
+    public function createComponentAdminFilterForm()
+    {
+        $form = new Form;
+        $form->setRenderer(new BootstrapInlineRenderer());
+        $form->addText('text', $this->translator->translate('system.filter'), 50)
+            ->setAttribute('placeholder', $this->translator->translate('products.admin.products.default.admin_filter_form.text.placeholder'))
+            ->setAttribute('autofocus');
+
+        $form->addSubmit('send', $this->translator->translate('system.filter'))
+            ->getControlPrototype()
+            ->setName('button')
+            ->setHtml('<i class="fa fa-filter"></i> ' . $this->translator->translate('system.filter'));
+        $presenter = $this;
+        $form->addSubmit('cancel', $this->translator->translate('system.cancel_filter'))
+            ->onClick[] = function () use ($presenter) {
+                $presenter->redirect('ProductsAdmin:Default', ['text' => '']);
+            };
+
+        $form->setDefaults((array)$this->params);
+
+        $form->onSuccess[] = [$this, 'adminFilterSubmited'];
+        return $form;
+    }
+
+    public function adminFilterSubmited(Form $form, array $values)
+    {
+        $this->redirect('Default', $values);
     }
 }

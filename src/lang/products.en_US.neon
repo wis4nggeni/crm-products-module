@@ -82,6 +82,10 @@ admin:
 		default:
 			header: Products
 			new: Create product
+			admin_filter_form:
+				text:
+					placeholder: 'Name / Identifier / Label / Price'
+
 		new:
 			title: New product
 			back: Back to the list

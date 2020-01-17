@@ -7,7 +7,7 @@ use Nette\Database\Table\ActiveRow;
 class EbookProvider
 {
     /** @var EbookProviderInterface[] */
-    private $providers;
+    private $providers = [];
 
     public function register(EbookProviderInterface $ebookProvider)
     {
