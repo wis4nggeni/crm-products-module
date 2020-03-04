@@ -12,12 +12,12 @@ class DistributionCentersRepository extends Repository
 
     protected $tableName = 'distribution_centers';
 
-    public function all()
+    final public function all()
     {
         return $this->getTable();
     }
 
-    public function add($code, $name)
+    final public function add($code, $name)
     {
         return $this->insert([
             'code' => $code,

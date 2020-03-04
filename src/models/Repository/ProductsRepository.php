@@ -39,7 +39,7 @@ class ProductsRepository extends Repository
         $this->productShopCountsDistribution = $productShopCountsDistribution;
     }
 
-    public function all(string $search = null)
+    final public function all(string $search = null)
     {
         $all = $this->getTable()->order('-sorting DESC, name ASC');
 
@@ -67,12 +67,12 @@ class ProductsRepository extends Repository
         return $all->whereOr($conditions);
     }
 
-    public function getByCode($code)
+    final public function getByCode($code)
     {
         return $this->getTable()->where(['code' => $code])->fetch();
     }
 
-    public function getShopProducts($visibleOnly = true, $availableOnly = true, $tags = [])
+    final public function getShopProducts($visibleOnly = true, $availableOnly = true, $tags = [])
     {
         $where = ['shop' => true];
         if ($visibleOnly === true) {
@@ -88,7 +88,7 @@ class ProductsRepository extends Repository
         return $this->getTable()->where($where)->order('sorting');
     }
 
-    public function relatedProducts(IRow $product, $limit = 4)
+    final public function relatedProducts(IRow $product, $limit = 4)
     {
         $where = [
             'shop' => true,
@@ -102,12 +102,12 @@ class ProductsRepository extends Repository
             ->limit($limit);
     }
 
-    public function findByIds($ids)
+    final public function findByIds($ids)
     {
         return $this->getTable()->where('id', (array)$ids)->fetchAll();
     }
 
-    public function updateSorting($newSorting, $oldSorting = null)
+    final public function updateSorting($newSorting, $oldSorting = null)
     {
         if ($newSorting == $oldSorting) {
             return;
@@ -120,47 +120,47 @@ class ProductsRepository extends Repository
         $this->getTable()->where('sorting >= ?', $newSorting)->update(['sorting+=' => 1]);
     }
 
-    public function userAmountSpentDistribution($levels, $productId)
+    final public function userAmountSpentDistribution($levels, $productId)
     {
         return $this->amountSpentDistribution->distribution($productId, $levels);
     }
 
-    public function userAmountSpentDistributionList($fromLevel, $toLevel, $productId)
+    final public function userAmountSpentDistributionList($fromLevel, $toLevel, $productId)
     {
         return $this->amountSpentDistribution->distributionList($productId, $fromLevel, $toLevel);
     }
 
-    public function userPaymentCountsDistribution($levels, $productId)
+    final public function userPaymentCountsDistribution($levels, $productId)
     {
         return $this->paymentCountDistribution->distribution($productId, $levels);
     }
 
-    public function userPaymentCountsDistributionList($fromLevel, $toLevel, $productId)
+    final public function userPaymentCountsDistributionList($fromLevel, $toLevel, $productId)
     {
         return $this->paymentCountDistribution->distributionList($productId, $fromLevel, $toLevel);
     }
 
-    public function productDaysFromLastOrderDistribution($levels, $productId)
+    final public function productDaysFromLastOrderDistribution($levels, $productId)
     {
         return $this->productDaysFromLastOrderDistribution->distribution($productId, $levels);
     }
 
-    public function productDaysFromLastOrderDistributionList($fromlevel, $toLevel, $productId)
+    final public function productDaysFromLastOrderDistributionList($fromlevel, $toLevel, $productId)
     {
         return $this->productDaysFromLastOrderDistribution->distributionList($productId, $fromlevel, $toLevel);
     }
 
-    public function productShopCountsDistribution($levels, $productId)
+    final public function productShopCountsDistribution($levels, $productId)
     {
         return $this->productShopCountsDistribution->distribution($productId, $levels);
     }
 
-    public function productShopCountsDistributionList($fromlevel, $toLevel, $productId)
+    final public function productShopCountsDistributionList($fromlevel, $toLevel, $productId)
     {
         return $this->productShopCountsDistribution->distributionList($productId, $fromlevel, $toLevel);
     }
 
-    public function decreaseStock(IRow $product, $count = 1)
+    final public function decreaseStock(IRow $product, $count = 1)
     {
         $this->update($product, ['stock-=' => $count]);
     }

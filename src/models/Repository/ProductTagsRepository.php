@@ -8,7 +8,7 @@ class ProductTagsRepository extends Repository
 {
     protected $tableName = 'product_tags';
 
-    public function add($productId, $tagId)
+    final public function add($productId, $tagId)
     {
         return $this->insert([
             'product_id' => $productId,
@@ -16,7 +16,7 @@ class ProductTagsRepository extends Repository
         ]);
     }
 
-    public function setProductTags($product, $tags)
+    final public function setProductTags($product, $tags)
     {
         $this->getTable()->where(['product_id' => $product->id])->delete();
         foreach ($tags as $id) {

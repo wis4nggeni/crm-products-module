@@ -8,7 +8,7 @@ class ProductBundlesRepository extends Repository
 {
     protected $tableName = 'product_bundles';
 
-    public function add($productId, $itemId)
+    final public function add($productId, $itemId)
     {
         return $this->insert([
             'bundle_id' => $productId,
@@ -16,7 +16,7 @@ class ProductBundlesRepository extends Repository
         ]);
     }
 
-    public function setBundleItems($product, $bundleItems)
+    final public function setBundleItems($product, $bundleItems)
     {
         $this->getTable()->where(['bundle_id' => $product->id])->delete();
         foreach ($bundleItems as $id) {

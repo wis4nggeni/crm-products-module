@@ -33,12 +33,12 @@ class OrdersRepository extends Repository
         $this->auditLogRepository = $auditLogRepository;
     }
 
-    public function all()
+    final public function all()
     {
         return $this->getTable()->order('created_at DESC');
     }
 
-    public function add($paymentId, $shippingAddressId, $licenceAddressId, $billingAddressId, $postalFee, $note = null)
+    final public function add($paymentId, $shippingAddressId, $licenceAddressId, $billingAddressId, $postalFee, $note = null)
     {
         return $this->insert([
             'payment_id' => $paymentId,
@@ -53,7 +53,7 @@ class OrdersRepository extends Repository
         ]);
     }
 
-    public function getStatusPairs()
+    final public function getStatusPairs()
     {
         return [
             self::STATUS_NEW => self::STATUS_NEW,
@@ -67,12 +67,12 @@ class OrdersRepository extends Repository
         ];
     }
 
-    public function findByPayment($payment)
+    final public function findByPayment($payment)
     {
         return $this->getTable()->where(['payment_id' => $payment->id])->fetch();
     }
 
-    public function getByUser($userId, $status = [])
+    final public function getByUser($userId, $status = [])
     {
         $orders = $this->getTable()->where(['payment.user_id' => $userId])->order('created_at DESC');
         if (!empty($status)) {
@@ -82,7 +82,7 @@ class OrdersRepository extends Repository
         return $orders;
     }
 
-    public function stats(DateTime $from = null, DateTime $to = null)
+    final public function stats(DateTime $from = null, DateTime $to = null)
     {
         $selection = $this->getTable()
             ->select('SUM(payment:payment_items.count) AS product_counts, payment:payment_items.product.id AS product_id')

@@ -8,7 +8,7 @@ class ProductPropertiesRepository extends Repository
 {
     protected $tableName = 'product_properties';
 
-    public function add($product, $productTemplatePropertyId, $value)
+    final public function add($product, $productTemplatePropertyId, $value)
     {
         return $this->insert([
             'product_id' => $product->id,
@@ -17,7 +17,7 @@ class ProductPropertiesRepository extends Repository
         ]);
     }
 
-    public function setProductProperties($product, $properties)
+    final public function setProductProperties($product, $properties)
     {
         $this->getTable()->where(['product_id' => $product->id])->delete();
         foreach ($properties as $propertyId => $propertyValue) {
@@ -25,7 +25,7 @@ class ProductPropertiesRepository extends Repository
         }
     }
 
-    public function getPropertyByCode($product, $propertyCode)
+    final public function getPropertyByCode($product, $propertyCode)
     {
         $properties = $product->related('product_properties');
         foreach ($properties as $property) {

@@ -8,12 +8,12 @@ class TagsRepository extends Repository
 {
     protected $tableName = 'tags';
 
-    public function all()
+    final public function all()
     {
         return $this->getTable()->order('-sorting DESC, code ASC');
     }
 
-    public function counts()
+    final public function counts()
     {
         return $this->getTable()
             ->where([
@@ -23,7 +23,7 @@ class TagsRepository extends Repository
             ->select(':product_tags.tag_id AS id, COUNT(*) AS val');
     }
 
-    public function add($code, $icon, $visible = false)
+    final public function add($code, $icon, $visible = false)
     {
         return $this->insert([
             'code' => $code,
@@ -32,7 +32,7 @@ class TagsRepository extends Repository
         ]);
     }
 
-    public function updateSorting($newSorting, $oldSorting = null)
+    final public function updateSorting($newSorting, $oldSorting = null)
     {
         if ($newSorting == $oldSorting) {
             return;

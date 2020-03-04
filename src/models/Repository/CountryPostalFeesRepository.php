@@ -8,7 +8,7 @@ class CountryPostalFeesRepository extends Repository
 {
     protected $tableName = 'country_postal_fees';
 
-    public function add($countryId, $postalFeeId, $sorting = 10, $default = false)
+    final public function add($countryId, $postalFeeId, $sorting = 10, $default = false)
     {
         return $this->insert([
             'country_id' => $countryId,
@@ -18,7 +18,7 @@ class CountryPostalFeesRepository extends Repository
         ]);
     }
 
-    public function exists($countryId, $postalFeeId)
+    final public function exists($countryId, $postalFeeId)
     {
         return $this->getTable()->where(['country_id' => $countryId, 'postal_fee_id' => $postalFeeId])->count('*') > 0;
     }
