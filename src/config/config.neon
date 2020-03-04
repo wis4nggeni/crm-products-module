@@ -3,6 +3,18 @@ services:
 		setup:
 			- addModule(Crm\ProductsModule\ProductsModule())
 
+	countryPostalFeesRepository: Crm\ProductsModule\Repository\CountryPostalFeesRepository
+	distributionCentersRepository: Crm\ProductsModule\Repository\DistributionCentersRepository
+	ordersRepository: Crm\ProductsModule\Repository\OrdersRepository
+	postalFeesRepository: Crm\ProductsModule\Repository\PostalFeesRepository
+	productBundlesRepository: Crm\ProductsModule\Repository\ProductBundlesRepository
+	productPropertiesRepository: Crm\ProductsModule\Repository\ProductPropertiesRepository
+	productsRepository: Crm\ProductsModule\Repository\ProductsRepository
+	productTemplatesRepository: Crm\ProductsModule\Repository\ProductTemplatesRepository
+	productTemplatePropertiesRepository: Crm\ProductsModule\Repository\ProductTemplatePropertiesRepository
+	productTagsRepository: Crm\ProductsModule\Repository\ProductTagsRepository
+	tagsRepository: Crm\ProductsModule\Repository\TagsRepository
+
 	- Crm\ProductsModule\Builder\ProductBuilder
 
 	- Crm\ProductsModule\Commands\CalculateAveragesCommand
@@ -32,18 +44,6 @@ services:
 	- Crm\ProductsModule\PaymentItem\PaymentItemHelper
 
 	- Crm\ProductsModule\ProductsCache(%redis.host%, %redis.port%)
-
-	- Crm\ProductsModule\Repository\CountryPostalFeesRepository
-	- Crm\ProductsModule\Repository\DistributionCentersRepository
-	- Crm\ProductsModule\Repository\OrdersRepository
-	- Crm\ProductsModule\Repository\PostalFeesRepository
-	- Crm\ProductsModule\Repository\ProductBundlesRepository
-	- Crm\ProductsModule\Repository\ProductPropertiesRepository
-	- Crm\ProductsModule\Repository\ProductsRepository
-	- Crm\ProductsModule\Repository\ProductTemplatesRepository
-	- Crm\ProductsModule\Repository\ProductTemplatePropertiesRepository
-	- Crm\ProductsModule\Repository\ProductTagsRepository
-	- Crm\ProductsModule\Repository\TagsRepository
 
 	- Crm\ProductsModule\Seeders\AddressTypesSeeder
 	- Crm\ProductsModule\Seeders\ConfigsSeeder
