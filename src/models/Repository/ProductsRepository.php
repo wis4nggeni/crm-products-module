@@ -10,6 +10,7 @@ use Crm\ProductsModule\Distribution\ProductDaysFromLastOrderDistribution;
 use Crm\ProductsModule\Distribution\ProductShopCountsDistribution;
 use Nette\Database\Context;
 use Nette\Database\Table\IRow;
+use Nette\Database\Table\Selection;
 
 class ProductsRepository extends Repository
 {
@@ -39,11 +40,11 @@ class ProductsRepository extends Repository
         $this->productShopCountsDistribution = $productShopCountsDistribution;
     }
 
-    final public function all(string $search = null)
+    final public function all(string $search = null, array $tags = []): Selection
     {
         $all = $this->getTable()->order('-sorting DESC, name ASC');
 
-        if (is_null($search) || empty(trim($search))) {
+        if (empty($tags) && ($search === null || empty(trim($search)))) {
             return $all;
         }
 
@@ -57,11 +58,15 @@ class ProductsRepository extends Repository
         // check if searched text is number (replace comma with period; otherwise is_numeric won't work)
         $searchNum = str_replace(',', '.', $search);
         if (is_numeric($searchNum)) {
-            $searchFloat = floatval($searchNum);
+            $searchFloat = (float) $searchNum;
             $conditions = array_merge($conditions, [
                 'price = ?' => $searchFloat,
                 'catalog_price = ?' => $searchFloat,
             ]);
+        }
+
+        if (!empty($tags)) {
+            $all->where(':product_tags.tag_id IN (?)', $tags);
         }
 
         return $all->whereOr($conditions);

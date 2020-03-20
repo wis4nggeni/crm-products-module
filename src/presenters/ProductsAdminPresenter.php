@@ -12,44 +12,41 @@ use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Forms\ProductsFormFactory;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\ProductsRepository;
+use Crm\ProductsModule\Repository\TagsRepository;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\IRow;
-use Nette\Http\Request;
 use Tomaj\Form\Renderer\BootstrapInlineRenderer;
 
 class ProductsAdminPresenter extends AdminPresenter
 {
-    private $request;
-
     private $productsRepository;
 
     private $productsFormFactory;
 
     private $paymentItemsRepository;
 
+    private $tagsRepository;
+
+    /** @persistent */
+    public $tags = [];
+
     public function __construct(
-        Request $request,
         ProductsRepository $productsRepository,
         ProductsFormFactory $productsFormFactory,
-        PaymentItemsRepository $paymentItemsRepository
+        PaymentItemsRepository $paymentItemsRepository,
+        TagsRepository $tagsRepository
     ) {
         parent::__construct();
-        $this->request = $request;
         $this->productsRepository = $productsRepository;
         $this->productsFormFactory = $productsFormFactory;
         $this->paymentItemsRepository = $paymentItemsRepository;
-    }
-
-    public function startup()
-    {
-        parent::startup();
-        $this->text = isset($this->params['text']) ? $this->params['text'] : null;
+        $this->tagsRepository = $tagsRepository;
     }
 
     public function renderDefault()
     {
-        $products = $this->productsRepository->all($this->text);
+        $products = $this->productsRepository->all($this->text, $this->tags);
         $filteredCount  = $products->count();
 
         $vp = new VisualPaginator();
@@ -187,6 +184,12 @@ class ProductsAdminPresenter extends AdminPresenter
             ->setAttribute('placeholder', $this->translator->translate('products.admin.products.default.admin_filter_form.text.placeholder'))
             ->setAttribute('autofocus');
 
+        $form->addMultiSelect(
+            'tags',
+            $this->translator->translate('products.admin.products.default.admin_filter_form.tags'),
+            $this->tagsRepository->all()->fetchPairs('id', 'code')
+        )->getControlPrototype()->addAttributes(['class' => 'select2']);
+
         $form->addSubmit('send', $this->translator->translate('system.filter'))
             ->getControlPrototype()
             ->setName('button')
@@ -194,7 +197,7 @@ class ProductsAdminPresenter extends AdminPresenter
         $presenter = $this;
         $form->addSubmit('cancel', $this->translator->translate('system.cancel_filter'))
             ->onClick[] = function () use ($presenter) {
-                $presenter->redirect('ProductsAdmin:Default', ['text' => '']);
+                $presenter->redirect('ProductsAdmin:Default', ['text' => '', 'tags' => []]);
             };
 
         $form->setDefaults((array)$this->params);

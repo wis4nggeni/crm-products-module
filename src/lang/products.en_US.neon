@@ -85,6 +85,7 @@ admin:
 			admin_filter_form:
 				text:
 					placeholder: 'Name / Identifier / Label / Price'
+				tags: Tags
 
 		new:
 			title: New product

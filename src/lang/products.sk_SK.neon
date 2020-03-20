@@ -85,6 +85,7 @@ admin:
 			admin_filter_form:
 				text:
 					placeholder: 'Názov / Identifikátor / Verejný popis / Cena'
+				tags: Tagy
 
 		new:
 			title: Nový produkt
