@@ -31,6 +31,8 @@ services:
 	- Crm\ProductsModule\Distribution\ProductShopCountsDistribution
 	- Crm\ProductsModule\Distribution\ProductDaysFromLastOrderDistribution
 
+	productManager: Crm\ProductsModule\Manager\ProductManager
+
 	ebookProvider:
 	    class: Crm\ProductsModule\Ebook\EbookProvider
 

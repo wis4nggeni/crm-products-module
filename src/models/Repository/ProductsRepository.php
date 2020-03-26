@@ -165,7 +165,7 @@ class ProductsRepository extends Repository
         return $this->productShopCountsDistribution->distributionList($productId, $fromlevel, $toLevel);
     }
 
-    final public function decreaseStock(IRow $product, $count = 1)
+    final public function decreaseStock(IRow &$product, $count = 1)
     {
         $this->update($product, ['stock-=' => $count]);
     }

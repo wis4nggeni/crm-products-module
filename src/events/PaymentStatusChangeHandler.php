@@ -7,11 +7,10 @@ use Crm\ApplicationModule\DataRow;
 use Crm\PaymentsModule\DataProvider\PaymentInvoiceProviderManager;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\ProductsModule\Manager\ProductManager;
 use Crm\ProductsModule\PaymentItem\PaymentItemHelper;
-use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Repository\ProductPropertiesRepository;
-use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\UsersModule\Events\NotificationEvent;
 use League\Event\AbstractListener;
 use League\Event\Emitter;
@@ -23,13 +22,9 @@ class PaymentStatusChangeHandler extends AbstractListener
 {
     private $ordersRepository;
 
-    private $paymentsRepository;
-
     private $paymentInvoiceProviderManager;
 
     private $productPropertiesRepository;
-
-    private $productsRepository;
 
     private $paymentItemHelper;
 
@@ -37,24 +32,25 @@ class PaymentStatusChangeHandler extends AbstractListener
 
     private $applicationConfig;
 
+    private $productManager;
+
     public function __construct(
         OrdersRepository $ordersRepository,
-        PaymentsRepository $paymentsRepository,
         PaymentInvoiceProviderManager $paymentInvoiceProviderManager,
         ProductPropertiesRepository $productPropertiesRepository,
-        ProductsRepository $productsRepository,
         PaymentItemHelper $paymentItemHelper,
         Emitter $emitter,
-        ApplicationConfig $applicationConfig
+        ApplicationConfig $applicationConfig,
+        ProductManager $productManager
     ) {
         $this->ordersRepository = $ordersRepository;
-        $this->paymentsRepository = $paymentsRepository;
+
         $this->paymentInvoiceProviderManager = $paymentInvoiceProviderManager;
         $this->productPropertiesRepository = $productPropertiesRepository;
-        $this->productsRepository = $productsRepository;
         $this->paymentItemHelper = $paymentItemHelper;
         $this->emitter = $emitter;
         $this->applicationConfig = $applicationConfig;
+        $this->productManager = $productManager;
     }
 
     public function handle(EventInterface $event)
@@ -83,7 +79,9 @@ class PaymentStatusChangeHandler extends AbstractListener
         switch ($payment->status) {
             case PaymentsRepository::STATUS_PAID:
                 $this->ordersRepository->update($order, ['status' => OrdersRepository::STATUS_PAID]);
-                $this->decreaseStock($payment);
+                $this->paymentItemHelper->unBundleProducts($payment, function ($product, $itemCount) {
+                    $this->productManager->decreaseStock($product, $itemCount);
+                });
 
                 if ($order->billing_address_id !== null) {
                     $invoices = $this->paymentInvoiceProviderManager->getAttachments($payment);
@@ -112,7 +110,9 @@ class PaymentStatusChangeHandler extends AbstractListener
             case PaymentsRepository::STATUS_PREPAID:
                 if ($order->status === OrdersRepository::STATUS_NEW) {
                     $this->ordersRepository->update($order, ['status' => OrdersRepository::STATUS_PAID]);
-                    $this->decreaseStock($payment);
+                    $this->paymentItemHelper->unBundleProducts($payment, function ($product, $itemCount) {
+                        $this->productManager->decreaseStock($product, $itemCount);
+                    });
                 }
 
                 $this->attachAttachments($payment, $order, $templateCode, $sendHelpdeskEmail, $attachments);
@@ -186,14 +186,6 @@ class PaymentStatusChangeHandler extends AbstractListener
                 $params,
                 null
             ));
-        }
-    }
-
-    private function decreaseStock(ActiveRow $payment)
-    {
-        foreach ($payment->related('payment_items')->where('type = ?', ProductPaymentItem::TYPE) as $paymentItem) {
-            $product = $paymentItem->product;
-            $this->productsRepository->decreaseStock($product, $paymentItem->count);
         }
     }
 }
