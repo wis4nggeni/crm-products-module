@@ -43,7 +43,7 @@
                                     <legend>{_products.admin.orders.new.contact_details}</legend>
                                     {formContainer user}
                                         <h2>
-                                            {$payment->user->email}<br/>
+                                            {$payment->user->public_name}<br/>
                                         </h2>
                                     {input email}
                                         <input type="hidden" name="user[password]" value="" />

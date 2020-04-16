@@ -24,7 +24,7 @@
                 <b>{_products.admin.orders.show.fields.amount}:</b> {$order->payment->amount|price}
             </li>
             <li class="list-group-item">
-                <b>{_products.admin.orders.show.fields.email}:</b> <a n:href=":Users:UsersAdmin:show $order->payment->user_id">{$order->payment->user->email}</a>
+                <b>{_products.admin.orders.show.fields.email}:</b> <a n:href=":Users:UsersAdmin:show $order->payment->user_id">{$order->payment->user->public_name}</a>
             </li>
             <li class="list-group-item">
                 <b>{_products.admin.orders.show.fields.status}:</b> {$order->status}

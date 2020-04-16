@@ -57,7 +57,7 @@
                         </div>
                     </td>
                     <td class="text-right">{$order->payment->amount|price}</td>
-                    <td><a n:href=":Users:UsersAdmin:show $order->payment->user_id">{$order->payment->user->email}</a></td>
+                    <td><a n:href=":Users:UsersAdmin:show $order->payment->user_id">{$order->payment->user->public_name}</a></td>
                     <td>
                         {var $btn_class = 'btn-default'}
                         {if $order->payment->status == \Crm\PaymentsModule\Repository\PaymentsRepository::STATUS_PAID || $order->payment->status == \Crm\PaymentsModule\Repository\PaymentsRepository::STATUS_IMPORTED}

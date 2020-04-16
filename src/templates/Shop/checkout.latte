@@ -36,7 +36,7 @@
                     {formContainer user}
                         {if $user->isLoggedIn()}
                             <h2>
-                                {$user->getIdentity()->email}<br/>
+                                {$user->getIdentity()->public_name}<br/>
                                 <a style="font-size: 0.8em; font-weight: normal" n:href=":Users:Sign:out back => $back">({_products.frontend.shop.checkout.sign_under_different_account})</a>
                             </h2>
                             {input email}
