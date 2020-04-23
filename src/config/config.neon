@@ -45,7 +45,7 @@ services:
 
 	- Crm\ProductsModule\PaymentItem\PaymentItemHelper
 
-	- Crm\ProductsModule\ProductsCache(%redis.host%, %redis.port%)
+	productsCache: Crm\ProductsModule\ProductsCache
 
 	- Crm\ProductsModule\Seeders\AddressTypesSeeder
 	- Crm\ProductsModule\Seeders\ConfigsSeeder
