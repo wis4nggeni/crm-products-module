@@ -28,11 +28,12 @@ class TotalShopPaymentsWidget extends BaseWidget
 
     public function render($meta)
     {
-        if (!isset($meta['product_payments']) || !isset($meta['product_payments_amount'])) {
+        if (!isset($meta['product_payments']) || empty($meta['product_payments']) || !isset($meta['product_payments_amount']) || empty($meta['product_payments_amount'])) {
             return;
         }
 
-        $this->template->meta = $meta;
+        $this->template->productPayments = $meta['product_payments'];
+        $this->template->productPaymentsAmount = $meta['product_payments_amount'];
         $this->template->setFile(__DIR__ . '/' . $this->templateName);
         $this->template->render();
     }
