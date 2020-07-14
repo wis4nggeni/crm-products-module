@@ -5,6 +5,7 @@ namespace Crm\ProductsModule\Presenters;
 use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroupControlFactoryInterface;
 use Crm\ApplicationModule\Components\VisualPaginator;
+use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\Graphs\Criteria;
 use Crm\ApplicationModule\Graphs\GraphDataItem;
 use Crm\PaymentsModule\Repository\PaymentItemsRepository;
@@ -28,6 +29,10 @@ class ProductsAdminPresenter extends AdminPresenter
 
     private $tagsRepository;
 
+    private $configRepository;
+
+    private $distributionConfiguration;
+
     /** @persistent */
     public $tags = [];
 
@@ -35,13 +40,33 @@ class ProductsAdminPresenter extends AdminPresenter
         ProductsRepository $productsRepository,
         ProductsFormFactory $productsFormFactory,
         PaymentItemsRepository $paymentItemsRepository,
-        TagsRepository $tagsRepository
+        TagsRepository $tagsRepository,
+        ConfigsRepository $configRepository
     ) {
         parent::__construct();
         $this->productsRepository = $productsRepository;
         $this->productsFormFactory = $productsFormFactory;
         $this->paymentItemsRepository = $paymentItemsRepository;
         $this->tagsRepository = $tagsRepository;
+        $this->configRepository = $configRepository;
+    }
+
+    /**
+     * @param string $key
+     * @param array $distributionLevels - array of numeric values starting with zero and minimal length of 3 element
+     */
+    public function setDistributionConfiguration(string $key, array $distributionLevels)
+    {
+        if (count($distributionLevels) < 3) {
+            throw new \UnexpectedValueException('Required at least 3 elements of $distributionLevels array.');
+        }
+
+        sort($distributionLevels);
+        if ($distributionLevels[0] !== 0) {
+            array_unshift($distributionLevels, 0);
+        }
+
+        $this->distributionConfiguration[$key] = $distributionLevels;
     }
 
     public function renderDefault()
@@ -70,19 +95,19 @@ class ProductsAdminPresenter extends AdminPresenter
             $this->redirect('default');
         }
 
-        $levels = [0, 0.01, 3, 6, 10, 20, 50, 100, 200, 300];
+        $levels = $this->distributionConfiguration['user_payment_amount'] ?? [0, 0.01, 3, 6, 10, 20, 50, 100, 200, 300];
         $this->template->amountSpentDistributionLevels = $levels;
         $this->template->amountSpentDistribution = $this->productsRepository->userAmountSpentDistribution($levels, $product->id);
 
-        $levels = [0, 1, 3, 5, 8, 13, 21, 34];
+        $levels = $this->distributionConfiguration['user_payment_count'] ?? [0, 1, 3, 5, 8, 13, 21, 34];
         $this->template->paymentCountDistributionLevels = $levels;
         $this->template->paymentCountDistribution = $this->productsRepository->userPaymentCountsDistribution($levels, $product->id);
 
-        $levels = [0, 1, 3, 5, 8, 13, 21, 34];
+        $levels = $this->distributionConfiguration['product_shop_count'] ?? [0, 1, 3, 5, 8, 13, 21, 34];
         $this->template->shopCountsDistributionLevels = $levels;
         $this->template->shopCountsDistribution = $this->productsRepository->productShopCountsDistribution($levels, $product->id);
 
-        $levels = [0, 7, 14, 31, 93, 186, 365, 99999];
+        $levels = $this->distributionConfiguration['product_days_from_last_order'] ?? [0, 7, 14, 31, 93, 186, 365, 99999];
         $this->template->shopDaysDistribution = $this->productsRepository->productDaysFromLastOrderDistribution($levels, $product->id);
 
         $this->template->product = $product;

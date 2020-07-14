@@ -56,3 +56,6 @@ services:
 	paymentCompleteRedirect:
 	 	setup:
 	 		- registerRedirectResolver(Crm\ProductsModule\Model\ShopPaymentCompleteRedirectResolver(), 400)
+
+	productsAdminPresenter:
+	 	class: Crm\ProductsModule\Presenters\ProductsAdminPresenter
