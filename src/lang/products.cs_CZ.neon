@@ -228,7 +228,7 @@ admin:
 
 frontend:
 	shop:
-		title: "Knihy Denníku N - prodáváme to, co sami čteme"
+		title: "Knihy Deníku N - prodáváme to, co sami čteme"
 		cart:
 			title: 'Nákupní košík: Obchod Denníku N - prodáváme jen to, co sami čteme'
 			header: Nákupní košík
@@ -285,7 +285,7 @@ frontend:
 				city_required: 'Položka Město je povinná.'
 				zip_code: PSČ
 				zip_code_required: 'Položka PSČ je povinná.'
-				country: Krajina
+				country: 'Stát (země)'
 				company_name: 'Jméno / Název společnosti'
 				company_name_required: 'Položka Jméno / Název společnosti je povinná.'
 				company_id: 'IČ0'
