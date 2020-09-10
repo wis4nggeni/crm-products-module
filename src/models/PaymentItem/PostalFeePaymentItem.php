@@ -3,27 +3,24 @@
 namespace Crm\ProductsModule\PaymentItem;
 
 use Crm\PaymentsModule\PaymentItem\PaymentItemInterface;
+use Crm\PaymentsModule\PaymentItem\PaymentItemTrait;
 use Nette\Database\Table\IRow;
 
 class PostalFeePaymentItem implements PaymentItemInterface
 {
+    use PaymentItemTrait;
+
     const TYPE = 'postal_fee';
 
     private $postalFee;
-
-    private $price = false;
-
-    private $vat = false;
-
-    private $name = false;
-
-    private $count;
 
     public function __construct(IRow $postalFee, int $vat, int $count = 1)
     {
         $this->postalFee = $postalFee;
         $this->vat = $vat;
         $this->count = $count;
+        $this->name = $postalFee->title;
+        $this->price = $postalFee->amount;
     }
 
     public function forcePrice(float $price): self
@@ -36,36 +33,6 @@ class PostalFeePaymentItem implements PaymentItemInterface
     {
         $this->name = $name;
         return $this;
-    }
-
-    public function type(): string
-    {
-        return self::TYPE;
-    }
-
-    public function name(): string
-    {
-        return $this->name === false ? $this->postalFee->title : $this->name;
-    }
-
-    public function unitPrice(): float
-    {
-        return $this->price === false ? $this->postalFee->amount : $this->price;
-    }
-
-    public function totalPrice(): float
-    {
-        return $this->unitPrice();
-    }
-
-    public function vat(): int
-    {
-        return $this->vat;
-    }
-
-    public function count(): int
-    {
-        return $this->count;
     }
 
     public function data(): array
