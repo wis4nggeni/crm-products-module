@@ -174,7 +174,7 @@ admin:
 			product: Produkt
 			price: Částka
 			amount: Množství
-			together: Spolu
+			together: Celkem
 			price_with_vat: Cena celkově s dph
 			sum_on_payment: Částka na platbě
 			warnings:
@@ -235,7 +235,7 @@ frontend:
 			product: Produkt
 			price: Cena
 			amount: Množství
-			together: Spolu
+			together: Celkem
 			price_with_vat: Cena celkově s DPH
 			continue_with_shopping: Pokračovat v nákupu
 			order: objednat
