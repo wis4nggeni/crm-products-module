@@ -230,7 +230,7 @@ frontend:
 	shop:
 		title: "Knihy Deníku N - prodáváme to, co sami čteme"
 		cart:
-			title: 'Nákupní košík: Obchod Denníku N - prodáváme jen to, co sami čteme'
+			title: 'Nákupní košík: Obchod Deníku N - prodáváme jen to, co sami čteme'
 			header: Nákupní košík
 			product: Produkt
 			price: Cena
@@ -248,7 +248,7 @@ frontend:
 				items_removed_from_cart: 'Některé položky (<strong>%name%</strong>) byly odstraněny z košíku. Link ke stažení najdete ve <a href="%link%">svém kontě</a>.'
 				items_removed_from_cart_reason_sold_out: 'Některé položky (<strong>%name%</strong>) boli odstranené z košíka, nakoľko sú vypredané.'
 		checkout:
-			title: 'Objednávka : Obchod Denníku N - prodáváme jen to, co sami čteme'
+			title: 'Objednávka : Obchod Deníku N - prodáváme jen to, co sami čteme'
 			order: Objednávka
 			payment_method: Způsob platby
 			contact_information: Kontaktní údaje
@@ -309,14 +309,14 @@ frontend:
 			add_to_cart: do košíku
 			sold_out: vyprodáno
 		error:
-			title: 'Chyba : Obchod Denníku N - prodáváme jen to, co sami čteme'
+			title: 'Chyba : Obchod Deníku N - prodáváme jen to, co sami čteme'
 		success:
-			title: 'Děkujeme! : Obchod Denníku N - prodáváme jen to, co sami čteme'
+			title: 'Děkujeme! : Obchod Deníku N - prodáváme jen to, co sami čteme'
 			header: "Děkujeme!"
 			payment_successful: "Vaše platba byla úspěšná."
 			list_of_books_to_download: "Seznam knih ke stažení"
 		show:
-			title: '%product_name% : Obchod Denníku N - prodáváme jen to, co sami čteme'
+			title: '%product_name% : Obchod Deníku N - prodáváme jen to, co sami čteme'
 			add_to_cart: vložit do košíku
 			sold_out: vyprodáno
 	orders:
