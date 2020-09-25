@@ -68,8 +68,19 @@
                             <tr>
                                 <td>
                                     <div class="price">
-                                        <span class="catalog-price" n:if="$product->catalog_price != $product->price">{$product->catalog_price|price}</span>
-                                        {$product->price|price}
+                                        <span class="catalog-price" n:if="$product->catalog_price != $product->price">
+                                            {if mb_strtolower($currency) === 'czk'}
+                                                {$product->catalog_price|price:null,0}
+                                            {else}
+                                                {$product->catalog_price|price}
+                                            {/if}
+                                        </span>
+
+                                        {if mb_strtolower($currency) === 'czk'}
+                                            {$product->price|price:null,0}
+                                        {else}
+                                            {$product->price|price}
+                                        {/if}
                                     </div>
                                 </td>
                                 <td>

@@ -115,6 +115,7 @@ class ShopPresenter extends FrontendPresenter
         foreach ($this->tagsRepository->counts()->where(['shop' => true]) as $count) {
             $counts[$count->id] = $count->val;
         }
+        $this->template->currency = $this->applicationConfig->get('currency');
         $this->template->tagCounts = $counts;
         $this->template->productsCount = $this->productsRepository->getShopProducts(true, true)->count('*');
         $this->template->selectedTags = array_keys($this->tags);
