@@ -52,6 +52,10 @@ class ProductStats extends UI\Control
             }
         }
 
+        $productStats = array_filter($productStats, function ($item) {
+            return array_key_exists('stats', $item);
+        });
+
         $this->template->productStats = $productStats;
         $this->template->setFile(__DIR__ . '/' . $this->templateName);
         $this->template->render();
