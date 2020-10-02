@@ -37,7 +37,7 @@
                         {if $user->isLoggedIn()}
                             <h2>
                                 {$user->getIdentity()->email}<br/>
-                                <a style="font-size: 0.8em; font-weight: normal" n:href=":Users:Sign:out back => $back">({_products.frontend.shop.checkout.sign_under_different_account})</a>
+                                <a style="font-size: 0.8em; font-weight: normal" href="{$siteUrl}{link :Users:Sign:out back => $back}">({_products.frontend.shop.checkout.sign_under_different_account})</a>
                             </h2>
                             {input email}
                             <input type="hidden" name="user[password]" value="" />
