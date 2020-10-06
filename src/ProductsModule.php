@@ -170,7 +170,8 @@ class ProductsModule extends CrmModule
             );
         }
 
-        $router[] = new Route($shopHost . '/<action>[/<id>[/<code>]]', 'Products:Shop:default');
+        $router[] = new Route($shopHost . '/<action show>[/<id>[/<code>]]', 'Products:Shop:default');
+        $router[] = new Route($shopHost . '/<action>[/<id>]', 'Products:Shop:default');
     }
 
     public function cache(OutputInterface $output, array $tags = [])

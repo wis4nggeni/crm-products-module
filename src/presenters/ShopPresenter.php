@@ -315,7 +315,6 @@ class ShopPresenter extends FrontendPresenter
         $this->template->amount = $amount;
         $this->template->user = $this->getUser();
         $this->template->back = $this->storeRequest();
-        $this->template->siteUrl = $this->applicationConfig->get('site_url');
         $this->template->gatewayLabel = function ($gatewayCode) {
             return $this->checkoutFormFactory->gatewayLabel($gatewayCode);
         };
