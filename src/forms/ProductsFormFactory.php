@@ -189,6 +189,7 @@ class ProductsFormFactory
         $description = $form->addTextArea('description', 'products.data.products.fields.description')
             ->setAttribute('placeholder', 'products.data.products.placeholder.description')
             ->setAttribute('rows', 10)
+            ->setAttribute('data-html-editor', [])
             ->setOption('id', 'description');
 
         $image = $form->addText('image_url', 'products.data.products.fields.image_url')
