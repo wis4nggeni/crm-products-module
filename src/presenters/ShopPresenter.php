@@ -20,7 +20,6 @@ use Crm\ProductsModule\Repository\TagsRepository;
 use Nette\Application\BadRequestException;
 use Nette\Forms\Controls\RadioList;
 use Tomaj\Hermes\Emitter;
-use Tracy\Debugger;
 
 class ShopPresenter extends FrontendPresenter
 {
@@ -130,7 +129,7 @@ class ShopPresenter extends FrontendPresenter
         }
 
         if ($code && $code !== $product->code) {
-            Debugger::log("Provided code [{$code}] does not match code of provided product [{$id}].");
+            throw new BadRequestException("Product code does not match the product ID. Is your URL valid?", 404);
         }
 
         $this->template->cartProductSum = $this->cartProductSum;
