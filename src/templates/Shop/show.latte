@@ -62,7 +62,7 @@
             <li n:foreach="$product->related('product_properties') as $property" n:if="!empty($property->value) && $property->product_template_property->visible"><span>{$property->product_template_property->title}:</span> {$property->value}</li>
         </ul>
     </div>
-    <div class="col-xs-12 col-sm-5">
+    <div class="col-xs-12 col-sm-5" id="description-block">
         <p>{nl2br($product->description)|noescape}</p>
     </div>
 </div>
