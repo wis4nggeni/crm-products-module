@@ -349,10 +349,13 @@ config:
 	category: Obchod
 	shop_host:
 		name: URL obchodu
-		description: 'URL obchodu (v prípade, že beží na vlastnej doméne; napr. obchod.crm.press)'
+		description: 'URL obchodu (v prípade, že beží na vlastnej doméne; napr. <code>obchod.crm.press</code>)'
 	shop_header_block:
 		name: Kód v hlavičke pre obchod
 		description: 'Ľubovoľný kód (napr. Google analytics alebo ďalšie), ktorý sa má vložiť do hlavičky šablóny obchodu'
+	shop_og_image_url:
+		name: OG:image URL
+		description: 'URL k obrázku (napr. <code>/layouts/admin/images/logo_with_text.svg</code>)'
 
 seeders:
 	address_types:

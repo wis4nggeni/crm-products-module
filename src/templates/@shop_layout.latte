@@ -25,6 +25,10 @@
 
     {block head}{/block}
 
+    {if $ogImageUrl}
+      <meta property="og:image" content={$ogImageUrl}>
+    {/if}
+
     {block beforeTagManager}{/block}
 
     {block afterTagManager}{/block}

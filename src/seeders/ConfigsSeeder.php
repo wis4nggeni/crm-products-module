@@ -85,5 +85,29 @@ class ConfigsSeeder implements ISeeder
                 $output->writeln("  * config item <info>$name</info> updated");
             }
         }
+
+        $name = 'shop_og_image_url';
+        $config = $this->configsRepository->loadByName($name);
+        if (!$config) {
+            $this->configBuilder->createNew()
+                ->setName($name)
+                ->setDisplayName('products.config.shop_og_image_url.name')
+                ->setDescription('products.config.shop_og_image_url.description')
+                ->setType(ApplicationConfig::TYPE_STRING)
+                ->setAutoload(true)
+                ->setConfigCategory($category)
+                ->setSorting(600)
+                ->save();
+            $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
+        } else {
+            $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  * config item <info>$name</info> updated");
+            }
+        }
     }
 }

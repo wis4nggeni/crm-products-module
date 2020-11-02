@@ -331,7 +331,7 @@ frontend:
 		no_orders: Nemáte žádné objednávky.
 		no_books: Nemáte koupené žádné knihy.
 		visit_eshop: Navštivte náš eshop.
-		visit_eshop_ebooks: "Elektronické knihy můžete nakupovat na% shop_url%, všechny budou dostupné na tomto místě."
+		visit_eshop_ebooks: "Elektronické knihy můžete nakupovat na %shop_url%, všechny budou dostupné na tomto místě."
 		title: Název
 		preparing_download: Připravuje se stažení
 
@@ -345,10 +345,13 @@ config:
 	category: Obchod
 	shop_host:
 		name: URL obchodu
-		description: 'URL obchodu (v případě, že běží na vlastní doméně; např. obchod.crm.press)'
+		description: 'URL obchodu (v případě, že běží na vlastní doméně; např. <code>obchod.crm.press</code>)'
 	shop_header_block:
 		name: Kód v hlavičce pro obchod
 		description: 'Libovolný kód (např. Google analytics nebo další), který se má vložit do hlavičky šablony obchodu'
+	shop_og_image_url:
+		name: OG:image URL
+		description: 'URL k obrázku (např. <code>/layouts/admin/images/logo_with_text.svg</code>)'
 
 seeders:
 	address_types:

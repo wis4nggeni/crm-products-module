@@ -349,10 +349,13 @@ config:
 	category: Shop
 	shop_host:
 		name: Shop URL
-		description: 'URL of shop (in case its running on separate domain; e.g. shop.crm.press)'
+		description: 'URL of shop (in case its running on separate domain; e.g. <code>shop.crm.press</code>)'
 	shop_header_block:
 		name: "Code in shop's header"
 		description: 'Any optional code (e.g. Google Analytics) that should be injected to the head of shop layout'
+	shop_og_image_url:
+		name: OG:image URL
+		description: 'Full URL to the image (e.g. <code>/layouts/admin/images/logo_with_text.svg</code>)'
 
 seeders:
 	address_types:

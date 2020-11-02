@@ -94,6 +94,7 @@ class ShopPresenter extends FrontendPresenter
         }
 
         $this->template->headerCode = $this->applicationConfig->get('shop_header_block');
+        $this->template->ogImageUrl = $this->applicationConfig->get('shop_og_image_url');
     }
 
     protected function getLayoutName()
