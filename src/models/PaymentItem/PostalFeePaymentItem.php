@@ -41,4 +41,9 @@ class PostalFeePaymentItem implements PaymentItemInterface
             'postal_fee_id' => $this->postalFee->id,
         ];
     }
+
+    public function meta(): array
+    {
+        return [];
+    }
 }

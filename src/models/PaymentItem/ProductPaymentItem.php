@@ -41,4 +41,9 @@ class ProductPaymentItem implements PaymentItemInterface
             'product_id' => $this->product->id,
         ];
     }
+
+    public function meta(): array
+    {
+        return [];
+    }
 }
