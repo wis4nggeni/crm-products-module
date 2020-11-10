@@ -31,4 +31,9 @@ class PostalFeesRepository extends Repository
     {
         return $this->getTable()->where(['code' => $code, 'amount' => $amount])->count('*') > 0;
     }
+
+    final public function findByCode($code)
+    {
+        return $this->getTable()->where('code', $code)->fetch();
+    }
 }
