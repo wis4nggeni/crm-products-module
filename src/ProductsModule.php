@@ -17,6 +17,8 @@ use Crm\ApplicationModule\Widget\WidgetManagerInterface;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
 use Crm\ProductsModule\DataProvider\PaymentFormDataProvider;
 use Crm\ProductsModule\DataProvider\PaymentsAdminFilterFormDataProvider;
+use Crm\ProductsModule\Events\OrderStatusChangeEvent;
+use Crm\ProductsModule\Events\OrderStatusChangeEventHandler;
 use Crm\ProductsModule\Events\PaymentStatusChangeHandler;
 use Crm\ProductsModule\Events\PaymentStatusChangeNotifyHandler;
 use Crm\ProductsModule\Repository\ProductsRepository;
@@ -122,6 +124,11 @@ class ProductsModule extends CrmModule
         $emitter->addListener(
             PaymentChangeStatusEvent::class,
             $this->getInstance(PaymentStatusChangeNotifyHandler::class)
+        );
+
+        $emitter->addListener(
+            OrderStatusChangeEvent::class,
+            $this->getInstance(OrderStatusChangeEventHandler::class)
         );
     }
 

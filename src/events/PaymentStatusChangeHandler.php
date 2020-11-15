@@ -48,9 +48,6 @@ class PaymentStatusChangeHandler extends AbstractListener
         switch ($payment->status) {
             case PaymentsRepository::STATUS_PAID:
                 $this->ordersRepository->update($order, ['status' => OrdersRepository::STATUS_PAID]);
-                $this->paymentItemHelper->unBundleProducts($payment, function ($product, $itemCount) {
-                    $this->productManager->decreaseStock($product, $itemCount);
-                });
                 break;
 
             case PaymentsRepository::STATUS_FAIL:
@@ -69,9 +66,6 @@ class PaymentStatusChangeHandler extends AbstractListener
             case PaymentsRepository::STATUS_PREPAID:
                 if ($order->status === OrdersRepository::STATUS_NEW) {
                     $this->ordersRepository->update($order, ['status' => OrdersRepository::STATUS_PAID]);
-                    $this->paymentItemHelper->unBundleProducts($payment, function ($product, $itemCount) {
-                        $this->productManager->decreaseStock($product, $itemCount);
-                    });
                 }
                 break;
 

@@ -31,7 +31,7 @@ data:
 			bundle_items: Položky balíku
 			bundles: Balíky
 			created_at: Vytvořené
-			stock: Počet kusú na slade
+			stock: Počet kusú na sklade
 			shop_settings: Nastavení pro obchod
 		placeholder:
 			name: např. Bambusové tričko

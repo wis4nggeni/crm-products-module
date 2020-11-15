@@ -2,11 +2,15 @@
 
 namespace Crm\ProductsModule\Repository;
 
+use Crm\ApplicationModule\Hermes\HermesMessage;
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\ProductsModule\Events\OrderStatusChangeEvent;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
+use League\Event\Emitter;
 use Nette\Database\Context;
+use Nette\Database\Table\IRow;
 use Nette\Utils\DateTime;
 
 class OrdersRepository extends Repository
@@ -25,12 +29,21 @@ class OrdersRepository extends Repository
 
     protected $tableName = 'orders';
 
+    private $emitter;
+
+    private $hermesEmitter;
+
     public function __construct(
         Context $database,
-        AuditLogRepository $auditLogRepository
+        AuditLogRepository $auditLogRepository,
+        Emitter $emitter,
+        \Tomaj\Hermes\Emitter $hermesEmitter
     ) {
         parent::__construct($database);
         $this->auditLogRepository = $auditLogRepository;
+        $this->database = $database;
+        $this->emitter = $emitter;
+        $this->hermesEmitter = $hermesEmitter;
     }
 
     final public function all()
@@ -51,6 +64,26 @@ class OrdersRepository extends Repository
             'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
         ]);
+    }
+
+    final public function update(IRow &$row, $data)
+    {
+        $statusChanged = false;
+        $data['updated_at'] = new \DateTime();
+        if ($row->status !== $data['status']) {
+            $statusChanged = true;
+        }
+
+        $result = parent::update($row, $data);
+
+        if ($statusChanged) {
+            $this->emitter->emit(new OrderStatusChangeEvent($row->id));
+            $this->hermesEmitter->emit(new HermesMessage('order-status-change', [
+                'order_id' => $row->id
+            ]));
+        }
+
+        return $result;
     }
 
     final public function getStatusPairs()
