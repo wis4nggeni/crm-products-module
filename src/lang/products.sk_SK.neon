@@ -306,7 +306,7 @@ frontend:
 				invalid_email: "Tento email nie je platný."
 				email_registered: "E-mail už je zaregistrovaný, prosím, zadajte heslo."
 		default:
-			header: "Predávame len to, čo sa nám najviac páči."
+			header: "Knihy Denníka N - čítame, čo predávame."
 			filter: Vyfiltrovať
 			all: Všetko
 			add_to_cart: do košíka
