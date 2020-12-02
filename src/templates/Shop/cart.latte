@@ -32,15 +32,17 @@
                 </div>
             </div>
 
+            {capture $linkToLibrary}{plink :Products:Orders:Library}{/capture}
+
             <div n:if="$flash->type == 'product-exists'" class="row-fluid add-cart-message">
                 <div class="col-xs-12">
-                    {_products.frontend.shop.cart.messages.item_already_purchased, [name => $flash->message, link => "https://predplatne.dennikn.sk/products/orders/library"]|noescape}
+                    {_products.frontend.shop.cart.messages.item_already_purchased, [name => $flash->message, link => $linkToLibrary]|noescape}
                 </div>
             </div>
 
             <div n:if="$flash->type == 'product-removed'" class="row-fluid add-cart-message">
                 <div class="col-xs-12">
-                    {_products.frontend.shop.cart.messages.items_removed_from_cart, [name => $flash->message, link => "https://predplatne.dennikn.sk/products/orders/library"]|noescape}
+                    {_products.frontend.shop.cart.messages.items_removed_from_cart, [name => $flash->message, link => $linkToLibrary]|noescape}
                 </div>
             </div>
 

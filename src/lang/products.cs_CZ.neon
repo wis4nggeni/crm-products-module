@@ -244,8 +244,8 @@ frontend:
 			messages:
 				item_added_to_cart: "Položka <strong>%name%</strong> byla přidána do košíku."
 				item_not_available: "Položka <strong>%name%</strong> není dostupná."
-				item_already_purchased: 'Položku <strong>%name%</strong> jste si již jednou zakoupili. Link ke stažení najdete ve <a href="%link%">svém kontě</a>.'
-				items_removed_from_cart: 'Některé položky (<strong>%name%</strong>) byly odstraněny z košíku. Link ke stažení najdete ve <a href="%link%">svém kontě</a>.'
+				item_already_purchased: 'Položku <strong>%name%</strong> jste si již jednou zakoupili. Link ke stažení najdete ve <a href="%link%" class="link">svém kontě</a>.'
+				items_removed_from_cart: 'Některé položky (<strong>%name%</strong>) byly odstraněny z košíku, protože jste si je již jednou zakoupili. Link ke stažení najdete ve <a href="%link%" class="link">svém kontě</a>.'
 				items_removed_from_cart_reason_sold_out: 'Některé položky (<strong>%name%</strong>) boli odstranené z košíka, nakoľko sú vypredané.'
 		checkout:
 			title: 'Objednávka : Obchod Deníku N - prodáváme jen to, co sami čteme'
