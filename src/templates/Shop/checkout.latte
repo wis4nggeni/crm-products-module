@@ -244,7 +244,9 @@
         <div class="row button-row">
             <div class="col-sm-12 col-md-4 left"><a n:href="default" class="btn">{_products.frontend.shop.cart.continue_with_shopping}</a></div>
             <div class="col-sm-12 col-md-8 right text-right">
-                {input toc1}
+                <span n:if="$form->offsetExists('toc1')">
+                    {input toc1}
+                </span>
                 <input type="submit" value="{_products.frontend.shop.cart.confirm_order}" id="complete-order" class="btn"></div>
         </div>
     </div>

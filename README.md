@@ -1,5 +1,17 @@
 # CRM Products Module
 
+## Configuration
+
+### Terms and Conditions URL
+
+If you want the customer to agree to the terms and conditions, you need to configure URL in settings _(category **Shop**)_.
+
+![Terms and conditions URL - settings](docs/terms-and-conditions_-_configuration.png "Terms and conditions URL - settings")
+
+Checkbox with the link to the terms and conditions will be displayed _(and required)_ at the checkout before the customer confirms the order.
+
+![Terms and conditions URL - displayed at checkout](docs/terms-and-conditions_-_checkout.png "Terms and conditions URL - displayed at checkout")
+
 ## Components
 
 **DonatedSubscriptionListingWidget**

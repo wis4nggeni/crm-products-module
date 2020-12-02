@@ -2,6 +2,7 @@
 
 namespace Crm\ProductsModule\Forms;
 
+use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\PaymentsModule\DataProvider\CheckoutFormDataProviderInterface;
 use Crm\PaymentsModule\PaymentItem\PaymentItemContainer;
@@ -33,6 +34,8 @@ use Nette\Utils\Json;
 
 class CheckoutFormFactory
 {
+    private $applicationConfig;
+
     private $gateways = [];
 
     private $paymentsRepository;
@@ -78,6 +81,7 @@ class CheckoutFormFactory
     private $countryPostalFeesRepository;
 
     public function __construct(
+        ApplicationConfig $applicationConfig,
         PaymentsRepository $paymentsRepository,
         PaymentGatewaysRepository $paymentGatewaysRepository,
         ProductsRepository $productsRepository,
@@ -96,6 +100,7 @@ class CheckoutFormFactory
         DataProviderManager $dataProviderManager,
         CountryPostalFeesRepository $countryPostalFeesRepository
     ) {
+        $this->applicationConfig = $applicationConfig;
         $this->paymentsRepository = $paymentsRepository;
         $this->paymentGatewaysRepository = $paymentGatewaysRepository;
         $this->productsRepository = $productsRepository;
@@ -330,10 +335,17 @@ class CheckoutFormFactory
             ->setAttribute('placeholder', $this->translator->translate('products.frontend.shop.checkout.fields.company_vat_id_placeholder'));
 
         if (!$payment) {
-            $toc = $form->addCheckbox('toc1', Html::el()->setHtml($this->translator->translate('products.frontend.shop.checkout.fields.toc', ['link' => 'https://dennikn.sk/vseobecne-obchodne-podmienky/'])));
-            $toc->addConditionOn($action, Form::NOT_EQUAL, 'login')
-                ->addRule(Form::FILLED, $this->translator->translate('products.frontend.shop.checkout.fields.toc_required'));
-            $toc->getLabelPrototype()->addAttributes(['class' => 'checkbox-inline']);
+            // display terms and conditions if URL is configured
+            $termsURL = $this->applicationConfig->get('shop_terms_and_conditions_url');
+            if ($termsURL !== null && !empty(trim($termsURL))) {
+                $toc = $form->addCheckbox('toc1', Html::el()->setHtml($this->translator->translate(
+                    'products.frontend.shop.checkout.fields.toc',
+                    ['link' => $termsURL]
+                )));
+                $toc->addConditionOn($action, Form::NOT_EQUAL, 'login')
+                    ->addRule(Form::FILLED, $this->translator->translate('products.frontend.shop.checkout.fields.toc_required'));
+                $toc->getLabelPrototype()->addAttributes(['class' => 'checkbox-inline']);
+            }
         }
 
         $form->addSubmit('finish', $this->translator->translate('products.frontend.shop.checkout.fields.login'));

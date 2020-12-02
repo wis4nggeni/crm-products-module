@@ -37,7 +37,7 @@ class ConfigsSeeder implements ISeeder
         } else {
             $output->writeln('  * config category <info>Všeobecne</info> exists');
         }
-        
+
         $name = 'shop_host';
         $config = $this->configsRepository->loadByName($name);
         if (!$config) {
@@ -97,6 +97,31 @@ class ConfigsSeeder implements ISeeder
                 ->setAutoload(true)
                 ->setConfigCategory($category)
                 ->setSorting(600)
+                ->save();
+            $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
+        } else {
+            $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  * config item <info>$name</info> updated");
+            }
+        }
+
+        $name = 'shop_terms_and_conditions_url';
+        $config = $this->configsRepository->loadByName($name);
+        if (!$config) {
+            $this->configBuilder->createNew()
+                ->setName($name)
+                ->setDisplayName('products.config.shop_terms_and_conditions_url.name')
+                ->setDescription('products.config.shop_terms_and_conditions_url.description')
+                ->setType(ApplicationConfig::TYPE_STRING)
+                ->setAutoload(true)
+                ->setConfigCategory($category)
+                ->setSorting(700)
+                ->setValue(null)
                 ->save();
             $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
         } else {

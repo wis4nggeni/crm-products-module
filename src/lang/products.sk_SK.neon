@@ -356,6 +356,9 @@ config:
 	shop_og_image_url:
 		name: OG:image URL
 		description: 'URL k obrázku (napr. <code>/layouts/admin/images/logo_with_text.svg</code>)'
+	shop_terms_and_conditions_url:
+		name: URL VOP
+		description: 'URL, na ktorej sa nachádzajú všeobecné obchodné podmienky (napr. <code>http://crm.press/terms-and-conditions/</code>)'
 
 seeders:
 	address_types:
