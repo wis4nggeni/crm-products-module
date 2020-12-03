@@ -10,6 +10,7 @@ use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\PaymentItem\PaymentItemHelper;
 use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
+use Crm\ProductsModule\Repository\CountryPostalFeesRepository;
 use Crm\ProductsModule\Repository\DistributionCentersRepository;
 use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Repository\PostalFeesRepository;
@@ -22,7 +23,6 @@ use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\CountriesRepository;
 use Crm\UsersModule\Repository\UsersRepository;
 use Kdyby\Translation\Translator;
-use League\Event\Emitter;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 use Nette\Http\Request;
@@ -75,7 +75,7 @@ class CheckoutFormFactory
 
     private $dataProviderManager;
 
-    private $emitter;
+    private $countryPostalFeesRepository;
 
     public function __construct(
         PaymentsRepository $paymentsRepository,
@@ -94,7 +94,7 @@ class CheckoutFormFactory
         Translator $translator,
         PaymentItemHelper $paymentItemHelper,
         DataProviderManager $dataProviderManager,
-        Emitter $emitter
+        CountryPostalFeesRepository $countryPostalFeesRepository
     ) {
         $this->paymentsRepository = $paymentsRepository;
         $this->paymentGatewaysRepository = $paymentGatewaysRepository;
@@ -112,7 +112,7 @@ class CheckoutFormFactory
         $this->translator = $translator;
         $this->paymentItemHelper = $paymentItemHelper;
         $this->dataProviderManager = $dataProviderManager;
-        $this->emitter = $emitter;
+        $this->countryPostalFeesRepository = $countryPostalFeesRepository;
     }
 
     public function create($cart, $cartFree = [], $payment = null)
@@ -259,7 +259,8 @@ class CheckoutFormFactory
                 ->addConditionOn($action, Form::NOT_EQUAL, 'login')
                 ->addRule(Form::FILLED, $this->translator->translate('products.frontend.shop.checkout.fields.zip_code_required'));
 
-            $shippingAddress->addSelect('country_id', $this->translator->translate('products.frontend.shop.checkout.fields.country'), $this->countriesRepository->getAllPairs());
+            $availableCountryPairs = $this->countryPostalFeesRepository->findAllAvailableCountryPairs();
+            $shippingAddress->addSelect('country_id', $this->translator->translate('products.frontend.shop.checkout.fields.country'), $availableCountryPairs);
             $sameShipping->addCondition(Form::EQUAL, true)
                 ->toggle('billing-address', false);
         } elseif ($hasLicence) {

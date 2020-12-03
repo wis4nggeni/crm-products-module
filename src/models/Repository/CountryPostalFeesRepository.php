@@ -23,6 +23,14 @@ class CountryPostalFeesRepository extends Repository
         return $this->getTable()->where(['country_id' => $countryId, 'postal_fee_id' => $postalFeeId])->count('*') > 0;
     }
 
+    final public function findAllAvailableCountryPairs()
+    {
+        return $this->getTable()
+            ->select('country.id AS country_id, country.name AS country_name')
+            ->order('-country.sorting DESC, country.name')
+            ->fetchPairs('country_id', 'country_name');
+    }
+
     final public function findAllByPostalFeeId($postalFeeId)
     {
         return $this->getTable()->where('postal_fee_id', $postalFeeId)->fetchAll();
