@@ -310,6 +310,7 @@ frontend:
 			sold_out: vyprodáno
 		error:
 			title: 'Chyba : Obchod Deníku N - prodáváme jen to, co sami čteme'
+			text: '<strong>Chyba:</strong> bohužel, platba nebyla úspěšná. Prosím, vyzkoušejte to znovu nebo nám při opakovaném problému napište na <a href="mailto:%contactEmail%" class="link">%contactEmail%</a>.'
 		success:
 			title: 'Děkujeme! : Obchod Deníku N - prodáváme jen to, co sami čteme'
 			header: "Děkujeme!"

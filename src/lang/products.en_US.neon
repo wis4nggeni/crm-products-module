@@ -313,6 +313,7 @@ frontend:
 			sold_out: sold out
 		error:
 			title: "Error : E-shop Denník N - we only sell what we read"
+			text: '<strong>Error:</strong> Unfortunately your payment was not successful. Please try again later or contact our support at <a href="mailto:%contactEmail%" class="link">%contactEmail%</a>.'
 		success:
 			title: "Thank you! : E-shop Denník N - we only sell what we read"
 			header: "Thank you!"
@@ -322,7 +323,7 @@ frontend:
 			title: "%product_name% : E-shop Denník N - we only sell what we read"
 			add_to_cart: add to cart
 			sold_out: sold out
-			
+
 	orders:
 		my_orders: My orders
 		my_books: My books

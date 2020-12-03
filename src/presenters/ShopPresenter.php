@@ -436,6 +436,11 @@ class ShopPresenter extends FrontendPresenter
         $this->cartSession->products = [];
     }
 
+    public function renderError()
+    {
+        $this->template->contactEmail = $this->applicationConfig->get('contact_email');
+    }
+
     private function buildCartSession()
     {
         $this->cartSession = $this->getSession('cart');
