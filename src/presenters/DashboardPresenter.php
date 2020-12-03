@@ -43,6 +43,7 @@ class DashboardPresenter extends AdminPresenter
 
     public function createComponentGoogleProductsStatsGraph(GoogleBarGraphGroupControlFactoryInterface $factory)
     {
+        $this->getSession()->close();
         $graphDataItem = new GraphDataItem();
         $graphDataItem->setCriteria((new Criteria())
             ->setTableName('payments')
