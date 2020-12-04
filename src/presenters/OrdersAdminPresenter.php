@@ -115,7 +115,7 @@ class OrdersAdminPresenter extends AdminPresenter
             ]);
         };
 
-        $form->onSuccess[] = [$this, 'adminFilterSubmited'];
+        $form->onSuccess[] = [$this, 'adminFilterSubmitted'];
         $form->setDefaults([
             'text' => $this->text,
             'payment_status' => $this->payment_status,
@@ -123,11 +123,6 @@ class OrdersAdminPresenter extends AdminPresenter
             'products' => $this->getParameter('products'),
         ]);
         return $form;
-    }
-
-    public function adminFilterSubmited($form, $values)
-    {
-        $this->redirect($this->action, array_filter((array)$values));
     }
 
     public function createComponentCheckoutForm()
