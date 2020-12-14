@@ -6,7 +6,6 @@ use Crm\ApplicationModule\DataProvider\DataProviderException;
 use Crm\PaymentsModule\DataProvider\AdminFilterFormDataProviderInterface;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\ProductsRepository;
-use Nette\Application\Request;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\Selection;
 
@@ -32,34 +31,39 @@ class PaymentsAdminFilterFormDataProvider implements AdminFilterFormDataProvider
             throw new DataProviderException('invalid type of provided form: ' . get_class($params['form']));
         }
 
-        if (!isset($params['request'])) {
-            throw new DataProviderException('missing [request] within data provider params');
+        if (!isset($params['formData'])) {
+            throw new DataProviderException('missing [formData] within data provider params');
         }
-        if (!($params['request'] instanceof Request)) {
-            throw new DataProviderException('invalid type of provided request: ' . get_class($params['request']));
+        if (!is_array($params['formData'])) {
+            throw new DataProviderException('invalid type of provided formData: ' . get_class($params['formData']));
         }
 
         $form = $params['form'];
-        $request = $params['request'];
+        $formData = $params['formData'];
 
         $products = $this->productsRepository->getTable()->fetchPairs('id', 'name');
         $form->addMultiSelect('products', 'Produkty', $products)
             ->getControlPrototype()->addAttributes(['class' => 'select2']);
 
         $form->setDefaults([
-            'products' => $request->getParameter('products'),
+            'products' => $this->getProducts($formData)
         ]);
 
         return $form;
     }
 
-    public function filter(Selection $selection, Request $request): Selection
+    public function filter(Selection $selection, array $formData): Selection
     {
-        if ($request->getParameter('products')) {
+        if ($this->getProducts($formData)) {
             $selection
                 ->where(':payment_items.type', ProductPaymentItem::TYPE)
-                ->where(':payment_items.product_id', $request->getParameter('products'));
+                ->where(':payment_items.product_id', $this->getProducts($formData));
         }
         return $selection;
+    }
+
+    private function getProducts($formData)
+    {
+        return $formData['products'] ?? null;
     }
 }
