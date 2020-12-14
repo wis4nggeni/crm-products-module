@@ -148,6 +148,11 @@ class ShopPresenter extends FrontendPresenter
             $this->redirect($redirect);
         }
 
+        if (isset($this->cartSession->products[$product->id]) && $product->stock <= $this->cartSession->products[$product->id]) {
+            $this->flashMessage($product->name, 'product-more-not-available');
+            $this->redirect($redirect);
+        }
+
         if (!$product || !$product->shop) {
             throw new BadRequestException('Product not found.', 404);
         }
@@ -245,7 +250,7 @@ class ShopPresenter extends FrontendPresenter
         $removedProducts = [];
 
         foreach ($products as $productKey => $product) {
-            if ($product->stock <= 0) {
+            if ($product->stock <= 0 || $product->stock < $this->cartSession->products[$product->id]) {
                 unset($this->cartSession->products[$product->id]);
                 unset($products[$productKey]);
                 $this->cartProductSum = array_sum($this->cartSession->products);
@@ -275,7 +280,7 @@ class ShopPresenter extends FrontendPresenter
         $amount = 0;
 
         foreach ($products as $product) {
-            if ($product->stock <= 0) {
+            if ($product->stock <= 0 || $product->stock < $this->cartSession->products[$product->id]) {
                 unset($this->cartSession->products[$product->id]);
                 $removedProducts[] = $product->name;
             }

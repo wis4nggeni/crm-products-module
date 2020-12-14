@@ -247,6 +247,7 @@ frontend:
 			messages:
 				item_added_to_cart: "Item <strong>%name%</strong> was added to cart."
 				item_not_available: "Item <strong>%name%</strong> is not available."
+				item_more_not_available: "No more pieces of item <strong>%name%</strong> available."
 				item_already_purchased: 'Item <strong>%name%</strong> has already been purchased. Download link can be found <a href="%link%" class="link">in your profile</a>.'
 				items_removed_from_cart: 'Some items (<strong>%name%</strong>) were removed from the cart, because you already purchased them. Download links can be found <a href="%link%" class="link">in your profile</a>'
 				items_removed_from_cart_reason_sold_out: 'Some items (<strong>%name%</strong>) were removed from the cart, since they are sold out.'

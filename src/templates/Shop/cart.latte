@@ -32,6 +32,12 @@
                 </div>
             </div>
 
+            <div n:if="$flash->type == 'product-more-not-available'" class="row-fluid add-cart-message">
+                <div class="col-xs-12">
+                    {_products.frontend.shop.cart.messages.item_more_not_available, [name => $flash->message]|noescape}
+                </div>
+            </div>
+
             {capture $linkToLibrary}{plink :Products:Orders:Library}{/capture}
 
             <div n:if="$flash->type == 'product-exists'" class="row-fluid add-cart-message">
