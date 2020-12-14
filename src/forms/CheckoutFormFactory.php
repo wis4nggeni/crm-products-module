@@ -150,8 +150,9 @@ class CheckoutFormFactory
             }
         }
 
-        if ($this->request->getPost('shipping_address')['country_id'] !== null) {
-            $countryId = $this->request->getPost('shipping_address')['country_id'];
+        $postShippingAddress = $this->request->getPost('shipping_address');
+        if (isset($postShippingAddress['country_id']) && $postShippingAddress['country_id'] !== null) {
+            $countryId = $postShippingAddress['country_id'];
         }
 
         $products = $this->productsRepository->findByIds(array_keys($cart));
