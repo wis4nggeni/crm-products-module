@@ -2,18 +2,18 @@
 
 namespace Crm\ProductsModule\Presenters;
 
+use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Hermes\HermesMessage;
 use Crm\ApplicationModule\Presenters\FrontendPresenter;
 use Crm\PaymentsModule\CannotProcessPayment;
 use Crm\PaymentsModule\PaymentProcessor;
-use Crm\PaymentsModule\Repository\PaymentItemsRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\ProductsModule\DataProvider\TrackerDataProviderInterface;
 use Crm\ProductsModule\Ebook\EbookProvider;
 use Crm\ProductsModule\Events\CartItemAddedEvent;
 use Crm\ProductsModule\Events\CartItemRemovedEvent;
 use Crm\ProductsModule\Forms\CheckoutFormFactory;
 use Crm\ProductsModule\PaymentItem\PaymentItemHelper;
-use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Repository\PostalFeesRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
@@ -29,13 +29,9 @@ class ShopPresenter extends FrontendPresenter
 
     private $postalFeesRepository;
 
-    private $ordersRepository;
-
     private $checkoutFormFactory;
 
     private $paymentsRepository;
-
-    private $paymentItemsRepository;
 
     private $paymentItemHelper;
 
@@ -47,6 +43,8 @@ class ShopPresenter extends FrontendPresenter
 
     private $hermesEmitter;
 
+    private $dataProviderManager;
+
     private $cartSession;
     private $cartProducts;
     private $cartProductSum;
@@ -57,29 +55,27 @@ class ShopPresenter extends FrontendPresenter
     public function __construct(
         ProductsRepository $productsRepository,
         PostalFeesRepository $postalFeesRepository,
-        OrdersRepository $ordersRepository,
         CheckoutFormFactory $checkoutFormFactory,
         PaymentsRepository $paymentsRepository,
-        PaymentItemsRepository $paymentItemsRepository,
         PaymentItemHelper $paymentItemHelper,
         TagsRepository $tagsRepository,
         PaymentProcessor $paymentProcessor,
         EbookProvider $ebookProvider,
-        Emitter $hermesEmitter
+        Emitter $hermesEmitter,
+        DataProviderManager $dataProviderManager
     ) {
         parent::__construct();
 
         $this->productsRepository = $productsRepository;
         $this->postalFeesRepository = $postalFeesRepository;
-        $this->ordersRepository = $ordersRepository;
         $this->checkoutFormFactory = $checkoutFormFactory;
         $this->paymentsRepository = $paymentsRepository;
-        $this->paymentItemsRepository = $paymentItemsRepository;
         $this->paymentItemHelper = $paymentItemHelper;
         $this->tagsRepository = $tagsRepository;
         $this->paymentProcessor = $paymentProcessor;
         $this->ebookProvider = $ebookProvider;
         $this->hermesEmitter = $hermesEmitter;
+        $this->dataProviderManager = $dataProviderManager;
     }
 
     public function startup()
@@ -302,22 +298,6 @@ class ShopPresenter extends FrontendPresenter
             $this->redirect('cart');
         }
 
-        $userId = null;
-        if ($this->getUser()->isLoggedIn()) {
-            $userId = $this->getUser()->getId();
-        }
-        $browserId = (isset($_COOKIE['browser_id']) ? $_COOKIE['browser_id'] : null);
-
-        if (!is_null($userId)) {
-            $this->hermesEmitter->emit(new HermesMessage('sales-funnel', [
-                'type' => 'checkout',
-                'user_id' => $userId,
-                'browser_id' => $browserId,
-                'sales_funnel_id' => self::SALES_FUNNEL_SHOP,
-                'source' => $this->trackingParams(),
-            ]));
-        }
-
         $freeProducts = [];
         if (count($this->cartSession->freeProducts)) {
             $freeProducts = $this->productsRepository->findByIds(array_keys($this->cartSession->freeProducts));
@@ -352,24 +332,34 @@ class ShopPresenter extends FrontendPresenter
             }
         };
         $this->checkoutFormFactory->onAuth = function ($userId) {
-            $this->hermesEmitter->emit(new HermesMessage('sales-funnel', [
-                'type' => 'checkout',
-                'user_id' => $userId,
-                'browser_id' => (isset($_COOKIE['browser_id']) ? $_COOKIE['browser_id'] : null),
-                'sales_funnel_id' => self::SALES_FUNNEL_SHOP,
-                'source' => $this->trackingParams(),
-            ]));
+            $this->hermesEmitter->emit(
+                new HermesMessage(
+                    'sales-funnel',
+                    array_merge($this->getTrackerParams(), [
+                        'type' => 'checkout',
+                        'user_id' => $userId,
+                        'sales_funnel_id' => self::SALES_FUNNEL_SHOP,
+                    ])
+                )
+            );
         };
         $this->checkoutFormFactory->onSave = function ($payment) {
-            $this->paymentsRepository->addMeta($payment, $this->trackingParams());
+            $trackerParams = $this->getTrackerParams();
 
-            $this->hermesEmitter->emit(new HermesMessage('sales-funnel', [
+            $this->paymentsRepository->addMeta($payment, $trackerParams);
+
+            $eventParams = [
                 'type' => 'payment',
                 'user_id' => $payment->user_id,
-                'browser_id' => (isset($_COOKIE['browser_id']) ? $_COOKIE['browser_id'] : null),
                 'sales_funnel_id' => self::SALES_FUNNEL_SHOP,
                 'payment_id' => $payment->id,
-            ]));
+            ];
+            $this->hermesEmitter->emit(
+                new HermesMessage(
+                    'sales-funnel',
+                    array_merge($eventParams, $trackerParams)
+                )
+            );
 
             try {
                 $this->paymentProcessor->begin($payment);
@@ -500,5 +490,20 @@ class ShopPresenter extends FrontendPresenter
     {
         $this->tags = [];
         $this->redirect('default');
+    }
+
+    protected function getTrackerParams()
+    {
+        $trackerParams = [];
+
+        /** @var TrackerDataProviderInterface[] $providers */
+        $providers = $this->dataProviderManager->getProviders(
+            'products.dataprovider.tracker',
+            TrackerDataProviderInterface::class
+        );
+        foreach ($providers as $sorting => $provider) {
+            $trackerParams[] = $provider->provide();
+        }
+        return array_merge([], ...$trackerParams);
     }
 }
