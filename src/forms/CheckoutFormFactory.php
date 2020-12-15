@@ -150,7 +150,7 @@ class CheckoutFormFactory
             }
         }
 
-        if (isset($this->request->getPost('shipping_address')['country_id'])) {
+        if ($this->request->getPost('shipping_address')['country_id'] !== null) {
             $countryId = $this->request->getPost('shipping_address')['country_id'];
         }
 

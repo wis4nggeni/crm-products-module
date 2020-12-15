@@ -291,14 +291,17 @@ class ShopPresenter extends FrontendPresenter
         if ($this->getUser()->isLoggedIn()) {
             $userId = $this->getUser()->getId();
         }
+        $browserId = (isset($_COOKIE['browser_id']) ? $_COOKIE['browser_id'] : null);
 
-        $this->hermesEmitter->emit(new HermesMessage('sales-funnel', [
-            'type' => 'checkout',
-            'user_id' => $userId,
-            'browser_id' => $_COOKIE['browser_id'] ?? null,
-            'sales_funnel_id' => self::SALES_FUNNEL_SHOP,
-            'source' => $this->trackingParams(),
-        ]));
+        if (!is_null($userId)) {
+            $this->hermesEmitter->emit(new HermesMessage('sales-funnel', [
+                'type' => 'checkout',
+                'user_id' => $userId,
+                'browser_id' => $browserId,
+                'sales_funnel_id' => self::SALES_FUNNEL_SHOP,
+                'source' => $this->trackingParams(),
+            ]));
+        }
 
         $freeProducts = [];
         if (count($this->cartSession->freeProducts)) {
@@ -337,28 +340,20 @@ class ShopPresenter extends FrontendPresenter
             $this->hermesEmitter->emit(new HermesMessage('sales-funnel', [
                 'type' => 'checkout',
                 'user_id' => $userId,
-                'browser_id' => ($_COOKIE['browser_id'] ?? null),
+                'browser_id' => (isset($_COOKIE['browser_id']) ? $_COOKIE['browser_id'] : null),
                 'sales_funnel_id' => self::SALES_FUNNEL_SHOP,
                 'source' => $this->trackingParams(),
             ]));
         };
         $this->checkoutFormFactory->onSave = function ($payment) {
-            $metaData = [];
-            if (isset($_COOKIE['browser_id'])) {
-                $metaData['browser_id'] = $_COOKIE['browser_id'];
-            }
-            if (isset($_COOKIE['commerce_session_id'])) {
-                $metaData['commerce_session_id'] = $_COOKIE['commerce_session_id'];
-            }
+            $this->paymentsRepository->addMeta($payment, $this->trackingParams());
 
-            $this->paymentsRepository->addMeta($payment, array_merge($metaData, $this->trackingParams()));
             $this->hermesEmitter->emit(new HermesMessage('sales-funnel', [
                 'type' => 'payment',
                 'user_id' => $payment->user_id,
-                'browser_id' => $_COOKIE['browser_id'] ?? null,
+                'browser_id' => (isset($_COOKIE['browser_id']) ? $_COOKIE['browser_id'] : null),
                 'sales_funnel_id' => self::SALES_FUNNEL_SHOP,
                 'payment_id' => $payment->id,
-                'commerce_session_id' => $_COOKIE['commerce_session_id'] ?? null,
             ]));
 
             try {
