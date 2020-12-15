@@ -7,6 +7,16 @@
         $('.increase-cart-amount').click(function () {
             $.event.trigger('crm:shop:action:add-to-cart');
         });
+
+        function setUpTooltip() {
+            $('[data-toggle="tooltip"]').tooltip({'html': true})
+        }
+        $(document).ready(function() {
+            setUpTooltip();
+        });
+        $(document).ajaxComplete(function () {
+            setUpTooltip();
+        });
     </script>
 {/block}
 
@@ -78,7 +88,17 @@
                                 <div class="input-group">
                                     <a n:if="!$product->unique_per_user" class="input-group-addon ajax decrease-cart-amount" data-ajax-off="unique" n:href="removeCart! $product->id"><i class="fa fa-minus"></i></a>
                                     <input type="text" class="form-control text-center" value="{$cartProducts[$product->id]}" disabled="disabled">
-                                    <a n:if="!$product->unique_per_user" class="input-group-addon ajax increase-cart-amount" data-ajax-off="unique" n:href="addCart! $product->id"><i class="fa fa-plus"></i></a>
+
+                                    {if (!$product->unique_per_user && ($product->stock > $cartProducts[$product->id]))}
+                                    <a class="input-group-addon ajax increase-cart-amount" data-ajax-off="unique" n:href="addCart! $product->id">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+                                    {else}
+                                    <span class="input-group-addon ajax increase-cart-amount" data-ajax-off="unique" data-toggle="tooltip"
+                                        title="{_products.frontend.shop.cart.messages.item_more_not_available, [name => $product->name]|noescape}">
+                                        <i class="fa fa-plus" style="color:silver"></i>
+                                    </span>
+                                    {/if}
                                 </div>
                             </div></div>
                         <div class="_total"><div class="_pad">
