@@ -109,9 +109,6 @@ class ProductsModule extends CrmModule
     {
         $menuItem = new MenuItem($this->translator->translate('products.menu.orders'), ':Products:Orders:My', '', 150);
         $menuContainer->attachMenuItem($menuItem);
-
-        $menuItem = new MenuItem($this->translator->translate('products.menu.books'), ':Products:Orders:Library', '', 155);
-        $menuContainer->attachMenuItem($menuItem);
     }
 
     public function registerEventHandlers(Emitter $emitter)

@@ -12,6 +12,32 @@ Checkbox with the link to the terms and conditions will be displayed _(and requi
 
 ![Terms and conditions URL - displayed at checkout](docs/terms-and-conditions_-_checkout.png "Terms and conditions URL - displayed at checkout")
 
+### E-books
+
+Product module can handle orders of ebooks and provides download links in the user's section.
+
+To display the download links of e-books you have to register your own implementation of `EbookProviderInterface` in configuration:
+
+```
+ebookProvider:
+    setup:
+        - register(Crm\DibukModule\Ebook\DibukEbookProvider())
+```
+
+And register link on library into user's section menu:
+
+```
+public function registerFrontendMenuItems(MenuContainerInterface $menuContainer)
+{
+    ...
+    
+    $menuItem = new MenuItem($this->translator->translate('products.menu.books'), ':Products:Orders:Library', '', 155);
+    $menuContainer->attachMenuItem($menuItem);
+}
+```
+
+![Books library link](docs/books-library-link.png "Books library link")
+
 ## Components
 
 **DonatedSubscriptionListingWidget**
