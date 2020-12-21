@@ -5,6 +5,7 @@ namespace Crm\ProductsModule;
 use Crm\ApplicationModule\Commands\CommandsContainerInterface;
 use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\Config\ConfigsCache;
+use Crm\ApplicationModule\Criteria\ScenariosCriteriaStorage;
 use Crm\ApplicationModule\CrmModule;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Event\EventsStorage;
@@ -22,6 +23,7 @@ use Crm\ProductsModule\Events\OrderStatusChangeEventHandler;
 use Crm\ProductsModule\Events\PaymentStatusChangeHandler;
 use Crm\ProductsModule\Events\PaymentStatusChangeNotifyHandler;
 use Crm\ProductsModule\Repository\ProductsRepository;
+use Crm\ProductsModule\Scenarios\HasOrderCriteria;
 use Crm\ProductsModule\Seeders\AddressTypesSeeder;
 use Crm\ProductsModule\Seeders\ConfigsSeeder;
 use Kdyby\Translation\Translator;
@@ -245,6 +247,15 @@ class ProductsModule extends CrmModule
         $widgetManager->registerWidget(
             'segment.detail.statspanel.row',
             $this->getInstance(\Crm\ProductsModule\Components\AvgProductsPaymentWidget::class)
+        );
+    }
+
+    public function registerScenariosCriteria(ScenariosCriteriaStorage $scenariosCriteriaStorage)
+    {
+        $scenariosCriteriaStorage->register(
+            'payment',
+            'has_order',
+            $this->getInstance(HasOrderCriteria::class)
         );
     }
 }
