@@ -261,6 +261,7 @@ frontend:
 			shipping_method: Způsob dopravy
 			billing_address: Fakturační adresa
 			for_free: Zadarmo
+			postal_fee: Poštovné
 			choose_payment_method: Vyber způsob platby.
 			fields:
 				email_required: Položka Email je povinná.

@@ -19,6 +19,7 @@ use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\UsersModule\Auth\Authorizator;
 use Crm\UsersModule\Auth\InvalidEmailException;
 use Crm\UsersModule\Auth\UserManager;
+use Crm\UsersModule\DataProvider\AddressFormDataProviderInterface;
 use Crm\UsersModule\Repository\AddressChangeRequestsRepository;
 use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\CountriesRepository;
@@ -334,6 +335,12 @@ class CheckoutFormFactory
 
         $billingAddress->addText('company_vat_id', $this->translator->translate('products.frontend.shop.checkout.fields.company_vat_id'))
             ->setAttribute('placeholder', $this->translator->translate('products.frontend.shop.checkout.fields.company_vat_id_placeholder'));
+
+        /** @var AddressFormDataProviderInterface $providers */
+        $providers = $this->dataProviderManager->getProviders('products.dataprovider.checkout_form.billing_address', AddressFormDataProviderInterface::class);
+        foreach ($providers as $sorting => $provider) {
+            $form = $provider->provide(['form' => $form, 'addressType' => 'invoice', 'container' => 'billing_address']);
+        }
 
         if (!$payment) {
             // display terms and conditions if URL is configured

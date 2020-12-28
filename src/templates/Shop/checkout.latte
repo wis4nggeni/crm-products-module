@@ -21,7 +21,12 @@
         <div class="row">
             <div class="col-xs-12">
                 <div n:if="$form->getErrors()" n:inner-foreach="$form->getErrors() as $error" class="alert alert-danger" role="alert">
-                    {$error}<br>
+                    {if $error instanceof \Nette\Utils\Html}
+                      {$error->getText()}
+                    {else}
+                      {$error}
+                    {/if}
+                    <br>
                 </div>
                 <fieldset id="payment-methods">
                     <legend>{_products.frontend.shop.checkout.payment_method}</legend>
@@ -129,7 +134,7 @@
                             </div>
                         </fieldset>
                     {else}
-                        {input $control['checkoutForm']['postal_fee']}
+                        {input postal_fee}
                     {/ifset}
                 {/snippet}
                 <div id="invoice">
@@ -170,14 +175,17 @@
                         <div class="form-group">
                             {label company_id /}
                             {input company_id}
+                            {$control['checkoutForm']['billing_address']['company_id']->getOption('description')}
                         </div>
                         <div class="form-group">
                             {label company_tax_id /}
                             {input company_tax_id}
+                            {$control['checkoutForm']['billing_address']['company_tax_id']->getOption('description')}
                         </div>
                         <div class="form-group">
                             {label company_vat_id /}
                             {input company_vat_id}
+                            {$control['checkoutForm']['billing_address']['company_vat_id']->getOption('description')}
                         </div>
                     {/formContainer}
                 </fieldset>
@@ -217,14 +225,14 @@
                         <div class="hidden-xs hidden-sm col-sm-4 text-right"><strike>{$product->price|price}</strike> {0|price}</div>
                         <div class="hidden-xs hidden-sm col-sm-4 text-right">1</div>
                         <div class="col-sm-4 text-right">
-                            Zadarmo
+                          {_products.frontend.shop.checkout.for_free}
                         </div>
                     </div>
                 </div>
             </div>
         {/if}
         <div class="row-fluid cart-product" n:if="$control['checkoutForm']['postal_fee'] instanceof Nette\Forms\Controls\RadioList">
-            <div class="col-sm-6 col-md-8">Poštovné - {$control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->title}</div>
+            <div class="col-sm-6 col-md-8">{_products.frontend.shop.checkout.postal_fee} - {$control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->title}</div>
             <div class="col-sm-6 col-md-4">
                 <div class="row">
                     <div class="hidden-xs hidden-sm col-sm-4 text-right">&nbsp</div>
