@@ -206,6 +206,7 @@ admin:
 					ico: Buyer ID
 					dic: Tax ID
 					icdph: Vat ID
+					phone_number: Phone Number
 			products:
 				header: Ordered products
 				fields:

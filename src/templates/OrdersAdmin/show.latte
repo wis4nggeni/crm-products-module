@@ -14,6 +14,10 @@
     </div>
 </div>
 
+<div class="col-md-12">
+    {control 'simpleWidget' 'admin.products.order.top', $order}
+</div>
+
 <div class="row">
     <div class="col-md-4">
         <ul class="list-group">
@@ -38,26 +42,19 @@
         </ul>
     </div>
     {if (!empty($order->shipping_address_id))}
-    <div class="col-md-4">
+      <div class="col-md-3">
         {var $shippingAddress = $order->ref('addresses', 'shipping_address_id')}
-        <ul class="list-group">
-            <li class="list-group-item">
-                <b>{_products.admin.orders.show.shipping_address}</b>
-            </li>
-            <li class="list-group-item">
-                <b>{_products.admin.orders.show.fields.address.name}:</b> {$shippingAddress->first_name} {$shippingAddress->last_name}
-            </li>
-            <li class="list-group-item">
-                <b>{_products.admin.orders.show.fields.address.street}:</b> {$shippingAddress->address} {$shippingAddress->number}
-            </li>
-            <li class="list-group-item">
-                <b>{_products.admin.orders.show.fields.address.city}:</b> {$shippingAddress->city}
-            </li>
-            <li class="list-group-item">
-                <b>{_products.admin.orders.show.fields.address.zip}:</b> {$shippingAddress->zip}
-            </li>
-        </ul>
-    </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            {$shippingAddress->typ->title} <small class="text-muted">#{$shippingAddress->id}</small>
+            <a n:href=":Users:AddressAdmin:edit $shippingAddress->id" class="pull-right btn-default btn-xs"><i class="fa fa-edit"></i></a>
+          </div>
+          <div class="panel-body">
+            {control simpleWidget 'admin.products.order.address', $shippingAddress}
+          </div>
+          <div class="panel-footer"><small class="text-muted">{_users.admin.show.address_last_change} {$shippingAddress->updated_at|userDate}</small></div>
+        </div>
+      </div>
     {/if}
     {if (!empty($order->licence_address_id))}
     <div class="col-md-4">

@@ -248,6 +248,10 @@ class ProductsModule extends CrmModule
             'segment.detail.statspanel.row',
             $this->getInstance(\Crm\ProductsModule\Components\AvgProductsPaymentWidget::class)
         );
+        $widgetManager->registerWidget(
+            'admin.products.order.address',
+            $this->getInstance(\Crm\UsersModule\Components\AddressWidget::class)
+        );
     }
 
     public function registerScenariosCriteria(ScenariosCriteriaStorage $scenariosCriteriaStorage)

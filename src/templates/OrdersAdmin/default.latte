@@ -39,7 +39,10 @@
                 </thead>
                 <tbody>
                 <tr n:foreach="$orders as $order">
-                    <td>{$order->id}</td>
+                    <td>
+                    {$order->id}
+                    {control simpleWidget 'admin.products.orders.list.id', $order}
+                    </td>
                     <td>{$order->payment->variable_symbol}</td>
                     <td>
                         <div class="list-group">

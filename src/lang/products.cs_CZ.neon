@@ -203,6 +203,7 @@ admin:
 					ico: IČO
 					dic: DIČ
 					icdph: IČ DPH
+					phone_number: 'Telefonní číslo'
 			products:
 				header: Objednané produkty
 				fields:
