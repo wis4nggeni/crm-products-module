@@ -138,19 +138,18 @@ class ShopPresenter extends FrontendPresenter
         $this->template->relatedProducts = $this->productsRepository->relatedProducts($product);
     }
 
-    public function handleAddCart($id, $checkout = false)
+    public function handleAddCart($id, $redirectToCheckout = false)
     {
         $product = $this->productsRepository->find($id);
-        $redirect = $checkout ? 'checkout' : 'cart';
 
         if ($product->stock <= 0) {
             $this->flashMessage($product->name, 'product-not-available');
-            $this->redirect($redirect);
+            $this->redirect('this');
         }
 
         if (isset($this->cartSession->products[$product->id]) && $product->stock <= $this->cartSession->products[$product->id]) {
             $this->flashMessage($product->name, 'product-more-not-available');
-            $this->redirect($redirect);
+            $this->redirect('this');
         }
 
         if (!$product || !$product->shop) {
@@ -160,7 +159,7 @@ class ShopPresenter extends FrontendPresenter
         if (!isset($this->cartSession->products[$product->id])) {
             if ($this->user->isLoggedIn() && $product->unique_per_user && $this->paymentItemHelper->hasUniqueProduct($product, $this->user->getId())) {
                 $this->flashMessage($product->name, 'product-exists');
-                $this->redirect($redirect);
+                $this->redirect('this');
             }
 
             $this->cartSession->products[$product->id] = 0;
@@ -171,7 +170,7 @@ class ShopPresenter extends FrontendPresenter
         }
 
         // fast checkout could mislead users if they already had something in their cart
-        if ($checkout) {
+        if ($redirectToCheckout) {
             $this->cartSession->products = [];
             $this->cartSession->products[$product->id] = 0;
             $this->cartSession->freeProducts = [];
@@ -181,12 +180,13 @@ class ShopPresenter extends FrontendPresenter
 
         $this->emitter->emit(new CartItemAddedEvent($product));
 
-        if ($this->isAjax() && !$checkout) {
+        if ($this->isAjax() && !$redirectToCheckout) {
             $this->buildSession();
             $this->redrawControl('cart');
             $this->redrawControl('cartIcon');
         } else {
             $this->flashMessage($product->name, 'add-cart');
+            $redirect = $redirectToCheckout ? 'checkout' : 'cart';
             $this->redirect($redirect);
         }
     }
