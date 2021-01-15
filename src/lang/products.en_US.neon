@@ -252,6 +252,7 @@ frontend:
 				item_already_purchased: 'Item <strong>%name%</strong> has already been purchased. Download link can be found <a href="%link%" class="link">in your profile</a>.'
 				items_removed_from_cart: 'Some items (<strong>%name%</strong>) were removed from the cart, because you already purchased them. Download links can be found <a href="%link%" class="link">in your profile</a>'
 				items_removed_from_cart_reason_sold_out: 'Some items (<strong>%name%</strong>) were removed from the cart, since they are sold out.'
+				items_removed_from_cart_reason_little_stock: 'Some items (<strong>%name%</strong>) have had their number of pieces reduced because there are not enough in stock.'
 		checkout:
 			title: "Order : E-shop Denník N - we only sell what we read"
 			order: Order

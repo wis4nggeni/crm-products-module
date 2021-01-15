@@ -67,6 +67,12 @@
                     {_products.frontend.shop.cart.messages.items_removed_from_cart_reason_sold_out, [name => $flash->message]|noescape}
                 </div>
             </div>
+
+            <div n:if="$flash->type == 'product-little-in-stock'" class="row-fluid add-cart-message">
+                <div class="col-xs-12">
+                    {_products.frontend.shop.cart.messages.items_removed_from_cart_reason_little_stock, [name => $flash->message]|noescape}
+                </div>
+            </div>
         {/foreach}
         {if !empty($products)}
             <div class="_cart">

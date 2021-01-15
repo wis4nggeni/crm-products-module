@@ -276,19 +276,29 @@ class ShopPresenter extends FrontendPresenter
     public function renderCheckout()
     {
         $products = $this->productsRepository->findByIds(array_keys($this->cartSession->products));
-        $removedProducts = [];
+        $outOfStockProducts = [];
+        $littleStockProducts = [];
         $amount = 0;
 
         foreach ($products as $product) {
-            if ($product->stock <= 0 || $product->stock < $this->cartSession->products[$product->id]) {
+            if ($product->stock <= 0) {
                 unset($this->cartSession->products[$product->id]);
-                $removedProducts[] = $product->name;
+                $outOfStockProducts[] = $product->name;
+            } elseif ($product->stock < $this->cartSession->products[$product->id]) {
+                $this->cartSession->products[$product->id] = $product->stock;
+                $littleStockProducts[] = $product->name;
             }
             $amount += $product->price * $this->cartProducts[$product->id];
         }
 
-        if (!empty($removedProducts)) {
-            $this->flashMessage(implode(', ', $removedProducts), 'product-out-of-stock');
+        if (!empty($outOfStockProducts) || !empty($littleStockProducts)) {
+            if (!empty($outOfStockProducts)) {
+                $this->flashMessage(implode(', ', $outOfStockProducts), 'product-out-of-stock');
+            }
+            if (!empty($littleStockProducts)) {
+                $this->flashMessage(implode(', ', $littleStockProducts), 'product-little-in-stock');
+            }
+
             $this->redirect('cart');
         }
 

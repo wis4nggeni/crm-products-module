@@ -252,6 +252,7 @@ frontend:
 				item_already_purchased: 'Položku <strong>%name%</strong> ste si už raz zakúpili. Link na stiahnutie nájdete vo <a href="%link%" class="link">svojom konte</a>.'
 				items_removed_from_cart: 'Niektoré položky (<strong>%name%</strong>) boli odstranené z košíka, pretože ste si ich už raz zakúpili. Linky na stiahnutie nájdete vo <a href="%link%" class="link">svojom konte</a>'
 				items_removed_from_cart_reason_sold_out: 'Niektoré položky (<strong>%name%</strong>) boli odstranené z košíka, nakoľko sú vypredané.'
+				items_removed_from_cart_reason_little_stock: 'Niektorým položkám (<strong>%name%</strong>) boli znížené počty kusov, pretože ich nie je dostatok na sklade.'
 		checkout:
 			title: "Objednávka : Obchod Denníka N - predávame len to, čo sami čítame"
 			order: Objednávka
