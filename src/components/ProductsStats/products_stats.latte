@@ -1,40 +1,92 @@
 {block scripts}
-    <script type="text/javascript" src="{$basePath}/layouts/admin/js/jquery-tablesorter/jquery.tablesorter.combined.2.31.3.min.js"></script>
-    <link rel="stylesheet" href="{$basePath}/layouts/admin/js/jquery-tablesorter/jquery.tablesorter.theme.bootstrap.2.31.3.min.css">
-    <script>
-        $(document).ready(function(){
-            $(".tablesorter").tablesorter({
-                ignoreCase: true,
-                sortInitialOrder: 'desc',
-                theme: 'bootstrap',
-                headerTemplate: '{l}content{r} {l}icon{r}',
-                widgets: ['uitheme']
-            });
-        });
-    </script>
+  <script type="text/javascript"
+          src="{$basePath}/layouts/admin/js/jquery-tablesorter/jquery.tablesorter.combined.2.31.3.min.js"></script>
+  <link rel="stylesheet"
+        href="{$basePath}/layouts/admin/js/jquery-tablesorter/jquery.tablesorter.theme.bootstrap.2.31.3.min.css">
+  <script>
+      $(document).ready(function () {
+          $(".tablesorter").tablesorter({
+              ignoreCase: true,
+              sortInitialOrder: 'desc',
+              theme: 'bootstrap',
+              headerTemplate: '{l}content{r} {l}icon{r}',
+              widgets: ['uitheme', 'output'],
+              widgetOptions : {
+                 output_dataAttrib: 'data-text'
+              }
+          });
+      });
+  </script>
 {/block}
 
 <table class="table table-striped table-bordered tablesorter">
-    <thead>
-    <tr>
-        <th>{_products.admin.products.stats.product}</th>
-        <th>{_products.admin.products.stats.today}</th>
-        <th>{_products.admin.products.stats.yesterday}</th>
-        <th>{_products.admin.products.stats.seven_days}</th>
-        <th>{_products.admin.products.stats.this_month}</th>
-        <th>{_products.admin.products.stats.last_month}</th>
-        <th>{_products.admin.products.stats.all_stats}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr n:foreach="$productStats as $product">
-        <td><a href="{plink :Products:ProductsAdmin:show $product['id']}">{$product['name']}</a></td>
-        <td align="right">{isset($product['stats']['today']) ? $product['stats']['today'] : 0}</td>
-        <td align="right">{isset($product['stats']['yesterday']) ? $product['stats']['yesterday'] : 0}</td>
-        <td align="right">{isset($product['stats']['last_7days']) ? $product['stats']['last_7days'] : 0}</td>
-        <td align="right">{isset($product['stats']['current_month']) ? $product['stats']['current_month'] : 0}</td>
-        <td align="right">{isset($product['stats']['last_month']) ? $product['stats']['last_month'] : 0}</td>
-        <td align="right">{isset($product['stats']['all']) ? $product['stats']['all'] : 0}</td>
-    </tr>
-    </tbody>
+  <thead>
+  <tr>
+    <th rowspan="2">{_products.admin.products.stats.product}</th>
+    <th class="sorter-false" colspan="2">{_products.admin.products.stats.today}</th>
+    <th class="sorter-false" colspan="2">{_products.admin.products.stats.yesterday}</th>
+    <th class="sorter-false" colspan="2">{_products.admin.products.stats.seven_days}</th>
+    <th class="sorter-false" colspan="2">{_products.admin.products.stats.this_month}</th>
+    <th class="sorter-false" colspan="2">{_products.admin.products.stats.last_month}</th>
+    <th class="sorter-false" colspan="2">{_products.admin.products.stats.all_stats}</th>
+  </tr>
+  <tr>
+    <th>{_products.admin.products.stats.count}</th>
+    <th>{_products.admin.products.stats.amount}</th>
+    <th>{_products.admin.products.stats.count}</th>
+    <th>{_products.admin.products.stats.amount}</th>
+    <th>{_products.admin.products.stats.count}</th>
+    <th>{_products.admin.products.stats.amount}</th>
+    <th>{_products.admin.products.stats.count}</th>
+    <th>{_products.admin.products.stats.amount}</th>
+    <th>{_products.admin.products.stats.count}</th>
+    <th>{_products.admin.products.stats.amount}</th>
+    <th>{_products.admin.products.stats.count}</th>
+    <th>{_products.admin.products.stats.amount}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr n:foreach="$productStats as $product">
+    <td><a href="{plink :Products:ProductsAdmin:show $product['id']}">{$product['name']}</a></td>
+
+    <td align="right">{$product['count']['today'] ?? 0}</td>
+    {var $price = $product['amount']['today'] ?? 0}
+    <td align="right" data-text="{$price}">{$price|price}</td>
+
+    <td align="right">{$product['count']['yesterday'] ?? 0}</td>
+    {var $price = $product['amount']['yesterday'] ?? 0}
+    <td align="right" data-text="{$price}">{$price|price}</td>
+
+    <td align="right">{$product['count']['last_7days'] ?? 0}</td>
+    {var $price = $product['amount']['last_7days'] ?? 0}
+    <td align="right" data-text="{$price}">{$price|price}</td>
+
+    <td align="right">{$product['count']['current_month'] ?? 0}</td>
+    {var $price = $product['amount']['current_month'] ?? 0}
+    <td align="right" data-text="{$price}">{$price|price}</td>
+
+    <td align="right">{$product['count']['last_month'] ?? 0}</td>
+    {var $price = $product['amount']['last_month'] ?? 0}
+    <td align="right" data-text="{$price}">{$price|price}</td>
+
+    <td align="right">{$product['count']['all'] ?? 0}</td>
+    {var $price = $product['amount']['all'] ?? 0}
+    <td align="right" data-text="{$price}">{$price|price}</td>
+  </tr>
+  <tfoot>
+  <td>{_products.admin.products.stats.total}</td>
+  <td align="right">{$totalStats['today']['count']}</td>
+  <td align="right">{$totalStats['today']['amount']|price}</td>
+  <td align="right">{$totalStats['yesterday']['count']}</td>
+  <td align="right">{$totalStats['yesterday']['amount']|price}</td>
+  <td align="right">{$totalStats['last_7days']['count']}</td>
+  <td align="right">{$totalStats['last_7days']['amount']|price}</td>
+  <td align="right">{$totalStats['current_month']['count']}</td>
+  <td align="right">{$totalStats['current_month']['amount']|price}</td>
+  <td align="right">{$totalStats['last_month']['count']}</td>
+  <td align="right">{$totalStats['last_month']['amount']|price}</td>
+  <td align="right">{$totalStats['all']['count']}</td>
+  <td align="right">{$totalStats['all']['amount']|price}</td>
+  </tfoot>
+  </tbody>
 </table>

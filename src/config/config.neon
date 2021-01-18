@@ -20,7 +20,7 @@ services:
 	- Crm\ProductsModule\Commands\CalculateAveragesCommand
 
 	- Crm\ProductsModule\Components\ProductItemsListWidget
-	- Crm\ProductsModule\Components\ProductStatsFactoryInterface
+	- Crm\ProductsModule\Components\ProductStatsFactory
 	- Crm\ProductsModule\Components\TotalShopPaymentsWidget
 	- Crm\ProductsModule\Components\AvgProductsPaymentWidget
 

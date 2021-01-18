@@ -132,6 +132,16 @@ admin:
 			all_stats: Všetky
 			sold_products: Predané produkty
 			sold_products_in_time: Predané produkty v rámci času
+			count: Počet kusov
+			amount: Suma peňazí
+			total: Spolu
+			modes:
+				all: Všetky
+				sold: Predané
+				gifted: Darované
+			form:
+				mode: Typ predaja
+				filter: Filter
 	tags:
 		default:
 			header: Tagy

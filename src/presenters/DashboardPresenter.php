@@ -7,9 +7,11 @@ use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\ApplicationModule\Components\Graphs\GoogleBarGraphGroupControlFactoryInterface;
 use Crm\ApplicationModule\Graphs\Criteria;
 use Crm\ApplicationModule\Graphs\GraphDataItem;
-use Crm\ProductsModule\Components\ProductStatsFactoryInterface;
+use Crm\ProductsModule\Components\ProductStatsFactory;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
+use Nette\Application\UI\Form;
 use Nette\Utils\DateTime;
+use Tomaj\Form\Renderer\BootstrapInlineRenderer;
 
 class DashboardPresenter extends AdminPresenter
 {
@@ -19,11 +21,18 @@ class DashboardPresenter extends AdminPresenter
     /** @persistent */
     public $dateTo;
 
+    /** @persistent */
+    public $productStatsMode;
+
+    /** @var ProductStatsFactory @inject */
+    public $productStatsFactory;
+
     public function startup()
     {
         parent::startup();
         $this->dateFrom = $this->dateFrom ?? DateTime::from('-2 months')->format('Y-m-d');
         $this->dateTo = $this->dateTo ?? DateTime::from('today')->format('Y-m-d');
+        $this->productStatsMode = $this->productStatsMode ?? ProductStatsFactory::MODE_ALL;
     }
 
     public function renderDefault()
@@ -67,9 +76,29 @@ class DashboardPresenter extends AdminPresenter
         return $control;
     }
 
-    public function createComponentTableProductsStatsGraph(ProductStatsFactoryInterface $factory)
+    public function createComponentProductStatsModeForm()
     {
-        $control = $factory->create();
-        return $control;
+        $form = new Form;
+        $form->setRenderer(new BootstrapInlineRenderer());
+        $form->addSelect('product_stats_mode', $this->translator->translate('products.admin.products.stats.form.mode'), $this->productStatsFactory->getProductModesPairs());
+
+        $form->addSubmit('send', $this->translator->translate('products.admin.products.stats.form.filter'))
+            ->getControlPrototype()
+            ->setName('button')
+            ->setHtml('<i class="fa fa-filter"></i> ' . $this->translator->translate('products.admin.products.stats.form.filter'));
+
+        $form->setDefaults([
+            'product_stats_mode' => $this->productStatsMode,
+        ]);
+        $form->onSuccess[] = function ($form, $values) {
+            $this->productStatsMode = $values['product_stats_mode'];
+            $this->redirect($this->action);
+        };
+        return $form;
+    }
+
+    public function createComponentTableProductsStatsGraph()
+    {
+        return $this->productStatsFactory->create($this->productStatsMode);
     }
 }

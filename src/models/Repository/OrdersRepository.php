@@ -118,7 +118,7 @@ class OrdersRepository extends Repository
     final public function stats(DateTime $from = null, DateTime $to = null)
     {
         $selection = $this->getTable()
-            ->select('SUM(payment:payment_items.count) AS product_counts, payment:payment_items.product.id AS product_id')
+            ->select('SUM(payment:payment_items.count) AS product_count, SUM(payment:payment_items.amount * payment:payment_items.count) AS product_amount, payment:payment_items.product.id AS product_id')
             ->where('payment:payment_items.type = ?', ProductPaymentItem::TYPE)
             ->where('payment:payment_items.product.shop = ?', true)
             ->where('payment.status = ?', PaymentsRepository::STATUS_PAID)
@@ -133,6 +133,6 @@ class OrdersRepository extends Repository
             $selection->where('payment.paid_at BETWEEN ? AND ?', $from, $to);
         }
 
-        return $selection->fetchPairs('product_id', 'product_counts');
+        return $selection;
     }
 }

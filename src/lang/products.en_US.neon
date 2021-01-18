@@ -132,6 +132,16 @@ admin:
 			all_stats: All
 			sold_products: Sold products
 			sold_products_in_time: Sold products time histogram
+			count: Number of pieces
+			amount: Total money
+			total: Total
+			modes:
+				all: All
+				sold: Sold
+				gifted: Gifted
+			form:
+				mode: Sale type
+				filter: Filter
 	tags:
 		default:
 			header: Tags
