@@ -16,12 +16,16 @@ class ProductManagerTest extends DatabaseTestCase
     /** @var ProductBundlesRepository */
     private $productBundlesRepository;
 
+    /** @var ProductManager */
+    private $productManager;
+
     public function setUp(): void
     {
         parent::setUp();
 
         $this->productsRepository = $this->getRepository(ProductsRepository::class);
         $this->productBundlesRepository = $this->getRepository(ProductBundlesRepository::class);
+        $this->productManager = $this->inject(ProductManager::class);
     }
 
     protected function requiredRepositories(): array
@@ -43,21 +47,17 @@ class ProductManagerTest extends DatabaseTestCase
         /** @var ActiveRow $product */
         $product = $this->insertProduct();
 
-        $productManager = new ProductManager($this->productsRepository);
-
-        $productManager->decreaseStock($product, 1);
+        $this->productManager->decreaseStock($product, 1);
         $product = $this->productsRepository->find($product->id);
         $this->assertEquals(9, $product->stock);
 
-        $productManager->decreaseStock($product, 3);
+        $this->productManager->decreaseStock($product, 3);
         $product = $this->productsRepository->find($product->id);
         $this->assertEquals(6, $product->stock);
     }
 
     public function testDecreaseStockBundleProducts(): void
     {
-        $productManager = new ProductManager($this->productsRepository);
-
         /** @var ActiveRow $mainProduct */
         $mainProduct = $this->insertProduct(10);
         /** @var ActiveRow $bundleProduct */
@@ -65,7 +65,7 @@ class ProductManagerTest extends DatabaseTestCase
 
         $this->productBundlesRepository->add($mainProduct->id, $bundleProduct->id);
 
-        $productManager->decreaseStock($bundleProduct, 3);
+        $this->productManager->decreaseStock($bundleProduct, 3);
 
         $this->assertEquals(4, $this->productsRepository->find($mainProduct->id)->stock);
         $this->assertEquals(4, $this->productsRepository->find($bundleProduct->id)->stock);
@@ -77,7 +77,7 @@ class ProductManagerTest extends DatabaseTestCase
 
         $this->productBundlesRepository->add($mainProduct->id, $bundleProduct->id);
 
-        $productManager->decreaseStock($bundleProduct, 3);
+        $this->productManager->decreaseStock($bundleProduct, 3);
 
         $this->assertEquals(4, $this->productsRepository->find($mainProduct->id)->stock);
         $this->assertEquals(7, $this->productsRepository->find($bundleProduct->id)->stock);
@@ -92,8 +92,8 @@ class ProductManagerTest extends DatabaseTestCase
         $this->productBundlesRepository->add($mainProduct->id, $bundleProduct1->id);
         $this->productBundlesRepository->add($mainProduct->id, $bundleProduct2->id);
 
-        $productManager->decreaseStock($bundleProduct1, 2);
-        $productManager->decreaseStock($bundleProduct2, 2);
+        $this->productManager->decreaseStock($bundleProduct1, 2);
+        $this->productManager->decreaseStock($bundleProduct2, 2);
 
         $this->assertEquals(8, $this->productsRepository->find($mainProduct->id)->stock);
         $this->assertEquals(8, $this->productsRepository->find($bundleProduct1->id)->stock);

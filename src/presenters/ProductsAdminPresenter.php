@@ -11,6 +11,7 @@ use Crm\ApplicationModule\Graphs\GraphDataItem;
 use Crm\PaymentsModule\Repository\PaymentItemsRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Forms\ProductsFormFactory;
+use Crm\ProductsModule\Manager\ProductManager;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
@@ -36,12 +37,15 @@ class ProductsAdminPresenter extends AdminPresenter
     /** @persistent */
     public $tags = [];
 
+    private $productManager;
+
     public function __construct(
         ProductsRepository $productsRepository,
         ProductsFormFactory $productsFormFactory,
         PaymentItemsRepository $paymentItemsRepository,
         TagsRepository $tagsRepository,
-        ConfigsRepository $configRepository
+        ConfigsRepository $configRepository,
+        ProductManager $productManager
     ) {
         parent::__construct();
         $this->productsRepository = $productsRepository;
@@ -49,6 +53,7 @@ class ProductsAdminPresenter extends AdminPresenter
         $this->paymentItemsRepository = $paymentItemsRepository;
         $this->tagsRepository = $tagsRepository;
         $this->configRepository = $configRepository;
+        $this->productManager = $productManager;
     }
 
     /**
@@ -159,6 +164,7 @@ class ProductsAdminPresenter extends AdminPresenter
             $this->flashMessage($this->translator->translate('products.admin.products.messages.product_not_found'));
             $this->redirect('default');
         }
+        $product = $this->productManager->syncProductWithDistributionCenter($product);
         $this->template->product = $product;
     }
 
