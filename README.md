@@ -2,6 +2,21 @@
 
 ## Configuration
 
+### Payment gateways
+
+To configure which gateways are available on the checkout page, you need to register the gateway and add it's label in your `config.neon` file.
+
+Please add following snippet with the (available) gateways you want to use:
+
+```neon
+services:
+	# ...
+	checkoutFormFactory:
+		setup:
+			- addPaymentGateway(paypal, "Paypal")
+			- addPaymentGateway(cardpay, "Credit card")
+```
+
 ### Terms and Conditions URL
 
 If you want the customer to agree to the terms and conditions, you need to configure URL in settings _(category **Shop**)_.
