@@ -233,6 +233,7 @@ admin:
 		invoice: Faktúra
 		created_at: Vytvorený
 		back_to_funnel: Návrat na okno
+		warning: "Distribúcia je neaktuálna. Spustite príkaz 'sales-funnel:distributions'."
 
 	total_user_payments:
 		for_shop_payments: "{1}platbu v obchode|[2,4]platby v obchode|[5,Inf]platieb v obchode"

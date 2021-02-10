@@ -233,6 +233,7 @@ admin:
 		invoice: Invoice
 		created_at: Created at
 		back_to_funnel: Back to funnel
+		warning: Distribution is out of date. Please run `sales-funnel:distributions` command.
 
 	total_user_payments:
 		for_shop_payments: "{1}payment in shop|[2,Inf]payments in shop"

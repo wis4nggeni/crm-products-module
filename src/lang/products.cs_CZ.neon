@@ -230,6 +230,7 @@ admin:
 		invoice: Faktura
 		created_at: Vytvořený
 		back_to_funnel: Zpět na okno
+		warning: "Distribuce je zastaralá. Spusťte příkaz `sales-funnel:distributions`."
 
 	total_user_payments:
 		for_shop_payments: "{1}platbu v obchodě|[2,4]platby v obchodě|[5,Inf]plateb v obchodě"
