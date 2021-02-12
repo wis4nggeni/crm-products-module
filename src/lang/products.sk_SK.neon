@@ -360,6 +360,9 @@ data_provider:
 		products_from_eshop: "Produkty z e-shopu:"
 		products_from_eshop_desc: "Pozor: po výbere produktu je potrebné zadať ešte počet zakúpených kusov."
 		products_from_eshop_readonly: "Produkty nie je možné upraviť, objednávka už bola vytvorená."
+	payment_item_types_filter:
+		key:
+			product: Produkt
 
 config:
 	category: Obchod

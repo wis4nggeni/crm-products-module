@@ -26,6 +26,7 @@ services:
 
 	- Crm\ProductsModule\DataProvider\PaymentFormDataProvider
 	- Crm\ProductsModule\DataProvider\PaymentsAdminFilterFormDataProvider
+	- Crm\ProductsModule\DataProvider\PaymentItemTypesFilterDataProvider
 
 	- Crm\ProductsModule\Distribution\AmountSpentDistribution
 	- Crm\ProductsModule\Distribution\PaymentCountsDistribution

@@ -356,6 +356,9 @@ data_provider:
 		products_from_eshop: "Produkty z e-shopu:"
 		products_from_eshop_desc: "Pozor: po výběru produktu je třeba zadat ještě počet zakoupených kusů."
 		products_from_eshop_readonly: "Produkty není možné upravit, objednávka již byla vytvořena."
+	payment_item_types_filter:
+		key:
+			product: Produkt
 
 config:
 	category: Obchod

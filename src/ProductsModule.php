@@ -226,6 +226,10 @@ class ProductsModule extends CrmModule
             'payments.dataprovider.payment_form',
             $this->getInstance(PaymentFormDataProvider::class)
         );
+        $dataProviderManager->registerDataProvider(
+            'payments.dataprovider.dashboard',
+            $this->getInstance(\Crm\ProductsModule\DataProvider\PaymentItemTypesFilterDataProvider::class)
+        );
     }
 
     public function registerEvents(EventsStorage $eventsStorage)
