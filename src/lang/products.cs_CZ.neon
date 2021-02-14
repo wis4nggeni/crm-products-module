@@ -358,7 +358,7 @@ data_provider:
 		products_from_eshop_readonly: "Produkty není možné upravit, objednávka již byla vytvořena."
 	payment_item_types_filter:
 		key:
-			product: Produkt
+			product: Obchod
 
 config:
 	category: Obchod

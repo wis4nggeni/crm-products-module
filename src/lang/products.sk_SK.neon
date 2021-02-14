@@ -362,7 +362,7 @@ data_provider:
 		products_from_eshop_readonly: "Produkty nie je možné upraviť, objednávka už bola vytvorená."
 	payment_item_types_filter:
 		key:
-			product: Produkt
+			product: Obchod
 
 config:
 	category: Obchod

@@ -362,7 +362,7 @@ data_provider:
 		products_from_eshop_readonly: "It's not possible to edit products, order has already been created."
 	payment_item_types_filter:
 		key:
-			product: Product
+			product: Shop
 
 config:
 	category: Shop
