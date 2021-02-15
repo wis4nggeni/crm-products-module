@@ -48,7 +48,8 @@ class HasOrderCriteriaTest extends DatabaseTestCase
         [$paymentSelection, $paymentRow] = $this->prepareData(true);
 
         $hasOrderCriteria = new HasOrderCriteria();
-        $hasOrderCriteria->addCondition($paymentSelection, (object)['selection' => true], $paymentRow);
+        $values = (object)['selection' => true];
+        $hasOrderCriteria->addConditions($paymentSelection, ['has_order' => $values], $paymentRow);
 
         $this->assertNotEmpty($paymentSelection->fetch());
     }
@@ -58,7 +59,8 @@ class HasOrderCriteriaTest extends DatabaseTestCase
         [$paymentSelection, $paymentRow] = $this->prepareData(false);
 
         $hasOrderCriteria = new HasOrderCriteria();
-        $hasOrderCriteria->addCondition($paymentSelection, (object)['selection' => true], $paymentRow);
+        $values = (object)['selection' => true];
+        $hasOrderCriteria->addConditions($paymentSelection, ['has_order' => $values], $paymentRow);
 
         $this->assertEmpty($paymentSelection->fetch());
     }

@@ -16,8 +16,10 @@ class HasOrderCriteria implements ScenariosCriteriaInterface
         ];
     }
 
-    public function addCondition(Selection $selection, $values, IRow $criterionItemRow): bool
+    public function addConditions(Selection $selection, array $paramValues, IRow $criterionItemRow): bool
     {
+        $values = $paramValues['has_order'];
+
         if ($values->selection) {
             $selection->where(':orders.id IS NOT NULL');
         } else {
