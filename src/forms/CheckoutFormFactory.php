@@ -264,12 +264,17 @@ class CheckoutFormFactory
                 ->addConditionOn($action, Form::NOT_EQUAL, 'login')
                 ->addRule(Form::FILLED, $this->translator->translate('products.frontend.shop.checkout.fields.city_required'));
 
-            $shippingAddress->addText('zip', $this->translator->translate('products.frontend.shop.checkout.fields.zip_code'))
+            $zip = $shippingAddress->addText('zip', $this->translator->translate('products.frontend.shop.checkout.fields.zip_code'))
                 ->addConditionOn($action, Form::NOT_EQUAL, 'login')
                 ->addRule(Form::FILLED, $this->translator->translate('products.frontend.shop.checkout.fields.zip_code_required'));
 
             $availableCountryPairs = $this->countryPostalFeesRepository->findAllAvailableCountryPairs();
-            $shippingAddress->addSelect('country_id', $this->translator->translate('products.frontend.shop.checkout.fields.country'), $availableCountryPairs);
+            $country = $shippingAddress->addSelect('country_id', $this->translator->translate('products.frontend.shop.checkout.fields.country'), $availableCountryPairs);
+
+            $validateCountryIds = $this->getIdsOfCountriesByIsoCode(['CZ', 'SK']);
+            $zip->addConditionOn($country, Form::IS_IN, $validateCountryIds)
+                ->addRule(Form::PATTERN, $this->translator->translate('products.frontend.shop.checkout.fields.zip_code_invalid'), '\d{3} ?\d{2}');
+
             $sameShipping->addCondition(Form::EQUAL, true)
                 ->toggle('billing-address', false);
         } elseif ($hasLicence) {
@@ -323,11 +328,15 @@ class CheckoutFormFactory
             ->addConditionOn($sameShipping->isDisabled() ? $addInvoice : $sameShipping, Form::EQUAL, $sameShipping->isDisabled() ? true : false)
             ->addRule(Form::FILLED, $this->translator->translate('products.frontend.shop.checkout.fields.city_required'));
 
-        $billingAddress->addText('zip', $this->translator->translate('products.frontend.shop.checkout.fields.zip_code'))
+        $zip = $billingAddress->addText('zip', $this->translator->translate('products.frontend.shop.checkout.fields.zip_code'))
             ->addConditionOn($sameShipping->isDisabled() ? $addInvoice : $sameShipping, Form::EQUAL, $sameShipping->isDisabled() ? true : false)
             ->addRule(Form::FILLED, $this->translator->translate('products.frontend.shop.checkout.fields.zip_code_required'));
 
-        $billingAddress->addSelect('country_id', $this->translator->translate('products.frontend.shop.checkout.fields.country'), $this->countriesRepository->getAllPairs());
+        $country = $billingAddress->addSelect('country_id', $this->translator->translate('products.frontend.shop.checkout.fields.country'), $this->countriesRepository->getAllPairs());
+
+        $validateCountryIds = $this->getIdsOfCountriesByIsoCode(['CZ', 'SK']);
+        $zip->addConditionOn($country, Form::IS_IN, $validateCountryIds)
+            ->addRule(Form::PATTERN, $this->translator->translate('products.frontend.shop.checkout.fields.zip_code_invalid'), '\d{3} ?\d{2}');
 
         $billingAddress->addText('company_id', $this->translator->translate('products.frontend.shop.checkout.fields.company_id'))
             ->setAttribute('placeholder', $this->translator->translate('products.frontend.shop.checkout.fields.company_id_placeholder'));
@@ -668,5 +677,14 @@ class CheckoutFormFactory
             $postalFee = $this->postalFeesRepository->find($values['postal_fee']);
         }
         return $postalFee;
+    }
+
+    private function getIdsOfCountriesByIsoCode(array $codes)
+    {
+        $countries = $this->countriesRepository->all()->where(['iso_code' => $codes])->fetchAssoc('id');
+        if (empty($countries)) {
+            return [];
+        }
+        return array_keys($countries);
     }
 }

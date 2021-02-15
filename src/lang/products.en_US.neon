@@ -303,6 +303,7 @@ frontend:
 				city_required: 'Field City is required.'
 				zip_code: Zip Code
 				zip_code_required: 'Field Zip Code is required.'
+				zip_code_invalid: 'The zip code field should contain exactly 5 numbers and must be in the format: XXX XX (e.g.: 841 07).'
 				country: Country
 				company_name: 'Company Name'
 				company_name_required: 'Field Company Name is required.'
