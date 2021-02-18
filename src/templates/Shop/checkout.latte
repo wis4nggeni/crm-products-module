@@ -65,12 +65,14 @@
                             </div>
                         {/if}
                     {/formContainer}
-                    {formContainer contact}
-                        <div class="form-group" id="phone-number">
-                            {label phone_number /}
-                            {input phone_number}
-                        </div>
-                    {/formContainer}
+                    {ifset $control['checkoutForm']['contact']}
+                        {formContainer contact}
+                            <div class="form-group" id="phone-number">
+                                {label phone_number /}
+                                {input phone_number}
+                            </div>
+                        {/formContainer}
+                    {/ifset}
                 </fieldset>
                 {ifset $control['checkoutForm']['shipping_address']}
                 <fieldset id="shipping-address">

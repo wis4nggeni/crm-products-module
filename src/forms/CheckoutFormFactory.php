@@ -215,12 +215,14 @@ class CheckoutFormFactory
             ->addConditionOn($action, Form::EQUAL, 'login')
             ->addRule(Form::FILLED, $this->translator->translate('products.frontend.shop.checkout.fields.pass_required'));
 
-        $contact = $form->addContainer('contact');
-        $contact->addText('phone_number', $this->translator->translate('products.frontend.shop.checkout.fields.phone_number'))
-            ->setAttribute('placeholder', $this->translator->translate('products.frontend.shop.checkout.fields.phone_number_placeholder'))
-            ->addConditionOn($action, Form::NOT_EQUAL, 'login')
-            ->addRule(Form::FILLED, $this->translator->translate('products.frontend.shop.checkout.fields.phone_number_required'))
-            ->addRule(Form::MIN_LENGTH, $this->translator->translate('products.frontend.shop.checkout.fields.phone_number_min_length'), 6);
+        if ($hasDelivery) {
+            $contact = $form->addContainer('contact');
+            $contact->addText('phone_number', $this->translator->translate('products.frontend.shop.checkout.fields.phone_number'))
+                ->setAttribute('placeholder', $this->translator->translate('products.frontend.shop.checkout.fields.phone_number_placeholder'))
+                ->addConditionOn($action, Form::NOT_EQUAL, 'login')
+                ->addRule(Form::FILLED, $this->translator->translate('products.frontend.shop.checkout.fields.phone_number_required'))
+                ->addRule(Form::MIN_LENGTH, $this->translator->translate('products.frontend.shop.checkout.fields.phone_number_min_length'), 6);
+        }
 
         $invoice = $form->addContainer('invoice');
         $addInvoice = $invoice->addCheckbox('add_invoice', $this->translator->translate('products.frontend.shop.checkout.fields.want_invoice'));
@@ -552,7 +554,7 @@ class CheckoutFormFactory
     {
         $shippingAddressId = null;
         if (isset($values['shipping_address'])) {
-            $values['shipping_address']['phone_number'] = $values['contact']['phone_number'];
+            $values['shipping_address']['phone_number'] = $values['contact']['phone_number'] ?? null;
             $shippingAddress = $this->addressesRepository->findByAddress($values['shipping_address'], 'shop', $user->id);
             if (!$shippingAddress) {
                 $shippingAddress = $this->addressesRepository->add(
@@ -578,7 +580,7 @@ class CheckoutFormFactory
     {
         $licenceAddressId = null;
         if (isset($values['licence_address'])) {
-            $values['licence_address']['phone_number'] = $values['contact']['phone_number'];
+            $values['licence_address']['phone_number'] = $values['contact']['phone_number'] ?? null;
             $licenceAddress = $this->addressesRepository->findByAddress($values['licence_address'], 'licence', $user->id);
             if (!$licenceAddress) {
                 $licenceAddress = $this->addressesRepository->add(
@@ -629,7 +631,7 @@ class CheckoutFormFactory
                     $billingAddress = $this->addressChangeRequestsRepository->acceptRequest($changeRequest);
                 }
             } else {
-                $values['billing_address']['phone_number'] = $values['contact']['phone_number'];
+                $values['billing_address']['phone_number'] = $values['contact']['phone_number'] ?? null;
                 $changeRequest = $this->addressChangeRequestsRepository->add(
                     $user,
                     $billingAddress,
