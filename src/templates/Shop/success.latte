@@ -4,18 +4,16 @@
     <script type="text/javascript">
         ga('ecommerce:addTransaction', {
             'id': {$payment->variable_symbol},
-            'affiliation': 'Obchod DennikN',
             'revenue': {$payment->amount},
             'shipping': {$order->postal_fee_id ? $order->postal_fee->amount : 0},
-            'currency': 'EUR'
+            'currency': {$currency}
         });
 
         ga('globalTracker.ecommerce:addTransaction', {
             'id': {$payment->variable_symbol},
-            'affiliation': 'Obchod DennikN',
             'revenue': {$payment->amount},
             'shipping': {$order->postal_fee_id ? $order->postal_fee->amount : 0},
-            'currency': 'EUR'
+            'currency': {$currency}
         });
 
         {foreach $payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\PaymentItem\ProductPaymentItem::TYPE) as $paymentItem}
@@ -34,7 +32,7 @@
                 'category': {$category},
                 'price': {$paymentItem->amount},
                 'quantity': {$paymentItem->count},
-                'currency': 'EUR'
+                'currency': {$currency}
             });
 
             ga('globalTracker.ecommerce:addItem', {
@@ -44,7 +42,7 @@
                 'category': {$category},
                 'price': {$paymentItem->amount},
                 'quantity': {$paymentItem->count},
-                'currency': 'EUR'
+                'currency': {$currency}
             });
         {/foreach}
 

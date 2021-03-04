@@ -437,6 +437,7 @@ class ShopPresenter extends FrontendPresenter
         $this->template->order = $order;
         $this->template->fileFormatMap = $fileFormatMap;
         $this->template->ebooks = $ebooks;
+        $this->template->currency = $this->applicationConfig->get('currency');
 
         $this->cartSession->products = [];
     }
