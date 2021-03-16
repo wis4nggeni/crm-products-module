@@ -6,6 +6,7 @@ use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ProductsModule\Builder\ProductBuilder;
 use Crm\ProductsModule\DataProvider\ProductsFormDataProviderInterface;
+use Crm\ProductsModule\Distribution\ProductSaveEventDistributionException;
 use Crm\ProductsModule\Events\ProductSaveEvent;
 use Crm\ProductsModule\ProductsCache;
 use Crm\ProductsModule\Repository\DistributionCentersRepository;
@@ -22,6 +23,7 @@ use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\Html;
 use Tomaj\Form\Renderer\BootstrapRenderer;
+use Tracy\Debugger;
 
 class ProductsFormFactory
 {
@@ -342,7 +344,14 @@ class ProductsFormFactory
             $this->productPropertiesRepository->setProductProperties($product, $productProperties);
             $this->productTagsRepository->setProductTags($product, $tags);
 
-            $this->emitter->emit(new ProductSaveEvent($product->id));
+            try {
+                $this->emitter->emit(new ProductSaveEvent($product->id));
+            } catch (ProductSaveEventDistributionException $e) {
+                Debugger::log($e, Debugger::EXCEPTION);
+                $form->addError($this->translator->translate('products.data.products.errors.not_stored_to_distribution_center'));
+                return;
+            }
+
             $this->onUpdate->__invoke($product);
 
             return;

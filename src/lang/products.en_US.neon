@@ -60,6 +60,7 @@ data:
 			ean13: EAN code must be 13 characters
 			template_property: Field '%s' is required
 			vat: VAT is required
+			not_stored_to_distribution_center: 'Unable to save product to distribution center.'
 	tags:
 		fields:
 			name: Name
