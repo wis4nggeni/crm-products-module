@@ -36,7 +36,7 @@ To display the download links of e-books you have to register your own implement
 ```
 ebookProvider:
     setup:
-        - register(Crm\DibukModule\Ebook\DibukEbookProvider())
+        - register(Crm\DibukModule\Models\DibukEbookProvider())
 ```
 
 And register link on library into user's section menu:
