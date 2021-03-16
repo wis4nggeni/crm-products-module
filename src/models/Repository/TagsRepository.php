@@ -10,16 +10,14 @@ class TagsRepository extends Repository
 
     final public function all()
     {
-        return $this->getTable()->order('sorting IS NOT NULL, sorting DESC, code ASC');
+        return $this->getTable()->order('sorting IS NOT NULL, sorting ASC, code ASC');
     }
 
     final public function counts()
     {
         return $this->getTable()
             ->where([
-                ':product_tags.product.stock > ?' => 0,
-                ':product_tags.product.visible' => true,
-                ':product_tags.product.shop' => true
+                ':product_tags.product.stock > ?' => 0
             ])
             ->group(':product_tags.tag_id')
             ->select(':product_tags.tag_id AS id, COUNT(*) AS val');

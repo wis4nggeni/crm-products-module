@@ -185,7 +185,7 @@ class ProductsModule extends CrmModule
             $tagsCount = $this->tagsRepository->getTable()->count('*');
             if ($tagsCount) {
                 $this->tagsCache->removeAll();
-                foreach ($this->tagsRepository->all()->where('visible', true) as $tag) {
+                foreach ($this->tagsRepository->all() as $tag) {
                     $this->tagsCache->add($tag->id, $tag->code);
                     $output->writeln("  * adding tag <info>{$tag->code}</info>");
                 }

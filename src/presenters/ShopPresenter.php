@@ -152,7 +152,7 @@ class ShopPresenter extends FrontendPresenter
         $this->productListData();
 
         $this->template->title = $tag->name;
-        $this->template->products = $this->productsRepository->getShopProducts(true, true, $tag);
+        $this->template->products = $this->productsRepository->getShopProducts(false, true, $tag);
         $this->template->selectedTag = $tag;
     }
 
