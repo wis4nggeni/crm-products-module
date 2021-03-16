@@ -10,7 +10,7 @@ class TagsRepository extends Repository
 
     final public function all()
     {
-        return $this->getTable()->order('-sorting DESC, code ASC');
+        return $this->getTable()->order('sorting IS NOT NULL, sorting DESC, code ASC');
     }
 
     final public function counts()
@@ -18,15 +18,18 @@ class TagsRepository extends Repository
         return $this->getTable()
             ->where([
                 ':product_tags.product.stock > ?' => 0,
+                ':product_tags.product.visible' => true,
+                ':product_tags.product.shop' => true
             ])
             ->group(':product_tags.tag_id')
             ->select(':product_tags.tag_id AS id, COUNT(*) AS val');
     }
 
-    final public function add($code, $icon, $visible = false)
+    final public function add($code, $name, $icon, $visible = false)
     {
         return $this->insert([
             'code' => $code,
+            'name' => $name,
             'icon' => $icon,
             'visible' => $visible,
         ]);

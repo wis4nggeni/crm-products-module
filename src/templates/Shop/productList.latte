@@ -1,0 +1,99 @@
+{block #title}
+  {$title}
+{/block}
+
+{block head}
+  <style>
+      @media screen and (max-width: 767px) {
+          .nav-pills > li {
+              width: 100%;
+          }
+      }
+
+      .nav-pills > li > a> .badge {
+          font-size: inherit;
+      }
+  </style>
+{/block}
+
+{block #content}
+<div class="row filter">
+  <div class="col-xs-12">
+
+    <h1 class="text-center" style="margin-top:20px; margin-bottom:50px;">
+       {$title}
+    </h1>
+
+    <ul class="nav nav-pills">
+      <li role="presentation" n:class="is_null($selectedTag) ? active, is_null($selectedTag) ? disabled">
+        <a n:href="default">{_products.frontend.shop.default.all} <span class="badge">{$productsCount}</span></a></li>
+      {foreach $tags as $tag}
+        {ifset $tagCounts[$tag->id]}
+          <li role="presentation" n:class="isset($selectedTag) && $selectedTag->id === $tag->id ? active, isset($selectedTag) && $selectedTag->id === $tag->id ? disabled">
+            <a n:href="tag $tag->code">{$tag->name} <span class="badge">{$tagCounts[$tag->id]}</span></a></li>
+        {/ifset}
+      {/foreach}
+    </ul>
+    <hr>
+
+  </div>
+</div>
+
+<div class="products">
+  <div class="row">
+    <div n:foreach="$products as $product" class="col-xs-12 col-sm-6 col-md-4">
+      <div class="product">
+        <div class="product-image">
+          <a n:href="show $product->id, $product->code"><img src="{$product->image_url}" alt="{$product->name}"
+                                                             class="img-responsive"></a>
+          <div class="image-tags" n:inner-foreach="$product->related('product_tags') as $productTag">
+            <a n:href="tag $productTag->tag->code">
+              <div class="image-tag" n:if="$productTag->tag->visible">
+                {if $productTag->tag->icon == 'dennikn'}
+                  <img src="{$basePath}/layouts/dennikn/images/shop/n.svg">
+                {else}
+                  <i class="fa {$productTag->tag->icon}"></i>
+                {/if}
+                                {$productTag->tag->name}
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="product-caption">
+          <h2><a n:href="show $product->id, $product->code">{$product->name}</a></h2>
+          <span n:foreach="$product->related('product_properties') as $property" n:if="$property->product_template_property->default">{$property->value}</span>
+          <div n:if="$product->stock > 0" class="price-row">
+            <table>
+              <tr>
+                <td>
+                  <div class="price">
+                                        <span class="catalog-price" n:if="$product->catalog_price != $product->price">
+                                            {if mb_strtolower($currency) === 'czk'}
+                                              {$product->catalog_price|price:null,0}
+                                            {else}
+                                              {$product->catalog_price|price}
+                                            {/if}
+                                        </span>
+
+                    {if mb_strtolower($currency) === 'czk'}
+                      {$product->price|price:null,0}
+                    {else}
+                      {$product->price|price}
+                    {/if}
+                  </div>
+                </td>
+                <td>
+                  <a n:href="addCart! $product->id" class="btn add-cart" data-ajax-off="unique" role="button"><i
+                            class="fa fa-shopping-cart"></i> {_products.frontend.shop.default.add_to_cart}</a>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div n:if="$product->stock <= 0" class="price-row out-of-stock">
+            <a n:href="show $product->id, $product->code" class="btn">{_products.frontend.shop.default.sold_out}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -49,9 +49,6 @@ class ShopPresenter extends FrontendPresenter
     private $cartProducts;
     private $cartProductSum;
 
-    /** @persistent */
-    public $tags = [];
-
     public function __construct(
         ProductsRepository $productsRepository,
         PostalFeesRepository $postalFeesRepository,
@@ -89,6 +86,7 @@ class ShopPresenter extends FrontendPresenter
             $this->setLayout('shop');
         }
 
+        $this->template->layoutName = $this->layoutManager->getLayout($this->getLayout());
         $this->template->headerCode = $this->applicationConfig->get('shop_header_block');
         $this->template->ogImageUrl = $this->applicationConfig->get('shop_og_image_url');
     }
@@ -103,33 +101,75 @@ class ShopPresenter extends FrontendPresenter
         return 'shop';
     }
 
-    public function renderDefault()
+    protected function beforeRender()
     {
+        parent::beforeRender();
+
         $this->template->cartProductSum = $this->cartProductSum;
+        $this->template->currency = $this->applicationConfig->get('currency');
+    }
+
+    private function productListData()
+    {
         $this->template->tags = $this->tagsRepository->all()->where(['visible' => true]);
         $counts = [];
         foreach ($this->tagsRepository->counts()->where(['shop' => true]) as $count) {
             $counts[$count->id] = $count->val;
         }
-        $this->template->currency = $this->applicationConfig->get('currency');
         $this->template->tagCounts = $counts;
         $this->template->productsCount = $this->productsRepository->getShopProducts(true, true)->count('*');
-        $this->template->selectedTags = array_keys($this->tags);
-        $this->template->products = $this->productsRepository->getShopProducts(empty($this->tags), true, array_keys($this->tags));
+    }
+
+    public function renderDefault()
+    {
+        // TODO: remove this fallback for deprecated routing by 2022
+        if ($tags = $this->getParameter('tags')) {
+            if (count($tags) === 1) {
+                $tag = $this->tagsRepository->find(array_key_first($tags));
+                if ($tag) {
+                    $this->redirect('tag', ['tagCode' => $tag->code]);
+                }
+            }
+            $this->redirect('this');
+        }
+
+        $this->setView('productList');
+        $this->productListData();
+
+        $this->template->title = $this->translator->translate('products.frontend.shop.default.header');
+        $this->template->products = $this->productsRepository->getShopProducts(true, true);
+        $this->template->selectedTag = null;
+    }
+
+    public function renderTag($tagCode)
+    {
+        $tag = $this->tagsRepository->findBy('code', $tagCode);
+        if (!$tag) {
+            throw new BadRequestException("Tag not found: " . $tagCode, 404);
+        }
+
+        $this->setView('productList');
+        $this->productListData();
+
+        $this->template->title = $tag->name;
+        $this->template->products = $this->productsRepository->getShopProducts(true, true, $tag);
+        $this->template->selectedTag = $tag;
     }
 
     public function renderShow($id, $code)
     {
         $product = $this->productsRepository->find($id);
+        if (!$product && $code) {
+            $product = $this->productsRepository->findBy('code', $code);
+            $this->redirect('this', ['id' => $product->id, 'code' => $product->code]);
+        }
         if (!$product || !$product->shop) {
             throw new BadRequestException('Product not found.', 404);
         }
-
         if ($code && $code !== $product->code) {
             throw new BadRequestException("Product code does not match the product ID. Is your URL valid?", 404);
         }
 
-        $this->template->cartProductSum = $this->cartProductSum;
         $this->template->product = $product;
         $this->template->relatedProducts = $this->productsRepository->relatedProducts($product);
     }
@@ -303,7 +343,6 @@ class ShopPresenter extends FrontendPresenter
             $freeProducts = $this->productsRepository->findByIds(array_keys($this->cartSession->freeProducts));
         }
 
-        $this->template->cartProductSum = $this->cartProductSum;
         $this->template->cartProducts = $this->cartSession->products;
         $this->template->products = $products;
         $this->template->freeProducts = $freeProducts;
@@ -437,7 +476,6 @@ class ShopPresenter extends FrontendPresenter
         $this->template->order = $order;
         $this->template->fileFormatMap = $fileFormatMap;
         $this->template->ebooks = $ebooks;
-        $this->template->currency = $this->applicationConfig->get('currency');
 
         $this->cartSession->products = [];
     }
@@ -465,32 +503,6 @@ class ShopPresenter extends FrontendPresenter
     {
         $this->buildCartSession();
         $this->buildTrackingParamsSession();
-    }
-
-    public function handleAddTag()
-    {
-        $tag = $this->getParameter('tag');
-        if (!$tag) {
-            return;
-        }
-        $this->tags[$tag] = $this->getParameter('code', true);
-        $this->redirect('default');
-    }
-
-    public function handleRemoveTag()
-    {
-        $tag = $this->getParameter('tag');
-        if (!$tag) {
-            return;
-        }
-        unset($this->tags[$tag]);
-        $this->redirect('default');
-    }
-
-    public function handleClearTags()
-    {
-        $this->tags = [];
-        $this->redirect('default');
     }
 
     protected function getTrackerParams()

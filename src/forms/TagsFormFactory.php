@@ -3,9 +3,11 @@
 namespace Crm\ProductsModule\Forms;
 
 use Crm\ProductsModule\Repository\TagsRepository;
+use Crm\ProductsModule\TagsCache;
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Form;
 use Nette\Utils\Html;
+use Nette\Utils\Strings;
 use Tomaj\Form\Renderer\BootstrapRenderer;
 
 class TagsFormFactory
@@ -18,12 +20,16 @@ class TagsFormFactory
 
     public $onUpdate;
 
+    private $tagsCache;
+
     public function __construct(
+        TagsCache $tagsCache,
         TagsRepository $tagsRepository,
         Translator $translator
     ) {
         $this->tagsRepository = $tagsRepository;
         $this->translator = $translator;
+        $this->tagsCache = $tagsCache;
     }
 
     /**
@@ -48,9 +54,14 @@ class TagsFormFactory
         $form->setTranslator($this->translator);
         $form->addProtection();
 
+        $form->addText('name', 'products.data.tags.fields.name')
+            ->setRequired('products.data.tags.errors.name')
+            ->setAttribute('placeholder', 'products.data.tags.placeholder.name');
+
         $form->addText('code', 'products.data.tags.fields.code')
-            ->setRequired('products.data.tags.errors.code')
-            ->setAttribute('placeholder', 'products.data.tags.placeholder.code');
+            ->setOption('description', 'products.data.tags.descriptions.code')
+            ->setAttribute('placeholder', 'products.data.tags.placeholder.code')
+            ->setDisabled(isset($tagId));
 
         $form->addText('icon', 'products.data.tags.fields.icon')
             ->setRequired('products.data.tags.errors.icon')
@@ -61,7 +72,7 @@ class TagsFormFactory
         if ($tagId) {
             $tagPairsQuery->where('id != ?', $tagId);
         }
-        $tagPairs = $tagPairsQuery->fetchPairs('sorting', 'code');
+        $tagPairs = $tagPairsQuery->fetchPairs('sorting', 'name');
         $form->addSelect('sorting', 'products.data.tags.fields.sorting', $tagPairs)
             ->setPrompt('products.data.tags.placeholder.sorting');
 
@@ -102,7 +113,9 @@ class TagsFormFactory
             $this->tagsRepository->update($tag, $values);
             $this->onUpdate->__invoke($tag);
         } else {
-            $tag = $this->tagsRepository->add($values['code'], $values['icon'], $values['visible']);
+            $code = Strings::webalize($values['code']);
+            $tag = $this->tagsRepository->add($code, $values['name'], $values['icon'], $values['visible']);
+            $this->tagsCache->add($tag->id, $code);
             $this->onSave->__invoke($tag);
         }
     }

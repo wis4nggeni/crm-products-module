@@ -23,6 +23,7 @@ use Crm\ProductsModule\Events\OrderStatusChangeEventHandler;
 use Crm\ProductsModule\Events\PaymentStatusChangeHandler;
 use Crm\ProductsModule\Events\PaymentStatusChangeNotifyHandler;
 use Crm\ProductsModule\Repository\ProductsRepository;
+use Crm\ProductsModule\Repository\TagsRepository;
 use Crm\ProductsModule\Scenarios\HasOrderCriteria;
 use Crm\ProductsModule\Seeders\AddressTypesSeeder;
 use Crm\ProductsModule\Seeders\ConfigsSeeder;
@@ -43,19 +44,27 @@ class ProductsModule extends CrmModule
 
     private $productsRepository;
 
+    private $tagsCache;
+
+    private $tagsRepository;
+
     public function __construct(
         Container $container,
         Translator $translator,
         ApplicationConfig $applicationConfig,
         ConfigsCache $configsCache,
         ProductsCache $productsCache,
-        ProductsRepository $productsRepository
+        ProductsRepository $productsRepository,
+        TagsCache $tagsCache,
+        TagsRepository $tagsRepository
     ) {
         parent::__construct($container, $translator);
         $this->applicationConfig = $applicationConfig;
         $this->configsCache = $configsCache;
         $this->productsCache = $productsCache;
         $this->productsRepository = $productsRepository;
+        $this->tagsCache = $tagsCache;
+        $this->tagsRepository = $tagsRepository;
     }
 
     public function registerAdminMenuItems(MenuContainerInterface $menuContainer)
@@ -151,40 +160,13 @@ class ProductsModule extends CrmModule
             $shopHost = "products/shop";
         }
 
-        foreach ($this->productsCache->all() as $product) {
-            $router[] = new Route(
-                $shopHost . "/show/<id {$product->id}>/<code {$product->code}>",
-                [
-                    'module' => 'Products',
-                    'presenter' => 'Shop',
-                    'action' => 'show',
-                ]
-            );
-
-            $router[] = new Route(
-                $shopHost . "/show/<id {$product->id}>",
-                [
-                    'module' => 'Products',
-                    'presenter' => 'Shop',
-                    'action' => 'show',
-                    'code' => $product->code,
-                ],
-                Route::ONE_WAY
-            );
-
-            $router[] = new Route(
-                $shopHost . "/product[/<id {$product->id}>]/<code {$product->code}>",
-                [
-                    'module' => 'Products',
-                    'presenter' => 'Shop',
-                    'action' => 'show',
-                    'id' => $product->id,
-                ],
-                Route::ONE_WAY
-            );
+        foreach ($this->tagsCache->all() as $tag) {
+            $router[] = new Route($shopHost . "/<tagCode {$tag->code}>", "Products:Shop:tag");
         }
 
-        $router[] = new Route($shopHost . '/<action show>[/<id>[/<code>]]', 'Products:Shop:default');
+        $router[] = new Route($shopHost . "/product/<code>", 'Products:Shop:show', Route::ONE_WAY);
+        $router[] = new Route($shopHost . '/<action show>/<id \d+>/<code>', 'Products:Shop:show');
+        $router[] = new Route($shopHost . '/<action show>/<code>', 'Products:Shop:show');
         $router[] = new Route($shopHost . '/<action>[/<id>]', 'Products:Shop:default');
     }
 
@@ -197,6 +179,15 @@ class ProductsModule extends CrmModule
                 foreach ($this->productsRepository->getTable() as $product) {
                     $this->productsCache->add($product->id, $product->code);
                     $output->writeln("  * adding product <info>{$product->code}</info>");
+                }
+            }
+
+            $tagsCount = $this->tagsRepository->getTable()->count('*');
+            if ($tagsCount) {
+                $this->tagsCache->removeAll();
+                foreach ($this->tagsRepository->all()->where('visible', true) as $tag) {
+                    $this->tagsCache->add($tag->id, $tag->code);
+                    $output->writeln("  * adding tag <info>{$tag->code}</info>");
                 }
             }
         }

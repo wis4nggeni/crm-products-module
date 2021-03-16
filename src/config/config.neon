@@ -50,6 +50,7 @@ services:
 	- Crm\ProductsModule\PaymentItem\PaymentItemHelper
 
 	productsCache: Crm\ProductsModule\ProductsCache
+	tagsCache: Crm\ProductsModule\TagsCache
 
 	- Crm\ProductsModule\Seeders\AddressTypesSeeder
 	- Crm\ProductsModule\Seeders\ConfigsSeeder

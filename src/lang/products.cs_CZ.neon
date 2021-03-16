@@ -61,19 +61,22 @@ data:
 			vat: DPH je povinná
 	tags:
 		fields:
-			code: Název
+			name: Název
+			code: Kód
 			icon: Ikona
 			visible: Umístit na titulku
 			products: Počet produktů
-			sorting: Produkt zařadit za
+			sorting: Tag zařadit za
 		placeholder:
-			code: SuperTag
+			name: SuperTag
+			code: super-tag
 			icon: fa-tag
 			sorting: Na první pozici
 		descriptions:
+			code: Kód bude použit v URL adrese pro produkty obchodu s daným tagem.
 			icon: Vyber z FontAwesome. Pre logo Nka použi dennikn.
 		errors:
-			code: Položka 'Název' je povinná
+			name: Položka 'Název' je povinná
 			icon: Položka 'Ikona' je povinná
 admin:
 	component:

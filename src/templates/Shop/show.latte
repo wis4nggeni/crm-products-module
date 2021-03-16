@@ -29,11 +29,13 @@
         <div class="product-image">
             <img n:ifset="$product->image_url" src="{$product->image_url}" alt="{$product->name}" class="img-responsive">
             <div class="image-tags" n:inner-foreach="$product->related('product_tags') as $productTag">
-                {if $productTag->tag->icon == 'dennikn'}
-                    <div class="image-tag" n:if="$productTag->tag->visible"><img src="{$basePath}/layouts/dennikn/images/shop/n.svg"> {$productTag->tag->code}</div>
-                {else}
-                    <div class="image-tag" n:if="$productTag->tag->visible"><i class="fa {$productTag->tag->icon}"></i> {$productTag->tag->code}</div>
-                {/if}
+                <a n:href="tag $productTag->tag->code">
+                    {if $productTag->tag->icon == 'dennikn'}
+                        <div class="image-tag" n:if="$productTag->tag->visible"><img src="{$basePath}/layouts/dennikn/images/shop/n.svg"> {$productTag->tag->name}</div>
+                    {else}
+                        <div class="image-tag" n:if="$productTag->tag->visible"><i class="fa {$productTag->tag->icon}"></i> {$productTag->tag->name}</div>
+                    {/if}
+                </a>
             </div>
         </div>
         <div n:if="!empty($product->images)" class="product-gallery">

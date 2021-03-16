@@ -77,7 +77,7 @@ class ProductsRepository extends Repository
         return $this->getTable()->where(['code' => $code])->fetch();
     }
 
-    final public function getShopProducts($visibleOnly = true, $availableOnly = true, $tags = [])
+    final public function getShopProducts($visibleOnly = true, $availableOnly = true, $tag = null)
     {
         $where = ['shop' => true];
         if ($visibleOnly === true) {
@@ -86,8 +86,8 @@ class ProductsRepository extends Repository
         if ($availableOnly === true) {
             $where['stock > ?'] = 0;
         }
-        if (!empty($tags)) {
-            $where[':product_tags.tag_id'] = $tags;
+        if (isset($tag)) {
+            $where[':product_tags.tag_id'] = $tag->id;
         }
 
         return $this->getTable()->where($where)->order('sorting');

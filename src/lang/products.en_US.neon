@@ -62,19 +62,22 @@ data:
 			vat: VAT is required
 	tags:
 		fields:
-			code: Name
+			name: Name
+			code: Code
 			icon: Icon
 			visible: Place on homepage
 			products: Number of products
-			sorting: Place product after
+			sorting: Place tag after
 		placeholder:
-			code: SuperTag
+			name: SuperTag
+			code: super-tag
 			icon: fa-tag
 			sorting: To the first position
 		descriptions:
+			code: Code will be used in shop URL for products with given tag.
 			icon: Choose from FontAwesome. For N logo use dennikn.
 		errors:
-			code: Field 'Code' is mandatory
+			name: Field 'Name' is mandatory
 			icon: Field 'Icon' is mandatory
 
 admin:
