@@ -256,6 +256,10 @@ class ProductsFormFactory
                     $input->addConditionOn($templateId, Form::EQUAL, $template->id)
                         ->addRule(Form::FILLED, sprintf($this->translator->trans('products.data.products.errors.template_property'), $templateProperty->title));
                 }
+                if ($templateProperty->type === 'date') {
+                    $input->setHtmlAttribute('class', 'flatpickr');
+                }
+
                 if ($templateProperty->hint) {
                     $input->setHtmlAttribute('placeholder', $templateProperty->hint);
                 }

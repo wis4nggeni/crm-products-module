@@ -23,7 +23,7 @@ class ProductTemplatePropertiesRepository extends Repository
         return $this->getTable()->where(['product_template_id' => $template->id, 'code' => $code])->count('*') > 0;
     }
 
-    final public function add($title, $code, $required, $default, $visible, $sorting, $template, $hint = null)
+    final public function add($title, $code, $required, $default, $visible, $sorting, $template, $hint = null, $type = 'text')
     {
         return $this->insert([
             'title' => $title,
@@ -33,7 +33,8 @@ class ProductTemplatePropertiesRepository extends Repository
             'visible' => (bool)$visible,
             'sorting' => (int)$sorting,
             'product_template_id' => $template->id,
-            'hint' => $hint
+            'hint' => $hint,
+            'type' => $type
         ]);
     }
 }

@@ -6,6 +6,8 @@
     <meta content="{$product->name}" property="og:title">
     <meta content="{$product->og_image_url}" property="og:image">
     <meta content="{plink //Shop:show $product->id, $product->code}" property="og:url">
+
+    {control simpleWidget 'products.shop.show.head', $product}
 {/block}
 
 {block #scripts}
@@ -61,7 +63,13 @@
             <a n:href="Show $product->id, $product->code" class="btn">{_products.frontend.shop.show.sold_out}</a>
         </div>
         <ul>
-            <li n:foreach="$product->related('product_properties') as $property" n:if="!empty($property->value) && $property->product_template_property->visible"><span>{$property->product_template_property->title}:</span> {$property->value}</li>
+            <li n:foreach="$product->related('product_properties') as $property" n:if="!empty($property->value) && $property->product_template_property->visible"><span>{$property->product_template_property->title}:</span>
+                {if $property->product_template_property->type === 'date'}
+                    {$property->value|date:'%d.%m.%Y'}
+                {else}
+                    {$property->value}
+                {/if}
+            </li>
         </ul>
     </div>
     <div class="col-xs-12 col-sm-5" id="description-block">
