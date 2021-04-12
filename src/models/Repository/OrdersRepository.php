@@ -9,6 +9,7 @@ use Crm\ProductsModule\Events\OrderStatusChangeEvent;
 use League\Event\Emitter;
 use Nette\Database\Context;
 use Nette\Database\Table\IRow;
+use Nette\Utils\DateTime;
 
 class OrdersRepository extends Repository
 {
@@ -110,5 +111,15 @@ class OrdersRepository extends Repository
         }
 
         return $orders;
+    }
+
+    final public function hasOrderAfter(int $userId, DateTime $after): bool
+    {
+        return $this->getTable()
+                ->where([
+                    'payment.user_id' => $userId,
+                    'orders.created_at > ?' => $after,
+                ])
+                ->count('*') > 0;
     }
 }

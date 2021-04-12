@@ -2,18 +2,34 @@
 
 namespace Crm\ProductsModule\User;
 
+use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\User\UserDataProviderInterface;
+use Crm\ProductsModule\Model\Config;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\OrdersRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\User\AddressesUserDataProvider;
+use Nette\Localization\ITranslator;
+use Nette\Utils\DateTime;
+use Tracy\Debugger;
 
 class OrdersUserDataProvider implements UserDataProviderInterface
 {
     private $ordersRepository;
+    private $configsRepository;
+    private $subscriptionsRepository;
+    private $translator;
 
-    public function __construct(OrdersRepository $ordersRepository)
-    {
+    public function __construct(
+        OrdersRepository $ordersRepository,
+        ConfigsRepository $configsRepository,
+        SubscriptionsRepository $subscriptionsRepository,
+        ITranslator $translator
+    ) {
         $this->ordersRepository = $ordersRepository;
+        $this->configsRepository = $configsRepository;
+        $this->subscriptionsRepository = $subscriptionsRepository;
+        $this->translator = $translator;
     }
 
     public static function identifier(): string
@@ -84,6 +100,24 @@ class OrdersUserDataProvider implements UserDataProviderInterface
 
     public function canBeDeleted($userId): array
     {
+        $config = $this->configsRepository->loadByName(Config::ORDER_BLOCK_ANONYMIZATION);
+
+        if ($config && $config->value) {
+            $configRow = $this->configsRepository->loadByName(Config::ORDER_BLOCK_ANONYMIZATION_WITHIN_DAYS);
+            if ($configRow && is_numeric($configRow->value) && $configRow->value >= 0) {
+                $deleteThreshold = new DateTime("-{$configRow->value} days");
+            } elseif (empty($configRow->value) === true) {
+                $deleteThreshold = new DateTime();
+            } else {
+                Debugger::log("Unexpected value for config option (" . Config::ORDER_BLOCK_ANONYMIZATION_WITHIN_DAYS . "): {$configRow->value}");
+                return [false, $this->translator->translate('products.data_provider.delete.unexpected_configuration_value')];
+            }
+
+            if ($this->ordersRepository->hasOrderAfter($userId, $deleteThreshold)) {
+                return [false, $this->translator->translate('products.data_provider.delete.active_order')];
+            }
+        }
+
         return [true, null];
     }
 }

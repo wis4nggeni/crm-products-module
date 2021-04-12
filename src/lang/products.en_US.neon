@@ -368,6 +368,9 @@ frontend:
 		preparing_download: Preparing download
 
 data_provider:
+	delete:
+		active_order: User has/had a recent order and cannot be deleted.
+		unexpected_configuration_value: "Unexpected configuration value 'Users -> Count of days to check'"
 	payment_form_data:
 		products_from_eshop: "Products from e-shop:"
 		products_from_eshop_desc: "Warning: after product selection, it's required to enter number of purchased products."
@@ -390,6 +393,14 @@ config:
 	shop_terms_and_conditions_url:
 		name: URL T&C
 		description: 'URL where the general terms and conditions are located (eg. <code>http://crm.press/terms-and-conditions/</code>)'
+	users:
+		category: Users
+		prevent_anonymization:
+			name: Prevent the anonymization of user with a recent order
+			description: Will block the anonymization of user in the case of a recent order
+		prevent_anonymization_within_days:
+			name: Number of days to check
+			description: 'The number of days to check since the last order. The setting is only considered if the "Prevent the anonymization of user with a recent order" option above is enabled.'
 
 seeders:
 	address_types:

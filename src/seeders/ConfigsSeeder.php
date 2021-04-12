@@ -8,6 +8,7 @@ use Crm\ApplicationModule\Config\Repository\ConfigCategoriesRepository;
 use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\Seeders\ConfigsTrait;
 use Crm\ApplicationModule\Seeders\ISeeder;
+use Crm\ProductsModule\Model\Config;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConfigsSeeder implements ISeeder
@@ -76,6 +77,29 @@ class ConfigsSeeder implements ISeeder
             'products.config.shop_terms_and_conditions_url.description',
             null,
             400
+        );
+
+        $category = $this->getCategory($output, 'subscriptions.config.users.category', 'fa fa-user', 300);
+        $this->addConfig(
+            $output,
+            $category,
+            Config::ORDER_BLOCK_ANONYMIZATION,
+            ApplicationConfig::TYPE_BOOLEAN,
+            'products.config.users.prevent_anonymization.name',
+            'products.config.users.prevent_anonymization.description',
+            true,
+            120
+        );
+        
+        $this->addConfig(
+            $output,
+            $category,
+            Config::ORDER_BLOCK_ANONYMIZATION_WITHIN_DAYS,
+            ApplicationConfig::TYPE_INT,
+            'products.config.users.prevent_anonymization_within_days.name',
+            'products.config.users.prevent_anonymization_within_days.description',
+            45,
+            120
         );
     }
 }

@@ -368,6 +368,9 @@ frontend:
 		preparing_download: Pripravuje sa stiahnutie
 
 data_provider:
+	delete:
+		active_order: Používateľ urobil v nedávnej minulosti objednávku a nemôže byť vymazaný.
+		unexpected_configuration_value: "Neočakávaná konfiguračná hodnota 'Používatelia -> Počet kontrolovaných dní'"
 	payment_form_data:
 		products_from_eshop: "Produkty z e-shopu:"
 		products_from_eshop_desc: "Pozor: po výbere produktu je potrebné zadať ešte počet zakúpených kusov."
@@ -390,6 +393,15 @@ config:
 	shop_terms_and_conditions_url:
 		name: URL VOP
 		description: 'URL, na ktorej sa nachádzajú všeobecné obchodné podmienky (napr. <code>http://crm.press/terms-and-conditions/</code>)'
+	users:
+		category: Používatelia
+		prevent_anonymization:
+			name: Zabrániť anonymizácii používateľa s nedávnou objednávkou
+			description: Zabráni anonymizácii používateľa v prípade ak v nedávnej minulosti vytvoril objednávku v obchode
+		prevent_anonymization_within_days:
+			name: Počet kontrolovaných dní
+			description: 'Počet dní, ktoré museli uplynúť od poslednej objednávky. Nastavenie sa berie do úvahy len v prípade, že je povolená možnosť "Zabrániť anonymizácii používateľa s nedávnou objednávkou" vyššie.'
+
 
 seeders:
 	address_types:
