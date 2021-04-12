@@ -18,6 +18,8 @@ use Tracy\Debugger;
 
 class PaymentStatusChangeNotifyHandler extends AbstractListener
 {
+    public const NEW_ORDER_TEMPLATE_CODE = 'new_order';
+
     private $paymentInvoiceProviderManager;
 
     private $productPropertiesRepository;
@@ -62,7 +64,7 @@ class PaymentStatusChangeNotifyHandler extends AbstractListener
             'order' => $order->toArray(),
         ];
         $attachments = [];
-        $templateCode = 'new_order';
+        $templateCode = self::NEW_ORDER_TEMPLATE_CODE;
         $sendHelpdeskEmail = false;
 
         switch ($payment->status) {
