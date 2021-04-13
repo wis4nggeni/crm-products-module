@@ -169,4 +169,9 @@ class ProductsRepository extends Repository
     {
         $this->update($product, ['stock-=' => $count]);
     }
+
+    final public function exists($code)
+    {
+        return $this->getTable()->where('code', $code)->count('*') > 0;
+    }
 }
