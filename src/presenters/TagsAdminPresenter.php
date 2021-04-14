@@ -62,4 +62,21 @@ class TagsAdminPresenter extends AdminPresenter
 
         return $form;
     }
+
+    public function handleDeleteTag(int $id)
+    {
+        $tag = $this->tagsRepository->find($id);
+        if (!$tag) {
+            $this->flashMessage($this->translator->translate('products.admin.products.messages.tag_not_found'), 'warning');
+        } else {
+            if ($this->tagsRepository->isTagUsed($id)) {
+                $this->flashMessage($this->translator->translate('products.admin.tags.messages.tag_indelible'), 'warning');
+            } else {
+                $this->tagsRepository->delete($tag);
+                $this->flashMessage($this->translator->translate('products.admin.tags.messages.tag_deleted'));
+            }
+        }
+
+        $this->redirect('Default');
+    }
 }

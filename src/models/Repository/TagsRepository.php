@@ -45,4 +45,9 @@ class TagsRepository extends Repository
 
         $this->getTable()->where('sorting >= ?', $newSorting)->update(['sorting+=' => 1]);
     }
+
+    final public function isTagUsed(int $id): bool
+    {
+        return $this->getTable()->where([':product_tags.tag_id' => $id])->count() > 0;
+    }
 }

@@ -157,6 +157,11 @@ admin:
 		messages:
 			tag_created: Tag byl vytvořen
 			tag_updated: Tag byl aktualizován
+			tag_deleted: Tag byl smazan
+			tag_indelible: "Tag nemůže být smazán, ještě se používá"
+		delete:
+			title: Smazat tag
+			tooltip: Tag se ještě používá
 	orders:
 		default:
 			header: Objednávky

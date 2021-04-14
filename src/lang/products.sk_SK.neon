@@ -160,6 +160,11 @@ admin:
 		messages:
 			tag_created: Tag bol vytvorený
 			tag_updated: Tag bol aktualizovaný
+			tag_deleted: Tag bol zmazaný
+			tag_indelible: "Tag nemôže byť zmazaný, ešte sa používa"
+		delete:
+			title: Zmazať tag
+			tooltip: Tag sa ešte používa
 	orders:
 		default:
 			header: Objednávky

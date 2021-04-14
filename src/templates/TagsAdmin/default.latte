@@ -1,5 +1,13 @@
 {block #title}{_products.admin.tags.default.header}{/block}
 
+{block scripts}
+  <script>
+    $(document).ready(function() {
+      $('.tooltip-wrapper').tooltip();
+    });
+  </script>
+{/block}
+
 {block #content}
 
 <div class="row">
@@ -25,13 +33,17 @@
       </thead>
       <tbody>
         {foreach $tags as $tag}
+          {var $productNum = $tag->related('product_tags')->count('*')}
           <tr>
             <td><a n:href="Edit $tag->id"><i class="fa {$tag->icon}"></i> {$tag->name}</a></td>
             <td><code>{$tag->code}</code></td>
             <td>{$tag->visible|YesNo}</a></td>
-            <td>{$tag->related('product_tags')->count('*')}</a></td>
+            <td>{$productNum}</a></td>
             <td style="white-space: nowrap">
                 <a n:href="Edit $tag->id" class="btn btn-sm btn-primary" title="{_system.edit}"><i class="fa fa-edit"></i> </a>
+                  <span style="cursor: not-allowed" class="tooltip-wrapper" data-placement="bottom" {if $productNum > 0} data-title={_"products.admin.tags.delete.tooltip"} {/if}>
+                	<a n:href="DeleteTag! $tag->id" class="btn btn-sm btn-danger" {$productNum > 0 ? disabled} title={_"products.admin.tags.delete.title"}><i class="fa fa-trash-alt"></i> </a>
+                  </span>
             </td>
           </tr>
         {/foreach}

@@ -160,6 +160,11 @@ admin:
 		messages:
 			tag_created: Tag was created
 			tag_updated: Tag was updated
+			tag_deleted: Tag was deleted
+			tag_indelible: "The tag cannot be deleted, it is still in use"
+		delete:
+			title: Delete tag
+			tooltip: The tag is still in use
 	orders:
 		default:
 			header: Orders
