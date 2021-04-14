@@ -38,42 +38,60 @@ class CalculateAveragesCommand extends Command
         $postalFeeType = PostalFeePaymentItem::TYPE;
 
         $this->database->query(<<<SQL
-            INSERT INTO user_meta (`user_id`,`key`,`value`,`created_at`,`updated_at`)
-            SELECT
-                id,
-                'product_payments',
-                (
-                    SELECT COALESCE(COUNT(DISTINCT(payments.id)), 0)
-                    FROM payments
-                    INNER JOIN payment_items ON payment_items.payment_id = payments.id AND payment_items.type IN ('$productType', '$postalFeeType')
-                    WHERE
-                        payments.status='$paidStatus'
-                        AND payments.user_id = users.id
-                ),
-                NOW(),
-                NOW()
-            FROM users
-            ON DUPLICATE KEY UPDATE `updated_at`=NOW(), `value`=VALUES(value);
+            -- fill empty values for new users
+            INSERT IGNORE INTO `user_meta` (`user_id`,`key`,`value`, `created_at`, `updated_at`)
+            SELECT `id`, 'product_payments', 0, NOW(), NOW()
+            FROM `users`;
+
+            -- calculate & update values
+            UPDATE `user_meta`
+            INNER JOIN (
+                SELECT
+                    `payments`.`user_id` AS `user_id`,
+                    COUNT(DISTINCT(`payments`.`id`)) AS `product_payments_count`
+                FROM `payment_items`
+                INNER JOIN `payments`
+                    ON `payments`.`id` = `payment_items`.`payment_id`
+                    AND `payments`.`status` = '$paidStatus'
+                WHERE `payment_items`.`type` IN ('$productType', '$postalFeeType')
+                GROUP BY `payments`.`user_id`
+            ) AS `product_payments`
+                ON `user_meta`.`user_id` = `product_payments`.`user_id`
+            SET
+               `value` = `product_payments`.`product_payments_count`,
+               `updated_at` = NOW()
+            WHERE
+                `key` = 'product_payments'
+            ;
 SQL
         );
 
         $this->database->query(<<<SQL
-            INSERT INTO user_meta (`user_id`,`key`,`value`,`created_at`,`updated_at`)
-            SELECT
-                id,
-                'product_payments_amount',
-                (
-                    SELECT COALESCE(SUM(payment_items.amount * payment_items.count), 0)
-                    FROM payments
-                    INNER JOIN payment_items ON payment_items.payment_id = payments.id AND payment_items.type IN ('$productType', '$postalFeeType')
-                    WHERE
-                        payments.status='$paidStatus'
-                        AND payments.user_id = users.id
-                ),
-                NOW(),
-                NOW()
-            FROM users
-            ON DUPLICATE KEY UPDATE `updated_at`=NOW(), `value`=VALUES(value);
+            -- fill empty values for new users
+            INSERT IGNORE INTO `user_meta` (`user_id`,`key`,`value`, `created_at`, `updated_at`)
+            SELECT `id`, 'product_payments_amount', 0, NOW(), NOW()
+            FROM `users`;
+
+            -- calculate & update values
+            UPDATE `user_meta`
+            INNER JOIN (
+                SELECT
+                    `payments`.`user_id` AS `user_id`,
+                    COALESCE(SUM(`payment_items`.`amount` * `payment_items`.`count`), 0) AS `product_payments_amount`
+                FROM `payment_items`
+                INNER JOIN `payments`
+                    ON `payments`.`id` = `payment_items`.`payment_id`
+                    AND `payments`.`status` = '$paidStatus'
+                WHERE `payment_items`.`type` IN ('$productType', '$postalFeeType')
+                GROUP BY `payments`.`user_id`
+            ) AS `product_payments`
+                ON `user_meta`.`user_id` = `product_payments`.`user_id`
+            SET
+               `value` = `product_payments`.`product_payments_amount`,
+               `updated_at` = NOW()
+            WHERE
+                `key` = 'product_payments_amount'
+            ;
 SQL
         );
 
