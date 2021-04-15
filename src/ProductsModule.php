@@ -166,6 +166,7 @@ class ProductsModule extends CrmModule
 
         $router[] = new Route($shopHost . "/product/<code>", 'Products:Shop:show', Route::ONE_WAY);
         $router[] = new Route($shopHost . '/<action show>/<id \d+>/<code>', 'Products:Shop:show');
+        $router[] = new Route($shopHost . '/<action show>/<id \d+>', 'Products:Shop:show');
         $router[] = new Route($shopHost . '/<action show>/<code>', 'Products:Shop:show');
         $router[] = new Route($shopHost . '/<action>[/<id>]', 'Products:Shop:default');
     }
