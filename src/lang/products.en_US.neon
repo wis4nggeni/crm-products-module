@@ -33,6 +33,7 @@ data:
 			bundles: Bundles
 			created_at: Created at
 			stock: Stock count
+			available_at: Date of Availability
 			shop_settings: Shop settings
 		placeholder:
 			name: eg. Bamboo T-shirt

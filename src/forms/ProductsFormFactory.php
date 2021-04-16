@@ -160,6 +160,9 @@ class ProductsFormFactory
 
         $form->addText('stock', 'products.data.products.fields.stock');
 
+        $form->addText('available_at', 'products.data.products.fields.available_at')
+            ->setHtmlAttribute('class', 'flatpickr');
+
         $bundle = $form->addCheckbox('bundle', 'products.data.products.fields.bundle');
         $bundleItems = $form->addMultiSelect(
             'bundle_items',

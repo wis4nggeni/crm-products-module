@@ -32,6 +32,7 @@ data:
 			bundles: Balíky
 			created_at: Vytvořené
 			stock: Počet kusú na sklade
+			available_at: Datum dostupnosti
 			shop_settings: Nastavení pro obchod
 		placeholder:
 			name: např. Bambusové tričko
