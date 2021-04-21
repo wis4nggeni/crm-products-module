@@ -4,10 +4,13 @@ namespace Crm\ProductsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
+use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Distribution\AmountSpentDistribution;
 use Crm\ProductsModule\Distribution\PaymentCountsDistribution;
 use Crm\ProductsModule\Distribution\ProductDaysFromLastOrderDistribution;
 use Crm\ProductsModule\Distribution\ProductShopCountsDistribution;
+use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
+use DateTime;
 use Nette\Database\Context;
 use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
@@ -173,5 +176,25 @@ class ProductsRepository extends Repository
     final public function exists($code)
     {
         return $this->getTable()->where('code', $code)->count('*') > 0;
+    }
+
+
+    final public function stats(DateTime $from = null, DateTime $to = null): Selection
+    {
+        $selection = $this->getTable()
+            ->select('SUM(:payment_items.count) AS product_count, SUM(:payment_items.amount * :payment_items.count) AS product_amount, products.id AS product_id')
+            ->where(':payment_items.type = ?', ProductPaymentItem::TYPE)
+            ->where(':payment_items.payment.status = ?', PaymentsRepository::STATUS_PAID)
+            ->group('products.id');
+
+        if ($to === null) {
+            $to = new DateTime();
+        }
+
+        if ($from !== null) {
+            $selection->where(':payment_items.payment.paid_at BETWEEN ? AND ?', $from, $to);
+        }
+
+        return $selection;
     }
 }

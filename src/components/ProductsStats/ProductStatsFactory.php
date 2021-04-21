@@ -2,7 +2,6 @@
 
 namespace Crm\ProductsModule\Components;
 
-use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Nette\Localization\ITranslator;
 use Nette\Utils\DateTime;
@@ -17,17 +16,13 @@ class ProductStatsFactory
 
     private $productsRepository;
 
-    private $ordersRepository;
-
     private $translator;
 
     public function __construct(
         ITranslator $translator,
-        OrdersRepository $ordersRepository,
         ProductsRepository $productsRepository
     ) {
         $this->productsRepository = $productsRepository;
-        $this->ordersRepository = $ordersRepository;
         $this->translator = $translator;
     }
 
@@ -52,9 +47,9 @@ class ProductStatsFactory
         $totalStats = [];
         $productModeQuery = $this->getProductModeQuery($mode);
 
-        $productStats = $this->productsRepository->getShopProducts(false, false)->fetchAssoc('id');
+        $productStats = $this->productsRepository->getTable()->fetchAssoc('id');
         foreach ($periods as $periodName => $period) {
-            $periodStats = $this->ordersRepository->stats($period[0], $period[1])->where($productModeQuery)->fetchAll();
+            $periodStats = $this->productsRepository->stats($period[0], $period[1])->where($productModeQuery)->fetchAll();
             $periodCount = 0;
             $periodAmount = 0;
             foreach ($periodStats as $productStat) {

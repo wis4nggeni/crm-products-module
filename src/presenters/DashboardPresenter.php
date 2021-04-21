@@ -57,7 +57,7 @@ class DashboardPresenter extends AdminPresenter
         $graphDataItem->setCriteria((new Criteria())
             ->setTableName('payments')
             ->setTimeField('created_at')
-            ->setWhere("AND payments.status = 'paid' AND products.shop = 1")
+            ->setWhere("AND payments.status = 'paid'")
             ->setGroupBy('products.id')
             ->setJoin(
                 "LEFT JOIN payment_items ON payments.id = payment_items.payment_id AND payment_items.type = '" . ProductPaymentItem::TYPE . "' " .

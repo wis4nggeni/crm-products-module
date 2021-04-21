@@ -5,13 +5,10 @@ namespace Crm\ProductsModule\Repository;
 use Crm\ApplicationModule\Hermes\HermesMessage;
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
-use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Events\OrderStatusChangeEvent;
-use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use League\Event\Emitter;
 use Nette\Database\Context;
 use Nette\Database\Table\IRow;
-use Nette\Utils\DateTime;
 
 class OrdersRepository extends Repository
 {
@@ -113,26 +110,5 @@ class OrdersRepository extends Repository
         }
 
         return $orders;
-    }
-
-    final public function stats(DateTime $from = null, DateTime $to = null)
-    {
-        $selection = $this->getTable()
-            ->select('SUM(payment:payment_items.count) AS product_count, SUM(payment:payment_items.amount * payment:payment_items.count) AS product_amount, payment:payment_items.product.id AS product_id')
-            ->where('payment:payment_items.type = ?', ProductPaymentItem::TYPE)
-            ->where('payment:payment_items.product.shop = ?', true)
-            ->where('payment.status = ?', PaymentsRepository::STATUS_PAID)
-            ->order('payment:payment_items.product.sorting')
-            ->group('payment:payment_items.product.id');
-
-        if ($to === null) {
-            $to = new DateTime();
-        }
-
-        if ($from !== null) {
-            $selection->where('payment.paid_at BETWEEN ? AND ?', $from, $to);
-        }
-
-        return $selection;
     }
 }
