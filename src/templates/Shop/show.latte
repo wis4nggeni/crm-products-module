@@ -73,6 +73,8 @@
         </ul>
     </div>
     <div class="col-xs-12 col-sm-5" id="description-block">
+        {control simpleWidget 'products.shop.show.description.top', $product}
+
         <p>{nl2br($product->description)|noescape}</p>
     </div>
 </div>

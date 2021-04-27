@@ -344,6 +344,7 @@ frontend:
 			list_of_books_to_download: "Seznam knih ke stažení"
 		show:
 			title: '%product_name% : Obchod Deníku N - prodáváme jen to, co sami čteme'
+			available_at: 'Produkt bude dostupný až %available_at%, odesíláme ho následující den.'
 			add_to_cart: vložit do košíku
 			sold_out: vyprodáno
 	orders:

@@ -19,6 +19,7 @@ use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
 use Nette\Application\BadRequestException;
 use Nette\Forms\Controls\RadioList;
+use Nette\Utils\DateTime;
 use Tomaj\Hermes\Emitter;
 
 class ShopPresenter extends FrontendPresenter
@@ -172,6 +173,7 @@ class ShopPresenter extends FrontendPresenter
 
         $this->template->product = $product;
         $this->template->relatedProducts = $this->productsRepository->relatedProducts($product);
+        $this->template->now = new DateTime();
     }
 
     public function handleAddCart($id, $redirectToCheckout = false)

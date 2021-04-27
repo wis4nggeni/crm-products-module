@@ -347,6 +347,7 @@ frontend:
 			list_of_books_to_download: "List of books to download"
 		show:
 			title: "%product_name% : E-shop Denník N - we only sell what we read"
+			available_at: 'The product will be available at %available_at%, we will send it the next day.'
 			add_to_cart: add to cart
 			sold_out: sold out
 

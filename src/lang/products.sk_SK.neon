@@ -347,6 +347,7 @@ frontend:
 			list_of_books_to_download: "Zoznam kníh na stiahnutie"
 		show:
 			title: "%product_name% : Obchod Denníka N - predávame len to, čo sami čítame"
+			available_at: 'Produkt bude dostupný až %available_at%, odosielame ho nasledujúci deň.'
 			add_to_cart: vložiť do košíka
 			sold_out: vypredané
 
