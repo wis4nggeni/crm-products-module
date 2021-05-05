@@ -14,6 +14,9 @@ class PostalFeesPresenter extends AdminPresenter
         $this->postalFeesRepository = $postalFeesRepository;
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderDefault()
     {
         $this->template->postalFees = $this->postalFeesRepository->all()->order('id');

@@ -48,6 +48,9 @@ class OrdersAdminPresenter extends AdminPresenter
         $this->checkoutFormFactory = $checkoutFormFactory;
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderDefault()
     {
         $orders = $this->getFilteredOrders();
@@ -66,6 +69,9 @@ class OrdersAdminPresenter extends AdminPresenter
         $this->template->totalCount = $totalCount;
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function renderNew($paymentId)
     {
         $payment = $this->paymentsRepository->find($paymentId);
@@ -79,6 +85,9 @@ class OrdersAdminPresenter extends AdminPresenter
         $this->template->payment = $payment;
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderShow($id)
     {
         $order = $this->ordersRepository->find($id);
@@ -140,6 +149,9 @@ class OrdersAdminPresenter extends AdminPresenter
         return $form;
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function handleCountryChange($value)
     {
         if ($this['checkoutForm']['postal_fee'] instanceof RadioList) {
@@ -152,6 +164,9 @@ class OrdersAdminPresenter extends AdminPresenter
         $this->redrawControl('cart');
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function handlePostalFeeChange()
     {
         $value = $this->request->getPost('value');

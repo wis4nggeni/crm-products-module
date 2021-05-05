@@ -27,15 +27,24 @@ class TagsAdminPresenter extends AdminPresenter
         $this->tagsFormFactory = $tagsFormFactory;
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderDefault()
     {
         $this->template->tags = $this->tagsRepository->all();
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function renderNew()
     {
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function renderEdit($id)
     {
         $tag = $this->tagsRepository->find($id);
@@ -63,6 +72,9 @@ class TagsAdminPresenter extends AdminPresenter
         return $form;
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function handleDeleteTag(int $id)
     {
         $tag = $this->tagsRepository->find($id);

@@ -74,6 +74,9 @@ class ProductsAdminPresenter extends AdminPresenter
         $this->distributionConfiguration[$key] = $distributionLevels;
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderDefault()
     {
         $products = $this->productsRepository->all($this->text, $this->tags);
@@ -92,6 +95,9 @@ class ProductsAdminPresenter extends AdminPresenter
         $this->template->filteredProductsCount = $filteredCount;
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderShow($id)
     {
         $product = $this->productsRepository->find($id);
@@ -120,6 +126,9 @@ class ProductsAdminPresenter extends AdminPresenter
         $this->template->soldCount = $this->getProductSalesCount($product);
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function renderNew()
     {
     }
@@ -132,6 +141,9 @@ class ProductsAdminPresenter extends AdminPresenter
             ->fetchField('COALESCE(SUM(`count`), 0)');
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderUserList(int $id, string $type, float $fromLevel, float $toLevel = null)
     {
         $product = $this->productsRepository->find($id);
@@ -157,6 +169,9 @@ class ProductsAdminPresenter extends AdminPresenter
         }
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function renderEdit($id)
     {
         $product = $this->productsRepository->find($id);

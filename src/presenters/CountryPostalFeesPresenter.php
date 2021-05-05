@@ -34,6 +34,9 @@ class CountryPostalFeesPresenter extends AdminPresenter
         $this->priceHelper = $priceHelper;
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderDefault()
     {
         $countries = $this->countriesRepository->all();
@@ -99,6 +102,9 @@ class CountryPostalFeesPresenter extends AdminPresenter
         return $result;
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function handleDelete($id)
     {
         $countryPostalFee = $this->countryPostalFeesRepository->find($id);
@@ -107,6 +113,9 @@ class CountryPostalFeesPresenter extends AdminPresenter
         $this->redirect('default');
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function handleInactive($id)
     {
         $countryPostalFee = $this->countryPostalFeesRepository->find($id);
@@ -114,6 +123,9 @@ class CountryPostalFeesPresenter extends AdminPresenter
         $this->redirect('default');
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function handleActive($id)
     {
         $countryPostalFee = $this->countryPostalFeesRepository->find($id);

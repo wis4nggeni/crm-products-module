@@ -35,6 +35,9 @@ class DashboardPresenter extends AdminPresenter
         $this->productStatsMode = $this->productStatsMode ?? ProductStatsFactory::MODE_ALL;
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderDefault()
     {
     }
