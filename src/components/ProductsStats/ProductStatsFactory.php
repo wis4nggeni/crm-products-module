@@ -75,9 +75,9 @@ class ProductStatsFactory
             case self::MODE_ALL:
                 return [];
             case self::MODE_GIFTED:
-                return ['payment:payment_items.amount' => 0];
+                return [':payment_items.amount' => 0];
             case self::MODE_SOLD:
-                return ['payment:payment_items.amount > ?' => 0];
+                return [':payment_items.amount > ?' => 0];
             default:
                 throw new \Exception("Unsupported query mode \"{$mode}\" provided");
         }
