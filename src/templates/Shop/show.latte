@@ -76,6 +76,8 @@
         {control simpleWidget 'products.shop.show.description.top', $product}
 
         <p>{nl2br($product->description)|noescape}</p>
+
+        {control simpleWidget 'products.shop.show.description.bottom', $product}
     </div>
 </div>
 

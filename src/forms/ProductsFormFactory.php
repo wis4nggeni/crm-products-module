@@ -6,6 +6,7 @@ use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ProductsModule\Builder\ProductBuilder;
 use Crm\ProductsModule\DataProvider\ProductsFormDataProviderInterface;
+use Crm\ProductsModule\DataProvider\ProductTemplatePropertiesDataProviderInterface;
 use Crm\ProductsModule\Distribution\ProductSaveEventDistributionException;
 use Crm\ProductsModule\Events\ProductSaveEvent;
 use Crm\ProductsModule\ProductsCache;
@@ -253,22 +254,33 @@ class ProductsFormFactory
 
             $templateProperties = $this->productTemplatePropertiesRepository->findByTemplate($template);
             foreach ($templateProperties as $templateProperty) {
-                $input = $templateContainer->addText($templateProperty->id, $templateProperty->title);
-                $input->setOption("id", "template_property_{$templateProperty->id}");
-                if ($templateProperty->required) {
-                    $input->addConditionOn($templateId, Form::EQUAL, $template->id)
-                        ->addRule(Form::FILLED, sprintf($this->translator->trans('products.data.products.errors.template_property'), $templateProperty->title));
-                }
-                if ($templateProperty->type === 'date') {
-                    $input->setHtmlAttribute('class', 'flatpickr');
-                }
+                if ($templateProperty->type === 'dataprovider') {
+                    /** @var ProductsFormDataProviderInterface[] $providers */
+                    $providers = $this->dataProviderManager->getProviders('products.dataprovider.product_form.product_template.' . $templateProperty->code, ProductTemplatePropertiesDataProviderInterface::class);
+                    foreach ($providers as $sorting => $provider) {
+                        $form = $provider->provide([
+                            'form' => $form,
+                            'container' => $templateContainer,
+                            'templateProperty' => $templateProperty
+                        ]);
+                    }
+                } else {
+                    $input = $templateContainer->addText($templateProperty->id, $templateProperty->title);
+                    $input->setOption("id", "template_property_{$templateProperty->id}");
+                    if ($templateProperty->required) {
+                        $input->addConditionOn($templateId, Form::EQUAL, $template->id)
+                            ->addRule(Form::FILLED, sprintf($this->translator->trans('products.data.products.errors.template_property'), $templateProperty->title));
+                    }
+                    if ($templateProperty->type === 'date') {
+                        $input->setHtmlAttribute('class', 'flatpickr');
+                    }
 
-                if ($templateProperty->hint) {
-                    $input->setHtmlAttribute('placeholder', $templateProperty->hint);
+                    if ($templateProperty->hint) {
+                        $input->setHtmlAttribute('placeholder', $templateProperty->hint);
+                    }
                 }
-
                 $templateId->addCondition(Form::EQUAL, $template->id)
-                    ->toggle("template_property_{$templateProperty->id}");
+                        ->toggle("template_property_{$templateProperty->id}");
             }
         }
 
@@ -359,25 +371,38 @@ class ProductsFormFactory
                 return;
             }
 
-            $this->onUpdate->__invoke($product);
+            $callback = $this->onUpdate;
+        } else {
+            $product = $this->productBuilder->createNew()
+                ->fromArray((array)$values)
+                ->setBundleItems($bundleItems)
+                ->setTemplateProperties($productProperties)
+                ->setProductsTags($tags)
+                ->save();
 
-            return;
+            if (!$product) {
+                $form['name']->addError(implode("\n", $this->productBuilder->getErrors()));
+                return;
+            }
+
+            $this->productsCache->add($product->id, $product->code);
+            $this->emitter->emit(new ProductSaveEvent($product->id));
+
+            $callback = $this->onSave;
         }
 
-        $product = $this->productBuilder->createNew()
-            ->fromArray((array)$values)
-            ->setBundleItems($bundleItems)
-            ->setTemplateProperties($productProperties)
-            ->setProductsTags($tags)
-            ->save();
-
-        if (!$product) {
-            $form['name']->addError(implode("\n", $this->productBuilder->getErrors()));
-            return;
+        $templateProperties = $this->productTemplatePropertiesRepository->getTable()->where([
+                'product_template_id' => $values['product_template_id'],
+                'type' => 'dataprovider',
+            ]);
+        foreach ($templateProperties as $templateProperty) {
+                /** @var ProductsFormDataProviderInterface[] $providers */
+                $providers = $this->dataProviderManager->getProviders('products.dataprovider.product_form.product_template.' . $templateProperty->code, ProductTemplatePropertiesDataProviderInterface::class);
+            foreach ($providers as $sorting => $provider) {
+                $provider->formSucceeded($product, $templateProperty);
+            }
         }
 
-        $this->productsCache->add($product->id, $product->code);
-        $this->emitter->emit(new ProductSaveEvent($product->id));
-        $this->onSave->__invoke($product);
+        $callback->__invoke($product);
     }
 }
