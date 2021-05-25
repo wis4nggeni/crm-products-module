@@ -161,13 +161,17 @@ class ShopPresenter extends FrontendPresenter
     {
         $product = $this->productsRepository->find($id);
         if (!$product && $code) {
-            $product = $this->productsRepository->findBy('code', $code);
-            $this->redirect('this', ['id' => $product->id, 'code' => $product->code]);
+            $product = $this->productsRepository->getByCode($code);
         }
         if (!$product || !$product->shop) {
             throw new BadRequestException('Product not found.', 404);
         }
-        if ($code && $code !== $product->code) {
+
+        if (!$id || !$code) {
+            $this->canonicalize('this', ['id' => $product->id, 'code' => $product->code]);
+        }
+
+        if ($code !== $product->code) {
             throw new BadRequestException("Product code does not match the product ID. Is your URL valid?", 404);
         }
 
