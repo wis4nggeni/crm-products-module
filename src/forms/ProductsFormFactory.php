@@ -254,14 +254,15 @@ class ProductsFormFactory
 
             $templateProperties = $this->productTemplatePropertiesRepository->findByTemplate($template);
             foreach ($templateProperties as $templateProperty) {
-                if ($templateProperty->type === 'dataprovider') {
+                if ($templateProperty->type === ProductTemplatePropertiesRepository::TYPE_DATAPROVIDER) {
                     /** @var ProductsFormDataProviderInterface[] $providers */
                     $providers = $this->dataProviderManager->getProviders('products.dataprovider.product_form.product_template.' . $templateProperty->code, ProductTemplatePropertiesDataProviderInterface::class);
                     foreach ($providers as $sorting => $provider) {
                         $form = $provider->provide([
                             'form' => $form,
                             'container' => $templateContainer,
-                            'templateProperty' => $templateProperty
+                            'templateProperty' => $templateProperty,
+                            'productId' => $productId
                         ]);
                     }
                 } else {
@@ -297,7 +298,10 @@ class ProductsFormFactory
         }
 
         /** @var ProductsFormDataProviderInterface[] $providers */
-        $providers = $this->dataProviderManager->getProviders('products.dataprovider.product_form', ProductsFormDataProviderInterface::class);
+        $providers = $this->dataProviderManager->getProviders(
+            'products.dataprovider.product_form',
+            ProductsFormDataProviderInterface::class
+        );
         foreach ($providers as $sorting => $provider) {
             $form = $provider->provide(['form' => $form]);
         }
@@ -352,6 +356,22 @@ class ProductsFormFactory
 
             $product = $this->productsRepository->find($productId);
 
+            $templateProperties = $this->productTemplatePropertiesRepository->getTable()->where([
+                'product_template_id' => $product->product_template_id,
+                'type' => ProductTemplatePropertiesRepository::TYPE_DATAPROVIDER,
+            ]);
+
+            foreach ($templateProperties as $templateProperty) {
+                /** @var ProductTemplatePropertiesDataProviderInterface[] $providers */
+                $providers = $this->dataProviderManager->getProviders(
+                    'products.dataprovider.product_form.product_template.' . $templateProperty->code,
+                    ProductTemplatePropertiesDataProviderInterface::class
+                );
+                foreach ($providers as $provider) {
+                    $provider->beforeUpdate($product, $templateProperty);
+                }
+            }
+
             if ($values['sorting'] > $product->sorting) {
                 $values['sorting'] = $values['sorting'] - 1;
             }
@@ -392,14 +412,17 @@ class ProductsFormFactory
         }
 
         $templateProperties = $this->productTemplatePropertiesRepository->getTable()->where([
-                'product_template_id' => $values['product_template_id'],
-                'type' => 'dataprovider',
-            ]);
+            'product_template_id' => $product->product_template_id,
+            'type' => ProductTemplatePropertiesRepository::TYPE_DATAPROVIDER,
+        ]);
         foreach ($templateProperties as $templateProperty) {
-                /** @var ProductsFormDataProviderInterface[] $providers */
-                $providers = $this->dataProviderManager->getProviders('products.dataprovider.product_form.product_template.' . $templateProperty->code, ProductTemplatePropertiesDataProviderInterface::class);
-            foreach ($providers as $sorting => $provider) {
-                $provider->formSucceeded($product, $templateProperty);
+            /** @var ProductTemplatePropertiesDataProviderInterface[] $providers */
+            $providers = $this->dataProviderManager->getProviders(
+                'products.dataprovider.product_form.product_template.' . $templateProperty->code,
+                ProductTemplatePropertiesDataProviderInterface::class
+            );
+            foreach ($providers as $provider) {
+                $provider->afterSave($product, $templateProperty);
             }
         }
 

@@ -10,5 +10,7 @@ interface ProductTemplatePropertiesDataProviderInterface extends DataProviderInt
 {
     public function provide(array $params): Form;
 
-    public function formSucceeded(IRow $product, IRow $templateProperty);
+    public function beforeUpdate(IRow $product, IRow $templateProperty);
+
+    public function afterSave(IRow $product, IRow $templateProperty);
 }

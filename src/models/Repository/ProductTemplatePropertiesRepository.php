@@ -6,6 +6,8 @@ use Crm\ApplicationModule\Repository;
 
 class ProductTemplatePropertiesRepository extends Repository
 {
+    public const TYPE_DATAPROVIDER = 'dataprovider';
+
     protected $tableName = 'product_template_properties';
 
     final public function findByTemplate($template)
