@@ -25,6 +25,7 @@ use Crm\ProductsModule\Events\PaymentStatusChangeNotifyHandler;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
 use Crm\ProductsModule\Scenarios\HasOrderCriteria;
+use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
 use Crm\ProductsModule\Seeders\AddressTypesSeeder;
 use Crm\ProductsModule\Seeders\ConfigsSeeder;
 use Kdyby\Translation\Translator;
@@ -33,6 +34,7 @@ use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Nette\DI\Container;
 use Symfony\Component\Console\Output\OutputInterface;
+use Tomaj\Hermes\Dispatcher;
 
 class ProductsModule extends CrmModule
 {
@@ -140,6 +142,11 @@ class ProductsModule extends CrmModule
         );
     }
 
+    public function registerHermesHandlers(Dispatcher $dispatcher)
+    {
+        $dispatcher->registerHandler('order-status-change', $this->getInstance(OrderStatusChangeHandler::class));
+    }
+
     public function registerUserData(UserDataRegistrator $dataRegistrator)
     {
         $dataRegistrator->addUserDataProvider($this->getInstance(\Crm\ProductsModule\User\OrdersUserDataProvider::class));
@@ -226,7 +233,7 @@ class ProductsModule extends CrmModule
 
     public function registerEvents(EventsStorage $eventsStorage)
     {
-        $eventsStorage->register('order_status_change', Events\OrderStatusChangeEvent::class);
+        $eventsStorage->register('order_status_change', Events\OrderStatusChangeEvent::class, true);
         $eventsStorage->register('product_save', Events\ProductSaveEvent::class);
     }
 
