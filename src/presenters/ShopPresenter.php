@@ -385,7 +385,8 @@ class ShopPresenter extends FrontendPresenter
                         'user_id' => $userId,
                         'sales_funnel_id' => self::SALES_FUNNEL_SHOP,
                     ])
-                )
+                ),
+                HermesMessage::PRIORITY_DEFAULT
             );
         };
         $this->checkoutFormFactory->onSave = function ($payment) {
@@ -403,7 +404,8 @@ class ShopPresenter extends FrontendPresenter
                 new HermesMessage(
                     'sales-funnel',
                     array_merge($eventParams, $trackerParams)
-                )
+                ),
+                HermesMessage::PRIORITY_DEFAULT
             );
 
             try {
