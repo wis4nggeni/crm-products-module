@@ -187,6 +187,7 @@ class ProductsFormFactory
         $sorting = $form->addSelect('sorting', 'products.data.products.fields.sorting', $sortingPairs)
             ->setOption('id', 'sorting')
             ->setPrompt('products.data.products.placeholder.sorting');
+        $sorting->getControlPrototype()->addAttributes(['class' => 'select2']);
 
         $tagPairs = $this->tagsRepository->all()->fetchPairs('id', 'code');
         $tags = $form->addMultiSelect('tags', 'products.data.products.fields.tags', $tagPairs)->setOption('id', 'tags');
