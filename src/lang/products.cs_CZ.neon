@@ -251,6 +251,8 @@ admin:
 	scenarios:
 		has_product_with_template_name:
 			label: Obsahuje produkt se šablonou
+		has_product_with_distribution_center:
+			label: Obsahuje produkt s distribučním centrem
 
 frontend:
 	shop:

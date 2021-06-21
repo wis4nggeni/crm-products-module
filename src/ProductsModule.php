@@ -26,6 +26,7 @@ use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
 use Crm\ProductsModule\Scenarios\HasOrderCriteria;
 use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
+use Crm\ProductsModule\Scenarios\HasProductWithDistributionCenterCriteria;
 use Crm\ProductsModule\Scenarios\NewOrderHandler;
 use Crm\ProductsModule\Scenarios\OrderScenarioConditionalModel;
 use Crm\ProductsModule\Scenarios\HasProductWithTemplateNameCriteria;
@@ -283,6 +284,11 @@ class ProductsModule extends CrmModule
             'order',
             HasProductWithTemplateNameCriteria::KEY,
             $this->getInstance(HasProductWithTemplateNameCriteria::class)
+        );
+        $scenariosCriteriaStorage->register(
+            'order',
+            HasProductWithDistributionCenterCriteria::KEY,
+            $this->getInstance(HasProductWithDistributionCenterCriteria::class)
         );
     }
 }

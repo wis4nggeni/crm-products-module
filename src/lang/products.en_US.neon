@@ -254,6 +254,8 @@ admin:
 	scenarios:
 		has_product_with_template_name:
 			label: Has product with template name
+		has_product_with_distribution_center:
+			label: Has product with distribution center
 
 frontend:
 	shop:

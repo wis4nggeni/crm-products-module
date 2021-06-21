@@ -60,6 +60,7 @@ services:
 	- Crm\ProductsModule\Scenarios\OrderStatusChangeHandler
 	- Crm\ProductsModule\Scenarios\NewOrderHandler
 	- Crm\ProductsModule\Scenarios\HasProductWithTemplateNameCriteria
+	- Crm\ProductsModule\Scenarios\HasProductWithDistributionCenterCriteria
 
 	- Crm\ProductsModule\User\OrdersUserDataProvider
 
