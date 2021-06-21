@@ -28,6 +28,7 @@ use Crm\ProductsModule\Scenarios\HasOrderCriteria;
 use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
 use Crm\ProductsModule\Scenarios\NewOrderHandler;
 use Crm\ProductsModule\Scenarios\OrderScenarioConditionalModel;
+use Crm\ProductsModule\Scenarios\HasProductWithTemplateNameCriteria;
 use Crm\ProductsModule\Seeders\AddressTypesSeeder;
 use Crm\ProductsModule\Seeders\ConfigsSeeder;
 use Kdyby\Translation\Translator;
@@ -277,6 +278,11 @@ class ProductsModule extends CrmModule
             'payment',
             'has_order',
             $this->getInstance(HasOrderCriteria::class)
+        );
+        $scenariosCriteriaStorage->register(
+            'order',
+            HasProductWithTemplateNameCriteria::KEY,
+            $this->getInstance(HasProductWithTemplateNameCriteria::class)
         );
     }
 }

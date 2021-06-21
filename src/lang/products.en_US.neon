@@ -251,6 +251,10 @@ admin:
 	dashboard:
 		title: Shop stats
 
+	scenarios:
+		has_product_with_template_name:
+			label: Has product with template name
+
 frontend:
 	shop:
 		title: "E-shop Denník N - we only sell what we read"

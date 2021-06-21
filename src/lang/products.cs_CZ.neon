@@ -248,6 +248,10 @@ admin:
 	dashboard:
 		title: Štatistiky obchodu
 
+	scenarios:
+		has_product_with_template_name:
+			label: Obsahuje produkt se šablonou
+
 frontend:
 	shop:
 		title: "Knihy Deníku N - prodáváme to, co sami čteme"
