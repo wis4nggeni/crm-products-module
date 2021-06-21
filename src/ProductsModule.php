@@ -26,6 +26,8 @@ use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
 use Crm\ProductsModule\Scenarios\HasOrderCriteria;
 use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
+use Crm\ProductsModule\Scenarios\NewOrderHandler;
+use Crm\ProductsModule\Scenarios\OrderScenarioConditionalModel;
 use Crm\ProductsModule\Seeders\AddressTypesSeeder;
 use Crm\ProductsModule\Seeders\ConfigsSeeder;
 use Kdyby\Translation\Translator;
@@ -144,7 +146,14 @@ class ProductsModule extends CrmModule
 
     public function registerHermesHandlers(Dispatcher $dispatcher)
     {
-        $dispatcher->registerHandler('order-status-change', $this->getInstance(OrderStatusChangeHandler::class));
+        $dispatcher->registerHandler(
+            'new-order',
+            $this->getInstance(NewOrderHandler::class)
+        );
+        $dispatcher->registerHandler(
+            'order-status-change',
+            $this->getInstance(OrderStatusChangeHandler::class)
+        );
     }
 
     public function registerUserData(UserDataRegistrator $dataRegistrator)
@@ -233,6 +242,7 @@ class ProductsModule extends CrmModule
 
     public function registerEvents(EventsStorage $eventsStorage)
     {
+        $eventsStorage->register('new_order', Events\NewOrderEvent::class, true);
         $eventsStorage->register('order_status_change', Events\OrderStatusChangeEvent::class, true);
         $eventsStorage->register('product_save', Events\ProductSaveEvent::class);
     }
@@ -259,6 +269,10 @@ class ProductsModule extends CrmModule
 
     public function registerScenariosCriteria(ScenariosCriteriaStorage $scenariosCriteriaStorage)
     {
+        $scenariosCriteriaStorage->registerConditionModel(
+            'order',
+            $this->getInstance(OrderScenarioConditionalModel::class)
+        );
         $scenariosCriteriaStorage->register(
             'payment',
             'has_order',

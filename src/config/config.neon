@@ -55,8 +55,10 @@ services:
 	- Crm\ProductsModule\Seeders\AddressTypesSeeder
 	- Crm\ProductsModule\Seeders\ConfigsSeeder
 
+	- Crm\ProductsModule\Scenarios\OrderScenarioConditionalModel
 	- Crm\ProductsModule\Scenarios\HasOrderCriteria
 	- Crm\ProductsModule\Scenarios\OrderStatusChangeHandler
+	- Crm\ProductsModule\Scenarios\NewOrderHandler
 
 	- Crm\ProductsModule\User\OrdersUserDataProvider
 

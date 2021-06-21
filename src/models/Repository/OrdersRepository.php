@@ -5,6 +5,7 @@ namespace Crm\ProductsModule\Repository;
 use Crm\ApplicationModule\Hermes\HermesMessage;
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
+use Crm\ProductsModule\Events\NewOrderEvent;
 use Crm\ProductsModule\Events\OrderStatusChangeEvent;
 use League\Event\Emitter;
 use Nette\Database\Context;
@@ -51,7 +52,7 @@ class OrdersRepository extends Repository
 
     final public function add($paymentId, $shippingAddressId, $licenceAddressId, $billingAddressId, $postalFee, $note = null)
     {
-        return $this->insert([
+        $order = $this->insert([
             'payment_id' => $paymentId,
             'shipping_address_id' => $shippingAddressId,
             'licence_address_id' => $licenceAddressId,
@@ -62,6 +63,13 @@ class OrdersRepository extends Repository
             'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
         ]);
+
+        $this->emitter->emit(new NewOrderEvent($order));
+        $this->hermesEmitter->emit(new HermesMessage('new-order', [
+            'order_id' => $order->id
+        ]));
+
+        return $order;
     }
 
     final public function update(IRow &$row, $data)
