@@ -145,7 +145,7 @@ class OrdersAdminPresenter extends AdminPresenter
         if ($this['checkoutForm']['postal_fee'] instanceof RadioList) {
             $this['checkoutForm']['postal_fee']
                 ->setItems($this->postalFeesRepository->getByCountry($value)->fetchAll())
-                ->setDefaultValue($this->postalFeesRepository->getDefaultByCountry($value)->fetch());
+                ->setDefaultValue($this->postalFeesRepository->getDefaultByCountry($value));
         }
 
         $this->redrawControl('postalFeesSnippet');

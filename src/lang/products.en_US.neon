@@ -5,6 +5,8 @@ menu:
 	orders: Orders
 	stats: Shop
 	books: Books
+	postal_fees: Delivery methods
+	country_postal_fees: Countries and delivery methods
 
 data:
 	products:
@@ -81,6 +83,19 @@ data:
 		errors:
 			name: Field 'Name' is mandatory
 			icon: Field 'Icon' is mandatory
+	postal_fees:
+		fields:
+		    title: Name
+		    code: Identifier
+		    used_count: Used
+		    amount: Amount
+	country_postal_fees:
+	    fields:
+	        country_id: Country
+	        postal_fee_id: Delivery method
+	        default: Default
+	        active: Active
+	        sorting: Sorting
 
 admin:
 	component:
@@ -233,6 +248,18 @@ admin:
 					name: Name
 					price: Price
 					count: Count
+	postal_fees:
+	    default:
+	        header: Delivery methods
+	country_postal_fees:
+		default:
+			header: Countries and delivery methods
+			add_form_header: Add delivery method
+			submit: Add delivery method
+			close: Close
+			successfully_added: Delivery method was successfully added
+			successfully_deleted: Delivery method was successfully removed
+			error_already_exists: The selected delivery method is already added
 	distribution:
 		shopCounts: How many orders in shop made before the payment
 		shopDays: How many days passed since last order in shop

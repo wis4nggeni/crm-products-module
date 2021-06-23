@@ -240,7 +240,7 @@ class CheckoutFormFactory
             $form->addRadioList('postal_fee', null, $this->postalFeesRepository->getByCountry($countryId)->fetchAll())
                 ->setRequired($this->translator->translate('products.frontend.shop.checkout.fields.choose_shipping_method'));
 
-            $defaults['postal_fee'] = $this->postalFeesRepository->getDefaultByCountry($countryId)->fetch();
+            $defaults['postal_fee'] = $this->postalFeesRepository->getDefaultByCountry($countryId);
 
             $shippingAddress = $form->addContainer('shipping_address');
             $shippingAddress->addText('first_name', $this->translator->translate('products.frontend.shop.checkout.fields.first_name'))

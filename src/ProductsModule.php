@@ -99,10 +99,24 @@ class ProductsModule extends CrmModule
             'fa fa-paper-plane',
             700
         );
+        $menuItem4 = new MenuItem(
+            $this->translator->translate('products.menu.postal_fees'),
+            ':Products:PostalFees:default',
+            'fa fa-rocket',
+            943
+        );
+        $menuItem5 = new MenuItem(
+            $this->translator->translate('products.menu.country_postal_fees'),
+            ':Products:CountryPostalFees:default',
+            'fa fa-globe',
+            944
+        );
 
         $mainMenu->addChild($menuItem1);
         $mainMenu->addChild($menuItem2);
         $mainMenu->addChild($menuItem3);
+        $mainMenu->addChild($menuItem4);
+        $mainMenu->addChild($menuItem5);
 
         $menuContainer->attachMenuItem($mainMenu);
 

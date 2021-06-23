@@ -5,6 +5,9 @@ menu:
 	orders: Objednávky
 	stats: Obchod
 	books: Knihy
+	postal_fees: Způsoby doručení
+	country_postal_fees: Země a způsoby doručení
+
 data:
 	products:
 		fields:
@@ -80,6 +83,20 @@ data:
 		errors:
 			name: Položka 'Název' je povinná
 			icon: Položka 'Ikona' je povinná
+	postal_fees:
+		fields:
+		    title: Název
+		    code: Identifikátor
+		    used_count: Použité
+		    amount: Ćástka
+	country_postal_fees:
+	    fields:
+	        country_id: Země
+	        postal_fee_id: Způsoby doručení
+	        default: Výchozí
+	        active: Aktivní
+	        sorting: Pořadí
+
 admin:
 	component:
 		avg_product_payment_widget:
@@ -230,6 +247,18 @@ admin:
 					name: Název
 					price: Cena
 					count: Počet
+	postal_fees:
+	    default:
+	        header: Způsoby doručení
+	country_postal_fees:
+		default:
+			header: Země a způsoby doručení
+			add_form_header: Přidej způsob doručení
+			submit: Přidej způsob doručení
+			close: Zavřít
+			successfully_added: Způsob doručení byl úspěšně přidán
+			successfully_deleted: Způsob doručení byl úspěšně odstraněn
+			error_already_exists: Vybraný způsob doručení již je přidán
 	distribution:
 		shopCounts: Kolik objednávek v obchodě provedl před zakoupením prostřednictvím tohoto okna
 		shopDays: "Kdy naposledy nakoupil v obchodě (počet dní před platbou v okně)"
