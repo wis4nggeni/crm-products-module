@@ -3,6 +3,7 @@
 namespace Crm\ProductsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
+use Nette\Database\Table\IRow;
 
 class PostalFeesRepository extends Repository
 {
@@ -33,7 +34,15 @@ class PostalFeesRepository extends Repository
             'code' => $code,
             'title' => $title,
             'amount' => $amount,
+            'created_at' => new \DateTime(),
+            'updated_at' => new \DateTime(),
         ]);
+    }
+
+    final public function update(IRow &$row, $data)
+    {
+        $data['updated_at'] = new \DateTime();
+        return parent::update($row, $data);
     }
 
     final public function exists($code, $amount)
