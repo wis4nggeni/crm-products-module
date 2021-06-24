@@ -279,6 +279,8 @@ admin:
 		title: Štatistiky obchodu
 
 	scenarios:
+		order_status:
+			label: Status objednávky
 		has_product_with_template_name:
 			label: Obsahuje produkt so šablónou
 		has_product_with_distribution_center:

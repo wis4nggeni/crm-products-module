@@ -279,6 +279,8 @@ admin:
 		title: Shop stats
 
 	scenarios:
+		order_status:
+			label: Order status
 		has_product_with_template_name:
 			label: Has product with template name
 		has_product_with_distribution_center:

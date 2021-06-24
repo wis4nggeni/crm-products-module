@@ -25,6 +25,7 @@ use Crm\ProductsModule\Events\PaymentStatusChangeNotifyHandler;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
 use Crm\ProductsModule\Scenarios\HasOrderCriteria;
+use Crm\ProductsModule\Scenarios\OrderStatusCriteria;
 use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
 use Crm\ProductsModule\Scenarios\HasProductWithDistributionCenterCriteria;
 use Crm\ProductsModule\Scenarios\NewOrderHandler;
@@ -293,6 +294,11 @@ class ProductsModule extends CrmModule
             'payment',
             'has_order',
             $this->getInstance(HasOrderCriteria::class)
+        );
+        $scenariosCriteriaStorage->register(
+            'order',
+            OrderStatusCriteria::KEY,
+            $this->getInstance(OrderStatusCriteria::class)
         );
         $scenariosCriteriaStorage->register(
             'order',
