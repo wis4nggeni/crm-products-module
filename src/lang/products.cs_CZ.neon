@@ -97,6 +97,15 @@ data:
 	        active: Aktivní
 	        sorting: Pořadí
 
+	orders:
+		statuses:
+			paid: Zaplacená
+			not_sent: Neodeslaná
+			pending: Přijata
+			confirmed: Potvrzená
+			sent: Odeslaná
+			delivered: Doručená
+			returned: Vrácená
 admin:
 	component:
 		avg_product_payment_widget:

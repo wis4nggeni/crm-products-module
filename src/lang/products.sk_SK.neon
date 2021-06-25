@@ -96,6 +96,15 @@ data:
 	        default: Predvolená
 	        active: Aktívne
 	        sorting: Poradie
+	orders:
+		statuses:
+			paid: Zaplatená
+			not_sent: Neodoslaná
+			pending: Prijatá
+			confirmed: Potvrdená
+			sent: Odoslaná
+			delivered: Doručená
+			returned: Vrátená
 
 admin:
 	component:

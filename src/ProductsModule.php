@@ -282,6 +282,10 @@ class ProductsModule extends CrmModule
             'admin.products.order.address',
             $this->getInstance(\Crm\UsersModule\Components\AddressWidget::class)
         );
+        $widgetManager->registerWidget(
+            'products.frontend.orders_my',
+            $this->getInstance(\Crm\ProductsModule\Components\UserOrdersWidget::class)
+        );
     }
 
     public function registerScenariosCriteria(ScenariosCriteriaStorage $scenariosCriteriaStorage)

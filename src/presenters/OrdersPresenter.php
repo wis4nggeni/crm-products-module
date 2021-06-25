@@ -32,19 +32,6 @@ class OrdersPresenter extends FrontendPresenter
     public function renderMy()
     {
         $this->onlyLoggedIn();
-
-        $statusMap = [
-            OrdersRepository::STATUS_PAID => 'Zaplatená',
-            OrdersRepository::STATUS_NOT_SENT => 'Zaplatená',
-            OrdersRepository::STATUS_PENDING => 'Prijatá',
-            OrdersRepository::STATUS_CONFIRMED => 'Potvrdená',
-            OrdersRepository::STATUS_SENT => 'Odoslaná',
-            OrdersRepository::STATUS_DELIVERED => 'Doručená',
-            OrdersRepository::STATUS_RETURNED => 'Vrátená',
-        ];
-
-        $this->template->orders = $this->ordersRepository->getByUser($this->getUser()->getId(), array_keys($statusMap));
-        $this->template->statusMap = $statusMap;
     }
 
     public function renderLibrary()

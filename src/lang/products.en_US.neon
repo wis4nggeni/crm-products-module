@@ -96,6 +96,15 @@ data:
 	        default: Default
 	        active: Active
 	        sorting: Sorting
+	orders:
+		statuses:
+			paid: Paid
+			not_sent: Not sent
+			pending: Pending
+			confirmed: Confirmed
+			sent: Sent
+			delivered: Delivered
+			returned: Returned
 
 admin:
 	component:
