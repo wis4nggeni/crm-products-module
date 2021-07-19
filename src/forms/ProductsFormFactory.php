@@ -351,6 +351,10 @@ class ProductsFormFactory
             unset($values['template_properties_' . $template->id]);
         }
 
+        if (!isset($values['available_at']) || empty(trim($values['available_at']))) {
+            $values['available_at'] = null;
+        }
+
         if (isset($values['product_id'])) {
             $productId = $values['product_id'];
             unset($values['product_id']);
