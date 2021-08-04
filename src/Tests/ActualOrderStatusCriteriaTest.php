@@ -6,9 +6,9 @@ use Crm\PaymentsModule\PaymentItem\PaymentItemContainer;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\PaymentsModule\Tests\PaymentsTestCase;
 use Crm\ProductsModule\Repository\OrdersRepository;
-use Crm\ProductsModule\Scenarios\OrderStatusCriteria;
+use Crm\ProductsModule\Scenarios\ActualOrderStatusCriteria;
 
-class OrderStatusCriteriaTest extends PaymentsTestCase
+class ActualOrderStatusCriteriaTest extends PaymentsTestCase
 {
     public function requiredRepositories(): array
     {
@@ -23,17 +23,17 @@ class OrderStatusCriteriaTest extends PaymentsTestCase
             [
                 'hasStatus' => OrdersRepository::STATUS_NEW,
                 'shouldHaveStatus' => [OrdersRepository::STATUS_NEW],
-                true
+                'result' => true,
             ],
             [
                 'hasStatus' => OrdersRepository::STATUS_NEW,
                 'shouldHaveStatus' => [OrdersRepository::STATUS_NEW, OrdersRepository::STATUS_CONFIRMED],
-                true
+                'result' => true,
             ],
             [
                 'hasStatus' => OrdersRepository::STATUS_NEW,
                 'shouldHaveStatus' => [OrdersRepository::STATUS_PAID, OrdersRepository::STATUS_CONFIRMED],
-                false
+                'result' => false,
             ],
         ];
     }
@@ -41,13 +41,13 @@ class OrderStatusCriteriaTest extends PaymentsTestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testOrderStatus(string $hasStatus, array $shouldHaveStatus, bool $result)
+    public function testActualOrderStatus(string $hasStatus, array $shouldHaveStatus, bool $result)
     {
         [$orderSelection, $orderRow] = $this->prepareData($hasStatus);
 
-        $hasOrderCriteria = $this->inject(OrderStatusCriteria::class);
+        $hasOrderCriteria = $this->inject(ActualOrderStatusCriteria::class);
         $values = (object)['selection' => $shouldHaveStatus];
-        $hasOrderCriteria->addConditions($orderSelection, [OrderStatusCriteria::KEY => $values], $orderRow);
+        $hasOrderCriteria->addConditions($orderSelection, [ActualOrderStatusCriteria::KEY => $values], $orderRow);
 
         if ($result) {
             $this->assertNotEmpty($orderSelection->fetch());

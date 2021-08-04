@@ -5,13 +5,15 @@ namespace Crm\ProductsModule\Scenarios;
 use Crm\ApplicationModule\Criteria\ScenarioParams\StringLabeledArrayParam;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
 use Crm\ProductsModule\Repository\OrdersRepository;
+use Crm\ScenariosModule\Events\ConditionCheckException;
+use Crm\ScenariosModule\Scenarios\ScenariosTriggerCriteriaInterface;
 use Kdyby\Translation\Translator;
 use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 
-class OrderStatusCriteria implements ScenariosCriteriaInterface
+class OrderStatusOnScenarioEnterCriteria implements ScenariosCriteriaInterface, ScenariosTriggerCriteriaInterface
 {
-    const KEY = 'order_status';
+    const KEY = 'order_status_on_scenario_enter';
 
     private $ordersRepository;
 
@@ -36,14 +38,25 @@ class OrderStatusCriteria implements ScenariosCriteriaInterface
 
     public function addConditions(Selection $selection, array $paramValues, IRow $criterionItemRow): bool
     {
-        $values = $paramValues[self::KEY];
-        $selection->where('status IN (?)', $values->selection);
-
         return true;
+    }
+
+    public function evaluate($jobParameters, array $paramValues): bool
+    {
+        if (!isset($jobParameters->order_status)) {
+            throw new ConditionCheckException("Missing order_status job parameter.");
+        }
+        $orderStatus = $jobParameters->order_status;
+        $values = $paramValues[self::KEY];
+
+        if (in_array($orderStatus, $values->selection)) {
+            return true;
+        }
+        return false;
     }
 
     public function label(): string
     {
-        return $this->translator->translate('products.admin.scenarios.order_status.label');
+        return $this->translator->translate('products.admin.scenarios.order_status_on_scenario_enter.label');
     }
 }

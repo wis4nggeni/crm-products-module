@@ -288,8 +288,10 @@ admin:
 		title: Shop stats
 
 	scenarios:
-		order_status:
-			label: Order status
+		actual_order_status:
+			label: Actual order status
+		order_status_on_scenario_enter:
+			label: Order status at the time of entering the scenario
 		has_product_with_template_name:
 			label: Has product with template name
 		has_product_with_distribution_center:

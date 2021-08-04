@@ -288,8 +288,10 @@ admin:
 		title: Štatistiky obchodu
 
 	scenarios:
-		order_status:
-			label: Status objednávky
+		actual_order_status:
+			label: Momentálny stav objednávky
+		order_status_on_scenario_enter:
+			label: Stav objednávky v čase vstupu do scenára
 		has_product_with_template_name:
 			label: Obsahuje produkt so šablónou
 		has_product_with_distribution_center:

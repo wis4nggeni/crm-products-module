@@ -21,16 +21,16 @@ use Crm\ProductsModule\DataProvider\PaymentsAdminFilterFormDataProvider;
 use Crm\ProductsModule\Events\OrderStatusChangeEvent;
 use Crm\ProductsModule\Events\OrderStatusChangeEventHandler;
 use Crm\ProductsModule\Events\PaymentStatusChangeHandler;
-use Crm\ProductsModule\Events\PaymentStatusChangeNotifyHandler;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
 use Crm\ProductsModule\Scenarios\HasOrderCriteria;
-use Crm\ProductsModule\Scenarios\OrderStatusCriteria;
+use Crm\ProductsModule\Scenarios\ActualOrderStatusCriteria;
 use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
 use Crm\ProductsModule\Scenarios\HasProductWithDistributionCenterCriteria;
 use Crm\ProductsModule\Scenarios\NewOrderHandler;
 use Crm\ProductsModule\Scenarios\OrderScenarioConditionalModel;
 use Crm\ProductsModule\Scenarios\HasProductWithTemplateNameCriteria;
+use Crm\ProductsModule\Scenarios\OrderStatusOnScenarioEnterCriteria;
 use Crm\ProductsModule\Seeders\AddressTypesSeeder;
 use Crm\ProductsModule\Seeders\ConfigsSeeder;
 use Kdyby\Translation\Translator;
@@ -148,11 +148,6 @@ class ProductsModule extends CrmModule
         $emitter->addListener(
             PaymentChangeStatusEvent::class,
             $this->getInstance(PaymentStatusChangeHandler::class)
-        );
-
-        $emitter->addListener(
-            PaymentChangeStatusEvent::class,
-            $this->getInstance(PaymentStatusChangeNotifyHandler::class)
         );
 
         $emitter->addListener(
@@ -301,8 +296,13 @@ class ProductsModule extends CrmModule
         );
         $scenariosCriteriaStorage->register(
             'order',
-            OrderStatusCriteria::KEY,
-            $this->getInstance(OrderStatusCriteria::class)
+            ActualOrderStatusCriteria::KEY,
+            $this->getInstance(ActualOrderStatusCriteria::class)
+        );
+        $scenariosCriteriaStorage->register(
+            'trigger',
+            OrderStatusOnScenarioEnterCriteria::KEY,
+            $this->getInstance(OrderStatusOnScenarioEnterCriteria::class)
         );
         $scenariosCriteriaStorage->register(
             'order',

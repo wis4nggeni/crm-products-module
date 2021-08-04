@@ -39,6 +39,7 @@ class NewOrderHandler implements HandlerInterface
 
         $params = array_filter([
             'order_id' => $order->id,
+            'order_status' => $order->status,
             'payment_id' => $payment->id,
             'subscription_id' => $payment->subscription_id ?? null
         ]);

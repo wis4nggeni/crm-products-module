@@ -35,8 +35,9 @@ class OrderStatusChangeHandler implements HandlerInterface
 
         $params = array_filter([
             'order_id' => $order->id,
+            'order_status' => $order->status,
             'payment_id' => $order->payment->id,
-            'subscription_id' => $order->payment->subscription_id ?? null
+            'subscription_id' => $order->payment->subscription_id ?? null,
         ]);
 
         $this->dispatcher->dispatch('order_status_change', $order->payment->user_id, $params, [
