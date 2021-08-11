@@ -26,7 +26,11 @@ class OrderStatusChangeHandler implements HandlerInterface
         if (!isset($payload['order_id'])) {
             throw new \Exception('unable to handle event: order_id missing');
         }
+        if (!isset($payload['order_status'])) {
+            throw new \Exception('unable to handle event: order_status missing');
+        }
         $orderId = $payload['order_id'];
+        $orderStatus = $payload['order_status'];
         $order = $this->ordersRepository->find($orderId);
 
         if (!$order) {
@@ -35,7 +39,7 @@ class OrderStatusChangeHandler implements HandlerInterface
 
         $params = array_filter([
             'order_id' => $order->id,
-            'order_status' => $order->status,
+            'order_status' => $orderStatus,
             'payment_id' => $order->payment->id,
             'subscription_id' => $order->payment->subscription_id ?? null,
         ]);

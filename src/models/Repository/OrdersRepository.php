@@ -85,7 +85,8 @@ class OrdersRepository extends Repository
         if ($statusChanged) {
             $this->emitter->emit(new OrderStatusChangeEvent($row->id));
             $this->hermesEmitter->emit(new HermesMessage('order-status-change', [
-                'order_id' => $row->id
+                'order_id' => $row->id,
+                'order_status' => $data['status'],
             ]), HermesMessage::PRIORITY_DEFAULT);
         }
 
