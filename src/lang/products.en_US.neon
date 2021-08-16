@@ -64,6 +64,8 @@ data:
 			template_property: Field '%s' is required
 			vat: VAT is required
 			not_stored_to_distribution_center: 'Unable to save product to distribution center.'
+			stock_required: Field 'Stock count' is required
+			stock_positive: Field 'Stock count' must be a non-negative number
 	tags:
 		fields:
 			name: Name

@@ -64,6 +64,8 @@ data:
 			template_property: Položka '%s' je povinná
 			vat: DPH je povinná
 			not_stored_to_distribution_center: 'Produkt se nepodařilo uložit do distribučního centra.'
+			stock_required: Položka 'Počet kusú na sklade' je povinná
+			stock_positive: Položka 'Počet kusú na sklade' musí být nezáporné číslo
 	tags:
 		fields:
 			name: Název

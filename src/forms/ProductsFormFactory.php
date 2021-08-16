@@ -52,20 +52,20 @@ class ProductsFormFactory
     public $onUpdate;
 
     public function __construct(
-        ProductsRepository $productsRepository,
-        ProductPropertiesRepository $productPropertiesRepository,
-        ProductTemplatesRepository $productTemplatesRepository,
+        ProductsRepository                  $productsRepository,
+        ProductPropertiesRepository         $productPropertiesRepository,
+        ProductTemplatesRepository          $productTemplatesRepository,
         ProductTemplatePropertiesRepository $productTemplatePropertiesRepository,
-        ProductBundlesRepository $productBundlesRepository,
-        TagsRepository $tagsRepository,
-        ProductTagsRepository $productTagsRepository,
-        DistributionCentersRepository $distributionCentersRepository,
-        ProductsCache $productsCache,
-        DataProviderManager $dataProviderManager,
-        ProductBuilder $productBuilder,
-        Translator $translator,
-        Emitter $emitter,
-        ApplicationConfig $applicationConfig
+        ProductBundlesRepository            $productBundlesRepository,
+        TagsRepository                      $tagsRepository,
+        ProductTagsRepository               $productTagsRepository,
+        DistributionCentersRepository       $distributionCentersRepository,
+        ProductsCache                       $productsCache,
+        DataProviderManager                 $dataProviderManager,
+        ProductBuilder                      $productBuilder,
+        Translator                          $translator,
+        Emitter                             $emitter,
+        ApplicationConfig                   $applicationConfig
     ) {
         $this->productsRepository = $productsRepository;
         $this->productPropertiesRepository = $productPropertiesRepository;
@@ -159,7 +159,9 @@ class ProductsFormFactory
         $form->addInteger('vat', 'products.data.products.fields.vat')
             ->setRequired('products.data.products.errors.vat');
 
-        $form->addText('stock', 'products.data.products.fields.stock');
+        $form->addInteger('stock', 'products.data.products.fields.stock')
+            ->setRequired('products.data.products.errors.stock_required')
+            ->addRule($form::MIN, 'products.data.products.errors.stock_positive', 0);
 
         $form->addText('available_at', 'products.data.products.fields.available_at')
             ->setHtmlAttribute('class', 'flatpickr');
@@ -282,7 +284,7 @@ class ProductsFormFactory
                     }
                 }
                 $templateId->addCondition(Form::EQUAL, $template->id)
-                        ->toggle("template_property_{$templateProperty->id}");
+                    ->toggle("template_property_{$templateProperty->id}");
             }
         }
 
