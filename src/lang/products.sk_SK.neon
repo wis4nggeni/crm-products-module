@@ -58,7 +58,9 @@ data:
 			code: Položka 'Identifikátor' je povinná
 			description: Položka 'Popis' je povinná
 			image_url: Položka 'URL Fotky' je povinná
-			price_with_vat: Položka 'Cena s DPH' je povinná
+			price_required: Položka 'Predajná cena s DPH' je povinná
+			price_float_positive: Položka 'Predajná cena s DPH' musí byť nezáporné číslo
+			catalog_price_float_positive: Položka 'Cenníková cena' musí byť nezáporné číslo
 			og_image_url: Položka 'OG:image URL' je povinná
 			ean13: EAN kód musí mať 13 znakov
 			template_property: Položka '%s' je povinná

@@ -58,7 +58,9 @@ data:
 			code: Field 'Code' is required
 			description: Field 'Description' is required
 			image_url: Field 'Photo URL' is required
-			price_with_vat: Field 'Price with VAT' is required
+			price_required: Field 'Shop price with VAT' is required
+			price_float_positive: Field 'Shop price with VAT' must be a non-negative number
+			catalog_price_float_positive: Field 'Basic price' must be a non-negative number
 			og_image_url: Field 'OG:image URL' is required
 			ean13: EAN code must be 13 characters
 			template_property: Field '%s' is required

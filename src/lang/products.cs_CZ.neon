@@ -59,7 +59,9 @@ data:
 			description: Položka 'Popis' je povinná
 			image_url: Položka 'URL Fotky' je povinná
 			og_image_url: Položka 'OG:image URL' je povinná
-			price_with_vat: Položka 'Cena s DPH' je povinná
+			price_required: Položka 'Prodejní cena s DPH' je povinná
+			price_float_positive: Položka 'Prodejní cena s DPH' musí být nezáporné číslo
+			catalog_price_float_positive: Položka 'Ceníková cena' musí být nezáporné číslo
 			ean13: EAN kód musí mít 13 znaků
 			template_property: Položka '%s' je povinná
 			vat: DPH je povinná

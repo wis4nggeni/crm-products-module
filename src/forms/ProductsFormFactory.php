@@ -150,11 +150,17 @@ class ProductsFormFactory
             ->setAttribute('placeholder', 'products.data.products.placeholder.user_label');
 
         $form->addText('price', 'products.data.products.fields.price')
-            ->setRequired('products.data.products.errors.price_with_vat')
-            ->setAttribute('placeholder', 'products.data.products.placeholder.price');
+            ->setRequired('products.data.products.errors.price_required')
+            ->setAttribute('placeholder', 'products.data.products.placeholder.price')
+            ->addRule($form::FLOAT, 'products.data.products.errors.price_float_positive')
+            ->addRule($form::MIN, 'products.data.products.errors.price_float_positive', 0);
 
         $form->addText('catalog_price', 'products.data.products.fields.catalog_price')
-            ->setAttribute('placeholder', 'products.data.products.placeholder.catalog_price');
+            ->setAttribute('placeholder', 'products.data.products.placeholder.catalog_price')
+            ->setRequired(false)
+            ->setNullable()
+            ->addRule($form::FLOAT, 'products.data.products.errors.catalog_price_float_positive')
+            ->addRule($form::MIN, 'products.data.products.errors.catalog_price_float_positive', 0);
 
         $form->addInteger('vat', 'products.data.products.fields.vat')
             ->setRequired('products.data.products.errors.vat');
