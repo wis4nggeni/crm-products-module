@@ -47,7 +47,10 @@ class PaymentStatusChangeHandler extends AbstractListener
 
         switch ($payment->status) {
             case PaymentsRepository::STATUS_PAID:
-                $this->ordersRepository->update($order, ['status' => OrdersRepository::STATUS_PAID]);
+            case PaymentsRepository::STATUS_PREPAID:
+                if ($order->status === OrdersRepository::STATUS_NEW) {
+                    $this->ordersRepository->update($order, ['status' => OrdersRepository::STATUS_PAID]);
+                }
                 break;
 
             case PaymentsRepository::STATUS_FAIL:
@@ -61,12 +64,6 @@ class PaymentStatusChangeHandler extends AbstractListener
 
             case PaymentsRepository::STATUS_IMPORTED:
                 $this->ordersRepository->update($order, ['status' => OrdersRepository::STATUS_IMPORTED]);
-                break;
-
-            case PaymentsRepository::STATUS_PREPAID:
-                if ($order->status === OrdersRepository::STATUS_NEW) {
-                    $this->ordersRepository->update($order, ['status' => OrdersRepository::STATUS_PAID]);
-                }
                 break;
 
             default:
