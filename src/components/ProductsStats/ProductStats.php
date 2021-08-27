@@ -19,7 +19,6 @@ class ProductStats extends UI\Control
 
     public function __construct($stats)
     {
-        parent::__construct();
         $this->stats = $stats;
     }
 
