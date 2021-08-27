@@ -56,17 +56,17 @@ class TagsFormFactory
 
         $form->addText('name', 'products.data.tags.fields.name')
             ->setRequired('products.data.tags.errors.name')
-            ->setAttribute('placeholder', 'products.data.tags.placeholder.name');
+            ->setHtmlAttribute('placeholder', 'products.data.tags.placeholder.name');
 
         $form->addText('code', 'products.data.tags.fields.code')
             ->setOption('description', 'products.data.tags.descriptions.code')
-            ->setAttribute('placeholder', 'products.data.tags.placeholder.code')
+            ->setHtmlAttribute('placeholder', 'products.data.tags.placeholder.code')
             ->setDisabled(isset($tagId));
 
         $form->addText('icon', 'products.data.tags.fields.icon')
             ->setRequired('products.data.tags.errors.icon')
             ->setOption('description', Html::el('a href="http://fontawesome.io/icons/"', $this->translator->trans('products.data.tags.descriptions.icon')))
-            ->setAttribute('placeholder', 'products.data.tags.placeholder.icon');
+            ->setHtmlAttribute('placeholder', 'products.data.tags.placeholder.icon');
 
         $tagPairsQuery = $this->tagsRepository->all()->where('sorting IS NOT NULL');
         if ($tagId) {

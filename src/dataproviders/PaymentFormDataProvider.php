@@ -86,7 +86,7 @@ class PaymentFormDataProvider implements PaymentFormDataProviderInterface
         $container->addHidden("product_counts");
 
         if ($payment) {
-            $productIdsMultiselect->setAttribute('readonly', 'readonly')
+            $productIdsMultiselect->setHtmlAttribute('readonly', 'readonly')
                 ->setOption(
                     'description',
                     $this->translator->translate('products.data_provider.payment_form_data.products_from_eshop_readonly')

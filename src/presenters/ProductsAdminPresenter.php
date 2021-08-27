@@ -245,8 +245,8 @@ class ProductsAdminPresenter extends AdminPresenter
         $form = new Form;
         $form->setRenderer(new BootstrapInlineRenderer());
         $form->addText('text', $this->translator->translate('system.filter'), 50)
-            ->setAttribute('placeholder', $this->translator->translate('products.admin.products.default.admin_filter_form.text.placeholder'))
-            ->setAttribute('autofocus');
+            ->setHtmlAttribute('placeholder', $this->translator->translate('products.admin.products.default.admin_filter_form.text.placeholder'))
+            ->setHtmlAttribute('autofocus');
 
         $form->addMultiSelect(
             'tags',

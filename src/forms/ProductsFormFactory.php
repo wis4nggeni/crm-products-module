@@ -139,24 +139,24 @@ class ProductsFormFactory
 
         $form->addText('name', 'products.data.products.fields.name')
             ->setRequired('products.data.products.errors.name')
-            ->setAttribute('placeholder', 'products.data.products.placeholder.name');
+            ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.name');
 
         $form->addText('code', 'products.data.products.fields.code')
             ->setRequired('products.data.products.errors.code')
-            ->setAttribute('placeholder', 'products.data.products.placeholder.code');
+            ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.code');
 
         $form->addText('user_label', 'products.data.products.fields.user_label')
             ->setOption('description', 'products.data.products.descriptions.user_label')
-            ->setAttribute('placeholder', 'products.data.products.placeholder.user_label');
+            ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.user_label');
 
         $form->addText('price', 'products.data.products.fields.price')
             ->setRequired('products.data.products.errors.price_required')
-            ->setAttribute('placeholder', 'products.data.products.placeholder.price')
+            ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.price')
             ->addRule($form::FLOAT, 'products.data.products.errors.price_float_positive')
             ->addRule($form::MIN, 'products.data.products.errors.price_float_positive', 0);
 
         $form->addText('catalog_price', 'products.data.products.fields.catalog_price')
-            ->setAttribute('placeholder', 'products.data.products.placeholder.catalog_price')
+            ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.catalog_price')
             ->setRequired(false)
             ->setNullable()
             ->addRule($form::FLOAT, 'products.data.products.errors.catalog_price_float_positive')
@@ -202,29 +202,29 @@ class ProductsFormFactory
         $tags->getControlPrototype()->addAttributes(['class' => 'select2']);
 
         $description = $form->addTextArea('description', 'products.data.products.fields.description')
-            ->setAttribute('placeholder', 'products.data.products.placeholder.description')
-            ->setAttribute('rows', 10)
-            ->setAttribute('data-html-editor', [])
+            ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.description')
+            ->setHtmlAttribute('rows', 10)
+            ->setHtmlAttribute('data-html-editor', [])
             ->setOption('id', 'description');
 
         $image = $form->addText('image_url', 'products.data.products.fields.image_url')
             ->setOption('description', 'products.data.products.descriptions.image_url')
             ->setOption('id', 'image')
-            ->setAttribute('placeholder', 'products.data.products.placeholder.image_url');
+            ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.image_url');
 
         $ogImage = $form->addText('og_image_url', 'products.data.products.fields.og_image_url')
             ->setOption('id', 'ogImage')
-            ->setAttribute('placeholder', 'products.data.products.placeholder.og_image_url');
+            ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.og_image_url');
 
         $images = $form->addTextArea('images', 'products.data.products.fields.images')
-            ->setAttribute('placeholder', 'products.data.products.placeholder.images')
+            ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.images')
             ->setOption('description', 'products.data.products.descriptions.images')
             ->setOption('id', 'images')
-            ->setAttribute('rows', 5);
+            ->setHtmlAttribute('rows', 5);
 
         $ean = $form->addText('ean', 'products.data.products.fields.ean')
             ->setOption('id', 'ean')
-            ->setAttribute('placeholder', 'products.data.products.placeholder.ean');
+            ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.ean');
 
         $distributionCenters = $this->distributionCentersRepository->all()->fetchPairs('code', 'name');
         $distributionCenter = $form->addSelect('distribution_center', 'products.data.products.fields.distribution_center', $distributionCenters)

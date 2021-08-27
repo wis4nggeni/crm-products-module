@@ -100,7 +100,7 @@ class OrdersAdminPresenter extends AdminPresenter
         $form = new Form;
         $form->setRenderer(new BootstrapInlineRenderer());
         $form->addText('text', $this->translator->translate('products.admin.orders.default.fields.order_id_vs') . ':')
-            ->setAttribute('autofocus');
+            ->setHtmlAttribute('autofocus');
 
         $products = $this->productsRepository->getTable()->fetchPairs('id', 'name');
         $form->addMultiSelect('products', $this->translator->translate('products.admin.orders.default.fields.products'), $products)
