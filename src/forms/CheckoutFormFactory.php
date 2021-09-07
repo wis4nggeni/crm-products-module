@@ -396,7 +396,7 @@ class CheckoutFormFactory
     public function formSucceeded($form, $values)
     {
         if ($values['action'] == 'login') {
-            $this->user->setExpiration('14 days', false);
+            $this->user->setExpiration('14 days');
             try {
                 $this->user->login(['username' => $values['user']['email'], 'password' => $values['user']['password']]);
                 $this->user->setAuthorizator($this->authorizator);
