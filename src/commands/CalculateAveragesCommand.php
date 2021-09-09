@@ -95,6 +95,6 @@ SQL
 SQL
         );
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
