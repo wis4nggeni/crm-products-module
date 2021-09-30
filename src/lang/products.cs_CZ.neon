@@ -272,6 +272,13 @@ admin:
 			successfully_added: Způsob doručení byl úspěšně přidán
 			successfully_deleted: Způsob doručení byl úspěšně odstraněn
 			error_already_exists: Vybraný způsob doručení již je přidán
+			sorting_required: Položka 'Pořadí' je povinná
+			condition_value_required: Položka 'Hodnota' je povinná
+		conditions:
+			products_sum:
+				label: Suma produktů v košíku
+				validation_integer: Suma produktů musí být číselná hodnota
+				validation_min: Suma produktů být kladná hodnota
 	distribution:
 		shopCounts: Kolik objednávek v obchodě provedl před zakoupením prostřednictvím tohoto okna
 		shopDays: "Kdy naposledy nakoupil v obchodě (počet dní před platbou v okně)"
@@ -414,6 +421,11 @@ frontend:
 		visit_eshop_ebooks: "Elektronické knihy můžete nakupovat na %shop_url%, všechny budou dostupné na tomto místě."
 		title: Název
 		preparing_download: Připravuje se stažení
+
+	components:
+		free_shipping_progress_bar:
+			message: "Pro bezplatné doručení nakupte ještě za <strong>%amount%</strong>."
+			reached_message: "Nakoupili jste za více než <strong>%amount%</strong>, doručení máte <strong>zdarma</strong>"
 
 data_provider:
 	delete:

@@ -32,6 +32,13 @@
                                 <a n:href="Active! $countryPostalFee->id" class="btn btn-xs btn-default"><span class="fa fa-eye"></span></a>
                             {/if}
 
+                            <i n:foreach="$countryPostalFee->related('country_postal_fee_conditions', 'country_postal_fee_id') as $condition"
+                                class="fa fa-question-circle"
+                                data-toggle="tooltip"
+                                data-placement="right"
+                                title="{$postalFeeService->getRegisteredConditionByCode($condition->code)->getLabel() . " (" . $condition->value . ")"}"
+                            ></i>
+
                             <small>({$countryPostalFee->sorting})</small>
                             <span n:if="$countryPostalFee->default" class="badge">{_products.data.country_postal_fees.fields.default}</span>
                         </div>

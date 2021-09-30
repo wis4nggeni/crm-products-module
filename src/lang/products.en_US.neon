@@ -273,6 +273,13 @@ admin:
 			successfully_added: Delivery method was successfully added
 			successfully_deleted: Delivery method was successfully removed
 			error_already_exists: The selected delivery method is already added
+			sorting_required: Field 'Sorting' is required
+			condition_value_required: Field 'Value' is required
+		conditions:
+			products_sum:
+				label: Sumary of products in the cart
+				validation_integer: Sumary of products has to be a numeric value
+				validation_min: Sumary of products has to be a positive value
 	distribution:
 		shopCounts: How many orders in shop made before the payment
 		shopDays: How many days passed since last order in shop
@@ -416,6 +423,11 @@ frontend:
 		visit_eshop_ebooks: "You can buy e-books at %shop_url%, all your books will be available here."
 		title: Title
 		preparing_download: Preparing download
+
+	components:
+		free_shipping_progress_bar:
+			message: "For free delivery buy products for another <strong>%amount%</strong>."
+			reached_message: "You order reached <strong>%amount%</strong>, you have <strong>free delivery</strong>"
 
 data_provider:
 	delete:

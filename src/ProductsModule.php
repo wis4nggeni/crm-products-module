@@ -281,6 +281,11 @@ class ProductsModule extends CrmModule
             'products.frontend.orders_my',
             $this->getInstance(\Crm\ProductsModule\Components\UserOrdersWidget::class)
         );
+
+        $widgetManager->registerWidget(
+            'products.frontend.cart',
+            $this->getInstance(\Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class)
+        );
     }
 
     public function registerScenariosCriteria(ScenariosCriteriaStorage $scenariosCriteriaStorage)

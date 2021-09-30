@@ -14,6 +14,7 @@ services:
 	productTemplatePropertiesRepository: Crm\ProductsModule\Repository\ProductTemplatePropertiesRepository
 	productTagsRepository: Crm\ProductsModule\Repository\ProductTagsRepository
 	tagsRepository: Crm\ProductsModule\Repository\TagsRepository
+	postalFeeConditionsRepository: Crm\ProductsModule\Repository\CountryPostalFeeConditionsRepository
 
 	- Crm\ProductsModule\Builder\ProductBuilder
 
@@ -24,6 +25,7 @@ services:
 	- Crm\ProductsModule\Components\TotalShopPaymentsWidget
 	- Crm\ProductsModule\Components\AvgProductsPaymentWidget
 	- Crm\ProductsModule\Components\UserOrdersWidget
+	- Crm\ProductsModule\Components\FreeShippingProgressBarWidget
 
 	- Crm\ProductsModule\DataProvider\PaymentFormDataProvider
 	- Crm\ProductsModule\DataProvider\PaymentsAdminFilterFormDataProvider
@@ -72,3 +74,8 @@ services:
 
 	productsAdminPresenter:
 	 	class: Crm\ProductsModule\Presenters\ProductsAdminPresenter
+
+	postalFeeService:
+		class: Crm\ProductsModule\PostalFeeCondition\PostalFeeService
+		setup:
+			- registerCondition('products_sum', Crm\ProductsModule\PostalFeeCondition\ProductSumCondition())

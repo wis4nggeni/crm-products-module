@@ -7,8 +7,8 @@ use Crm\ApplicationModule\Components\VisualPaginator;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Forms\CheckoutFormFactory;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
+use Crm\ProductsModule\PostalFeeCondition\PostalFeeService;
 use Crm\ProductsModule\Repository\OrdersRepository;
-use Crm\ProductsModule\Repository\PostalFeesRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls\RadioList;
@@ -21,9 +21,9 @@ class OrdersAdminPresenter extends AdminPresenter
 
     private $paymentsRepository;
 
-    private $postalFeesRepository;
-
     private $productsRepository;
+
+    private $postalFeeService;
 
     public $checkoutFormFactory;
 
@@ -36,16 +36,16 @@ class OrdersAdminPresenter extends AdminPresenter
     public function __construct(
         OrdersRepository $ordersRepository,
         PaymentsRepository $paymentsRepository,
-        PostalFeesRepository $postalFeesRepository,
         ProductsRepository $productsRepository,
-        CheckoutFormFactory $checkoutFormFactory
+        CheckoutFormFactory $checkoutFormFactory,
+        PostalFeeService $postalFeeService
     ) {
         parent::__construct();
         $this->ordersRepository = $ordersRepository;
         $this->paymentsRepository = $paymentsRepository;
-        $this->postalFeesRepository = $postalFeesRepository;
         $this->productsRepository = $productsRepository;
         $this->checkoutFormFactory = $checkoutFormFactory;
+        $this->postalFeeService = $postalFeeService;
     }
 
     /**
@@ -137,10 +137,8 @@ class OrdersAdminPresenter extends AdminPresenter
     public function createComponentCheckoutForm()
     {
         $payment = $this->paymentsRepository->find($this->getParameter('paymentId'));
-        $cart = [];
-        foreach ($payment->related('payment_items')->where('type = ?', ProductPaymentItem::TYPE) as $paymentItem) {
-            $cart[$paymentItem->product_id] = $paymentItem->count;
-        }
+        $cart = $this->createCartFromPayment($this->getParameter('paymentId'));
+
         $form = $this->checkoutFormFactory->create($cart, null, $payment);
         $form->setRenderer(new BootstrapRenderer());
         $this->checkoutFormFactory->onSave = function ($payment) {
@@ -154,10 +152,12 @@ class OrdersAdminPresenter extends AdminPresenter
      */
     public function handleCountryChange($value)
     {
+        $cart = $this->createCartFromPayment($this->getParameter('paymentId'));
         if ($this['checkoutForm']['postal_fee'] instanceof RadioList) {
+            $options = $this->postalFeeService->getAvailablePostalFeesOptions($value, $cart);
             $this['checkoutForm']['postal_fee']
-                ->setItems($this->postalFeesRepository->getByCountry($value)->fetchAll())
-                ->setDefaultValue($this->postalFeesRepository->getDefaultByCountry($value));
+                ->setItems($options)
+                ->setDefaultValue($this->postalFeeService->getDefaultPostalFee($value, $options));
         }
 
         $this->redrawControl('postalFeesSnippet');
@@ -198,5 +198,16 @@ class OrdersAdminPresenter extends AdminPresenter
         }
 
         return $orders;
+    }
+
+    private function createCartFromPayment(int $paymentId): array
+    {
+        $payment = $this->paymentsRepository->find($paymentId);
+        $cart = [];
+        foreach ($payment->related('payment_items')->where('type = ?', ProductPaymentItem::TYPE) as $paymentItem) {
+            $cart[$paymentItem->product_id] = $paymentItem->count;
+        }
+
+        return $cart;
     }
 }

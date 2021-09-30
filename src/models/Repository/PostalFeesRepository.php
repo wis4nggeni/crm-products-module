@@ -14,15 +14,6 @@ class PostalFeesRepository extends Repository
         return $this->getTable()->where([':country_postal_fees.country_id' => $countryId, ':country_postal_fees.active' => true])->order('sorting');
     }
 
-    final public function getDefaultByCountry($countryId)
-    {
-        $row = $this->getByCountry($countryId)->where(['default' => true])->limit(1)->fetch();
-        if (!$row) {
-            $row = $this->getByCountry($countryId)->order('sorting')->limit(1)->fetch();
-        }
-        return $row;
-    }
-
     final public function all()
     {
         return $this->getTable();

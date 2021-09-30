@@ -1,0 +1,71 @@
+<?php
+
+namespace Crm\ProductsModule\Tests;
+
+use Crm\ApplicationModule\Tests\DatabaseTestCase;
+use Crm\ProductsModule\PostalFeeCondition\ProductSumCondition;
+use Crm\ProductsModule\Repository\ProductsRepository;
+use Kdyby\Translation\Translator;
+use Nette\Database\Table\IRow;
+
+class ProductSumConditionTest extends DatabaseTestCase
+{
+    /** @var ProductsRepository */
+    private $productsRepository;
+
+    protected function requiredRepositories(): array
+    {
+        return [
+            ProductsRepository::class,
+        ];
+    }
+
+    protected function requiredSeeders(): array
+    {
+        return [];
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->productsRepository = $this->getRepository(ProductsRepository::class);
+    }
+
+    public function testPositiveResult(): void
+    {
+        $productRow1 = $this->insertProduct(13.29);
+        $productRow2 = $this->insertProduct(27);
+
+        $productSumCondition = new ProductSumCondition(
+            $this->inject(Translator::class),
+            $this->productsRepository
+        );
+
+        $cartProducts = [
+            $productRow1->id => 2,
+            $productRow2->id => 1,
+        ];
+
+        $this->assertFalse($productSumCondition->isReached($cartProducts, 100));
+        $this->assertTrue($productSumCondition->isReached($cartProducts, 20));
+    }
+
+    private function insertProduct(float $price): IRow
+    {
+        return $this->productsRepository->insert([
+            'name' => 'test1',
+            'code' => 'test1_code',
+            'price' => 10.0,
+            'vat' => 19,
+            'user_label' => 'user_label',
+            'bundle' => 0,
+            'shop' => 1,
+            'visible' => 1,
+            'stored' => 1,
+            'stock' => 10,
+            'created_at' => new \DateTime(),
+            'modified_at' => new \DateTime()
+        ]);
+    }
+}

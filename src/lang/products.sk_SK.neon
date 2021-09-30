@@ -100,6 +100,8 @@ data:
 	        default: Predvolená
 	        active: Aktívne
 	        sorting: Poradie
+	        condition: Podmienka
+	        condition_value: Hodnota
 	orders:
 		statuses:
 			paid: Zaplatená
@@ -273,6 +275,13 @@ admin:
 			successfully_added: Spôsob doručenia bol úspešne pridaný
 			successfully_deleted: Spôsob doručenia bol úspešne odstránený
 			error_already_exists: Vybraný spôsob doručenia už je pridaný
+			sorting_required: Položka 'Poradie' je povinná
+			condition_value_required: Položka 'Hodnota' je povinná
+		conditions:
+			products_sum:
+			 	label: Suma produktov v košíku
+			 	validation_integer: Suma produktov musí byť číselná hodnota
+			 	validation_min: Suma produktov byť kladná hodnota
 	distribution:
 		shopCounts: Koľko objednávok v obchode spravil pred zakúpením cez toto okno
 		shopDays: 'Kedy naposledy nakúpil v obchode (počet dní pred platbou v okne)'
@@ -416,6 +425,11 @@ frontend:
 		visit_eshop_ebooks: "Elektronické knihy môžete nakupovať na %shop_url%, všetky budú dostupné na tomto mieste."
 		title: Názov
 		preparing_download: Pripravuje sa stiahnutie
+
+	components:
+		free_shipping_progress_bar:
+			message: "Pre bezplatné doručenie nakúpte ešte za <strong>%amount%</strong>."
+			reached_message: "Nakúpili ste za viac ako <strong>%amount%</strong>, doručenie máte <strong>zadarmo</strong>."
 
 data_provider:
 	delete:

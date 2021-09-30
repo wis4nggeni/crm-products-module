@@ -78,8 +78,7 @@ class OrderStatusOnScenarioEnterCriteriaTest extends BaseTestCase
             'status' => OrdersRepository::STATUS_NOT_SENT
         ]);
 
-        $this->engine->run(true); // process trigger, finish its job and create wait job
-        $this->engine->run(true); // job(condition): created -> started
+        $this->engine->run(3); // process trigger, finish its job and create wait job, job(condition): created -> started
 
         $this->dispatcher->handle(); // job(condition): started -> finished
 
@@ -104,8 +103,7 @@ class OrderStatusOnScenarioEnterCriteriaTest extends BaseTestCase
         // run Hermes to create trigger job
         $this->dispatcher->handle();
 
-        $this->engine->run(true); // process trigger, finish its job and create wait job
-        $this->engine->run(true); // job(condition): created -> started
+        $this->engine->run(3); // process trigger, finish its job and create wait job, job(condition): created -> started
 
         $this->dispatcher->handle(); // job(condition): started -> failed
 

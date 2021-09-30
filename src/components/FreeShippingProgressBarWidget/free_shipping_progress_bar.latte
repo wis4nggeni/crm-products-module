@@ -1,0 +1,19 @@
+{var $percentage = round($actualValue / $desiredValue * 100)}
+
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col-xs-12">
+        {if $isReached}
+            <span>{_products.frontend.components.free_shipping_progress_bar.reached_message, ['amount' => ($desiredValue|price)]|noescape}</span>
+        {else}
+            <span>{_products.frontend.components.free_shipping_progress_bar.message, ['amount' => ($desiredValue - $actualValue|price)]|noescape}</span>
+        {/if}
+    </div>
+</div>
+
+<div style="margin-top: 10px;">
+    <div class="progress" style="height: 5px;">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{$percentage}" aria-valuemin="0" aria-valuemax="100" style="width: {$percentage}%;">
+        </div>
+    </div>
+</div>

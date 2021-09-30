@@ -11,6 +11,7 @@ use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\PaymentItem\PaymentItemHelper;
 use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
+use Crm\ProductsModule\PostalFeeCondition\PostalFeeService;
 use Crm\ProductsModule\Repository\CountryPostalFeesRepository;
 use Crm\ProductsModule\Repository\DistributionCentersRepository;
 use Crm\ProductsModule\Repository\OrdersRepository;
@@ -81,6 +82,8 @@ class CheckoutFormFactory
 
     private $countryPostalFeesRepository;
 
+    private $postalFeeService;
+
     public function __construct(
         ApplicationConfig $applicationConfig,
         PaymentsRepository $paymentsRepository,
@@ -99,7 +102,8 @@ class CheckoutFormFactory
         Translator $translator,
         PaymentItemHelper $paymentItemHelper,
         DataProviderManager $dataProviderManager,
-        CountryPostalFeesRepository $countryPostalFeesRepository
+        CountryPostalFeesRepository $countryPostalFeesRepository,
+        PostalFeeService $postalFeeService
     ) {
         $this->applicationConfig = $applicationConfig;
         $this->paymentsRepository = $paymentsRepository;
@@ -119,6 +123,7 @@ class CheckoutFormFactory
         $this->paymentItemHelper = $paymentItemHelper;
         $this->dataProviderManager = $dataProviderManager;
         $this->countryPostalFeesRepository = $countryPostalFeesRepository;
+        $this->postalFeeService = $postalFeeService;
     }
 
     public function create($cart, $cartFree = [], $payment = null)
@@ -237,10 +242,11 @@ class CheckoutFormFactory
 
         if ($hasDelivery) {
             $form->removeComponent($postalFee);
-            $form->addRadioList('postal_fee', null, $this->postalFeesRepository->getByCountry($countryId)->fetchAll())
+            $options = $this->postalFeeService->getAvailablePostalFeesOptions($countryId, $cart);
+            $form->addRadioList('postal_fee', null, $options)
                 ->setRequired($this->translator->translate('products.frontend.shop.checkout.fields.choose_shipping_method'));
 
-            $defaults['postal_fee'] = $this->postalFeesRepository->getDefaultByCountry($countryId);
+            $defaults['postal_fee'] = $this->postalFeeService->getDefaultPostalFee($countryId, $options);
 
             $shippingAddress = $form->addContainer('shipping_address');
             $shippingAddress->addText('first_name', $this->translator->translate('products.frontend.shop.checkout.fields.first_name'))

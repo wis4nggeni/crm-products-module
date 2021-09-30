@@ -14,6 +14,7 @@ use Crm\ProductsModule\Events\CartItemAddedEvent;
 use Crm\ProductsModule\Events\CartItemRemovedEvent;
 use Crm\ProductsModule\Forms\CheckoutFormFactory;
 use Crm\ProductsModule\PaymentItem\PaymentItemHelper;
+use Crm\ProductsModule\PostalFeeCondition\PostalFeeService;
 use Crm\ProductsModule\Repository\PostalFeesRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
@@ -47,6 +48,8 @@ class ShopPresenter extends FrontendPresenter
 
     private $dataProviderManager;
 
+    private $postalFeeService;
+
     private $cartSession;
     private $cartProducts;
     private $cartProductSum;
@@ -61,7 +64,8 @@ class ShopPresenter extends FrontendPresenter
         PaymentProcessor $paymentProcessor,
         EbookProvider $ebookProvider,
         Emitter $hermesEmitter,
-        DataProviderManager $dataProviderManager
+        DataProviderManager $dataProviderManager,
+        PostalFeeService $postalFeeService
     ) {
         parent::__construct();
 
@@ -75,6 +79,7 @@ class ShopPresenter extends FrontendPresenter
         $this->ebookProvider = $ebookProvider;
         $this->hermesEmitter = $hermesEmitter;
         $this->dataProviderManager = $dataProviderManager;
+        $this->postalFeeService = $postalFeeService;
     }
 
     public function startup()
@@ -429,9 +434,10 @@ class ShopPresenter extends FrontendPresenter
             return;
         }
         if ($this['checkoutForm']['postal_fee'] instanceof RadioList) {
+            $options = $this->postalFeeService->getAvailablePostalFeesOptions($value, $this->cartProducts);
             $this['checkoutForm']['postal_fee']
-                ->setItems($this->postalFeesRepository->getByCountry($value)->fetchAll())
-                ->setDefaultValue($this->postalFeesRepository->getDefaultByCountry($value));
+                ->setItems($options)
+                ->setDefaultValue($this->postalFeeService->getDefaultPostalFee($value, $options));
         }
 
         $this->redrawControl('postalFeesSnippet');

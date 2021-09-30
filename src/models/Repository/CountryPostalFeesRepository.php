@@ -3,6 +3,7 @@
 namespace Crm\ProductsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
+use Crm\ApplicationModule\Selection;
 use Nette\Database\Table\IRow;
 use Nette\Utils\DateTime;
 
@@ -60,5 +61,22 @@ class CountryPostalFeesRepository extends Repository
     final public function findAllByPostalFeeId($postalFeeId)
     {
         return $this->getTable()->where('postal_fee_id', $postalFeeId)->fetchAll();
+    }
+
+    final public function findActiveByCountry(int $countryId): Selection
+    {
+        return $this->getTable()
+            ->where([
+                'country_id' => $countryId,
+                'active' => 1,
+            ]);
+    }
+
+    final public function getByCountryAndPostalFee(int $countryId, int $postalFeeId)
+    {
+        return $this->getTable()->where([
+            'country_id' => $countryId,
+            'postal_fee_id' => $postalFeeId,
+        ])->fetch();
     }
 }
