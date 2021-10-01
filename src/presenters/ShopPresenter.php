@@ -19,6 +19,7 @@ use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
 use Nette\Application\BadRequestException;
 use Nette\Forms\Controls\RadioList;
+use Nette\Http\Response;
 use Nette\Utils\DateTime;
 use Tomaj\Hermes\Emitter;
 
@@ -180,9 +181,17 @@ class ShopPresenter extends FrontendPresenter
         $this->template->now = new DateTime();
     }
 
+    public function actionAddToCart($id)
+    {
+        $this->handleAddCart($id);
+    }
+
     public function handleAddCart($id, $redirectToCheckout = false)
     {
         $product = $this->productsRepository->find($id);
+        if (!$product || !$product->shop) {
+            throw new BadRequestException('Product not found.', Response::S404_NOT_FOUND);
+        }
 
         if ($product->stock <= 0) {
             $this->flashMessage($product->name, 'product-not-available');
@@ -192,10 +201,6 @@ class ShopPresenter extends FrontendPresenter
         if (isset($this->cartSession->products[$product->id]) && $product->stock <= $this->cartSession->products[$product->id]) {
             $this->flashMessage($product->name, 'product-more-not-available');
             $this->redirect('this');
-        }
-
-        if (!$product || !$product->shop) {
-            throw new BadRequestException('Product not found.', 404);
         }
 
         if (!isset($this->cartSession->products[$product->id])) {
