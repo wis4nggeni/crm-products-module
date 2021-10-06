@@ -82,12 +82,12 @@ class ProductsRepository extends Repository
 
     final public function getShopProducts($visibleOnly = true, $availableOnly = true, $tag = null)
     {
-        $where = ['shop' => true];
+        $where = ['products.shop' => true];
         if ($visibleOnly === true) {
-            $where['visible'] = true;
+            $where['products.visible'] = true;
         }
         if ($availableOnly === true) {
-            $where['stock > ?'] = 0;
+            $where['products.stock > ?'] = 0;
         }
         if (isset($tag)) {
             $where[':product_tags.tag_id'] = $tag->id;
