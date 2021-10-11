@@ -2,8 +2,8 @@
 
 namespace Crm\ProductsModule\DataProvider;
 
-use Nette\Application\UI\Form;
 use Crm\ApplicationModule\DataProvider\DataProviderInterface;
+use Nette\Application\UI\Form;
 
 interface ProductsFormDataProviderInterface extends DataProviderInterface
 {

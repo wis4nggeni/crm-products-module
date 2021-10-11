@@ -5,8 +5,8 @@ namespace Crm\ProductsModule\Builder;
 use Crm\ApplicationModule\Builder\Builder;
 use Crm\ProductsModule\Repository\ProductBundlesRepository;
 use Crm\ProductsModule\Repository\ProductPropertiesRepository;
-use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\ProductTagsRepository;
+use Crm\ProductsModule\Repository\ProductsRepository;
 use Nette\Database\Context;
 use Nette\Database\Table\ActiveRow;
 
