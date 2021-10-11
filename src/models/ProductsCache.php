@@ -19,7 +19,7 @@ class ProductsCache
 
     public function add($id, $code)
     {
-        $product = JSON::encode([
+        $product = Json::encode([
             'id' => $id,
             'code' => $code,
         ]);
@@ -36,7 +36,7 @@ class ProductsCache
         $data = $this->redis()->hgetall(static::REDIS_KEY);
         $res = [];
         foreach ($data as $record) {
-            $res[] = JSON::decode($record);
+            $res[] = Json::decode($record);
         }
         return $res;
     }
