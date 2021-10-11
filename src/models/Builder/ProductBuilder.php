@@ -7,7 +7,7 @@ use Crm\ProductsModule\Repository\ProductBundlesRepository;
 use Crm\ProductsModule\Repository\ProductPropertiesRepository;
 use Crm\ProductsModule\Repository\ProductTagsRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 
 class ProductBuilder extends Builder
@@ -26,7 +26,7 @@ class ProductBuilder extends Builder
     private $productTags = [];
 
     public function __construct(
-        Context $database,
+        Explorer $database,
         ProductsRepository $productsRepository,
         ProductBundlesRepository $productBundlesRepository,
         ProductPropertiesRepository $productPropertiesRepository,

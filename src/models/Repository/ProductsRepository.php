@@ -11,7 +11,7 @@ use Crm\ProductsModule\Distribution\ProductDaysFromLastOrderDistribution;
 use Crm\ProductsModule\Distribution\ProductShopCountsDistribution;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use DateTime;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 
@@ -28,7 +28,7 @@ class ProductsRepository extends Repository
     private $productShopCountsDistribution;
 
     public function __construct(
-        Context $database,
+        Explorer $database,
         AuditLogRepository $auditLogRepository,
         AmountSpentDistribution $amountSpentDistribution,
         PaymentCountsDistribution $paymentCountDistribution,

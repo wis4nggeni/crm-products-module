@@ -2,13 +2,13 @@
 
 namespace Crm\ProductsModule\Distribution;
 
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 
 class ProductShopCountsDistribution implements DistributionInterface
 {
     private $database;
 
-    public function __construct(Context $database)
+    public function __construct(Explorer $database)
     {
         $this->database = $database;
     }

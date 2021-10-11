@@ -5,7 +5,7 @@ namespace Crm\ProductsModule\Commands;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,7 +19,7 @@ class CalculateAveragesCommand extends Command
 {
     private $database;
 
-    public function __construct(Context $database)
+    public function __construct(Explorer $database)
     {
         parent::__construct();
         $this->database = $database;

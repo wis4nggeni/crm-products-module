@@ -8,7 +8,7 @@ use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\ProductsModule\Events\NewOrderEvent;
 use Crm\ProductsModule\Events\OrderStatusChangeEvent;
 use League\Event\Emitter;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Database\Table\IRow;
 use Nette\Utils\DateTime;
 
@@ -33,7 +33,7 @@ class OrdersRepository extends Repository
     private $hermesEmitter;
 
     public function __construct(
-        Context $database,
+        Explorer $database,
         AuditLogRepository $auditLogRepository,
         Emitter $emitter,
         \Tomaj\Hermes\Emitter $hermesEmitter
