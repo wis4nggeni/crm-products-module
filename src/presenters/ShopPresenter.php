@@ -146,6 +146,7 @@ class ShopPresenter extends FrontendPresenter
         $this->template->title = $this->translator->translate('products.frontend.shop.default.header');
         $this->template->products = $this->productsRepository->getShopProducts(true, true);
         $this->template->selectedTag = null;
+        $this->template->cartProducts = $this->cartSession->products;
     }
 
     public function renderTag($tagCode)
@@ -184,6 +185,7 @@ class ShopPresenter extends FrontendPresenter
         $this->template->product = $product;
         $this->template->relatedProducts = $this->productsRepository->relatedProducts($product);
         $this->template->now = new DateTime();
+        $this->template->cartProducts = $this->cartSession->products;
     }
 
     public function actionAddToCart($id)

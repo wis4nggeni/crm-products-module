@@ -24,6 +24,8 @@
        {$title}
     </h1>
 
+    {control simpleWidget 'products.shop.product_list.title', $cartProducts}
+
     <ul class="nav nav-pills">
       <li role="presentation" n:class="is_null($selectedTag) ? active, is_null($selectedTag) ? disabled">
         <a n:href="default">{_products.frontend.shop.default.all} <span class="badge">{$productsCount}</span></a></li>

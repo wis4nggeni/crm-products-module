@@ -25,6 +25,9 @@
 {/block}
 
 {block #content}
+
+{control simpleWidget 'products.shop.show.title', $cartProducts}
+
 <h1>{$product->name}</h1>
 <div class="row product-detail">
     <div class="col-xs-12 col-sm-7">

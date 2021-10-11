@@ -425,7 +425,7 @@ frontend:
 	components:
 		free_shipping_progress_bar:
 			message: "Pro bezplatné doručení nakupte ještě za <strong>%amount%</strong>."
-			reached_message: "Nakoupili jste za více než <strong>%amount%</strong>, doručení máte <strong>zdarma</strong>"
+			reached_message: "Vybrali jste si za více než <strong>%amount%</strong>, doručení máte <strong>zdarma</strong>"
 
 data_provider:
 	delete:

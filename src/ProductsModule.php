@@ -283,7 +283,17 @@ class ProductsModule extends CrmModule
         );
 
         $widgetManager->registerWidget(
-            'products.frontend.cart',
+            'products.shop.cart',
+            $this->getInstance(\Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class)
+        );
+
+        $widgetManager->registerWidget(
+            'products.shop.show.title',
+            $this->getInstance(\Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class)
+        );
+
+        $widgetManager->registerWidget(
+            'products.shop.product_list.title',
             $this->getInstance(\Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class)
         );
     }

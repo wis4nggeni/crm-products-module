@@ -429,7 +429,7 @@ frontend:
 	components:
 		free_shipping_progress_bar:
 			message: "Pre bezplatné doručenie nakúpte ešte za <strong>%amount%</strong>."
-			reached_message: "Nakúpili ste za viac ako <strong>%amount%</strong>, doručenie máte <strong>zadarmo</strong>."
+			reached_message: "Vybrali ste si za viac ako %amount%, <strong>doručenie máte zadarmo.</strong>"
 
 data_provider:
 	delete:

@@ -38,6 +38,10 @@ class FreeShippingProgressBarWidget extends BaseWidget
             $countryId = $this->countriesRepository->defaultCountry()->id;
         }
 
+        if (count($cartProducts) === 0) {
+            return;
+        }
+
         $countryPostalFeeConditionRow = $this->postalFeeService->getRecommendedFreePostalFeeCondition($countryId);
 
         if (!$countryPostalFeeConditionRow) {
