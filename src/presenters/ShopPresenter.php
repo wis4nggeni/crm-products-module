@@ -162,6 +162,7 @@ class ShopPresenter extends FrontendPresenter
         $this->template->title = $tag->name;
         $this->template->products = $this->productsRepository->getShopProducts(false, true, $tag);
         $this->template->selectedTag = $tag;
+        $this->template->cartProducts = $this->cartSession->products;
     }
 
     public function renderShow($id, $code)
