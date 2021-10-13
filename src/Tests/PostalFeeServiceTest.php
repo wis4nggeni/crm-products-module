@@ -127,30 +127,6 @@ class PostalFeeServiceTest extends DatabaseTestCase
         $this->assertEquals([1.99, 1.99, 0], array_column($postalFees, 'amount'));
     }
 
-    public function testGetCheapestFreePostalFee()
-    {
-        $this->preparePostalFeeForCountry(164, 'posta_list', 1.99);
-        $this->preparePostalFeeForCountry(164, 'dhl_parcel', 1.99);
-        $this->preparePostalFeeForCountry(164, 'ups_parcel', 1.99);
-
-        $postalFeeRow = $this->preparePostalFeeForCountry(164, 'dhl_parcel', 0, 20);
-        $this->countryPostalFeeConditionsRepository->add($postalFeeRow, 'test_code', 120);
-
-        $postalFeeRow = $this->preparePostalFeeForCountry(164, 'ups_parcel', 0, 40);
-        $countryPostalFeeConditionRow = $this->countryPostalFeeConditionsRepository->add($postalFeeRow, 'test_code', 90);
-
-        $postalFeeRow = $this->preparePostalFeeForCountry(164, 'ups_parcel', 0, 50);
-        $this->countryPostalFeeConditionsRepository->add($postalFeeRow, 'test_code', 110);
-
-        /** @var PostalFeeService $postalFeeService */
-        $postalFeeService = $this->inject(PostalFeeService::class);
-
-        $closestFreePostalFeeCondition = $postalFeeService->getRecommendedFreePostalFeeCondition(164);
-
-        $this->assertNotFalse($closestFreePostalFeeCondition);
-        $this->assertEquals($countryPostalFeeConditionRow->id, $closestFreePostalFeeCondition->id);
-    }
-
     public function testGetDefaultPostalFee()
     {
         /** @var PostalFeeService $postalFeeService */

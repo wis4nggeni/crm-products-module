@@ -47,8 +47,8 @@ class ProductSumConditionTest extends DatabaseTestCase
             $productRow2->id => 1,
         ];
 
-        $this->assertFalse($productSumCondition->isReached($cartProducts, 100));
-        $this->assertTrue($productSumCondition->isReached($cartProducts, 20));
+        $this->assertFalse($productSumCondition->isReached($cartProducts, 100, null));
+        $this->assertTrue($productSumCondition->isReached($cartProducts, 20, null));
     }
 
     private function insertProduct(float $price): IRow

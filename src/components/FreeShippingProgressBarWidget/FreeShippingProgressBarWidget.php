@@ -46,7 +46,8 @@ class FreeShippingProgressBarWidget extends BaseWidget
             $countryId = $this->countriesRepository->defaultCountry()->id;
         }
 
-        if (count($cartProducts) === 0) {
+        $freeCountryPostalFees = $this->postalFeeService->getFreePostalPostalFeeForCondition($countryId, 'code');
+        if ($freeCountryPostalFees->count('*') === 0) {
             return;
         }
 
@@ -55,20 +56,50 @@ class FreeShippingProgressBarWidget extends BaseWidget
             return;
         }
 
-        $countryPostalFeeConditionRow = $this->postalFeeService->getRecommendedFreePostalFeeCondition($countryId);
+        $userId = null;
+        if ($this->getPresenter()->getUser()->isLoggedIn()) {
+            $userId = $this->getPresenter()->getUser()->getId();
+        }
 
-        if (!$countryPostalFeeConditionRow) {
+        $reachedCondition = null;
+        $reachedConditionRow = null;
+        $unreachedConditions = [];
+        $unreachedConditionRows = [];
+
+        foreach ($freeCountryPostalFees as $freeCountryPostalFee) {
+            $countryPostalFeeConditionRow = $freeCountryPostalFee->related('country_postal_fee_conditions')->fetch();
+
+            $condition = $this->postalFeeService->getRegisteredConditionByCode($countryPostalFeeConditionRow->code);
+
+            if ($condition->isReached($cartProducts, $countryPostalFeeConditionRow->value, $userId)) {
+                $reachedCondition = $condition;
+                $reachedConditionRow = $countryPostalFeeConditionRow;
+                break;
+            }
+            if ($condition instanceof PostalFeeNumericConditionInterface) {
+                $unreachedConditions[] = $condition;
+                $unreachedConditionRows[] = $countryPostalFeeConditionRow;
+            }
+        }
+
+        if ($reachedCondition) {
+            $condition = $reachedCondition;
+            $countryPostalFeeConditionRow = $reachedConditionRow;
+            $this->template->isReached = true;
+            $this->template->condition = $reachedCondition;
+        } elseif (count($unreachedConditions) > 0) {
+            $condition = $unreachedConditions[0];
+            $countryPostalFeeConditionRow = $unreachedConditionRows[0];
+            $this->template->isReached = false;
+            $this->template->condition = $condition;
+        } else {
             return;
         }
 
-        $postalFeeCondition = $this->postalFeeService->getRegisteredConditionByCode($countryPostalFeeConditionRow->code);
-        if (!$postalFeeCondition instanceof PostalFeeNumericConditionInterface) {
-            return;
+        if ($condition instanceof PostalFeeNumericConditionInterface) {
+            $this->template->actualValue = $condition->getActualValue($cartProducts);
+            $this->template->desiredValue = $countryPostalFeeConditionRow->value;
         }
-
-        $this->template->isReached = $postalFeeCondition->isReached($cartProducts, $countryPostalFeeConditionRow->value);
-        $this->template->actualValue = $postalFeeCondition->getActualValue($cartProducts);
-        $this->template->desiredValue = $countryPostalFeeConditionRow->value;
 
         $this->template->setFile(__DIR__ . '/' . $this->templateName);
         $this->template->render();

@@ -49,6 +49,7 @@ services:
 		class: Crm\ProductsModule\Forms\CheckoutFormFactory
 	- Crm\ProductsModule\Forms\ProductsFormFactory
 	- Crm\ProductsModule\Forms\TagsFormFactory
+	- Crm\ProductsModule\Forms\CountryPostalFeesFormFactory
 
 	- Crm\ProductsModule\PaymentItem\PaymentItemHelper
 
@@ -80,3 +81,4 @@ services:
 		class: Crm\ProductsModule\PostalFeeCondition\PostalFeeService
 		setup:
 			- registerCondition('products_sum', Crm\ProductsModule\PostalFeeCondition\ProductSumCondition())
+			- registerCondition('user_segment', Crm\ProductsModule\PostalFeeCondition\UserSegmentCondition())

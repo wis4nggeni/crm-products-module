@@ -436,7 +436,7 @@ class ShopPresenter extends FrontendPresenter
             return;
         }
         if ($this['checkoutForm']['postal_fee'] instanceof RadioList) {
-            $options = $this->postalFeeService->getAvailablePostalFeesOptions($value, $this->cartProducts);
+            $options = $this->postalFeeService->getAvailablePostalFeesOptions($value, $this->cartProducts, $this->user->getId());
             $this['checkoutForm']['postal_fee']
                 ->setItems($options)
                 ->setDefaultValue($this->postalFeeService->getDefaultPostalFee($value, $options));

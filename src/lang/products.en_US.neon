@@ -267,10 +267,10 @@ admin:
 	country_postal_fees:
 		default:
 			header: Countries and delivery methods
-			add_form_header: Add delivery method
-			submit: Add delivery method
+			form_header: Delivery method
+			submit: Save delivery method
 			close: Close
-			successfully_added: Delivery method was successfully added
+			successfully_added: Delivery method was successfully saved
 			successfully_deleted: Delivery method was successfully removed
 			error_already_exists: The selected delivery method is already added
 			sorting_required: Field 'Sorting' is required
@@ -280,6 +280,9 @@ admin:
 				label: Sumary of products in the cart
 				validation_integer: Sumary of products has to be a numeric value
 				validation_min: Sumary of products has to be a positive value
+			user_segment:
+				label: Segment of users
+				message: "You have free delivery today because you are our subscriber."
 	distribution:
 		shopCounts: How many orders in shop made before the payment
 		shopDays: How many days passed since last order in shop

@@ -227,7 +227,7 @@ class CheckoutFormFactory
 
         if ($hasDelivery) {
             $form->removeComponent($postalFee);
-            $options = $this->postalFeeService->getAvailablePostalFeesOptions($countryId, $cart);
+            $options = $this->postalFeeService->getAvailablePostalFeesOptions($countryId, $cart, $this->user->getId());
             $form->addRadioList('postal_fee', null, $options)
                 ->setRequired($this->translator->translate('products.frontend.shop.checkout.fields.choose_shipping_method'));
 

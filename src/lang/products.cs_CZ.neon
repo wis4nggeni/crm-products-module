@@ -266,10 +266,10 @@ admin:
 	country_postal_fees:
 		default:
 			header: Země a způsoby doručení
-			add_form_header: Přidej způsob doručení
-			submit: Přidej způsob doručení
+			form_header: Způsob doručení
+			submit: Ulož způsob doručení
 			close: Zavřít
-			successfully_added: Způsob doručení byl úspěšně přidán
+			successfully_added: Způsob doručení byl úspěšně uložen
 			successfully_deleted: Způsob doručení byl úspěšně odstraněn
 			error_already_exists: Vybraný způsob doručení již je přidán
 			sorting_required: Položka 'Pořadí' je povinná
@@ -279,6 +279,10 @@ admin:
 				label: Suma produktů v košíku
 				validation_integer: Suma produktů musí být číselná hodnota
 				validation_min: Suma produktů být kladná hodnota
+			user_segment:
+				label: Segment uživatelů
+				message: "Doručení máte dnes zdarma, protože jste náš předplatitel."
+
 	distribution:
 		shopCounts: Kolik objednávek v obchodě provedl před zakoupením prostřednictvím tohoto okna
 		shopDays: "Kdy naposledy nakoupil v obchodě (počet dní před platbou v okně)"

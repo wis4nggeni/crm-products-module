@@ -5,6 +5,8 @@ namespace Crm\ProductsModule\PostalFeeCondition;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Form;
+use Nette\ComponentModel\IComponent;
+use Nette\Forms\Controls\TextInput;
 
 class ProductSumCondition implements PostalFeeConditionInterface, PostalFeeNumericConditionInterface
 {
@@ -27,7 +29,7 @@ class ProductSumCondition implements PostalFeeConditionInterface, PostalFeeNumer
         return $this->translator->translate('products.admin.country_postal_fees.conditions.products_sum.label');
     }
 
-    public function isReached(array $products, string $value): bool
+    public function isReached(array $products, string $value, int $userId = null): bool
     {
         return $this->sumProductsFromCart($products) >= (float)$value;
     }
@@ -37,12 +39,17 @@ class ProductSumCondition implements PostalFeeConditionInterface, PostalFeeNumer
         return $this->sumProductsFromCart($products);
     }
 
-    public function getValidationRules(): array
+    public function getInputControl(): IComponent
     {
-        return [
-            [Form::FLOAT, $this->translator->translate('products.admin.country_postal_fees.conditions.products_sum.validation_integer')],
-            [Form::MIN, $this->translator->translate('products.admin.country_postal_fees.conditions.products_sum.validation_min'), 0],
-        ];
+        $textInput = (new TextInput('products.data.country_postal_fees.fields.condition_value'))
+            ->setRequired(true)
+            ->addRule(Form::FLOAT, $this->translator->translate('products.admin.country_postal_fees.conditions.products_sum.validation_integer'))
+            ->addRule(Form::MIN, $this->translator->translate('products.admin.country_postal_fees.conditions.products_sum.validation_min'), 0);
+
+        $textInput->getControlPrototype()
+            ->addAttributes(['class' => 'form-control']);
+
+        return $textInput;
     }
 
     private function sumProductsFromCart(array $products): float

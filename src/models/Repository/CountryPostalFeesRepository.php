@@ -72,11 +72,11 @@ class CountryPostalFeesRepository extends Repository
             ]);
     }
 
-    final public function getByCountryAndPostalFee(int $countryId, int $postalFeeId)
+    final public function getByCountryAndPostalFee(int $countryId, int $postalFeeId): Selection
     {
         return $this->getTable()->where([
             'country_id' => $countryId,
             'postal_fee_id' => $postalFeeId,
-        ])->fetch();
+        ]);
     }
 }

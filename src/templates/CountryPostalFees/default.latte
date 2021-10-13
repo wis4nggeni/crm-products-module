@@ -25,29 +25,28 @@
                     <div class="list-group">
                         <div class="list-group-item {if !$countryPostalFee->active}disabled{/if}" n:foreach="$country->related('country_postal_fees')->order('sorting') as $countryPostalFee">
                             {$countryPostalFee->postal_fee->title} <small>/ {$countryPostalFee->postal_fee->amount|price}</small>
-                            <a n:href="Delete! $countryPostalFee->id" class="btn btn-xs btn-default" onclick="return alert('Are you sure?')"><span class="fa fa-trash"></span></a>
-                            {if $countryPostalFee->active}
-                                <a n:href="Inactive! $countryPostalFee->id" class="btn btn-xs btn-default"><span class="fa fa-eye-slash"></span></a>
-                            {else}
-                                <a n:href="Active! $countryPostalFee->id" class="btn btn-xs btn-default"><span class="fa fa-eye"></span></a>
-                            {/if}
-
                             <i n:foreach="$countryPostalFee->related('country_postal_fee_conditions', 'country_postal_fee_id') as $condition"
-                                class="fa fa-question-circle"
-                                data-toggle="tooltip"
-                                data-placement="right"
-                                title="{$postalFeeService->getRegisteredConditionByCode($condition->code)->getLabel() . " (" . $condition->value . ")"}"
-                            ></i>
-
+                                  class="fa fa-question-circle"
+                                  data-toggle="tooltip"
+                                  data-placement="right"
+                                  title="{$postalFeeService->getRegisteredConditionByCode($condition->code)->getLabel() . " (" . $condition->value . ")"}"
+                              ></i>
+                            <a n:href="Edit! $countryPostalFee->id" class="ajax btn btn-xs btn-default"><span class="fa fa-edit"></span></a>
+                            {if $countryPostalFee->active}
+                              <a n:href="Inactive! $countryPostalFee->id" class="btn btn-xs btn-default"><span class="fa fa-eye-slash"></span></a>
+                            {else}
+                              <a n:href="Active! $countryPostalFee->id" class="btn btn-xs btn-default"><span class="fa fa-eye"></span></a>
+                            {/if}
+                            <a n:href="Delete! $countryPostalFee->id" class="btn btn-xs btn-default" onclick="return alert('Are you sure?')"><span class="fa fa-trash"></span></a>
                             <small>({$countryPostalFee->sorting})</small>
                             <span n:if="$countryPostalFee->default" class="badge">{_products.data.country_postal_fees.fields.default}</span>
                         </div>
                     </div>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#add-modal" onclick="$('#frm-addForm-country_id').val({$country->id}); return true">
+                    <a n:href="add!, $country->id" class="ajax btn btn-xs btn-default">
                         <span class="fa fa-plus-circle"></span>
-                    </button>
+                    </a>
                 </td>
             </tr>
             </tbody>
@@ -55,23 +54,90 @@
     </div>
 </div>
 
-
-<!-- Modal -->
-<div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+<div class="modal fade modal-ajax" id="form-modal" tabindex="-1" role="dialog" aria-labelledby="countryPostalFeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title" id="exampleModalLabel">{_products.admin.country_postal_fees.default.add_form_header}</h5>
-            </div>
-            <div class="modal-body">
-                {control addForm}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{_products.admin.country_postal_fees.default.close}</button>
-            </div>
+              <h5 class="modal-title" id="countryPostalFeeModalLabel">{_products.admin.country_postal_fees.default.form_header}</h5>
+          </div>
+          {snippet formModal}
+          {if $presenter->isAjax()}
+          <div class="modal-body">
+              {form countryPostalFeeForm}
+                  <div class="form-group">
+                      <div class="col-sm-3 control-label">{label country_id /}</div>
+                      <div class="col-sm-9">{input country_id, class => 'form-control'}</div>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-sm-3 control-label">{label postal_fee_id /}</div>
+                      <div class="col-sm-9">{input postal_fee_id}</div>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-sm-3 control-label">{label sorting /}</div>
+                      <div class="col-sm-9">{input sorting, class => 'form-control text'}</div>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-sm-3 control-label">{label active /}</div>
+                      <div class="col-sm-9"><div class="checkbox">{input active}</div></div>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-sm-3 control-label">{label default /}</div>
+                      <div class="col-sm-9"><div class="checkbox">{input default}</div></div>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-sm-3 control-label">{label condition /}</div>
+                      <div class="col-sm-9">{input condition, class => 'form-control'}</div>
+                  </div>
+                  {snippet conditionSnippet}
+                      {ifset $form['condition_value']}
+                          <div class="form-group">
+                              <div class="col-sm-3 control-label">{$form['condition_value']->getLabel()}</div>
+                              <div class="col-sm-9">{$form['condition_value']->getControl()}</div>
+                          </div>
+                          <script type="application/javascript">initSelect2();</script>
+                      {/ifset}
+                  {/snippet}
+                  <div class="form-group">
+                      <div class="col-sm-3 control-label"></div>
+                      <div class="col-sm-9">{input submit, class => 'btn btn-primary'}</div>
+                  </div>
+              {/form}
+          </div>
+          <script type="application/javascript">
+              $('#' + {$form["condition"]->htmlId}).on('change', function () {
+                changeCondition($(this).val());
+              });
+          </script>
+          {/if}
+          {/snippet}
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">{_products.admin.country_postal_fees.default.close}</button>
+          </div>
         </div>
     </div>
 </div>
+
+<script type="application/javascript">
+    $.nette.ext("modals", {
+        success: function (payload) {
+            if (payload.redirect) {
+                $(".modal-ajax").modal("hide");
+            } else if (payload.isModal) {
+                $('.modal-ajax').modal('show');
+            }
+        }
+    });
+
+    function changeCondition(condition) {
+        $.nette.ajax({
+            type: 'POST',
+            url: {link changeCondition!},
+            data: {
+                'condition': condition,
+            }
+        });
+    }
+</script>
