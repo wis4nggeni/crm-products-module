@@ -183,9 +183,8 @@ class ShopPresenter extends FrontendPresenter
             throw new BadRequestException("Product code does not match the product ID. Is your URL valid?", 404);
         }
 
-        $this->template->product = $product;
-        $this->template->relatedProducts = $this->productsRepository->relatedProducts($product);
         $this->template->now = new DateTime();
+        $this->template->product = $product;
         $this->template->cartProducts = $this->cartSession->products;
     }
 

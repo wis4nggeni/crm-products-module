@@ -1,0 +1,9 @@
+<div n:if="count($relatedProducts)" class="row">
+	<hr>
+	<div n:foreach="$relatedProducts as $relatedProduct" n:if="$relatedProduct" class="col-md-3">
+		<div class="product-image">
+			<a href="{plink :Products:Shop:show $relatedProduct->id, $relatedProduct->code}"><img src="{$relatedProduct->image_url}" alt="{$relatedProduct->name}" class="img-responsive"></a>
+		</div>
+		<h4><a href="{plink :Products:Shop:show $relatedProduct->id, $relatedProduct->code}">{$relatedProduct->name}</a></h4>
+	</div>
+</div>

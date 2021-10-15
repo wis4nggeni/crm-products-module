@@ -296,6 +296,11 @@ class ProductsModule extends CrmModule
             'products.shop.product_list.title',
             $this->getInstance(\Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class)
         );
+
+        $widgetManager->registerWidget(
+            'products.shop.show.bottom',
+            $this->getInstance(\Crm\ProductsModule\Components\RecommendedProductsWidget::class)
+        );
     }
 
     public function registerScenariosCriteria(ScenariosCriteriaStorage $scenariosCriteriaStorage)

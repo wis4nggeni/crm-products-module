@@ -80,7 +80,7 @@ class ProductsRepository extends Repository
         return $this->getTable()->where(['code' => $code])->fetch();
     }
 
-    final public function getShopProducts($visibleOnly = true, $availableOnly = true, $tag = null)
+    final public function getShopProducts($visibleOnly = true, $availableOnly = true, $tag = null, $order = 'sorting')
     {
         $where = ['products.shop' => true];
         if ($visibleOnly === true) {
@@ -93,21 +93,34 @@ class ProductsRepository extends Repository
             $where[':product_tags.tag_id'] = $tag->id;
         }
 
-        return $this->getTable()->where($where)->order('sorting');
+        return $this->getTable()->where($where)->order($order);
     }
 
     final public function relatedProducts(IRow $product, $limit = 4)
     {
-        $where = [
-            'shop' => true,
-            'visible' => true,
-            'stock > ?' => 0,
-            'id != ?' => $product->id
-        ];
-        return $this->getTable()
-            ->where($where)
-            ->order('RAND()')
+        return $this->getShopProducts(true, true, null, 'RAND()')
+            ->where('id != ?', $product->id)
             ->limit($limit);
+    }
+
+    final public function mostSoldProducts(DateTime $from = null, DateTime $to = null)
+    {
+        $products = $this->getShopProducts(true, true, null, 'sold_count DESC')
+            ->select('products.*, SUM(:payment_items.count) AS sold_count')
+            ->where([
+                ':payment_items.type' => ProductPaymentItem::TYPE,
+                ':payment_items.payment.status' => PaymentsRepository::STATUS_PAID,
+            ])
+            ->group('products.id');
+
+        if ($from) {
+            $products->where(':payment_items.payment.paid_at >= ?', $from);
+        }
+        if ($to) {
+            $products->where(':payment_items.payment.paid_at < ?', $to);
+        }
+
+        return $products;
     }
 
     final public function findByIds($ids)
