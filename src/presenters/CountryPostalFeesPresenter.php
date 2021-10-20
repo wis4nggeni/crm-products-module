@@ -8,7 +8,7 @@ use Crm\ProductsModule\PostalFeeCondition\PostalFeeService;
 use Crm\ProductsModule\Repository\CountryPostalFeesRepository;
 use Crm\UsersModule\Repository\CountriesRepository;
 use Nette\Application\UI\Form;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class CountryPostalFeesPresenter extends AdminPresenter
 {
@@ -48,12 +48,12 @@ class CountryPostalFeesPresenter extends AdminPresenter
     public function createComponentCountryPostalFeeForm(): Form
     {
         $form = $this->countryPostalFeeFormFactory->create($this->params['id'] ?? null);
-        $this->countryPostalFeeFormFactory->onAlreadyExist = function (IRow $countryPostalFeeRow) {
+        $this->countryPostalFeeFormFactory->onAlreadyExist = function (ActiveRow $countryPostalFeeRow) {
             $this->flashMessage($this->translator->translate('products.admin.country_postal_fees.default.error_already_exists'), 'error');
             $this->redirect('default');
         };
 
-        $this->countryPostalFeeFormFactory->onSave = function (IRow $countryPostalFeeRow) {
+        $this->countryPostalFeeFormFactory->onSave = function (ActiveRow $countryPostalFeeRow) {
             $this->flashMessage($this->translator->translate('products.admin.country_postal_fees.default.successfully_added'));
             $this->redirect('default');
         };

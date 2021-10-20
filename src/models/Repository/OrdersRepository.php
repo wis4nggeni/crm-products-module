@@ -9,7 +9,7 @@ use Crm\ProductsModule\Events\NewOrderEvent;
 use Crm\ProductsModule\Events\OrderStatusChangeEvent;
 use League\Event\Emitter;
 use Nette\Database\Explorer;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 
 class OrdersRepository extends Repository
@@ -79,7 +79,7 @@ class OrdersRepository extends Repository
         return $order;
     }
 
-    final public function update(IRow &$row, $data)
+    final public function update(ActiveRow &$row, $data)
     {
         $statusChanged = false;
         $data['updated_at'] = new \DateTime();

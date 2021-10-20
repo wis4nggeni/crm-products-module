@@ -17,7 +17,6 @@ use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\IRow;
 use Tomaj\Form\Renderer\BootstrapInlineRenderer;
 
 class ProductsAdminPresenter extends AdminPresenter
@@ -151,7 +150,7 @@ class ProductsAdminPresenter extends AdminPresenter
         $this->redirect('this');
     }
 
-    private function getProductSalesCount(IRow $product)
+    private function getProductSalesCount(ActiveRow $product)
     {
         return $this->paymentItemsRepository->getTable()
             ->where('product_id', $product->id)

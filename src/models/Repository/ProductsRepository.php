@@ -12,7 +12,7 @@ use Crm\ProductsModule\Distribution\ProductShopCountsDistribution;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use DateTime;
 use Nette\Database\Explorer;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 
 class ProductsRepository extends Repository
@@ -106,7 +106,7 @@ class ProductsRepository extends Repository
         return $this->getTable()->where($where)->order($order);
     }
 
-    final public function relatedProducts(IRow $product, $limit = 4)
+    final public function relatedProducts(ActiveRow $product, $limit = 4)
     {
         return $this->getShopProducts(true, true, null, 'RAND()')
             ->where('id != ?', $product->id)
@@ -195,7 +195,7 @@ class ProductsRepository extends Repository
         return $this->productShopCountsDistribution->distributionList($productId, $fromlevel, $toLevel);
     }
 
-    final public function decreaseStock(IRow &$product, $count = 1)
+    final public function decreaseStock(ActiveRow &$product, $count = 1)
     {
         $this->update($product, ['stock-=' => $count]);
     }
@@ -225,7 +225,7 @@ class ProductsRepository extends Repository
         return $selection;
     }
 
-    final public function softDelete(IRow $segment)
+    final public function softDelete(ActiveRow $segment)
     {
         $this->update($segment, [
             'deleted_at' => new \DateTime(),

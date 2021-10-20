@@ -4,7 +4,7 @@ namespace Crm\ProductsModule\PostalFeeCondition;
 
 use Crm\ApplicationModule\Selection;
 use Crm\ProductsModule\Repository\CountryPostalFeesRepository;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class PostalFeeService
 {
@@ -48,7 +48,7 @@ class PostalFeeService
 
         $result = [];
         foreach ($countryPostalFeesSelection as $countryPostalFee) {
-            /** @var IRow $countryPostalFee */
+            /** @var ActiveRow $countryPostalFee */
             $conditions = $countryPostalFee->related('country_postal_fee_conditions')
                 ->where('country_postal_fee_conditions.code IN (?)', array_keys($this->getRegisteredConditions()));
             if ($conditions && $conditions->count() > 0) {
@@ -79,7 +79,7 @@ class PostalFeeService
             ->order('ABS(:country_postal_fee_conditions.value)');
     }
 
-    public function getDefaultPostalFee(int $countryId, array $postalFees): IRow
+    public function getDefaultPostalFee(int $countryId, array $postalFees): ActiveRow
     {
         $freePostalFees = array_filter($postalFees, function ($item) {
             return $item->amount === 0.0;
@@ -90,7 +90,7 @@ class PostalFeeService
 
         $countryPostalFeesPairs = [];
         foreach ($postalFees as $postalFee) {
-            /** @var IRow $postalFee */
+            /** @var ActiveRow $postalFee */
             $countryPostalFeesPairs[$postalFee->id] = $postalFee->related('country_postal_fees')
                 ->where('country_id', $countryId)
                 ->fetch();

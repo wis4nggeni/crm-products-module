@@ -4,7 +4,7 @@ namespace Crm\ProductsModule\PaymentItem;
 
 use Crm\PaymentsModule\PaymentItem\PaymentItemInterface;
 use Crm\PaymentsModule\PaymentItem\PaymentItemTrait;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class PostalFeePaymentItem implements PaymentItemInterface
 {
@@ -14,7 +14,7 @@ class PostalFeePaymentItem implements PaymentItemInterface
 
     private $postalFee;
 
-    public function __construct(IRow $postalFee, int $vat, int $count = 1)
+    public function __construct(ActiveRow $postalFee, int $vat, int $count = 1)
     {
         $this->postalFee = $postalFee;
         $this->vat = $vat;

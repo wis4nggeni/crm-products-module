@@ -8,7 +8,7 @@ use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ScenariosModule\Events\ConditionCheckException;
 use Crm\ScenariosModule\Scenarios\ScenariosTriggerCriteriaInterface;
 use Kdyby\Translation\Translator;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 
 class OrderStatusOnScenarioEnterCriteria implements ScenariosCriteriaInterface, ScenariosTriggerCriteriaInterface
@@ -36,7 +36,7 @@ class OrderStatusOnScenarioEnterCriteria implements ScenariosCriteriaInterface, 
         ];
     }
 
-    public function addConditions(Selection $selection, array $paramValues, IRow $criterionItemRow): bool
+    public function addConditions(Selection $selection, array $paramValues, ActiveRow $criterionItemRow): bool
     {
         return true;
     }

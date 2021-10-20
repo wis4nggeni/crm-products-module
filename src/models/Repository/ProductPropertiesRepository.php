@@ -3,7 +3,7 @@
 namespace Crm\ProductsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class ProductPropertiesRepository extends Repository
 {
@@ -18,7 +18,7 @@ class ProductPropertiesRepository extends Repository
         ]);
     }
 
-    final public function upsert(IRow $product, IRow $productTemplateProperty, $value)
+    final public function upsert(ActiveRow $product, ActiveRow $productTemplateProperty, $value)
     {
         $productProperty = $this->getTable()->where([
             'product_id' => $product->id,

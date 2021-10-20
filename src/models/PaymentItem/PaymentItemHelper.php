@@ -5,7 +5,6 @@ namespace Crm\ProductsModule\PaymentItem;
 use Crm\PaymentsModule\Repository\PaymentItemsRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\IRow;
 
 class PaymentItemHelper
 {
@@ -16,7 +15,7 @@ class PaymentItemHelper
         $this->paymentItemsRepository = $paymentItemsRepository;
     }
 
-    public function hasUniqueProduct(IRow $product, int $userId): bool
+    public function hasUniqueProduct(ActiveRow $product, int $userId): bool
     {
         return $this->paymentItemsRepository->getTable()->where([
             'payment.user_id' => $userId,

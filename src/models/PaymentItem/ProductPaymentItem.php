@@ -4,7 +4,7 @@ namespace Crm\ProductsModule\PaymentItem;
 
 use Crm\PaymentsModule\PaymentItem\PaymentItemInterface;
 use Crm\PaymentsModule\PaymentItem\PaymentItemTrait;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class ProductPaymentItem implements PaymentItemInterface
 {
@@ -14,7 +14,7 @@ class ProductPaymentItem implements PaymentItemInterface
 
     private $product;
 
-    public function __construct(IRow $product, int $count)
+    public function __construct(ActiveRow $product, int $count)
     {
         $this->product = $product;
         $this->count = $count;

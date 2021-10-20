@@ -6,7 +6,7 @@ use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Crm\ProductsModule\PostalFeeCondition\ProductSumCondition;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Kdyby\Translation\Translator;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class ProductSumConditionTest extends DatabaseTestCase
 {
@@ -51,7 +51,7 @@ class ProductSumConditionTest extends DatabaseTestCase
         $this->assertTrue($productSumCondition->isReached($cartProducts, 20, null));
     }
 
-    private function insertProduct(float $price): IRow
+    private function insertProduct(float $price): ActiveRow
     {
         return $this->productsRepository->insert([
             'name' => 'test1',

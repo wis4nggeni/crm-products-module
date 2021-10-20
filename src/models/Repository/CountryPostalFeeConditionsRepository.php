@@ -3,20 +3,20 @@
 namespace Crm\ProductsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class CountryPostalFeeConditionsRepository extends Repository
 {
     protected $tableName = 'country_postal_fee_conditions';
 
     /**
-     * @param IRow $countryPostalFeeRow
+     * @param ActiveRow $countryPostalFeeRow
      * @param string $code - Unique identification of condition
      * @param string $value - Represents configurable value that is checked during the condition evaluation
      *
-     * @return bool|int|IRow
+     * @return bool|int|ActiveRow
      */
-    final public function add(IRow $countryPostalFeeRow, string $code, string $value)
+    final public function add(ActiveRow $countryPostalFeeRow, string $code, string $value)
     {
         return $this->insert([
             'country_postal_fee_id' => $countryPostalFeeRow->id,
@@ -26,7 +26,7 @@ class CountryPostalFeeConditionsRepository extends Repository
         ]);
     }
 
-    final public function getByCountryPostalFeeAndCode(IRow $countryPostalFeeRow, string $code)
+    final public function getByCountryPostalFeeAndCode(ActiveRow $countryPostalFeeRow, string $code)
     {
         return $this->getTable()->where([
             'country_postal_fee_id' => $countryPostalFeeRow->id,

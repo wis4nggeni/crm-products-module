@@ -11,7 +11,7 @@ use Crm\ProductsModule\Repository\CountryPostalFeesRepository;
 use Crm\ProductsModule\Repository\PostalFeesRepository;
 use Crm\UsersModule\Repository\CountriesRepository;
 use Mockery\Mock;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class PostalFeeServiceTest extends DatabaseTestCase
 {
@@ -175,7 +175,7 @@ class PostalFeeServiceTest extends DatabaseTestCase
         $this->assertEquals($postalFee8Row->id, $defaultPostalFeeRow->id);
     }
 
-    private function preparePostalFeeForCountry(int $countryId, string $code, float $amount, int $sorting = 10, bool $default = false): IRow
+    private function preparePostalFeeForCountry(int $countryId, string $code, float $amount, int $sorting = 10, bool $default = false): ActiveRow
     {
         $postalFeeRow = $this->postalFeesRepository->add($code, $code, $amount);
         $this->countryPostalFeesRepository->add($countryId, $postalFeeRow->id, $sorting, $default);

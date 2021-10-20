@@ -6,7 +6,7 @@ use Crm\ApplicationModule\Criteria\ScenarioParams\StringLabeledArrayParam;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
 use Crm\ProductsModule\Repository\ProductTemplatesRepository;
 use Kdyby\Translation\Translator;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 
 class HasProductWithTemplateNameCriteria implements ScenariosCriteriaInterface
@@ -38,7 +38,7 @@ class HasProductWithTemplateNameCriteria implements ScenariosCriteriaInterface
         ];
     }
 
-    public function addConditions(Selection $selection, array $paramValues, IRow $criterionItemRow): bool
+    public function addConditions(Selection $selection, array $paramValues, ActiveRow $criterionItemRow): bool
     {
         $values = $paramValues[self::KEY];
         $selection->where('payment:payment_items.product.product_template.id IN (?)', $values->selection);
