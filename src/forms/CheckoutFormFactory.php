@@ -8,12 +8,12 @@ use Crm\PaymentsModule\DataProvider\CheckoutFormDataProviderInterface;
 use Crm\PaymentsModule\PaymentItem\PaymentItemContainer;
 use Crm\PaymentsModule\Repository\PaymentGatewaysRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\ProductsModule\Model\ProductsTrait;
 use Crm\ProductsModule\PaymentItem\PaymentItemHelper;
 use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\PostalFeeCondition\PostalFeeService;
 use Crm\ProductsModule\Repository\CountryPostalFeesRepository;
-use Crm\ProductsModule\Repository\DistributionCentersRepository;
 use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Repository\PostalFeesRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
@@ -36,6 +36,8 @@ use Nette\Utils\Json;
 
 class CheckoutFormFactory
 {
+    use ProductsTrait;
+
     private $applicationConfig;
 
     private $gateways = [];
@@ -162,26 +164,9 @@ class CheckoutFormFactory
         }
 
         $products = $this->productsRepository->findByIds(array_keys($cart));
-        $hasDelivery = false;
-        $hasLicence = false;
 
-        $flagHandler = function ($product) use (&$hasDelivery, &$hasLicence) {
-            if ($product->has_delivery) {
-                $hasDelivery = true;
-            }
-            if ($product->distribution_center == DistributionCentersRepository::DISTRIBUTION_CENTER_DIBUK) {
-                $hasLicence = true;
-            }
-        };
-        foreach ($products as $product) {
-            if ($product->bundle) {
-                foreach ($product->related('product_bundles') as $productBundle) {
-                    $flagHandler($productBundle->item);
-                }
-            } else {
-                $flagHandler($product);
-            }
-        }
+        $hasDelivery = $this->hasDelivery($products);
+        $hasLicence = $this->hasLicense($products);
 
         $form = new Form;
 
