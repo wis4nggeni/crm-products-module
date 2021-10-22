@@ -40,7 +40,7 @@ services:
 	productManager: Crm\ProductsModule\Manager\ProductManager
 
 	ebookProvider:
-	    class: Crm\ProductsModule\Ebook\EbookProvider
+		class: Crm\ProductsModule\Ebook\EbookProvider
 
 	- Crm\ProductsModule\Events\OrderStatusChangeEventHandler
 	- Crm\ProductsModule\Events\PaymentStatusChangeHandler
@@ -70,11 +70,11 @@ services:
 	- Crm\ProductsModule\User\OrdersUserDataProvider
 
 	paymentCompleteRedirect:
-	 	setup:
-	 		- registerRedirectResolver(Crm\ProductsModule\Model\ShopPaymentCompleteRedirectResolver(), 400)
+		setup:
+			- registerRedirectResolver(Crm\ProductsModule\Model\ShopPaymentCompleteRedirectResolver(), 400)
 
 	productsAdminPresenter:
-	 	class: Crm\ProductsModule\Presenters\ProductsAdminPresenter
+		class: Crm\ProductsModule\Presenters\ProductsAdminPresenter
 
 	postalFeeService:
 		class: Crm\ProductsModule\PostalFeeCondition\PostalFeeService
