@@ -189,14 +189,14 @@ class ProductsModule extends CrmModule
         }
 
         foreach ($this->tagsCache->all() as $tag) {
-            $router[] = new Route($shopHost . "/<tagCode {$tag->code}>", "Products:Shop:tag");
+            $router->addRoute($shopHost . "/<tagCode {$tag->code}>", "Products:Shop:tag");
         }
 
-        $router[] = new Route($shopHost . "/product/<code>", 'Products:Shop:show', Route::ONE_WAY);
-        $router[] = new Route($shopHost . '/<action show>/<id \d+>/<code>', 'Products:Shop:show');
-        $router[] = new Route($shopHost . '/<action show>/<id \d+>', 'Products:Shop:show');
-        $router[] = new Route($shopHost . '/<action show>/<code>', 'Products:Shop:show');
-        $router[] = new Route($shopHost . '/<action>[/<id>]', 'Products:Shop:default');
+        $router->addRoute($shopHost . "/product/<code>", 'Products:Shop:show', Route::ONE_WAY);
+        $router->addRoute($shopHost . '/<action show>/<id \d+>/<code>', 'Products:Shop:show');
+        $router->addRoute($shopHost . '/<action show>/<id \d+>', 'Products:Shop:show');
+        $router->addRoute($shopHost . '/<action show>/<code>', 'Products:Shop:show');
+        $router->addRoute($shopHost . '/<action>[/<id>]', 'Products:Shop:default');
     }
 
     public function cache(OutputInterface $output, array $tags = [])
