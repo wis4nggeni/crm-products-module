@@ -3,7 +3,7 @@
 namespace Crm\ProductsModule\Components;
 
 use Crm\ProductsModule\Repository\ProductsRepository;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 
 class ProductStatsFactory
@@ -19,7 +19,7 @@ class ProductStatsFactory
     private $translator;
 
     public function __construct(
-        ITranslator $translator,
+        Translator $translator,
         ProductsRepository $productsRepository
     ) {
         $this->productsRepository = $productsRepository;

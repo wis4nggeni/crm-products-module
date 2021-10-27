@@ -5,7 +5,7 @@ namespace Crm\ProductsModule\Components;
 use Crm\ApplicationModule\Widget\BaseWidget;
 use Crm\ApplicationModule\Widget\WidgetManager;
 use Crm\ProductsModule\Repository\OrdersRepository;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 class UserOrdersWidget extends BaseWidget
 {
@@ -17,7 +17,7 @@ class UserOrdersWidget extends BaseWidget
 
     public function __construct(
         WidgetManager $widgetManager,
-        ITranslator $translator,
+        Translator $translator,
         OrdersRepository $ordersRepository
     ) {
         parent::__construct($widgetManager);

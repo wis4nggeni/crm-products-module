@@ -9,7 +9,7 @@ use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\User\AddressesUserDataProvider;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 use Tracy\Debugger;
 
@@ -24,7 +24,7 @@ class OrdersUserDataProvider implements UserDataProviderInterface
         OrdersRepository $ordersRepository,
         ConfigsRepository $configsRepository,
         SubscriptionsRepository $subscriptionsRepository,
-        ITranslator $translator
+        Translator $translator
     ) {
         $this->ordersRepository = $ordersRepository;
         $this->configsRepository = $configsRepository;
