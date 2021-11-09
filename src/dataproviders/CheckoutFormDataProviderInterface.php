@@ -10,4 +10,6 @@ interface CheckoutFormDataProviderInterface extends DataProviderInterface
     public function provide(array $params): Form;
 
     public function formSucceeded($form, $values, array $params);
+
+    public function addAdditionalColumns($form, $values, &$additionalColumns);
 }

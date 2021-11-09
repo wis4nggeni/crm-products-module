@@ -50,9 +50,16 @@ class OrdersRepository extends Repository
         return $this->getTable()->order('created_at DESC');
     }
 
-    final public function add($paymentId, $shippingAddressId, $licenceAddressId, $billingAddressId, $postalFee, $note = null)
-    {
-        $order = $this->insert([
+    final public function add(
+        $paymentId,
+        $shippingAddressId,
+        $licenceAddressId,
+        $billingAddressId,
+        $postalFee,
+        $note = null,
+        $additionalColumns = []
+    ) {
+        $order = $this->insert(array_merge([
             'payment_id' => $paymentId,
             'shipping_address_id' => $shippingAddressId,
             'licence_address_id' => $licenceAddressId,
@@ -62,7 +69,7 @@ class OrdersRepository extends Repository
             'status' => static::STATUS_NEW,
             'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
-        ]);
+        ], $additionalColumns));
 
         $this->emitter->emit(new NewOrderEvent($order));
         $this->hermesEmitter->emit(new HermesMessage('new-order', [

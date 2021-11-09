@@ -14,6 +14,8 @@
 
 {block #content}
 <h1>{_products.frontend.shop.checkout.order}</h1>
+
+{snippetArea checkoutFormArea}
 {form checkoutForm}
     {input cart}
     {input action}
@@ -74,8 +76,42 @@
                         {/formContainer}
                     {/ifset}
                 </fieldset>
+
+                {ifset $control['checkoutForm']['shipping_country_id']}
+                <fieldset id="delivery-country">
+                    <legend>{_products.frontend.shop.checkout.shipping_method}</legend>
+                    <div class="form-group">
+                        {label shipping_country_id}
+                        {input shipping_country_id}
+                    </div>
+                </fieldset>
+                {/ifset}
+
+                {snippet postalFees}
+                {if isset($control['checkoutForm']['postal_fee']->items)}
+                <fieldset id="postal-fees" style="margin-top: 0">
+                    <div class="form-group" n:foreach="$control['checkoutForm']['postal_fee']->items as $id => $fee">
+                        <label class="radio-inline shipping-type">
+                            <input
+                                {if $fee->id == $control['checkoutForm']['postal_fee']->value} checked="checked"{/if}
+                                required
+                                type="radio"
+                                name="postal_fee"
+                                value="{$id}"
+                                data-code="{$fee->code}"
+                                data-nette-rules='{json_encode(Nette\Forms\Helpers::exportRules($control['checkoutForm']['postal_fee']->getRules()))|noescape}'
+                            >
+                            {$fee->title} (<span>{$fee->amount|price}</span>)
+                        </label>
+                    </div>
+                </fieldset>
+                {/if}
+                {/snippet}
+
+                {control simpleWidget 'products.checkout_form.address_form', $control['checkoutForm']}
+
                 {ifset $control['checkoutForm']['shipping_address']}
-                <fieldset id="shipping-address">
+                <fieldset id="shipping-address" data-postalfeeformcode="shipping-address">
                     <legend>{_products.frontend.shop.checkout.shipping_address}</legend>
                     {formContainer shipping_address}
                         <div class="form-group">
@@ -102,13 +138,10 @@
                             {label zip /}
                             {input zip}
                         </div>
-                        <div class="form-group">
-                            {label country_id /}
-                            {input country_id}
-                        </div>
                     {/formContainer}
                 </fieldset>
                 {/ifset}
+
                 {ifset $control['checkoutForm']['licence_address']}
                 <fieldset id="licence-address">
                     <legend>{_products.frontend.shop.checkout.license_address}</legend>
@@ -127,18 +160,7 @@
 
                 {control simpleWidget 'products.checkout_form.delivery_data', ['form' => $control['checkoutForm'], 'products' => $products]}
 
-                {snippet postalFeesSnippet}
-                    {ifset $control['checkoutForm']['shipping_address']}
-                        <fieldset id="postal-fees">
-                            <legend>{_products.frontend.shop.checkout.shipping_method}</legend>
-                            <div class="form-group" n:foreach="$control['checkoutForm']['postal_fee']->items as $id => $fee">
-                                <label class="radio-inline shipping-type"><input {if $fee->id == $control['checkoutForm']['postal_fee']->value} checked="checked"{/if} required type="radio" name="postal_fee" value="{$id}">{$fee->title} (<span>{$fee->amount|price}</span>)</label>
-                            </div>
-                        </fieldset>
-                    {else}
-                        {input postal_fee}
-                    {/ifset}
-                {/snippet}
+                {snippet billing}
                 <div id="invoice">
                     {formContainer invoice}
                         <div class="form-group">
@@ -147,6 +169,7 @@
                         </div>
                     {/formContainer}
                 </div>
+
                 <fieldset id="billing-address">
                     <legend>{_products.frontend.shop.checkout.billing_address}</legend>
                     {formContainer billing_address}
@@ -191,6 +214,7 @@
                         </div>
                     {/formContainer}
                 </fieldset>
+                {/snippet}
             </div>
         </div>
 
@@ -262,13 +286,15 @@
         </div>
     </div>
 {/form}
+
 {block script}
     <script>
         $(document).ready(function () {
             if ($('#{$form['user']['password']->getHtmlId()|noescape}').hasClass('error')) {
                 $('#password').show();
                 $('#{$form['user']['password']->getHtmlId()|noescape}').focus();
-                $('#phone-number, #postal-fees, #shipping-address, #licence-address, #coupon, #invoice, #billing-address, .button-row .right').hide();
+                $('#phone-number, #postal-fees, #licence-address, #coupon, #invoice, #billing-address, #delivery-country, .button-row .right').hide();
+                $('[data-postalfeeformcode]').hide();
             }
 
             function checkEmail(callback) {
@@ -292,6 +318,16 @@
                 });
             }
 
+            function getShippingElement() {
+                var checkedPostalFeeCode = $('[name="postal_fee"]:checked').data('code');
+
+                var defaultPostalFeeEl = $('[data-postalfeeformcode="' + checkedPostalFeeCode + '"]');
+			    if (defaultPostalFeeEl.length) {
+					return defaultPostalFeeEl;
+				}
+			    return $('#shipping-address');
+			}
+
             $('#{$form['user']['email']->getHtmlId()|noescape}').change(function () {
                 checkEmail(function (response) {
                     if (response.status === 'error' && response.code === 'invalid_email') {
@@ -300,18 +336,22 @@
                         $('#email-help-block').hide().closest('.form-group').removeClass('has-error');
                     }
 
+                    $('[data-postalfeeformcode]').hide();
+
                     if (response.status && response.status === 'taken') {
                         $('input[name="_action"]').val('login');
                         $('#password').show();
                         $('#frm-checkoutForm-user-password').focus();
-                        $('#phone-number, #postal-fees, #shipping-address, #licence-address, #coupon, #invoice, #billing-address, .button-row .right').hide();
+                        $('#phone-number, #postal-fees, #licence-address, #coupon, #invoice, #billing-address, #delivery-country, .button-row .right').hide();
+                        getShippingElement().hide();
                     } else {
                         $('input[name="_action"]').val('checkout');
                         $('#password').hide();
-                        $('#phone-number, #postal-fees, #shipping-address, #licence-address, #coupon, #invoice, .button-row .right').show();
+                        $('#phone-number, #postal-fees, #licence-address, #coupon, #invoice, #delivery-country, .button-row .right').show();
                         if (!$('#frm-checkoutForm-invoice-same_shipping').is(':checked')) {
                             $('#billing-address').show();
                         }
+                        getShippingElement().show();
                     }
                 });
             }).change();
@@ -328,7 +368,7 @@
             });
 
             {ifset $control['checkoutForm']['shipping_address']}
-            $('#{$form['shipping_address']['country_id']->getHtmlId()|noescape}').on('change', function () {
+            $('#{$form['shipping_country_id']->getHtmlId()|noescape}').on('change', function () {
                 $.nette.ext('loader', null);
                 $.nette.ajax({
                     type: 'GET',
@@ -338,6 +378,7 @@
                     }
                 });
             }).change();
+            {/ifset}
 
             $('body').on('change', '#postal-fees input[type="radio"]', function () {
                 $.nette.ext('loader', null);
@@ -345,12 +386,14 @@
                     type: 'POST',
                     url: {link postalFeeChange!},
                     data: {
-                        'value': $(this).val(),
-                        'shipping_address': { 'country_id': $('#{$form['shipping_address']['country_id']->getHtmlId()|noescape}').val() }
+                        'value': $(this).val()
                     }
                 });
             });
-            {/ifset}
+
+            $('[name=postal_fee]').change();
         });
     </script>
 {/block}
+
+{/snippetArea}
