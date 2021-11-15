@@ -76,7 +76,7 @@ class PostalFeeServiceTest extends DatabaseTestCase
         $this->preparePostalFeeForCountry($this->countriesRepository->findByIsoCode('SK')->id, 'posta_list', 1.99);
 
         $postalFeeRow = $this->preparePostalFeeForCountry($this->countriesRepository->findByIsoCode('SK')->id, 'dhl_parcel', 1.99);
-        $this->countryPostalFeeConditionsRepository->add($postalFeeRow, 'test_code', 120);
+        $this->countryPostalFeeConditionsRepository->add($postalFeeRow->related('country_postal_fee')->fetch(), 'test_code', 120);
 
         $this->preparePostalFeeForCountry($this->countriesRepository->findByIsoCode('SK')->id, 'ups_parcel', 1.99);
 
@@ -116,7 +116,7 @@ class PostalFeeServiceTest extends DatabaseTestCase
         $this->preparePostalFeeForCountry($this->countriesRepository->findByIsoCode('SK')->id, 'ups_parcel', 1.99);
 
         $postalFeeRow = $this->preparePostalFeeForCountry($this->countriesRepository->findByIsoCode('SK')->id, 'dhl_parcel', 0, 20);
-        $this->countryPostalFeeConditionsRepository->add($postalFeeRow, 'test_code', 120);
+        $this->countryPostalFeeConditionsRepository->add($postalFeeRow->related('country_postal_fee')->fetch(), 'test_code', 120);
 
         /** @var PostalFeeConditionInterface|Mock $postalFeeConditionMock */
         $postalFeeConditionMock = \Mockery::mock(PostalFeeConditionInterface::class)
