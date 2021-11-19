@@ -12,9 +12,9 @@ class ActualOrderStatusCriteriaTest extends PaymentsTestCase
 {
     public function requiredRepositories(): array
     {
-        $repositories = parent::requiredRepositories();
-        $repositories[] = OrdersRepository::class;
-        return $repositories;
+        return array_merge(parent::requiredRepositories(), [
+            OrdersRepository::class,
+        ]);
     }
 
     public function dataProvider()

@@ -48,10 +48,10 @@ class OrderStatusOnScenarioEnterCriteriaTest extends BaseTestCase
 
     public function requiredRepositories(): array
     {
-        $repositories = parent::requiredRepositories();
-        $repositories[] = OrdersRepository::class;
-        $repositories[] = UsersRepository::class;
-        return $repositories;
+        return array_merge(parent::requiredRepositories(), [
+            OrdersRepository::class,
+            UsersRepository::class
+        ]);
     }
 
     public function testOrderStatusOnScenarioEnter()
