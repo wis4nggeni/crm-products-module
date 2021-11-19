@@ -505,10 +505,6 @@ class CheckoutFormFactory
             $this->request->getUrl()->getBaseUrl(),
             $amount
         );
-
-        $shippingAddressId = $this->handleShippingAddress($user, $values);
-        $licenceAddressId = $this->handleLicenceAddress($user, $values);
-        $billingAddressId = $this->handleBillingAddress($user, $values);
         $additionalColumns = [];
 
         /** @var CheckoutFormDataProviderInterface[] $providers */
@@ -519,6 +515,10 @@ class CheckoutFormFactory
             ]);
             $provider->addAdditionalColumns($form, $values, $additionalColumns);
         }
+
+        $shippingAddressId = $this->handleShippingAddress($user, $values);
+        $licenceAddressId = $this->handleLicenceAddress($user, $values);
+        $billingAddressId = $this->handleBillingAddress($user, $values);
 
         $this->ordersRepository->add($payment->id, $shippingAddressId, $licenceAddressId, $billingAddressId, $postalFee, $values['note'], $additionalColumns);
 
