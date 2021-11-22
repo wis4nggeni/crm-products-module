@@ -118,9 +118,9 @@ class HasProductWithTemplateNameTest extends DatabaseTestCase
         ], $paymentRow);
 
         if ($result) {
-            $this->assertNotFalse($paymentSelection->fetch());
+            $this->assertNotNull($paymentSelection->fetch());
         } else {
-            $this->assertFalse($paymentSelection->fetch());
+            $this->assertNull($paymentSelection->fetch());
         }
     }
 

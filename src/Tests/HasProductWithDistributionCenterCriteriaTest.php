@@ -113,9 +113,9 @@ class HasProductWithDistributionCenterCriteriaTest extends DatabaseTestCase
         ], $orderRow);
 
         if ($result) {
-            $this->assertNotFalse($orderSelection->fetch());
+            $this->assertNotNull($orderSelection->fetch());
         } else {
-            $this->assertFalse($orderSelection->fetch());
+            $this->assertNull($orderSelection->fetch());
         }
     }
 
