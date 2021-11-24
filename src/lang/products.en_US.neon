@@ -145,7 +145,8 @@ admin:
 			no_bundle_items_message: This bundle doesn't contain any items
 			product_not_found: Selected product doesn't exist
 			product_created: Product was created
-			product_updated: Produkt was updated
+			product_updated: Product was updated
+			product_deleted: Product '%product%' was deleted
 		users_list:
 			back: Back
 			email: Email

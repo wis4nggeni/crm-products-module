@@ -133,6 +133,24 @@ class ProductsAdminPresenter extends AdminPresenter
     {
     }
 
+    /**
+     * @admin-access-level write
+     */
+    public function handleDelete($productId)
+    {
+        $product = $this->productsRepository->find($productId);
+        $this->productsRepository->softDelete($product);
+
+        $this->flashMessage(
+            $this->translator->translate(
+                'products.admin.products.messages.product_deleted',
+                null,
+                ['product' => $product->name]
+            )
+        );
+        $this->redirect('this');
+    }
+
     private function getProductSalesCount(IRow $product)
     {
         return $this->paymentItemsRepository->getTable()

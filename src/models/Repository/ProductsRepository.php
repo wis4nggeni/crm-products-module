@@ -43,9 +43,16 @@ class ProductsRepository extends Repository
         $this->productShopCountsDistribution = $productShopCountsDistribution;
     }
 
+    final public function find($id)
+    {
+        return $this->getTable()->where(['id' => $id, 'deleted_at' => null])->fetch();
+    }
+
     final public function all(string $search = null, array $tags = []): Selection
     {
-        $all = $this->getTable()->order('-sorting DESC, name ASC');
+        $all = $this->getTable()
+            ->where('deleted_at', null)
+            ->order('-sorting DESC, name ASC');
 
         if (empty($tags) && ($search === null || empty(trim($search)))) {
             return $all;
@@ -77,12 +84,15 @@ class ProductsRepository extends Repository
 
     final public function getByCode($code)
     {
-        return $this->getTable()->where(['code' => $code])->fetch();
+        return $this->getTable()->where(['code' => $code, 'deleted_at' => null])->fetch();
     }
 
     final public function getShopProducts($visibleOnly = true, $availableOnly = true, $tag = null, $order = 'sorting')
     {
-        $where = ['products.shop' => true];
+        $where = [
+            'products.shop' => true,
+            'products.deleted_at' => null,
+        ];
         if ($visibleOnly === true) {
             $where['products.visible'] = true;
         }
@@ -110,6 +120,7 @@ class ProductsRepository extends Repository
             ->where([
                 ':payment_items.type' => ProductPaymentItem::TYPE,
                 ':payment_items.payment.status' => PaymentsRepository::STATUS_PAID,
+                'products.deleted_at' => null
             ])
             ->group('products.id');
 
@@ -125,7 +136,10 @@ class ProductsRepository extends Repository
 
     final public function findByIds($ids)
     {
-        return $this->getTable()->where('id', (array)$ids)->fetchAll();
+        return $this->getTable()->where([
+            'id' => (array)$ids,
+            'deleted_at' => null
+        ])->fetchAll();
     }
 
     final public function updateSorting($newSorting, $oldSorting = null)
@@ -209,5 +223,13 @@ class ProductsRepository extends Repository
         }
 
         return $selection;
+    }
+
+    final public function softDelete(IRow $segment)
+    {
+        $this->update($segment, [
+            'deleted_at' => new \DateTime(),
+            'modified_at' => new \DateTime(),
+        ]);
     }
 }

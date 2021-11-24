@@ -148,6 +148,7 @@ admin:
 			product_not_found: Zvolený produkt neexistuje
 			product_created: Produkt bol vytvorený
 			product_updated: Produkt bol aktualizovaný
+			product_deleted: Produkt '%product%' bol vymazaný
 		users_list:
 			back: Naspäť
 			email: Email
