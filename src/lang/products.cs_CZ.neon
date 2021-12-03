@@ -114,6 +114,8 @@ admin:
 	component:
 		avg_product_payment_widget:
 		    avg_product_payment: Průměrný počet plateb za produkty
+		payment_items_list_widget:
+			product_deleted: Produkt byl už ze systému odstraněn
 	products:
 		default:
 			header: Produkty

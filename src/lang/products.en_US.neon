@@ -114,6 +114,8 @@ admin:
 	component:
 		avg_product_payment_widget:
 			avg_product_payment: Average payments for products
+		payment_items_list_widget:
+			product_deleted: Product was already removed from the system
 	products:
 		default:
 			header: Products

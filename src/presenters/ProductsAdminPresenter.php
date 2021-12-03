@@ -102,7 +102,7 @@ class ProductsAdminPresenter extends AdminPresenter
     {
         $product = $this->productsRepository->find($id);
         if (!$product) {
-            $this->flashMessage($this->translator->translate('products.admin.products.messages.product_not_found'));
+            $this->flashMessage($this->translator->translate('products.admin.products.messages.product_not_found'), 'danger');
             $this->redirect('default');
         }
 
@@ -194,7 +194,7 @@ class ProductsAdminPresenter extends AdminPresenter
     {
         $product = $this->productsRepository->find($id);
         if (!$product) {
-            $this->flashMessage($this->translator->translate('products.admin.products.messages.product_not_found'));
+            $this->flashMessage($this->translator->translate('products.admin.products.messages.product_not_found'), 'danger');
             $this->redirect('default');
         }
         $product = $this->productManager->syncProductWithDistributionCenter($product);
