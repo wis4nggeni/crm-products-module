@@ -357,9 +357,9 @@ frontend:
 				pass_required: Položka Heslo je povinná.
 				account_exists: 'Účet se zadaným emailem již existuje, prosím přihlaste se pomocí hesla'
 				phone_number: 'Telefonní číslo (pomůže nám při doručování)'
-				phone_number_placeholder: 'např. 0908 123 456'
+				phone_number_placeholder: 'např. 123 456 789'
 				phone_number_required: 'Položka Telefonní číslo je povinná.'
-				phone_number_min_length: 'Telefónne číslo musí mať aspon 9 znakov.'
+				phone_number_min_length: 'Telefonní číslo musí mít alespoň 9 znaků.'
 				want_invoice: Chci fakturu
 				same_shipping: 'Fakturační adresa stejná jako poštovní adresa'
 				choose_shipping_method: 'Vyber způsob doručení.'
