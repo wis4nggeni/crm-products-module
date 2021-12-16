@@ -212,7 +212,7 @@ class CheckoutFormFactory
                 ->setAttribute('placeholder', 'products.frontend.shop.checkout.fields.phone_number_placeholder')
                 ->addConditionOn($action, Form::NOT_EQUAL, 'login')
                 ->addRule(Form::FILLED, 'products.frontend.shop.checkout.fields.phone_number_required')
-                ->addRule(Form::MIN_LENGTH, 'products.frontend.shop.checkout.fields.phone_number_min_length', 10);
+                ->addRule(Form::MIN_LENGTH, 'products.frontend.shop.checkout.fields.phone_number_min_length', 9);
         }
 
         $invoice = $form->addContainer('invoice');

@@ -359,7 +359,7 @@ frontend:
 				phone_number: 'Telefonní číslo (pomůže nám při doručování)'
 				phone_number_placeholder: 'např. 0908 123 456'
 				phone_number_required: 'Položka Telefonní číslo je povinná.'
-				phone_number_min_length: 'Telefónne číslo musí mať aspon 6 znakov.'
+				phone_number_min_length: 'Telefónne číslo musí mať aspon 9 znakov.'
 				want_invoice: Chci fakturu
 				same_shipping: 'Fakturační adresa stejná jako poštovní adresa'
 				choose_shipping_method: 'Vyber způsob doručení.'
