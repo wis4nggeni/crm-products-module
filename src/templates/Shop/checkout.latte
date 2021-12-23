@@ -264,7 +264,7 @@
                     <div class="hidden-xs hidden-sm col-sm-4 text-right">&nbsp</div>
                     <div class="hidden-xs hidden-sm col-sm-4 text-right">&nbsp</div>
                     <div class="col-sm-4 text-right">{$control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->amount|price}</div>
-                    {var amount += $control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->amount}
+                    {var $amount += $control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->amount}
                 </div>
             </div>
         </div>
