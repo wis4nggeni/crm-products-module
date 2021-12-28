@@ -79,7 +79,10 @@
                         </button>
                     </td>
                     <td>{$order->created_at}</td>
-                    <td><a n:href="show $order->id" class="btn btn-sm btn-info" title="Zobraz"><i class="fa fa-eye"></i> </a></td>
+                    <td>
+                        <a n:href="show $order->id" class="btn btn-sm btn-info inline-block" title="Zobraz"><i class="fa fa-eye"></i> </a>
+                        {control simpleWidget 'orders.listing.payment_actions', $order->payment}
+                    </td>
                 </tr>
                 </tbody>
             </table>
