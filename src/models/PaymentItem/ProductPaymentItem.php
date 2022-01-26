@@ -35,6 +35,12 @@ class ProductPaymentItem implements PaymentItemInterface
         return $this;
     }
 
+    public function forceName(string $name): self
+    {
+        $this->name = $name;
+        return $this;
+    }
+
     public function data(): array
     {
         return [
