@@ -9,11 +9,14 @@ use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\Seeders\ConfigsTrait;
 use Crm\ApplicationModule\Seeders\ISeeder;
 use Crm\ProductsModule\Model\Config;
+use Nette\Localization\ITranslator;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConfigsSeeder implements ISeeder
 {
     use ConfigsTrait;
+
+    private $translator;
 
     private $configBuilder;
 
@@ -22,10 +25,12 @@ class ConfigsSeeder implements ISeeder
     private $configsRepository;
 
     public function __construct(
+        ITranslator $translator,
         ConfigBuilder $configBuilder,
         ConfigCategoriesRepository $configCategoriesRepository,
         ConfigsRepository $configsRepository
     ) {
+        $this->translator = $translator;
         $this->configBuilder = $configBuilder;
         $this->configCategoriesRepository = $configCategoriesRepository;
         $this->configsRepository = $configsRepository;
@@ -43,6 +48,17 @@ class ConfigsSeeder implements ISeeder
             'products.config.shop_host.name',
             'products.config.shop_host.description',
             null,
+            100
+        );
+
+        $this->addConfig(
+            $output,
+            $category,
+            'shop_title',
+            ApplicationConfig::TYPE_TEXT,
+            'products.config.shop_title.name',
+            'products.config.shop_title.description',
+            $this->translator->translate('products.config.shop_title.value'),
             100
         );
 

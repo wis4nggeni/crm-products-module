@@ -316,9 +316,7 @@ admin:
 
 frontend:
 	shop:
-		title: "E-shop Denník N - we only sell what we read"
 		cart:
-			title: "Cart : E-shop Denník N - we only sell what we read"
 			header: Shopping cart
 			product: Product
 			price: Price
@@ -338,7 +336,6 @@ frontend:
 				items_removed_from_cart_reason_sold_out: 'Some items (<strong>%name%</strong>) were removed from the cart, since they are sold out.'
 				items_removed_from_cart_reason_little_stock: 'Some items (<strong>%name%</strong>) have had their number of pieces reduced because there are not enough in stock.'
 		checkout:
-			title: "Order : E-shop Denník N - we only sell what we read"
 			order: Order
 			payment_method: Payment method
 			contact_information: Contact information
@@ -395,7 +392,6 @@ frontend:
 				invalid_email: "This email is not valid."
 				email_registered: "E-mail is already registered, please enter your password."
 		default:
-			header: "We only sell what we like most."
 			filter: Filter
 			all: All
 			add_to_cart: add to cart
@@ -461,6 +457,10 @@ config:
 	shop_terms_and_conditions_url:
 		name: URL T&C
 		description: 'URL where the general terms and conditions are located (eg. <code>http://crm.press/terms-and-conditions/</code>)'
+	shop_title:
+	    name: Shop title
+	    description: 'Custom shop title'
+	    value: 'E-shop Denník N - we only sell what we read'
 	users:
 		category: Users
 		prevent_anonymization:
