@@ -16,7 +16,7 @@ use Crm\ScenariosModule\Repository\ScenariosRepository;
 use Crm\ScenariosModule\Repository\TriggersRepository;
 use Crm\ScenariosModule\Tests\BaseTestCase;
 use Crm\UsersModule\Auth\UserManager;
-use Crm\UsersModule\Events\UserCreatedEvent;
+use Crm\UsersModule\Events\UserRegisteredEvent;
 use Crm\UsersModule\Repository\UsersRepository;
 
 class OrderStatusOnScenarioEnterCriteriaTest extends BaseTestCase
@@ -94,10 +94,10 @@ class OrderStatusOnScenarioEnterCriteriaTest extends BaseTestCase
 
     public function testOrderStatusOnScenarioEnterMissingOrderStatusException()
     {
-        $this->eventsStorage->register('user_created', UserCreatedEvent::class, true);
+        $this->eventsStorage->register('user_registered', UserRegisteredEvent::class, true);
 
-        // test criteria connected to user_created trigger (which doesn't have order_status parameter)
-        $this->createScenarioWithTrigger('user_created');
+        // test criteria connected to user_registered trigger (which doesn't have order_status parameter)
+        $this->createScenarioWithTrigger('user_registered');
         $orderRow = $this->prepareOrder();
 
         // run Hermes to create trigger job

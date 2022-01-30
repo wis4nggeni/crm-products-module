@@ -144,7 +144,7 @@ class ShopPresenter extends FrontendPresenter
         $this->setView('productList');
         $this->productListData();
 
-        $this->template->title = $this->translator->translate('products.frontend.shop.default.header');
+        $this->template->title = $this->applicationConfig->get('shop_title');
         $this->template->products = $this->productsRepository->getShopProducts(true, true);
         $this->template->selectedTag = null;
         $this->template->cartProducts = $this->cartSession->products;
@@ -184,6 +184,7 @@ class ShopPresenter extends FrontendPresenter
             throw new BadRequestException("Product code does not match the product ID. Is your URL valid?", 404);
         }
 
+        $this->template->title = $this->applicationConfig->get('shop_title');
         $this->template->now = new DateTime();
         $this->template->product = $product;
         $this->template->cartProducts = $this->cartSession->products;
@@ -322,6 +323,7 @@ class ShopPresenter extends FrontendPresenter
             $this->flashMessage(implode(', ', $removedProducts), 'product-out-of-stock');
         }
 
+        $this->template->shopTitle = $this->applicationConfig->get('shop_title');
         $this->template->cartProductSum = $this->cartProductSum;
         $this->template->cartProducts = $this->cartSession->products;
         $this->template->freeProducts = $freeProducts;
@@ -362,6 +364,7 @@ class ShopPresenter extends FrontendPresenter
             $freeProducts = $this->productsRepository->findByIds(array_keys($this->cartSession->freeProducts));
         }
 
+        $this->template->shopTitle = $this->applicationConfig->get('shop_title');
         $this->template->cartProducts = $this->cartSession->products;
         $this->template->products = $products;
         $this->template->freeProducts = $freeProducts;

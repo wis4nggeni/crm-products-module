@@ -319,9 +319,7 @@ admin:
 
 frontend:
 	shop:
-		title: "Knihy Denníka N - predávame len to, čo sami čítame"
 		cart:
-			title: "Nákupný košík : Obchod Denníka N - predávame len to, čo sami čítame"
 			header: Nákupný košík
 			product: Produkt
 			price: Cena
@@ -341,7 +339,6 @@ frontend:
 				items_removed_from_cart_reason_sold_out: 'Niektoré položky (<strong>%name%</strong>) boli odstranené z košíka, nakoľko sú vypredané.'
 				items_removed_from_cart_reason_little_stock: 'Niektorým položkám (<strong>%name%</strong>) boli znížené počty kusov, pretože ich nie je dostatok na sklade.'
 		checkout:
-			title: "Objednávka : Obchod Denníka N - predávame len to, čo sami čítame"
 			order: Objednávka
 			payment_method: Spôsob platby
 			contact_information: Kontaktné údaje
@@ -398,7 +395,6 @@ frontend:
 				invalid_email: "Tento email nie je platný."
 				email_registered: "E-mail už je zaregistrovaný, prosím, zadajte heslo."
 		default:
-			header: "Knihy Denníka N. Len to, čo sami čítame."
 			filter: Vyfiltrovať
 			all: Všetko
 			add_to_cart: do košíka
@@ -464,6 +460,10 @@ config:
 	shop_terms_and_conditions_url:
 		name: URL VOP
 		description: 'URL, na ktorej sa nachádzajú všeobecné obchodné podmienky (napr. <code>http://crm.press/terms-and-conditions/</code>)'
+	shop_title:
+	    name: Názov obchodu
+	    description: 'Názov obchodu zobrazený v záhlaví titulky obchodu'
+	    value: 'Knihy Denníka N. Len to, čo sami čítame.'
 	users:
 		category: Používatelia
 		prevent_anonymization:
