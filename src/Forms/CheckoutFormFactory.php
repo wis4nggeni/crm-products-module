@@ -179,8 +179,16 @@ class CheckoutFormFactory
         if (!$payment) {
             $paymentGateways = $this->paymentGatewaysRepository->getAllVisible()
                 ->where(['code' => array_keys($this->gateways)])
-                ->fetchPairs('id', 'code');
-            $form->addRadioList('payment_gateway', null, $paymentGateways)
+                ->fetchPairs('code', 'id');
+
+            $paymentGatewayItems = [];
+            foreach ($this->gateways as $code => $name) {
+                if (isset($paymentGateways[$code])) {
+                    $paymentGatewayItems[$paymentGateways[$code]] = $code;
+                }
+            }
+
+            $form->addRadioList('payment_gateway', null, $paymentGatewayItems)
                 ->setRequired('products.frontend.shop.checkout.choose_payment_method');
         }
 
