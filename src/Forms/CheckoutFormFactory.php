@@ -632,7 +632,7 @@ class CheckoutFormFactory
                     $billingAddress,
                     $values['shipping_address']['first_name'],
                     $values['shipping_address']['last_name'],
-                    null,
+                    $values['shipping_address']['first_name'] . ' ' . $values['shipping_address']['last_name'],
                     $values['shipping_address']['address'],
                     $values['shipping_address']['number'],
                     $values['shipping_address']['city'],
