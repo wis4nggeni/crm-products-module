@@ -89,17 +89,17 @@ data:
 			icon: Field 'Icon' is mandatory
 	postal_fees:
 		fields:
-		    title: Name
-		    code: Identifier
-		    used_count: Used
-		    amount: Amount
+			title: Name
+			code: Identifier
+			used_count: Used
+			amount: Amount
 	country_postal_fees:
-	    fields:
-	        country_id: Country
-	        postal_fee_id: Delivery method
-	        default: Default
-	        active: Active
-	        sorting: Sorting
+		fields:
+			country_id: Country
+			postal_fee_id: Delivery method
+			default: Default
+			active: Active
+			sorting: Sorting
 	orders:
 		statuses:
 			paid: Paid
@@ -265,8 +265,8 @@ admin:
 					price: Price
 					count: Count
 	postal_fees:
-	    default:
-	        header: Delivery methods
+		default:
+			header: Delivery methods
 	country_postal_fees:
 		default:
 			header: Countries and delivery methods
@@ -458,9 +458,9 @@ config:
 		name: URL T&C
 		description: 'URL where the general terms and conditions are located (eg. <code>http://crm.press/terms-and-conditions/</code>)'
 	shop_title:
-	    name: Shop title
-	    description: 'Custom shop title'
-	    value: 'E-shop Denník N - we only sell what we read'
+		name: Shop title
+		description: 'Custom shop title'
+		value: 'E-shop Denník N - we only sell what we read'
 	users:
 		category: Users
 		prevent_anonymization:

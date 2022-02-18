@@ -89,19 +89,19 @@ data:
 			icon: Položka 'Ikona' je povinná
 	postal_fees:
 		fields:
-		    title: Názov
-		    code: Identifikátor
-		    used_count: Požité
-		    amount: Suma
+			title: Názov
+			code: Identifikátor
+			used_count: Požité
+			amount: Suma
 	country_postal_fees:
-	    fields:
-	        country_id: Krajina
-	        postal_fee_id: Spôsoby doručenia
-	        default: Predvolená
-	        active: Aktívne
-	        sorting: Poradie
-	        condition: Podmienka
-	        condition_value: Hodnota
+		fields:
+			country_id: Krajina
+			postal_fee_id: Spôsoby doručenia
+			default: Predvolená
+			active: Aktívne
+			sorting: Poradie
+			condition: Podmienka
+			condition_value: Hodnota
 	orders:
 		statuses:
 			paid: Zaplatená
@@ -267,8 +267,8 @@ admin:
 					price: Cena
 					count: Počet
 	postal_fees:
-	    default:
-	        header: Spôsoby doručenia
+		default:
+			header: Spôsoby doručenia
 	country_postal_fees:
 		default:
 			header: Krajiny a spôsoby doručenia
@@ -282,9 +282,9 @@ admin:
 			condition_value_required: Položka 'Hodnota' je povinná
 		conditions:
 			products_sum:
-			 	label: Suma produktov v košíku
-			 	validation_integer: Suma produktov musí byť číselná hodnota
-			 	validation_min: Suma produktov byť kladná hodnota
+				label: Suma produktov v košíku
+				validation_integer: Suma produktov musí byť číselná hodnota
+				validation_min: Suma produktov byť kladná hodnota
 			user_segment:
 				label: Segment užívateľov
 				message: "Doručenie máte dnes zadarmo, pretože ste náš predplatiteľ."
@@ -461,9 +461,9 @@ config:
 		name: URL VOP
 		description: 'URL, na ktorej sa nachádzajú všeobecné obchodné podmienky (napr. <code>http://crm.press/terms-and-conditions/</code>)'
 	shop_title:
-	    name: Názov obchodu
-	    description: 'Názov obchodu zobrazený v záhlaví titulky obchodu'
-	    value: 'Knihy Denníka N. Len to, čo sami čítame.'
+		name: Názov obchodu
+		description: 'Názov obchodu zobrazený v záhlaví titulky obchodu'
+		value: 'Knihy Denníka N. Len to, čo sami čítame.'
 	users:
 		category: Používatelia
 		prevent_anonymization:

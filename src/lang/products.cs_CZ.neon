@@ -89,17 +89,17 @@ data:
 			icon: Položka 'Ikona' je povinná
 	postal_fees:
 		fields:
-		    title: Název
-		    code: Identifikátor
-		    used_count: Použité
-		    amount: Ćástka
+			title: Název
+			code: Identifikátor
+			used_count: Použité
+			amount: Ćástka
 	country_postal_fees:
-	    fields:
-	        country_id: Země
-	        postal_fee_id: Způsoby doručení
-	        default: Výchozí
-	        active: Aktivní
-	        sorting: Pořadí
+		fields:
+			country_id: Země
+			postal_fee_id: Způsoby doručení
+			default: Výchozí
+			active: Aktivní
+			sorting: Pořadí
 
 	orders:
 		statuses:
@@ -113,7 +113,7 @@ data:
 admin:
 	component:
 		avg_product_payment_widget:
-		    avg_product_payment: Průměrný počet plateb za produkty
+			avg_product_payment: Průměrný počet plateb za produkty
 		payment_items_list_widget:
 			product_deleted: Produkt byl už ze systému odstraněn
 	products:
@@ -264,8 +264,8 @@ admin:
 					price: Cena
 					count: Počet
 	postal_fees:
-	    default:
-	        header: Způsoby doručení
+		default:
+			header: Způsoby doručení
 	country_postal_fees:
 		default:
 			header: Země a způsoby doručení
@@ -457,9 +457,9 @@ config:
 		name: URL VOP
 		description: 'URL, na níž se nacházejí všeobecné obchodní podmínky (např. <code>http://crm.press/terms-and-conditions/</code>)'
 	shop_title:
-	    name: Název obchodu
-	    description: 'Název obchodu zobrazený v záhlaví titulky obchodu'
-	    value: 'Prodáváme jen to, co se nám nejvíce líbí.'
+		name: Název obchodu
+		description: 'Název obchodu zobrazený v záhlaví titulky obchodu'
+		value: 'Prodáváme jen to, co se nám nejvíce líbí.'
 	users:
 		category: Uživatelé
 		prevent_anonymization:
