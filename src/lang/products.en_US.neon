@@ -100,6 +100,8 @@ data:
 			default: Default
 			active: Active
 			sorting: Sorting
+			condition: Condition
+			condition_value: Value
 	orders:
 		statuses:
 			paid: Paid
