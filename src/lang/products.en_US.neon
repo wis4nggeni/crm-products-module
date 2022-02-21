@@ -144,8 +144,8 @@ admin:
 			back: Back to listing
 		messages:
 			no_bundles_message: This product is not assigned to any bundle
-			no_bundle_items_message: This bundle doesn't contain any items
-			product_not_found: Selected product doesn't exist
+			no_bundle_items_message: "This bundle doesn't contain any items"
+			product_not_found: "Selected product doesn't exist"
 			product_created: Product was created
 			product_updated: Product was updated
 			product_deleted: Product '%product%' was deleted
