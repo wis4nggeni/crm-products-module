@@ -1,69 +1,69 @@
 menu:
-	shop: Bold
-	products: Termékek
-	tags: Cimkék
-	orders: Rendelések
-	stats: Bolt
-	books: Könyvek
+    shop: Bold
+    products: Termékek
+    tags: Cimkék
+    orders: Rendelések
+    stats: Bolt
+    books: Könyvek
 
 frontend:
-	shop:
-		cart:
-			header: Kosár tartalma
-			product: Termék
-			price: Ár
-			amount: Összeg
-			together: Összesen fizetendő
-			price_with_vat: Összesen fizetendő
-			continue_with_shopping: Folytatom a vásárlást
-			order: Fizetés
-			empty_cart: Jelenleg nincs termék a kosaradban.
-			confirm_order: Fizetés
-			messages:
-				item_added_to_cart: "<strong>%name%</strong> a kosaradba került."
-				item_not_available: "<strong>%name%</strong> nem elérhető."
-				items_removed_from_cart: 'Egyes termékek (<strong>%name%</strong>) el lettek távolítva a kosárból.</a>'
-				items_removed_from_cart_reason_sold_out: 'Egyes termékek (<strong>%name%</strong>) el lettek távolítva a kosárból, mivel elfogytak.'
-		checkout:
-			order: Fizetési adatok
-			payment_method: Fizetési mód
-			contact_information: Kapcsolat információ
-			login: Bejelentkezés
-			shipping_address: Szállítási cím
-			license_address: Licensz cím
-			shipping_method: Szállítási mód
-			billing_address: Számlázási cím
-			for_free: Ingyenes
-			choose_payment_method: Válasszon Fizetési módot.
-			warnings:
-				unable_to_login_with_password: 'Ezzel a jelszóval nem tudtunk beléptetni.'
-		default:
-			filter: Szűrés
-			all: Mind
-			add_to_cart: Kosárba
-			sold_out: elkelt
-		error:
-			title: "Hiba"
-		success:
-			title: "Köszönjük!"
-			header: "Köszönjük!"
-			payment_successful: "Sikeres fizetés"
-		show:
-			title: "%product_name%"
-			add_to_cart: Kosárba
-			sold_out: elkelt
+    shop:
+        cart:
+            header: Kosár tartalma
+            product: Termék
+            price: Ár
+            amount: Összeg
+            together: Összesen fizetendő
+            price_with_vat: Összesen fizetendő
+            continue_with_shopping: Folytatom a vásárlást
+            order: Fizetés
+            empty_cart: Jelenleg nincs termék a kosaradban.
+            confirm_order: Fizetés
+            messages:
+                item_added_to_cart: "<strong>%name%</strong> a kosaradba került."
+                item_not_available: "<strong>%name%</strong> nem elérhető."
+                items_removed_from_cart: 'Egyes termékek (<strong>%name%</strong>) el lettek távolítva a kosárból.</a>'
+                items_removed_from_cart_reason_sold_out: 'Egyes termékek (<strong>%name%</strong>) el lettek távolítva a kosárból, mivel elfogytak.'
+        checkout:
+            order: Fizetési adatok
+            payment_method: Fizetési mód
+            contact_information: Kapcsolat információ
+            login: Bejelentkezés
+            shipping_address: Szállítási cím
+            license_address: Licensz cím
+            shipping_method: Szállítási mód
+            billing_address: Számlázási cím
+            for_free: Ingyenes
+            choose_payment_method: Válasszon Fizetési módot.
+            warnings:
+                unable_to_login_with_password: 'Ezzel a jelszóval nem tudtunk beléptetni.'
+        default:
+            filter: Szűrés
+            all: Mind
+            add_to_cart: Kosárba
+            sold_out: elkelt
+        error:
+            title: "Hiba"
+        success:
+            title: "Köszönjük!"
+            header: "Köszönjük!"
+            payment_successful: "Sikeres fizetés"
+        show:
+            title: "%product_name%"
+            add_to_cart: Kosárba
+            sold_out: elkelt
 
-	orders:
-		my_orders: Rendeléseim
-		my_books: Könyveim
-		day: Nap
-		order_number: Rendelés száma
-		price: Ár
-		status: Állapot
-		invoices: Számlák
-		postal_fee: Szállítási díj
-		no_orders: Nincs rendelés.
-		no_books: Nincs könyved.
-		visit_eshop: Látogass el a boltunkba.
-		title: Cím
-		preparing_download: Letöltés előkészítése
+    orders:
+        my_orders: Rendeléseim
+        my_books: Könyveim
+        day: Nap
+        order_number: Rendelés száma
+        price: Ár
+        status: Állapot
+        invoices: Számlák
+        postal_fee: Szállítási díj
+        no_orders: Nincs rendelés.
+        no_books: Nincs könyved.
+        visit_eshop: Látogass el a boltunkba.
+        title: Cím
+        preparing_download: Letöltés előkészítése
