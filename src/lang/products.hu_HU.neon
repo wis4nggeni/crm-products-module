@@ -8,15 +8,12 @@ menu:
 
 frontend:
 	shop:
-		title: "Bolt"
 		cart:
-			title: "Kosár tartalma"
 			header: Kosár tartalma
 			product: Termék
 			price: Ár
 			amount: Összeg
 			together: Összesen fizetendő
-			shipping_fee: Szállítási költség
 			price_with_vat: Összesen fizetendő
 			continue_with_shopping: Folytatom a vásárlást
 			order: Fizetés
@@ -25,15 +22,12 @@ frontend:
 			messages:
 				item_added_to_cart: "<strong>%name%</strong> a kosaradba került."
 				item_not_available: "<strong>%name%</strong> nem elérhető."
-				item_already_purchased: ''
 				items_removed_from_cart: 'Egyes termékek (<strong>%name%</strong>) el lettek távolítva a kosárból.</a>'
 				items_removed_from_cart_reason_sold_out: 'Egyes termékek (<strong>%name%</strong>) el lettek távolítva a kosárból, mivel elfogytak.'
 		checkout:
-			title: "Fizetési adatok"
 			order: Fizetési adatok
 			payment_method: Fizetési mód
 			contact_information: Kapcsolat információ
-			message: Megjegyzés
 			login: Bejelentkezés
 			shipping_address: Szállítási cím
 			license_address: Licensz cím
