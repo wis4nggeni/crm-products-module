@@ -124,6 +124,7 @@ admin:
 				text:
 					placeholder: 'Název / Identifikátor / Veřejný popis / Cena'
 				tags: Tagy
+
 		new:
 			title: Nový produkt
 			back: Spať na zoznam

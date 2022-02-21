@@ -58,10 +58,10 @@ data:
 			code: Položka 'Identifikátor' je povinná
 			description: Položka 'Popis' je povinná
 			image_url: Položka 'URL Fotky' je povinná
+			og_image_url: Položka 'OG:image URL' je povinná
 			price_required: Položka 'Predajná cena s DPH' je povinná
 			price_float_positive: Položka 'Predajná cena s DPH' musí byť nezáporné číslo
 			catalog_price_float_positive: Položka 'Cenníková cena' musí byť nezáporné číslo
-			og_image_url: Položka 'OG:image URL' je povinná
 			ean13: EAN kód musí mať 13 znakov
 			template_property: Položka '%s' je povinná
 			vat: DPH je povinná
@@ -472,7 +472,6 @@ config:
 		prevent_anonymization_within_days:
 			name: Počet kontrolovaných dní
 			description: 'Počet dní, ktoré museli uplynúť od poslednej objednávky. Nastavenie sa berie do úvahy len v prípade, že je povolená možnosť "Zabrániť anonymizácii používateľa s nedávnou objednávkou" vyššie.'
-
 
 seeders:
 	address_types:
