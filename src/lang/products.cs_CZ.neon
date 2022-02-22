@@ -384,7 +384,7 @@ frontend:
 				company_tax_id_placeholder: 'Např. 2020123456'
 				company_vat_id: 'IČ DPH'
 				company_vat_id_placeholder: 'Např. SK2020123456'
-				toc: 'Souhlasím s <a href="%link%" class="link" target="_blank"> podmínkami používání </a>'
+				toc: 'Souhlasím s <a href="%link%" class="link" target="_blank">podmínkami používání</a>'
 				toc_required: 'Musíte souhlasit s podmínkami používání'
 				login: Přihlásit
 			warnings:
