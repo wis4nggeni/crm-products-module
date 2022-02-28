@@ -85,8 +85,8 @@ data:
             code: Kód bude použitý v URL adrese pre produkty obchodu s daným tagom.
             icon: Vyber z FontAwesome. Pre logo Nka použi dennikn.
         errors:
-            name: Položka 'Názov' je povinná
-            icon: Položka 'Ikona' je povinná
+            name: Položka 'Názov' je povinná.
+            icon: Položka 'Ikona' je povinná.
     postal_fees:
         fields:
             title: Názov
@@ -145,12 +145,12 @@ admin:
             title: Upraviť produkt
             back: Spať na zoznam
         messages:
-            no_bundles_message: Tento produkt nie je súčasťou žiadneho balíka
-            no_bundle_items_message: Balík neobsahuje žiadne produkty
-            product_not_found: Zvolený produkt neexistuje
-            product_created: Produkt bol vytvorený
-            product_updated: Produkt bol aktualizovaný
-            product_deleted: Produkt '%product%' bol vymazaný
+            no_bundles_message: Tento produkt nie je súčasťou žiadneho balíka.
+            no_bundle_items_message: Balík neobsahuje žiadne produkty.
+            product_not_found: Zvolený produkt neexistuje.
+            product_created: Produkt bol vytvorený.
+            product_updated: Produkt bol aktualizovaný.
+            product_deleted: Produkt '%product%' bol vymazaný.
         users_list:
             back: Naspäť
             email: Email
@@ -191,10 +191,10 @@ admin:
             title: Upraviť tag
             back: Spať na zoznam
         messages:
-            tag_created: Tag bol vytvorený
-            tag_updated: Tag bol aktualizovaný
-            tag_deleted: Tag bol zmazaný
-            tag_indelible: "Tag nemôže byť zmazaný, ešte sa používa"
+            tag_created: Tag bol vytvorený.
+            tag_updated: Tag bol aktualizovaný.
+            tag_deleted: Tag bol zmazaný.
+            tag_indelible: "Tag nemôže byť zmazaný, ešte sa používa."
         delete:
             title: Zmazať tag
             tooltip: Tag sa ešte používa
@@ -335,7 +335,7 @@ frontend:
                 item_not_available: "Položka <strong>%name%</strong> nie je dostupná."
                 item_more_not_available: "Viac kusov položky <strong>%name%</strong> nie je dostupných."
                 item_already_purchased: 'Položku <strong>%name%</strong> ste si už raz zakúpili. Link na stiahnutie nájdete vo <a href="%link%" class="link">svojom konte</a>.'
-                items_removed_from_cart: 'Niektoré položky (<strong>%name%</strong>) boli odstranené z košíka, pretože ste si ich už raz zakúpili. Linky na stiahnutie nájdete vo <a href="%link%" class="link">svojom konte</a>'
+                items_removed_from_cart: 'Niektoré položky (<strong>%name%</strong>) boli odstranené z košíka, pretože ste si ich už raz zakúpili. Linky na stiahnutie nájdete vo <a href="%link%" class="link">svojom konte</a>.'
                 items_removed_from_cart_reason_sold_out: 'Niektoré položky (<strong>%name%</strong>) boli odstranené z košíka, nakoľko sú vypredané.'
                 items_removed_from_cart_reason_little_stock: 'Niektorým položkám (<strong>%name%</strong>) boli znížené počty kusov, pretože ich nie je dostatok na sklade.'
         checkout:
@@ -433,7 +433,7 @@ frontend:
     components:
         free_shipping_progress_bar:
             message: "Pre bezplatné doručenie nakúpte ešte za <strong>%amount%</strong>."
-            reached_message: "Vybrali ste si za viac ako %amount%, <strong>doručenie máte zadarmo.</strong>"
+            reached_message: "Vybrali ste si za viac ako %amount%, <strong>doručenie máte zadarmo</strong>."
 
 data_provider:
     delete:
