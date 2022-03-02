@@ -356,9 +356,10 @@ frontend:
                 pass_required: Field Password is required.
                 account_exists: 'Account with entered email already exists, please login with password'
                 phone_number: 'Phone Number'
-                phone_number_placeholder: 'E.g. 0908 123 456'
+                phone_number_placeholder: 'E.g. +421 908 123 456'
                 phone_number_required: 'Field Phone Number is required.'
                 phone_number_min_length: 'Phone Number has to be at least 9 characters long.'
+                phone_number_wrong_format: 'Phone number must be in the international format (e.g.: +421 908 123 456).'
                 want_invoice: I want invoice
                 same_shipping: 'Billing address same as shipping address'
                 choose_shipping_method: 'Choose shipping method.'
