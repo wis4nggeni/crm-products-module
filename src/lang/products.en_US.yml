@@ -85,8 +85,8 @@ data:
             code: Code will be used in shop URL for products with given tag.
             icon: Choose from FontAwesome. For N logo use dennikn.
         errors:
-            name: Field 'Name' is mandatory
-            icon: Field 'Icon' is mandatory
+            name: Field 'Name' is mandatory.
+            icon: Field 'Icon' is mandatory.
     postal_fees:
         fields:
             title: Name
@@ -145,12 +145,12 @@ admin:
             title: Edit product
             back: Back to listing
         messages:
-            no_bundles_message: This product is not assigned to any bundle
-            no_bundle_items_message: "This bundle doesn't contain any items"
-            product_not_found: "Selected product doesn't exist"
-            product_created: Product was created
-            product_updated: Product was updated
-            product_deleted: Product '%product%' was deleted
+            no_bundles_message: This product is not assigned to any bundle.
+            no_bundle_items_message: "This bundle doesn't contain any items."
+            product_not_found: "Selected product doesn't exist."
+            product_created: Product was created.
+            product_updated: Product was updated.
+            product_deleted: Product '%product%' was deleted.
         users_list:
             back: Back
             email: Email
@@ -191,10 +191,10 @@ admin:
             title: Edit tag
             back: Back to the list
         messages:
-            tag_created: Tag was created
-            tag_updated: Tag was updated
-            tag_deleted: Tag was deleted
-            tag_indelible: "The tag cannot be deleted, it is still in use"
+            tag_created: Tag was created.
+            tag_updated: Tag was updated.
+            tag_deleted: Tag was deleted.
+            tag_indelible: "The tag cannot be deleted, it is still in use."
         delete:
             title: Delete tag
             tooltip: The tag is still in use
@@ -334,7 +334,7 @@ frontend:
                 item_not_available: "Item <strong>%name%</strong> is not available."
                 item_more_not_available: "No more pieces of item <strong>%name%</strong> available."
                 item_already_purchased: 'Item <strong>%name%</strong> has already been purchased. Download link can be found <a href="%link%" class="link">in your profile</a>.'
-                items_removed_from_cart: 'Some items (<strong>%name%</strong>) were removed from the cart, because you already purchased them. Download links can be found <a href="%link%" class="link">in your profile</a>'
+                items_removed_from_cart: 'Some items (<strong>%name%</strong>) were removed from the cart, because you already purchased them. Download links can be found <a href="%link%" class="link">in your profile</a>.'
                 items_removed_from_cart_reason_sold_out: 'Some items (<strong>%name%</strong>) were removed from the cart, since they are sold out.'
                 items_removed_from_cart_reason_little_stock: 'Some items (<strong>%name%</strong>) have had their number of pieces reduced because there are not enough in stock.'
         checkout:
@@ -369,7 +369,7 @@ frontend:
                 last_name_required: 'Field Last Name is required.'
                 street: Street
                 street_required: 'Field Street is required.'
-                street_min_length: 'Field Street has to be at least 3 characters long.'
+                street_min_length: 'Field Street has to be at least 3 characters long'
                 number: Number
                 number_required: 'Field Number is required.'
                 city: City
@@ -390,7 +390,7 @@ frontend:
                 toc_required: 'You have to agree with terms and conditions'
                 login: Log in
             warnings:
-                unable_to_login_with_password: 'Unable to log in using provided password.'
+                unable_to_login_with_password: 'Unable to log in using provided password'
                 unable_to_create_user: 'Unable to create user.'
                 invalid_email: "This email is not valid."
                 email_registered: "E-mail is already registered, please enter your password."
@@ -432,7 +432,7 @@ frontend:
     components:
         free_shipping_progress_bar:
             message: "For free delivery buy products for another <strong>%amount%</strong>."
-            reached_message: "You order reached <strong>%amount%</strong>, you have <strong>free delivery</strong>"
+            reached_message: "You order reached <strong>%amount%</strong>, you have <strong>free delivery</strong>."
 
 data_provider:
     delete:
@@ -463,7 +463,7 @@ config:
     shop_title:
         name: Shop title
         description: 'Custom shop title'
-        value: 'E-shop Denník N - we only sell what we read'
+        value: 'E-shop Denník N - we only sell what we read.'
     users:
         category: Users
         prevent_anonymization:

@@ -85,8 +85,8 @@ data:
             code: Kód bude použit v URL adrese pro produkty obchodu s daným tagem.
             icon: Vyber z FontAwesome. Pre logo Nka použi dennikn.
         errors:
-            name: Položka 'Název' je povinná
-            icon: Položka 'Ikona' je povinná
+            name: Položka 'Název' je povinná.
+            icon: Položka 'Ikona' je povinná.
     postal_fees:
         fields:
             title: Název
@@ -143,12 +143,12 @@ admin:
             title: Upravit produkt
             back: Zpět na seznam
         messages:
-            no_bundles_message: Tento produkt není součástí žádného balíčku
-            no_bundle_items_message: Balík neobsahuje žádné produkty
-            product_not_found: Zvolená produkt neexistuje
-            product_created: Produkt byl vytvořen
-            product_updated: Produkt byl aktualizovaný
-            product_deleted: Produkt '%product%' byl vymazán
+            no_bundles_message: Tento produkt není součástí žádného balíčku.
+            no_bundle_items_message: Balík neobsahuje žádné produkty.
+            product_not_found: Zvolená produkt neexistuje.
+            product_created: Produkt byl vytvořen.
+            product_updated: Produkt byl aktualizovaný.
+            product_deleted: Produkt '%product%' byl vymazán.
         users_list:
             back: Zpět
             email: Email
@@ -189,10 +189,10 @@ admin:
             title: Upravit tag
             back: Zpět na seznam
         messages:
-            tag_created: Tag byl vytvořen
-            tag_updated: Tag byl aktualizován
-            tag_deleted: Tag byl smazan
-            tag_indelible: "Tag nemůže být smazán, ještě se používá"
+            tag_created: Tag byl vytvořen.
+            tag_updated: Tag byl aktualizován.
+            tag_deleted: Tag byl smazan.
+            tag_indelible: "Tag nemůže být smazán, ještě se používá."
         delete:
             title: Smazat tag
             tooltip: Tag se ještě používá
@@ -430,7 +430,7 @@ frontend:
     components:
         free_shipping_progress_bar:
             message: "Pro bezplatné doručení nakupte ještě za <strong>%amount%</strong>."
-            reached_message: "Vybrali jste si za více než <strong>%amount%</strong>, doručení máte <strong>zdarma</strong>"
+            reached_message: "Vybrali jste si za více než <strong>%amount%</strong>, doručení máte <strong>zdarma</strong>."
 
 data_provider:
     delete:
@@ -466,7 +466,7 @@ config:
         category: Uživatelé
         prevent_anonymization:
             name: Zabránit anonymizaci uživatele s nedávnou objednávkou
-            description: Zabrání anonymizaci uživatele v případě pokud v nedávné minulosti vytvořil objednávku v obchodě.
+            description: Zabrání anonymizaci uživatele v případě pokud v nedávné minulosti vytvořil objednávku v obchodě
         prevent_anonymization_within_days:
             name: Počet kontrolovaných dnú
             description: 'Počet dní, které musely uběhnout od poslední objednávky. Nastavení se bere v úvahu pouze v případě, že je povolena možnost "Zabránit anonymizaci uživatele s aktivní objednávkou" výše.'
