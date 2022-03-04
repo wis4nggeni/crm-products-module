@@ -220,7 +220,7 @@ class CheckoutFormFactory
                 ->setHtmlAttribute('placeholder', 'products.frontend.shop.checkout.fields.phone_number_placeholder')
                 ->addConditionOn($action, Form::NOT_EQUAL, 'login')
                 ->addRule(Form::FILLED, 'products.frontend.shop.checkout.fields.phone_number_required')
-                ->addRule(Form::MIN_LENGTH, 'products.frontend.shop.checkout.fields.phone_number_min_length', 9);
+                ->addRule(Form::PATTERN, 'products.frontend.shop.checkout.fields.phone_number_wrong_format', '^[+][-\s\.\/\d]{12,}$');
         }
 
         $invoice = $form->addContainer('invoice');

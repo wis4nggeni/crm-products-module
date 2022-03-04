@@ -357,9 +357,10 @@ frontend:
                 pass_required: Položka Heslo je povinná.
                 account_exists: 'Konto so zadaným emailom už existuje, prosím prihláste sa pomocou hesla'
                 phone_number: 'Telefónne číslo (pomôže nám pri doručovaní)'
-                phone_number_placeholder: 'Napr. 0908 123 456'
+                phone_number_placeholder: 'Napr. +421 908 123 456'
                 phone_number_required: 'Položka Telefónne číslo je povinná.'
-                phone_number_min_length: 'Telefónne číslo musí mať aspon 9 znakov.'
+                phone_number_min_length: 'Telefónne číslo musí mať aspoň 9 znakov.'
+                phone_number_wrong_format: 'Telefónne číslo musí byť v medzinárodnom formáte (napr. +421 908 123 456).'
                 want_invoice: Chcem faktúru
                 same_shipping: 'Fakturačná adresa rovnaká ako poštová adresa'
                 choose_shipping_method: 'Vyber spôsob doručenia.'
