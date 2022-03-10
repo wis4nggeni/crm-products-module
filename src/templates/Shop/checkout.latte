@@ -4,7 +4,7 @@
     <script>
         $.event.trigger('crm:shop:show:checkout');
 
-        Nette.addEvent($('form')[0], 'submit', function(e) {
+        $('form').on('submit', function(e) {
             if (Nette.validateForm(e.target, true)) {
                 $.event.trigger('crm:shop:action:complete-order');
             }
@@ -356,7 +356,7 @@
                 });
             }).change();
 
-            Nette.addEvent($('form')[0], 'submit', function(e) {
+            $('form').on('submit', function(e) {
                 if (Nette.validateForm(e.target, true)) {
                     $(this).find('input[type="submit"]').prop("disabled", true);
                     return true;
