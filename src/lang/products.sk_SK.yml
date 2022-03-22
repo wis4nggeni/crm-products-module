@@ -7,6 +7,7 @@ menu:
     books: Knihy
     postal_fees: Spôsoby doručenia
     country_postal_fees: Krajiny a spôsoby doručenia
+    sort_shop_products: Zoradiť produkty na hlavnej stránke
 
 data:
     products:
@@ -151,6 +152,7 @@ admin:
             product_created: Produkt bol vytvorený.
             product_updated: Produkt bol aktualizovaný.
             product_deleted: Produkt '%product%' bol vymazaný.
+            products_sorted: Produkty boli úspešne zoradené
         users_list:
             back: Naspäť
             email: Email

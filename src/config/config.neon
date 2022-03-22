@@ -50,6 +50,7 @@ services:
 	- Crm\ProductsModule\Forms\ProductsFormFactory
 	- Crm\ProductsModule\Forms\TagsFormFactory
 	- Crm\ProductsModule\Forms\CountryPostalFeesFormFactory
+	- Crm\ProductsModule\Forms\SortShopProductsFormFactory
 
 	- Crm\ProductsModule\PaymentItem\PaymentItemHelper
 

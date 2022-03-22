@@ -11,6 +11,7 @@ use Crm\ApplicationModule\Graphs\GraphDataItem;
 use Crm\PaymentsModule\Repository\PaymentItemsRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Forms\ProductsFormFactory;
+use Crm\ProductsModule\Forms\SortShopProductsFormFactory;
 use Crm\ProductsModule\Manager\ProductManager;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\ProductsRepository;
@@ -24,6 +25,8 @@ class ProductsAdminPresenter extends AdminPresenter
     private $productsRepository;
 
     private $productsFormFactory;
+
+    private $sortShopProductsFormFactory;
 
     private $paymentItemsRepository;
 
@@ -41,6 +44,7 @@ class ProductsAdminPresenter extends AdminPresenter
     public function __construct(
         ProductsRepository $productsRepository,
         ProductsFormFactory $productsFormFactory,
+        SortShopProductsFormFactory $sortShopProductsFormFactory,
         PaymentItemsRepository $paymentItemsRepository,
         TagsRepository $tagsRepository,
         ConfigsRepository $configRepository,
@@ -49,6 +53,7 @@ class ProductsAdminPresenter extends AdminPresenter
         parent::__construct();
         $this->productsRepository = $productsRepository;
         $this->productsFormFactory = $productsFormFactory;
+        $this->sortShopProductsFormFactory = $sortShopProductsFormFactory;
         $this->paymentItemsRepository = $paymentItemsRepository;
         $this->tagsRepository = $tagsRepository;
         $this->configRepository = $configRepository;
@@ -92,6 +97,22 @@ class ProductsAdminPresenter extends AdminPresenter
 
         $this->template->allProductsCount = $this->productsRepository->all()->count();
         $this->template->filteredProductsCount = $filteredCount;
+    }
+
+    public function renderSortShopProducts()
+    {
+        $this->template->products = $this->productsRepository->getShopProducts(true, true);
+    }
+
+    public function createComponentSortShopProductsForm(): Form
+    {
+        $form = $this->sortShopProductsFormFactory->create();
+
+        $this->sortShopProductsFormFactory->onSave = function () {
+            $this->flashMessage($this->translator->translate('products.admin.products.messages.products_sorted'));
+            $this->redirect('SortShopProducts');
+        };
+        return $form;
     }
 
     /**

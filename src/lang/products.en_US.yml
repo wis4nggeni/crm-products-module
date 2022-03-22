@@ -7,6 +7,7 @@ menu:
     books: Books
     postal_fees: Delivery methods
     country_postal_fees: Countries and delivery methods
+    sort_shop_products: Sort products on the main page
 
 data:
     products:
@@ -151,6 +152,7 @@ admin:
             product_created: Product was created.
             product_updated: Product was updated.
             product_deleted: Product '%product%' was deleted.
+            products_sorted: Products have been sorted successfully
         users_list:
             back: Back
             email: Email

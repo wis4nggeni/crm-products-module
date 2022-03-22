@@ -1,0 +1,22 @@
+{
+    "name": "products-module",
+    "version": "0.1.0",
+    "description": "",
+    "keywords": [],
+    "license": "MIT",
+    "author": "N Press, s.r.o.",
+    "scripts": {
+        "development": "mix",
+        "production": "mix --production",
+        "watch": "mix watch"
+    },
+    "dependencies": {
+        "sortablejs": "^1.14.0"
+    },
+    "devDependencies": {
+        "laravel-mix": "^6.0.11",
+        "resolve-url-loader": "^5.0.0",
+        "sass": "^1.49.7",
+        "sass-loader": "^12.1.0"
+    }
+}

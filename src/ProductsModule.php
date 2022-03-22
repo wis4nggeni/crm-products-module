@@ -2,6 +2,7 @@
 
 namespace Crm\ProductsModule;
 
+use Crm\ApplicationModule\AssetsManager;
 use Crm\ApplicationModule\Commands\CommandsContainerInterface;
 use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\Config\ConfigsCache;
@@ -112,12 +113,19 @@ class ProductsModule extends CrmModule
             'fa fa-globe',
             944
         );
+        $menuItem6 = new MenuItem(
+            $this->translator->translate('products.menu.sort_shop_products'),
+            ':Products:ProductsAdmin:sortShopProducts',
+            'fa fa-sort',
+            945
+        );
 
         $mainMenu->addChild($menuItem1);
         $mainMenu->addChild($menuItem2);
         $mainMenu->addChild($menuItem3);
         $mainMenu->addChild($menuItem4);
         $mainMenu->addChild($menuItem5);
+        $mainMenu->addChild($menuItem6);
 
         $menuContainer->attachMenuItem($mainMenu);
 
@@ -228,6 +236,11 @@ class ProductsModule extends CrmModule
             'shop',
             realpath(__DIR__ . '/templates/@shop_layout.latte')
         );
+    }
+
+    public function registerAssets(AssetsManager $assetsManager)
+    {
+        $assetsManager->copyAssets(__DIR__ . '/assets/dist/', 'layouts/products/dist/');
     }
 
     public function registerSeeders(SeederManager $seederManager)

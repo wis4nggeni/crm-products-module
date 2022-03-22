@@ -155,6 +155,20 @@ class ProductsRepository extends Repository
         $this->getTable()->where('sorting >= ?', $newSorting)->update(['sorting+=' => 1]);
     }
 
+    /**
+     * Updates sorting of products using id => sorting pairs array
+     *
+     * @param array $sorting
+     */
+    final public function resortProducts(array $sorting): void
+    {
+        foreach ($sorting as $id => $position) {
+            $this->getTable()
+                ->where('id', $id)
+                ->update(['sorting' => $position]);
+        }
+    }
+
     final public function userAmountSpentDistribution($levels, $productId)
     {
         return $this->amountSpentDistribution->distribution($productId, $levels);

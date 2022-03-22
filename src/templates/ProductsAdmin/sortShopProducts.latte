@@ -1,0 +1,38 @@
+{block #title}{_products.admin.products.default.header}{/block}
+
+{block #scripts}
+    <link href="{$basePath}/layouts/products/dist/css/products-module.min.css?v2" rel="stylesheet">
+    <script src="{$basePath}/layouts/products/dist/js/products-module.min.js?v2"></script>
+{/block}
+
+{block #content}
+
+{form sortShopProductsForm}
+<form id="shop-products-sort-form">
+    <h1>
+        Produkty <small>/ celkem {$products->count()}</small>
+        <div style="float: right;">{input submit, class => 'btn btn-primary'}</div>
+    </h1>
+
+    <hr>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" id="shop-products-sort-grid">
+            {foreach $products as $product}
+                <div class="grid-square grid-square-grab col-md-4">
+                    <div class="panel panel-default" style="height: 333px;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">#{$product->id} {$product->name}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <img loading="lazy" src="{$product->image_url}" alt="{$product->name}" class="img-responsive">
+                        </div>
+                        <input type="hidden" name="products[]" value="{$product->id}">
+                    </div>
+                </div>
+            {/foreach}
+            </div>
+        </div>
+    </div>
+{/form}
