@@ -65,7 +65,7 @@ class TagsFormFactory
 
         $form->addText('icon', 'products.data.tags.fields.icon')
             ->setRequired('products.data.tags.errors.icon')
-            ->setOption('description', Html::el('a href="http://fontawesome.io/icons/"', $this->translator->trans('products.data.tags.descriptions.icon')))
+            ->setOption('description', Html::el('a href="https://fontawesome.io/icons/"', $this->translator->trans('products.data.tags.descriptions.icon')))
             ->setHtmlAttribute('placeholder', 'products.data.tags.placeholder.icon');
 
         $tagPairsQuery = $this->tagsRepository->all()->where('sorting IS NOT NULL');
