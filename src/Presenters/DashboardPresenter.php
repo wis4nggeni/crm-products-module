@@ -59,8 +59,8 @@ class DashboardPresenter extends AdminPresenter
         $graphDataItem = new GraphDataItem();
         $graphDataItem->setCriteria((new Criteria())
             ->setTableName('payments')
-            ->setTimeField('created_at')
-            ->setWhere("AND payments.status = 'paid'")
+            ->setTimeField('paid_at')
+            ->setWhere("AND payments.id IN (SELECT id FROM payments WHERE status = 'paid')")
             ->setGroupBy('products.id')
             ->setJoin(
                 "LEFT JOIN payment_items ON payments.id = payment_items.payment_id AND payment_items.type = '" . ProductPaymentItem::TYPE . "' " .
@@ -74,6 +74,34 @@ class DashboardPresenter extends AdminPresenter
         $control = $factory->create();
         $control->setGraphTitle($this->translator->translate('dashboard.shop.products.title'))
             ->setGraphHelp($this->translator->translate('dashboard.shop.products.tooltip'))
+            ->addGraphDataItem($graphDataItem);
+
+        return $control;
+    }
+
+    public function createComponentGoogleProductTagsStatsGraph(GoogleBarGraphGroupControlFactoryInterface $factory)
+    {
+        $this->getSession()->close();
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria((new Criteria())
+            ->setTableName('payments')
+            ->setTimeField('paid_at')
+            ->setWhere("AND payments.id IN (SELECT id FROM payments WHERE status = 'paid')")
+            ->setGroupBy('product_tags.tag_id')
+            ->setJoin(
+                "LEFT JOIN payment_items ON payments.id = payment_items.payment_id AND payment_items.type = '" . ProductPaymentItem::TYPE . "' " .
+                'LEFT JOIN products ON product_id = products.id ' .
+                'LEFT JOIN product_tags ON products.id = product_tags.product_id ' .
+                'LEFT JOIN tags ON product_tags.tag_id = tags.id '
+            )
+            ->setSeries('tags.name')
+            ->setValueField('SUM(payment_items.count)')
+            ->setStart($this->dateFrom)
+            ->setEnd($this->dateTo));
+
+        $control = $factory->create();
+        $control->setGraphTitle($this->translator->translate('dashboard.shop.product_tags.title'))
+            ->setGraphHelp($this->translator->translate('dashboard.shop.product_tags.tooltip'))
             ->addGraphDataItem($graphDataItem);
 
         return $control;
