@@ -1,11 +1,14 @@
 menu:
-    shop: Bold
+    shop: Bolt
     products: Termékek
-    tags: Cimkék
+    tags: Címkék
     orders: Rendelések
     stats: Bolt
     books: Könyvek
 
+    postal_fees: Szállítás módja
+    country_postal_fees: A szállítás helye és módja
+    sort_shop_products: Termékek rendezése a főoldalon
 frontend:
     shop:
         cart:
@@ -67,3 +70,59 @@ frontend:
         visit_eshop: Látogass el a boltunkba.
         title: Cím
         preparing_download: Letöltés előkészítése
+data:
+    products:
+        placeholder:
+            price: pl. 13.99
+            description: pl. Ez a termék nagyszerű
+            name: pl. bambusz póló
+            code: pl. bambusz-polo
+            user_label: pl. bambusz póló
+            catalog_price: pl. 15.99
+            sorting: Az első helyre
+            ean: pl. 8580000000000
+            image_url: pl. http://dennikn.sk/images/shop.jpg
+            og_image_url: pl. http://dennikn.sk/images/shop.jpg
+            images: pl. http://dennikn.sk/images/shop.jpg
+        errors:
+            name: A 'Név' tétel kitöltése kötelező
+            og_image_url: A 'OG:image URL' tétel kitöltése kötelező
+            catalog_price_float_positive: Az 'Árjegyzék szerinti ár' tétel nem lehet negatív szám
+            ean13: Az EAN kódnak 13 jegyűnek kell lenni
+            template_property: A '%s' tétel kitöltése kötelező
+            image_url: A ' Fénykép URLje' tétel kitöltése kötelező
+            description: A 'Leírás' tétel kitöltése kötelező
+            price_float_positive: Az 'Értékesítési ár áfával' tétel nem lehet negatív szám
+            price_required: Az 'Értékesítési ár áfával' tétel kitöltése kötelező
+            code: Az 'Azonosító' tétel kitöltése kötelező
+        fields:
+            name: Név
+            code: Azonosító
+            price: Értékesítési ár áfával
+            catalog_price: Árjegyzék szerinti ár
+            vat: áfa
+            user_label: Nyilvános leírás
+            shop: Bolti értékesítés
+            tags: Címkék
+            og_image_url: OG:image URL
+            description: Leírás
+            ean: EAN-vonalkód
+            image_url: A fénykép URL címe
+            images: Fényképgaléria
+            distribution_center: Disztribúciós központ
+            visible: Címlapra helyezés
+            unique_per_user: Kizárólag a felhasználó számára
+            has_delivery: Postaköltség hozzáadása
+            bundle: Csomag
+            sorting: Termék besorolása a következő mögé
+            template_id: Sablon
+            bundles: Csomagok
+            bundle_items: A csomag tételei
+            created_at: Létrehozva
+            stock: A raktáron található tételek száma
+            available_at: 'Hozzáférhető:'
+            shop_settings: Bolti beállítások
+        descriptions:
+            image_url: 'Kérjük, az alábbi képfelbontást használja: 856px * 565px'
+            user_label: Csak a számlán szokás feltüntetni
+            images: A fényképek URLjeinek listája. Minden egyes URL új sorban található.
