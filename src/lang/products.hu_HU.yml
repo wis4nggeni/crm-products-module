@@ -15,61 +15,116 @@ frontend:
             header: Kosár tartalma
             product: Termék
             price: Ár
-            amount: Összeg
+            amount: Mennyiség
             together: Összesen fizetendő
-            price_with_vat: Összesen fizetendő
+            price_with_vat: Összesen fizetendő áfával
             continue_with_shopping: Folytatom a vásárlást
-            order: Fizetés
-            empty_cart: Jelenleg nincs termék a kosaradban.
-            confirm_order: Fizetés
+            order: Rendelés
+            empty_cart: Jelenleg nincs termék a kosarában.
+            confirm_order: Rendelés és fizetés
             messages:
                 item_added_to_cart: "<strong>%name%</strong> a kosaradba került."
                 item_not_available: "<strong>%name%</strong> nem elérhető."
                 items_removed_from_cart: 'Egyes termékek (<strong>%name%</strong>) el lettek távolítva a kosárból</a>.'
                 items_removed_from_cart_reason_sold_out: 'Egyes termékek (<strong>%name%</strong>) el lettek távolítva a kosárból, mivel elfogytak.'
+                item_more_not_available: A <strong>%name%</strong> tételből több darab nem elérhető.
+                item_already_purchased: A <strong>%name%</strong> tételt már egyszer megvásárolta. A letöltéshez szükséges linket <a href="%link%" class="link">a fiókjában találhatja</a>.
+                items_removed_from_cart_reason_little_stock: Bizonyos tételek (<strong>%name%</strong>) mennyiségét csökkentettük, mivel a raktáron hiány van belőlük.
         checkout:
-            order: Fizetési adatok
+            order: Rendelés
             payment_method: Fizetési mód
-            contact_information: Kapcsolat információ
+            contact_information: Elérhetőségek
             login: Bejelentkezés
             shipping_address: Szállítási cím
             license_address: Licensz cím
             shipping_method: Szállítási mód
             billing_address: Számlázási cím
             for_free: Ingyenes
-            choose_payment_method: Válasszon Fizetési módot.
+            choose_payment_method: Válasszon fizetési módot.
             warnings:
-                unable_to_login_with_password: 'Ezzel a jelszóval nem tudtunk beléptetni'
+                unable_to_login_with_password: 'Ezzel a jelszóval nem tudtuk beléptetni'
+                invalid_email: Érvénytelen e-mail címet adott meg.
+                unable_to_create_user: Felhasználó létrehozása sikertelen.
+                email_registered: Ezt az e-mail címet már regisztráltuk, kérjük, adja meg a jelszavát.
+            postal_fee: Postaköltség
+            fields:
+                email_required: Az E-mail tétel kitöltése kötelező.
+                pass_required: A Jelszó tétel kitöltése kötelező.
+                account_exists: A megadott e-mail címhez már tartozik fiók, kérem, jelentkezzen be a jelszavával
+                choose_shipping_method: Válassz kézbesítési módot.
+                first_name: Keresztnév
+                want_invoice: Számlát kérek
+                phone_number_min_length: A telefonszámnak legalább 9 jegyűnek kell lenni.
+                login: Bejelentkezés
+                zip_code_invalid: 'Az irányítószámnak pontosan 5 számjegyből kell állnia és az alábbi formátumban kell megadni: XXX XX (pl. 841 07).'
+                last_name: Vezetéknév
+                first_name_required: A Keresztnév tétel kitöltése kötelező.
+                last_name_required: A Vezetéknév kitöltése kötelező.
+                phone_number_wrong_format: A telefonszámot nemzetközi formátumban kell megadni (pl. +421 908 123 456).
+                same_shipping: A számlázási cím megegyezik a postacímmel
+                street: Utcanév
+                street_required: Az Utcanév kitöltése kötelező.
+                street_min_length: Az Utcanévnek legalább 3 betűből kell állnia.
+                number: Házszám
+                country: Ország
+                company_name: Név / A cég megnevezése
+                company_name_required: A Név / Cég megnevezése tétel kitöltése kötelező.
+                phone_number: Telefonszám (a kézbesítés során lesz segítségünkre)
+                phone_number_placeholder: Pl. +421 908 123 456
+                phone_number_required: A Telefonszám kitöltése kötelező.
+                number_required: A Házszám kitöltése kötelező.
+                city: Település
+                city_required: A Település kitöltése kötelező.
+                zip_code: Irányítószám
+                zip_code_required: Az Irányítószám kitöltése kötelező.
+                company_id: statisztikai számjel
+                company_id_placeholder: Pl. 12345678
+                company_tax_id: Adószám
+                company_tax_id_placeholder: Pl. 2020123456
+                company_vat_id: Uniós adószám
+                company_vat_id_placeholder: Pl. SK2020123456
+                toc: Elfogadom a <a href="%link%" class="link" target="_blank">felhasználási feltételeket</a>
+                toc_required: El kell fogadnia a felhasználási feltételeket
+            sign_under_different_account: bejelentkezés más fiókkal?
+            forgot_password: elfelejtette a jelszavát?
         default:
             filter: Szűrés
             all: Mind
             add_to_cart: Kosárba
             sold_out: elkelt
         error:
-            title: "Hiba"
+            title: "Hiba: A Denník N boltja - csak azt kínáljuk, amit mi is olvasunk"
+            text: <strong>Hiba:</strong> sajnos, a fizetés sikertelen volt. Kérjük, próbálja újra vagy ismétlődő problémák esetén értesítsen minket az alábbi e-mail címen <a href="mailto:%contactEmail%" class="link">%contactEmail%</a>.
         success:
-            title: "Köszönjük!"
+            title: "Köszönjük! : A Denník N boltja - csak azt kínáljuk, amit mi is olvasunk"
             header: "Köszönjük!"
             payment_successful: "Sikeres fizetés."
+            list_of_books_to_download: Letölthető könyvek listája
         show:
-            title: "%product_name%"
+            title: "%product_name% : A Denník N boltja - csak azt kínáljuk, amit mi is olvasunk"
             add_to_cart: Kosárba
             sold_out: elkelt
 
+            available_at: A termék csak  %available_at% lesz elérhető, a rá következő nap szállítjuk.
     orders:
         my_orders: Rendeléseim
         my_books: Könyveim
-        day: Nap
+        day: A rendelés időpontja
         order_number: Rendelés száma
         price: Ár
         status: Állapot
         invoices: Számlák
         postal_fee: Szállítási díj
-        no_orders: Nincs rendelés.
-        no_books: Nincs könyved.
-        visit_eshop: Látogass el a boltunkba.
+        no_orders: Önnek nincs rendelése.
+        no_books: Nincs megvásárolt könyve.
+        visit_eshop: Látogasson el a boltunkba.
         title: Cím
         preparing_download: Letöltés előkészítése
+        visit_eshop_ebooks: 'Elektronikus könyveket itt vásárolhat: %shop_url%, ezen a helyen minden könyvet megtalálhat.'
+    components:
+        free_shipping_progress_bar:
+            message: Ingyenes szállításhoz még <strong>%amount%</strong> hiányzik.
+            reached_message: A rendelése meghaladta az alábbi összeget %amount%, <strong>a szállítás ingyenes</strong>.
 data:
     products:
         placeholder:
@@ -95,6 +150,10 @@ data:
             price_float_positive: Az 'Értékesítési ár áfával' tétel nem lehet negatív szám
             price_required: Az 'Értékesítési ár áfával' tétel kitöltése kötelező
             code: Az 'Azonosító' tétel kitöltése kötelező
+            vat: Az áfa feltüntetése kötelező
+            not_stored_to_distribution_center: A termék elhelyezése a disztribúciós központban sikertelen volt.
+            stock_required: A 'Raktáron lévő tételek száma' kötelező
+            stock_positive: A 'Raktáron lévő tételek száma' nem lehet negatív szám
         fields:
             name: Név
             code: Azonosító
@@ -126,3 +185,67 @@ data:
             image_url: 'Kérjük, az alábbi képfelbontást használja: 856px * 565px'
             user_label: Csak a számlán szokás feltüntetni
             images: A fényképek URLjeinek listája. Minden egyes URL új sorban található.
+    country_postal_fees:
+        fields:
+            condition: Feltétel
+            country_id: Ország
+            postal_fee_id: A kézbesítés módja
+            default: Alapértelmezett
+            active: Aktív
+            sorting: Sorrend
+            condition_value: Érték
+    tags:
+        placeholder:
+            icon: fa-tag
+            sorting: Az első helyre
+            name: SzuperTag
+            code: szuper-tag
+        fields:
+            icon: Ikon
+            visible: Címlapra helyezés
+            products: A termékek száma
+            code: Kód
+            sorting: A címke besorolása a következő tétel után
+            name: Név
+        descriptions:
+            code: A kód az adott címkével ellátott bolti termék URL címében lesz feltüntetve.
+            icon: 'Válassz az alábbiból: FontAwesome. Az N logójához haszáld: dennikn.'
+        errors:
+            name: A 'Név' tétel kitöltése kötelező.
+            icon: Az'Ikon' kitöltése kötelező.
+    orders:
+        statuses:
+            paid: Kifizetve
+            not_sent: Nincs elküldve
+            pending: Beérkezett
+            confirmed: Visszaigazolt
+            sent: Elküldve
+            delivered: Kézbesítve
+            returned: Visszaküldve
+    postal_fees:
+        fields:
+            title: Név
+            code: Azonosító
+            used_count: Felhasználva
+            amount: Összeg
+config:
+    shop_host:
+        description: A bolt URL címe (abban az esetben, ha saját domainen fut; pl. <code>obchod.crm.press</code>)
+        name: A bolt URL címe
+    category: Bolt
+    shop_header_block:
+        name: A bolt kódja a fejlécben
+seeders:
+    address_types:
+        gift_subscription_type: Ajándék előfizetés
+data_provider:
+    delete:
+        unexpected_configuration_value: Váratlan konfigurációs érték 'Felhasználók -> Az ellenőrzött napok száma'
+        active_order: A felhasználó a közelmúltban leadott egy megrendelést, ezért nem tudjuk törölni.
+    payment_form_data:
+        products_from_eshop: 'Termékek az e-shopból:'
+        products_from_eshop_desc: 'Figyelem: a termék kiválasztását követően meg kell adni a vásárolt mennyiséget is.'
+        products_from_eshop_readonly: A termékeket nem lehet módosítani, a megrendelés már létre lett hozva.
+    payment_item_types_filter:
+        key:
+            product: Bolt
