@@ -6,8 +6,8 @@ menu:
     stats: Bolt
     books: Könyvek
 
-    postal_fees: Szállítás módja
-    country_postal_fees: A szállítás helye és módja
+    postal_fees: Kézbesítés módja
+    country_postal_fees: A kézbesítés helye és módja
     sort_shop_products: Termékek rendezése a főoldalon
 frontend:
     shop:
@@ -35,9 +35,9 @@ frontend:
             payment_method: Fizetési mód
             contact_information: Elérhetőségek
             login: Bejelentkezés
-            shipping_address: Szállítási cím
+            shipping_address: Kézbesítési cím
             license_address: Licensz cím
-            shipping_method: Szállítási mód
+            shipping_method: Kézbesítés módja
             billing_address: Számlázási cím
             for_free: Ingyenes
             choose_payment_method: Válasszon fizetési módot.
@@ -51,7 +51,7 @@ frontend:
                 email_required: Az E-mail tétel kitöltése kötelező.
                 pass_required: A Jelszó tétel kitöltése kötelező.
                 account_exists: A megadott e-mail címhez már tartozik fiók, kérem, jelentkezzen be a jelszavával
-                choose_shipping_method: Válassz kézbesítési módot.
+                choose_shipping_method: Válasszon kézbesítési módot.
                 first_name: Keresztnév
                 want_invoice: Számlát kérek
                 phone_number_min_length: A telefonszámnak legalább 9 jegyűnek kell lenni.
@@ -89,23 +89,23 @@ frontend:
             forgot_password: elfelejtette a jelszavát?
         default:
             filter: Szűrés
-            all: Mind
+            all: Összes
             add_to_cart: Kosárba
             sold_out: elkelt
         error:
-            title: "Hiba: A Denník N boltja - csak azt kínáljuk, amit mi is olvasunk"
+            title: "Hiba: A Denník N e-shopja - csak azt kínáljuk, amit mi is olvasunk"
             text: <strong>Hiba:</strong> sajnos, a fizetés sikertelen volt. Kérjük, próbálja újra vagy ismétlődő problémák esetén értesítsen minket az alábbi e-mail címen <a href="mailto:%contactEmail%" class="link">%contactEmail%</a>.
         success:
-            title: "Köszönjük! : A Denník N boltja - csak azt kínáljuk, amit mi is olvasunk"
+            title: "Köszönjük! : A Denník N e-shopja - csak azt kínáljuk, amit mi is olvasunk"
             header: "Köszönjük!"
             payment_successful: "Sikeres fizetés."
             list_of_books_to_download: Letölthető könyvek listája
         show:
-            title: "%product_name% : A Denník N boltja - csak azt kínáljuk, amit mi is olvasunk"
-            add_to_cart: Kosárba
+            title: "%product_name% : A Denník N e-shopja - csak azt kínáljuk, amit mi is olvasunk"
+            add_to_cart: Kosárba teszem
             sold_out: elkelt
 
-            available_at: A termék csak  %available_at% lesz elérhető, a rá következő nap szállítjuk.
+            available_at: A termék csak  %available_at% lesz elérhető, a rá következő nap postázzuk.
     orders:
         my_orders: Rendeléseim
         my_books: Könyveim
@@ -114,17 +114,17 @@ frontend:
         price: Ár
         status: Állapot
         invoices: Számlák
-        postal_fee: Szállítási díj
+        postal_fee: Postaköltség
         no_orders: Önnek nincs rendelése.
         no_books: Nincs megvásárolt könyve.
-        visit_eshop: Látogasson el a boltunkba.
+        visit_eshop: Látogasson el e-shopunkba.
         title: Cím
         preparing_download: Letöltés előkészítése
         visit_eshop_ebooks: 'Elektronikus könyveket itt vásárolhat: %shop_url%, ezen a helyen minden könyvet megtalálhat.'
     components:
         free_shipping_progress_bar:
-            message: Ingyenes szállításhoz még <strong>%amount%</strong> hiányzik.
-            reached_message: A rendelése meghaladta az alábbi összeget %amount%, <strong>a szállítás ingyenes</strong>.
+            message: Ingyenes kézbesítéshez még <strong>%amount%</strong> hiányzik.
+            reached_message: A rendelése meghaladta az alábbi összeget %amount%, <strong>a kézbesítés ingyenes</strong>.
 data:
     products:
         placeholder:
@@ -155,7 +155,7 @@ data:
             stock_required: A 'Raktáron lévő tételek száma' kötelező
             stock_positive: A 'Raktáron lévő tételek száma' nem lehet negatív szám
         fields:
-            name: Név
+            name: Cím
             code: Azonosító
             price: Értékesítési ár áfával
             catalog_price: Árjegyzék szerinti ár
@@ -230,11 +230,11 @@ data:
             amount: Összeg
 config:
     shop_host:
-        description: A bolt URL címe (abban az esetben, ha saját domainen fut; pl. <code>obchod.crm.press</code>)
-        name: A bolt URL címe
-    category: Bolt
+        description: Az e-shop URL címe (abban az esetben, ha saját domainen fut; pl. <code>obchod.crm.press</code>)
+        name: Az e-shop URL címe
+    category: E-shop
     shop_header_block:
-        name: A bolt kódja a fejlécben
+        name: Az e-shop kódja a fejlécben
 seeders:
     address_types:
         gift_subscription_type: Ajándék előfizetés
@@ -248,4 +248,4 @@ data_provider:
         products_from_eshop_readonly: A termékeket nem lehet módosítani, a megrendelés már létre lett hozva.
     payment_item_types_filter:
         key:
-            product: Bolt
+            product: E-shop
