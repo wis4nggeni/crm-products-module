@@ -143,7 +143,7 @@ data:
             name: A 'Név' tétel kitöltése kötelező
             og_image_url: A 'OG:image URL' tétel kitöltése kötelező
             catalog_price_float_positive: Az 'Árjegyzék szerinti ár' tétel nem lehet negatív szám
-            ean13: Az EAN kódnak 13 jegyűnek kell lenni
+            ean13: Az EAN kódnak 13 jegyűnek kell lennie
             template_property: A '%s' tétel kitöltése kötelező
             image_url: A ' Fénykép URLje' tétel kitöltése kötelező
             description: A 'Leírás' tétel kitöltése kötelező
@@ -151,7 +151,7 @@ data:
             price_required: Az 'Értékesítési ár áfával' tétel kitöltése kötelező
             code: Az 'Azonosító' tétel kitöltése kötelező
             vat: Az áfa feltüntetése kötelező
-            not_stored_to_distribution_center: A termék elhelyezése a disztribúciós központban sikertelen volt.
+            not_stored_to_distribution_center: A termék elhelyezése a forgalmazási központban sikertelen volt.
             stock_required: A 'Raktáron lévő tételek száma' kötelező
             stock_positive: A 'Raktáron lévő tételek száma' nem lehet negatív szám
         fields:
@@ -167,8 +167,8 @@ data:
             description: Leírás
             ean: EAN-vonalkód
             image_url: A fénykép URL címe
-            images: Fényképgaléria
-            distribution_center: Disztribúciós központ
+            images: Fotógaléria
+            distribution_center: Forgalmazói központ
             visible: Címlapra helyezés
             unique_per_user: Kizárólag a felhasználó számára
             has_delivery: Postaköltség hozzáadása
@@ -183,8 +183,8 @@ data:
             shop_settings: Bolti beállítások
         descriptions:
             image_url: 'Kérjük, az alábbi képfelbontást használja: 856px * 565px'
-            user_label: Csak a számlán szokás feltüntetni
-            images: A fényképek URLjeinek listája. Minden egyes URL új sorban található.
+            user_label: Csak a számlán feltüntetve
+            images: A fényképek URL-jeinek listája. Minden egyes URL új sorban található.
     country_postal_fees:
         fields:
             condition: Feltétel
@@ -209,7 +209,7 @@ data:
             name: Név
         descriptions:
             code: A kód az adott címkével ellátott bolti termék URL címében lesz feltüntetve.
-            icon: 'Válassz az alábbiból: FontAwesome. Az N logójához haszáld: dennikn.'
+            icon: 'Válassz az alábbiból: FontAwesome. Az N logójához használd: dennikn.'
         errors:
             name: A 'Név' tétel kitöltése kötelező.
             icon: Az'Ikon' kitöltése kötelező.
