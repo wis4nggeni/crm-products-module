@@ -16,16 +16,16 @@ frontend:
             product: Termék
             price: Ár
             amount: Mennyiség
-            together: Összesen fizetendő
+            together: Összesen
             price_with_vat: Összesen fizetendő áfával
             continue_with_shopping: Folytatom a vásárlást
-            order: Rendelés
-            empty_cart: Jelenleg nincs termék a kosarában.
+            order: rendelés
+            empty_cart: A kosara üres.
             confirm_order: Rendelés és fizetés
             messages:
-                item_added_to_cart: "<strong>%name%</strong> a kosaradba került."
+                item_added_to_cart: "<strong>%name%</strong> a kosarába került."
                 item_not_available: "<strong>%name%</strong> nem elérhető."
-                items_removed_from_cart: 'Egyes termékek (<strong>%name%</strong>) el lettek távolítva a kosárból</a>.'
+                items_removed_from_cart: 'Egyes termékek (<strong>%name%</strong>) el lettek távolítva a kosárból, mert már egyszer megvásárolta őket. A letöltéshez szükséges linket a<a href="%link%" class="link">fiókjában találhatja meg</a>.'
                 items_removed_from_cart_reason_sold_out: 'Egyes termékek (<strong>%name%</strong>) el lettek távolítva a kosárból, mivel elfogytak.'
                 item_more_not_available: A <strong>%name%</strong> tételből több darab nem elérhető.
                 item_already_purchased: A <strong>%name%</strong> tételt már egyszer megvásárolta. A letöltéshez szükséges linket <a href="%link%" class="link">a fiókjában találhatja</a>.
@@ -36,39 +36,39 @@ frontend:
             contact_information: Elérhetőségek
             login: Bejelentkezés
             shipping_address: Kézbesítési cím
-            license_address: Licensz cím
+            license_address: Licencadatok
             shipping_method: Kézbesítés módja
             billing_address: Számlázási cím
             for_free: Ingyenes
             choose_payment_method: Válasszon fizetési módot.
             warnings:
                 unable_to_login_with_password: 'Ezzel a jelszóval nem tudtuk beléptetni'
-                invalid_email: Érvénytelen e-mail címet adott meg.
+                invalid_email: Ez az e-mail cím érvénytelen.
                 unable_to_create_user: Felhasználó létrehozása sikertelen.
                 email_registered: Ezt az e-mail címet már regisztráltuk, kérjük, adja meg a jelszavát.
             postal_fee: Postaköltség
             fields:
-                email_required: Az E-mail tétel kitöltése kötelező.
-                pass_required: A Jelszó tétel kitöltése kötelező.
+                email_required: Az E-mail kitöltése kötelező.
+                pass_required: A Jelszó kitöltése kötelező.
                 account_exists: A megadott e-mail címhez már tartozik fiók, kérem, jelentkezzen be a jelszavával
                 choose_shipping_method: Válasszon kézbesítési módot.
                 first_name: Keresztnév
                 want_invoice: Számlát kérek
-                phone_number_min_length: A telefonszámnak legalább 9 jegyűnek kell lenni.
+                phone_number_min_length: A telefonszámnak legalább 9 jegyűnek kell lennie.
                 login: Bejelentkezés
                 zip_code_invalid: 'Az irányítószámnak pontosan 5 számjegyből kell állnia és az alábbi formátumban kell megadni: XXX XX (pl. 841 07).'
                 last_name: Vezetéknév
-                first_name_required: A Keresztnév tétel kitöltése kötelező.
+                first_name_required: A Keresztnév kitöltése kötelező.
                 last_name_required: A Vezetéknév kitöltése kötelező.
                 phone_number_wrong_format: A telefonszámot nemzetközi formátumban kell megadni (pl. +421 908 123 456).
                 same_shipping: A számlázási cím megegyezik a postacímmel
                 street: Utcanév
                 street_required: Az Utcanév kitöltése kötelező.
-                street_min_length: Az Utcanévnek legalább 3 betűből kell állnia.
+                street_min_length: Az utcanévnek legalább 3 betűből kell állnia.
                 number: Házszám
                 country: Ország
-                company_name: Név / A cég megnevezése
-                company_name_required: A Név / Cég megnevezése tétel kitöltése kötelező.
+                company_name: Név / A cég neve
+                company_name_required: A Név / A cég neve tétel kitöltése kötelező.
                 phone_number: Telefonszám (a kézbesítés során lesz segítségünkre)
                 phone_number_placeholder: Pl. +421 908 123 456
                 phone_number_required: A Telefonszám kitöltése kötelező.
@@ -77,11 +77,11 @@ frontend:
                 city_required: A Település kitöltése kötelező.
                 zip_code: Irányítószám
                 zip_code_required: Az Irányítószám kitöltése kötelező.
-                company_id: statisztikai számjel
+                company_id: IČO (statisztikai számjel)
                 company_id_placeholder: Pl. 12345678
-                company_tax_id: Adószám
+                company_tax_id: DIČ (adószám)
                 company_tax_id_placeholder: Pl. 2020123456
-                company_vat_id: Uniós adószám
+                company_vat_id: IČ DPH (áfás adószám)
                 company_vat_id_placeholder: Pl. SK2020123456
                 toc: Elfogadom a <a href="%link%" class="link" target="_blank">felhasználási feltételeket</a>
                 toc_required: El kell fogadnia a felhasználási feltételeket
@@ -90,8 +90,8 @@ frontend:
         default:
             filter: Szűrés
             all: Összes
-            add_to_cart: Kosárba
-            sold_out: elkelt
+            add_to_cart: kosárba
+            sold_out: elfogyott
         error:
             title: "Hiba: A Denník N e-shopja - csak azt kínáljuk, amit mi is olvasunk"
             text: <strong>Hiba:</strong> sajnos, a fizetés sikertelen volt. Kérjük, próbálja újra vagy ismétlődő problémák esetén értesítsen minket az alábbi e-mail címen <a href="mailto:%contactEmail%" class="link">%contactEmail%</a>.
@@ -103,13 +103,13 @@ frontend:
         show:
             title: "%product_name% : A Denník N e-shopja - csak azt kínáljuk, amit mi is olvasunk"
             add_to_cart: Kosárba teszem
-            sold_out: elkelt
+            sold_out: elfogyott
 
             available_at: A termék csak  %available_at% lesz elérhető, a rá következő nap postázzuk.
     orders:
         my_orders: Rendeléseim
         my_books: Könyveim
-        day: A rendelés időpontja
+        day: A rendelés dátuma
         order_number: Rendelés száma
         price: Ár
         status: Állapot
@@ -123,7 +123,7 @@ frontend:
         visit_eshop_ebooks: 'Elektronikus könyveket itt vásárolhat: %shop_url%, ezen a helyen minden könyvet megtalálhat.'
     components:
         free_shipping_progress_bar:
-            message: Ingyenes kézbesítéshez még <strong>%amount%</strong> hiányzik.
+            message: Az ingyenes kézbesítéshez még <strong>%amount%</strong> hiányzik.
             reached_message: A rendelése meghaladta az alábbi összeget %amount%, <strong>a kézbesítés ingyenes</strong>.
 data:
     products:
@@ -241,7 +241,7 @@ seeders:
 data_provider:
     delete:
         unexpected_configuration_value: Váratlan konfigurációs érték 'Felhasználók -> Az ellenőrzött napok száma'
-        active_order: A felhasználó a közelmúltban leadott egy megrendelést, ezért nem tudjuk törölni.
+        active_order: A felhasználó a közelmúltban leadott egy megrendelést, ezért nem törölhető.
     payment_form_data:
         products_from_eshop: 'Termékek az e-shopból:'
         products_from_eshop_desc: 'Figyelem: a termék kiválasztását követően meg kell adni a vásárolt mennyiséget is.'
