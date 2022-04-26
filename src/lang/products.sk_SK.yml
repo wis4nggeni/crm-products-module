@@ -403,10 +403,10 @@ frontend:
             add_to_cart: do košíka
             sold_out: vypredané
         error:
-            title: "Chyba : Obchod Denníka N - predávame len to, čo sami čítame"
-            text: '<strong>Chyba:</strong> bohužiaľ, platba nebola úspešná. Prosím, vyskúšajte to znova alebo nám pri opakovanom probléme napíšte na <a href="mailto:%contactEmail%" class="link">%contactEmail%</a>.'
+            title: "Chyba"
+            text: '<strong>Chyba:</strong> Bohužiaľ, platba nebola úspešná. Prosím, vyskúšajte to znova alebo nám pri opakovanom probléme napíšte na <a href="mailto:%contactEmail%" class="link">%contactEmail%</a>.'
         success:
-            title: "Ďakujeme! : Obchod Denníka N - predávame len to, čo sami čítame"
+            title: "Ďakujeme!"
             header: "Ďakujeme!"
             payment_successful: "Vaša platba bola úspešná."
             list_of_books_to_download: "Zoznam kníh na stiahnutie"

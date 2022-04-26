@@ -97,6 +97,7 @@ class ShopPresenter extends FrontendPresenter
         $this->template->layoutName = $this->layoutManager->getLayout($this->getLayout());
         $this->template->headerCode = $this->applicationConfig->get('shop_header_block');
         $this->template->ogImageUrl = $this->applicationConfig->get('shop_og_image_url');
+        $this->template->shopTitle = $this->applicationConfig->get('shop_title');
     }
 
     protected function getLayoutName()
@@ -323,7 +324,6 @@ class ShopPresenter extends FrontendPresenter
             $this->flashMessage(implode(', ', $removedProducts), 'product-out-of-stock');
         }
 
-        $this->template->shopTitle = $this->applicationConfig->get('shop_title');
         $this->template->cartProductSum = $this->cartProductSum;
         $this->template->cartProducts = $this->cartSession->products;
         $this->template->freeProducts = $freeProducts;
@@ -364,7 +364,6 @@ class ShopPresenter extends FrontendPresenter
             $freeProducts = $this->productsRepository->findByIds(array_keys($this->cartSession->freeProducts));
         }
 
-        $this->template->shopTitle = $this->applicationConfig->get('shop_title');
         $this->template->cartProducts = $this->cartSession->products;
         $this->template->products = $products;
         $this->template->freeProducts = $freeProducts;
