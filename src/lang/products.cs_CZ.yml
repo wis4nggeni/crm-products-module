@@ -306,6 +306,27 @@ admin:
 
     dashboard:
         title: Štatistiky obchodu
+        products:
+            title: Produkty
+            tooltip: Počet prodaných produktů
+        product_tags:
+            title: Tagy
+            tooltip: Počet prodaných produktů pro jednotlivé tagy
+        orders_count:
+            title: Počet objednávek
+            tooltip: Počet vytvořených objednávek
+        products_paid_sum:
+            title: Zaplacená částka
+            tooltip: Částka zaplacená za produkty
+        products_average_paid_sum:
+            title: Průměrná částka objednávky
+            tooltip: Průměrná částka platby za produkty
+        products_average_count:
+            title: Průměrný počet kusů produktů na jednu objednávku
+            tooltip: Např. objednané 3ks z jednoho produktu se počítá jako 3
+        products_various_average_count:
+            title: Průměrný počet různých produktů na jednu objednávku
+            tooltip: Např. objednané 3ks z jednoho produktu se počítá jako 1
 
     scenarios:
         actual_order_status:

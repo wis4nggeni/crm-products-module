@@ -72,8 +72,8 @@ class DashboardPresenter extends AdminPresenter
             ->setEnd($this->dateTo));
 
         $control = $factory->create();
-        $control->setGraphTitle($this->translator->translate('dashboard.shop.products.title'))
-            ->setGraphHelp($this->translator->translate('dashboard.shop.products.tooltip'))
+        $control->setGraphTitle($this->translator->translate('products.admin.dashboard.products.title'))
+            ->setGraphHelp($this->translator->translate('products.admin.dashboard.products.tooltip'))
             ->addGraphDataItem($graphDataItem);
 
         return $control;
@@ -100,8 +100,139 @@ class DashboardPresenter extends AdminPresenter
             ->setEnd($this->dateTo));
 
         $control = $factory->create();
-        $control->setGraphTitle($this->translator->translate('dashboard.shop.product_tags.title'))
-            ->setGraphHelp($this->translator->translate('dashboard.shop.product_tags.tooltip'))
+        $control->setGraphTitle($this->translator->translate('products.admin.dashboard.product_tags.title'))
+            ->setGraphHelp($this->translator->translate('products.admin.dashboard.product_tags.tooltip'))
+            ->addGraphDataItem($graphDataItem);
+
+        return $control;
+    }
+
+    public function createComponentGoogleOrdersCountGraph(GoogleBarGraphGroupControlFactoryInterface $factory)
+    {
+        $this->getSession()->close();
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria((new Criteria())
+            ->setTableName('orders')
+            ->setJoin(
+                "INNER JOIN payments ON payments.id = orders.payment_id AND payments.status = 'paid'"
+            )
+            ->setTimeField('created_at')
+            ->setValueField('COUNT(orders.id)')
+            ->setStart($this->dateFrom)
+            ->setEnd($this->dateTo));
+        $graphDataItem->setName($this->translator->translate('products.admin.dashboard.orders_count.title'));
+
+        $control = $factory->create();
+        $control->setGraphTitle($this->translator->translate('products.admin.dashboard.orders_count.title'))
+            ->setGraphHelp($this->translator->translate('products.admin.dashboard.orders_count.tooltip'))
+            ->addGraphDataItem($graphDataItem);
+
+        return $control;
+    }
+
+    public function createComponentGoogleProductsPaidSumGraph(GoogleBarGraphGroupControlFactoryInterface $factory)
+    {
+        $this->getSession()->close();
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria((new Criteria())
+            ->setTableName('payments')
+            ->setTimeField('paid_at')
+            ->setWhere("AND payments.status = 'paid'")
+            ->setJoin(
+                "INNER JOIN payment_items ON payments.id = payment_items.payment_id AND payment_items.type = '" . ProductPaymentItem::TYPE . "'"
+            )
+            ->setValueField('SUM(payment_items.count * payment_items.amount)')
+            ->setStart($this->dateFrom)
+            ->setEnd($this->dateTo));
+        $graphDataItem->setName($this->translator->translate('products.admin.dashboard.products_paid_sum.title'));
+
+        $control = $factory->create();
+        $control->setGraphTitle($this->translator->translate('products.admin.dashboard.products_paid_sum.title'))
+            ->setGraphHelp($this->translator->translate('products.admin.dashboard.products_paid_sum.tooltip'))
+            ->addGraphDataItem($graphDataItem);
+
+        return $control;
+    }
+
+    public function createComponentGoogleProductsAveragePaidSumGraph(GoogleBarGraphGroupControlFactoryInterface $factory)
+    {
+        $this->getSession()->close();
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria((new Criteria())
+            ->setTableName('payments')
+            ->setTimeField('paid_at')
+            ->setJoin(
+                "INNER JOIN (
+                    SELECT payments.id, SUM(payment_items.count * payment_items.amount) as sum FROM payments
+                        INNER JOIN payment_items ON payments.id = payment_items.payment_id AND payment_items.type = '" . ProductPaymentItem::TYPE . "'
+                    WHERE status = 'paid'
+                    GROUP BY payments.id
+                ) products_paid_amounts ON products_paid_amounts.id = payments.id"
+            )
+            ->setValueField('AVG(products_paid_amounts.sum)')
+            ->setStart($this->dateFrom)
+            ->setEnd($this->dateTo));
+        $graphDataItem->setName($this->translator->translate('products.admin.dashboard.products_average_paid_sum.title'));
+
+        $control = $factory->create();
+        $control->setGraphTitle($this->translator->translate('products.admin.dashboard.products_average_paid_sum.title'))
+            ->setGraphHelp($this->translator->translate('products.admin.dashboard.products_average_paid_sum.tooltip'))
+            ->addGraphDataItem($graphDataItem);
+
+        return $control;
+    }
+
+    public function createComponentGoogleAverageProductsCountGraph(GoogleBarGraphGroupControlFactoryInterface $factory)
+    {
+        $this->getSession()->close();
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria((new Criteria())
+            ->setTableName('payments')
+            ->setTimeField('paid_at')
+            ->setJoin(
+                "INNER JOIN (
+                    SELECT payments.id, SUM(payment_items.count) as sum FROM payments
+                        INNER JOIN payment_items ON payments.id = payment_items.payment_id AND payment_items.type = '" . ProductPaymentItem::TYPE . "'
+                    WHERE status = 'paid'
+                    GROUP BY payments.id
+                ) products_count ON products_count.id = payments.id"
+            )
+            ->setValueField('AVG(products_count.sum)')
+            ->setStart($this->dateFrom)
+            ->setEnd($this->dateTo));
+        $graphDataItem->setName($this->translator->translate('products.admin.dashboard.products_average_count.title'));
+
+        $control = $factory->create();
+        $control->setGraphTitle($this->translator->translate('products.admin.dashboard.products_average_count.title'))
+            ->setGraphHelp($this->translator->translate('products.admin.dashboard.products_average_count.tooltip'))
+            ->addGraphDataItem($graphDataItem);
+
+        return $control;
+    }
+
+    public function createComponentGoogleAverageVariousProductsCountGraph(GoogleBarGraphGroupControlFactoryInterface $factory)
+    {
+        $this->getSession()->close();
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria((new Criteria())
+            ->setTableName('payments')
+            ->setTimeField('paid_at')
+            ->setJoin(
+                "INNER JOIN (
+                    SELECT payments.id, COUNT(payment_items.id) as count FROM payments
+                        INNER JOIN payment_items ON payments.id = payment_items.payment_id AND payment_items.type = '" . ProductPaymentItem::TYPE . "'
+                    WHERE status = 'paid'
+                    GROUP BY payments.id
+                ) products_various_count ON products_various_count.id = payments.id"
+            )
+            ->setValueField('AVG(products_various_count.count)')
+            ->setStart($this->dateFrom)
+            ->setEnd($this->dateTo));
+        $graphDataItem->setName($this->translator->translate('products.admin.dashboard.products_various_average_count.title'));
+
+        $control = $factory->create();
+        $control->setGraphTitle($this->translator->translate('products.admin.dashboard.products_various_average_count.title'))
+            ->setGraphHelp($this->translator->translate('products.admin.dashboard.products_various_average_count.tooltip'))
             ->addGraphDataItem($graphDataItem);
 
         return $control;
