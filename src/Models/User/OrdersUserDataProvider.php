@@ -37,9 +37,9 @@ class OrdersUserDataProvider implements UserDataProviderInterface
         return 'orders';
     }
 
-    public function data($userId)
+    public function data($userId): ?array
     {
-        return [];
+        return null;
     }
 
     public function download($userId)
