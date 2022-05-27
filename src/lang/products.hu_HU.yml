@@ -249,3 +249,11 @@ data_provider:
     payment_item_types_filter:
         key:
             product: E-shop
+admin:
+    products:
+        show:
+            back: Vissza a listához
+            edit: Termék szerkesztése
+        new:
+            title: Új termék
+            back: Vissza a listához
