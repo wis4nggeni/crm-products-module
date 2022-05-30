@@ -1,4 +1,4 @@
-{block #title}{_products.admin.tags.default.header}{/block}
+{block #title}{_'products.admin.tags.default.header'}{/block}
 
 {block scripts}
   <script>
@@ -14,8 +14,8 @@
 
   <div class="col-md-12">
     <h1>
-      {_products.admin.tags.default.header}
-      <a n:href="new" class="btn btn-success btn-lg pull-right"><i class="fa fa-sliders-h"></i> {_products.admin.tags.default.new}</a>
+      {_'products.admin.tags.default.header'}
+      <a n:href="new" class="btn btn-success btn-lg pull-right"><i class="fa fa-sliders-h"></i> {_'products.admin.tags.default.new'}</a>
     </h1>
     <hr>
   </div>
@@ -24,11 +24,11 @@
     <table class="table table-striped table-hover table-bordered">
       <thead>
         <tr>
-          <th>{_products.data.tags.fields.name}</th>
-          <th>{_products.data.tags.fields.code}</th>
-          <th>{_products.data.tags.fields.visible}</th>
-          <th>{_products.data.tags.fields.products}</th>
-          <th>{_system.actions}</th>
+          <th>{_'products.data.tags.fields.name'}</th>
+          <th>{_'products.data.tags.fields.code'}</th>
+          <th>{_'products.data.tags.fields.visible'}</th>
+          <th>{_'products.data.tags.fields.products'}</th>
+          <th>{_'system.actions'}</th>
         </tr>
       </thead>
       <tbody>
@@ -40,9 +40,9 @@
             <td>{$tag->visible|YesNo}</a></td>
             <td>{$productNum}</a></td>
             <td style="white-space: nowrap">
-                <a n:href="Edit $tag->id" class="btn btn-sm btn-primary" title="{_system.edit}"><i class="fa fa-edit"></i> </a>
-                  <span style="cursor: not-allowed" class="tooltip-wrapper" data-placement="bottom" {if $productNum > 0} data-title={_"products.admin.tags.delete.tooltip"} {/if}>
-                	<a n:href="DeleteTag! $tag->id" class="btn btn-sm btn-danger" {$productNum > 0 ? disabled} title={_"products.admin.tags.delete.title"}><i class="fa fa-trash-alt"></i> </a>
+                <a n:href="Edit $tag->id" class="btn btn-sm btn-primary" title="{_'system.edit'}"><i class="fa fa-edit"></i> </a>
+                  <span style="cursor: not-allowed" class="tooltip-wrapper" data-placement="bottom" {if $productNum > 0} data-title={_'"products.admin.tags.delete.tooltip"'} {/if}>
+                	<a n:href="DeleteTag! $tag->id" class="btn btn-sm btn-danger" {$productNum > 0 ? disabled} title={_'"products.admin.tags.delete.title"'}><i class="fa fa-trash-alt"></i> </a>
                   </span>
             </td>
           </tr>

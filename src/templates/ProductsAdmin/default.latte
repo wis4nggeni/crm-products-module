@@ -1,4 +1,4 @@
-{block #title}{_products.admin.products.default.header}{/block}
+{block #title}{_'products.admin.products.default.header'}{/block}
 
 {block #content}
 
@@ -6,15 +6,15 @@
 
   <div class="col-md-12">
     <h1>
-      {_products.admin.products.default.header}
+      {_'products.admin.products.default.header'}
       <small>
-        / {_system.total} {$allProductsCount}
+        / {_'system.total'} {$allProductsCount}
         {if $allProductsCount != $filteredProductsCount}
-          , {_system.filtered} {$filteredProductsCount}
+          , {_'system.filtered'} {$filteredProductsCount}
         {/if}
       </small>
       <a n:href="new" class="btn btn-success btn-lg pull-right"><i
-                class="fa fa-sliders-h"></i> {_products.admin.products.default.new}</a>
+                class="fa fa-sliders-h"></i> {_'products.admin.products.default.new'}</a>
     </h1>
     <hr>
     {control adminFilterForm}
@@ -25,13 +25,13 @@
     <table class="table table-striped table-hover table-bordered">
       <thead>
         <tr>
-          <th>{_products.data.products.fields.name}</th>
-          <th>{_products.data.products.fields.code}</th>
-          <th>{_products.data.products.fields.price}</th>
-          <th>{_products.data.products.fields.bundle}</th>
-          <th>{_products.data.products.fields.user_label}</th>
-          <th>{_products.data.products.fields.created_at}</th>
-          <th>{_system.actions}</th>
+          <th>{_'products.data.products.fields.name'}</th>
+          <th>{_'products.data.products.fields.code'}</th>
+          <th>{_'products.data.products.fields.price'}</th>
+          <th>{_'products.data.products.fields.bundle'}</th>
+          <th>{_'products.data.products.fields.user_label'}</th>
+          <th>{_'products.data.products.fields.created_at'}</th>
+          <th>{_'system.actions'}</th>
         </tr>
       </thead>
       <tbody>
@@ -52,11 +52,11 @@
             <td style="white-space: nowrap">
               <p class="text-nowrap">
                 <a n:href="Show $product->id"
-                        class="btn btn-sm btn-info" title="{_system.show}"><i class="fa fa-eye"></i> </a>
+                        class="btn btn-sm btn-info" title="{_'system.show'}"><i class="fa fa-eye"></i> </a>
                 <a n:href="Edit $product->id"
-                        class="btn btn-sm btn-primary" title="{_system.edit}"><i class="fa fa-edit"></i> </a>
+                        class="btn btn-sm btn-primary" title="{_'system.edit'}"><i class="fa fa-edit"></i> </a>
                 <a n:href="delete! $product->id"
-                        class="btn btn-sm btn-danger" title="{_system.delete}"><i class="fa fa-trash"></i> </a>
+                        class="btn btn-sm btn-danger" title="{_'system.delete'}"><i class="fa fa-trash"></i> </a>
               </p>
             </td>
           </tr>

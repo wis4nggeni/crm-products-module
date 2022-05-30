@@ -1,4 +1,4 @@
-{block #title}{_products.admin.orders.new.header}{/block}
+{block #title}{_'products.admin.orders.new.header'}{/block}
 
 {block #head}
 <link rel="stylesheet" href="{$basePath}/layouts/dennikn/css/shop.css?v=2">
@@ -24,7 +24,7 @@
 {block #content}
 <div class="row">
     <div class="col-md-12">
-        <div class="page-header"><h1>{_products.admin.orders.new.header} <small>{_products.admin.orders.new.for_payment} {$payment->variable_symbol}</small></h1>
+        <div class="page-header"><h1>{_'products.admin.orders.new.header'} <small>{_'products.admin.orders.new.for_payment'} {$payment->variable_symbol}</small></h1>
         </div>
     </div>
 </div>
@@ -40,7 +40,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <fieldset id="user">
-                                    <legend>{_products.admin.orders.new.contact_details}</legend>
+                                    <legend>{_'products.admin.orders.new.contact_details'}</legend>
                                     {formContainer user}
                                         <h2>
                                             {$payment->user->public_name}<br/>
@@ -60,7 +60,7 @@
                                 {snippet postalFeesSnippet}
                                     {ifset $control['checkoutForm']['shipping_address']}
                                         <fieldset id="postal-fees">
-                                            <legend>{_products.admin.orders.new.shipping_option}</legend>
+                                            <legend>{_'products.admin.orders.new.shipping_option'}</legend>
                                             <div class="form-group" n:foreach="$control['checkoutForm']['postal_fee']->items as $id => $fee">
                                                 <label class="radio-inline shipping-type"><input {if $fee->id == $control['checkoutForm']['postal_fee']->value} checked="checked"{/if} required type="radio" name="postal_fee" value="{$id}">{$fee->title} (<span>{$fee->amount|price}</span>)</label>
                                             </div>
@@ -74,7 +74,7 @@
 
                         {ifset $control['checkoutForm']['shipping_address']}
                             <fieldset id="shipping-address">
-                                <legend>{_products.admin.orders.new.shipping_address}</legend>
+                                <legend>{_'products.admin.orders.new.shipping_address'}</legend>
                                 {formContainer shipping_address}
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -113,7 +113,7 @@
                         {/ifset}
                         {ifset $control['checkoutForm']['licence_address']}
                             <fieldset id="licence-address">
-                                <legend>{_products.admin.orders.new.license_data}</legend>
+                                <legend>{_'products.admin.orders.new.license_data'}</legend>
                                 {formContainer licence_address}
                                     <div class="form-group">
                                         {label first_name /}
@@ -138,7 +138,7 @@
                             {/formContainer}
                         </div>
                         <fieldset id="billing-address">
-                            <legend>{_products.admin.orders.new.billing_address}</legend>
+                            <legend>{_'products.admin.orders.new.billing_address'}</legend>
                             {formContainer billing_address}
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -188,12 +188,12 @@
                 {snippet cart}
                 {var $amount = 0}
                 <div class="row-fluid hidden-xs hidden-sm cart-header">
-                    <div class="col-sm-6 col-md-8">{_products.admin.orders.new.product}:</div>
+                    <div class="col-sm-6 col-md-8">{_'products.admin.orders.new.product'}:</div>
                     <div class="col-sm-6 col-md-4">
                         <div class="row">
-                            <div class="col-sm-4 text-center">{_products.admin.orders.new.price}:</div>
-                            <div class="col-sm-4 text-center">{_products.admin.orders.new.amount}:</div>
-                            <div class="col-sm-4 text-center">{_products.admin.orders.new.together}:</div>
+                            <div class="col-sm-4 text-center">{_'products.admin.orders.new.price'}:</div>
+                            <div class="col-sm-4 text-center">{_'products.admin.orders.new.amount'}:</div>
+                            <div class="col-sm-4 text-center">{_'products.admin.orders.new.together'}:</div>
                         </div>
                     </div>
                 </div>
@@ -223,22 +223,22 @@
                     </div>
                 </div>
                 <div class="row-fluid cart-summary">
-                    <div class="col-xs-8">{_products.admin.orders.new.price_with_vat}:</div>
+                    <div class="col-xs-8">{_'products.admin.orders.new.price_with_vat'}:</div>
                     <div class="col-xs-4 text-right">{$amount|price}</div>
                 </div>
                 <div class="row-fluid cart-summary">
-                    <div class="col-xs-8">{_products.admin.orders.new.sum_on_payment}:</div>
+                    <div class="col-xs-8">{_'products.admin.orders.new.sum_on_payment'}:</div>
                     <div class="col-xs-4 text-right">{$payment->amount|price}</div>
                 </div>
 
                 {if $amount !== $payment->amount}
-                    <p class="alert alert-warning">{_products.admin.orders.new.warnings.payment_sum_not_equal} <strong>{_products.admin.orders.new.warnings.order_will_override_sum_on_payment} {$amount|price}.</strong></p>
+                    <p class="alert alert-warning">{_'products.admin.orders.new.warnings.payment_sum_not_equal'} <strong>{_'products.admin.orders.new.warnings.order_will_override_sum_on_payment'} {$amount|price}.</strong></p>
                 {/if}
                 {/snippet}
 
                 <div class="row button-row">
                     <div class="col-sm-12 col-md-8">
-                        <input type="submit" value="{_products.admin.orders.new.create_order}" class="btn"></div>
+                        <input type="submit" value="{_'products.admin.orders.new.create_order'}" class="btn"></div>
                 </div>
             </div>
         {/form}
