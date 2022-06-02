@@ -307,6 +307,27 @@ admin:
 
     dashboard:
         title: Shop stats
+        products:
+            title: Products
+            tooltip: Number of sold products
+        product_tags:
+            title: Tagy
+            tooltip: The number of products sold for each tag
+        orders_count:
+            title: Number of orders
+            tooltip: Number of created orders
+        products_paid_sum:
+            title: Amount paid
+            tooltip: Amount paid for products
+        products_average_paid_sum:
+            title: Average order amount
+            tooltip: Average amount of payment for products
+        products_average_count:
+            title: Average number of products per order
+            tooltip: E.g. 3pcs of one product counts as 3
+        products_various_average_count:
+            title: Average number of various products per order
+            tooltip: E.g. 3pcs of one product counts as 1
 
     scenarios:
         actual_order_status:
