@@ -74,7 +74,9 @@ class DashboardPresenter extends AdminPresenter
         $control = $factory->create();
         $control->setGraphTitle($this->translator->translate('products.admin.dashboard.products.title'))
             ->setGraphHelp($this->translator->translate('products.admin.dashboard.products.tooltip'))
-            ->addGraphDataItem($graphDataItem);
+            ->addGraphDataItem($graphDataItem)
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         return $control;
     }
@@ -102,7 +104,9 @@ class DashboardPresenter extends AdminPresenter
         $control = $factory->create();
         $control->setGraphTitle($this->translator->translate('products.admin.dashboard.product_tags.title'))
             ->setGraphHelp($this->translator->translate('products.admin.dashboard.product_tags.tooltip'))
-            ->addGraphDataItem($graphDataItem);
+            ->addGraphDataItem($graphDataItem)
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         return $control;
     }
@@ -125,7 +129,9 @@ class DashboardPresenter extends AdminPresenter
         $control = $factory->create();
         $control->setGraphTitle($this->translator->translate('products.admin.dashboard.orders_count.title'))
             ->setGraphHelp($this->translator->translate('products.admin.dashboard.orders_count.tooltip'))
-            ->addGraphDataItem($graphDataItem);
+            ->addGraphDataItem($graphDataItem)
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         return $control;
     }
@@ -149,7 +155,9 @@ class DashboardPresenter extends AdminPresenter
         $control = $factory->create();
         $control->setGraphTitle($this->translator->translate('products.admin.dashboard.products_paid_sum.title'))
             ->setGraphHelp($this->translator->translate('products.admin.dashboard.products_paid_sum.tooltip'))
-            ->addGraphDataItem($graphDataItem);
+            ->addGraphDataItem($graphDataItem)
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         return $control;
     }
@@ -177,7 +185,9 @@ class DashboardPresenter extends AdminPresenter
         $control = $factory->create();
         $control->setGraphTitle($this->translator->translate('products.admin.dashboard.products_average_paid_sum.title'))
             ->setGraphHelp($this->translator->translate('products.admin.dashboard.products_average_paid_sum.tooltip'))
-            ->addGraphDataItem($graphDataItem);
+            ->addGraphDataItem($graphDataItem)
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         return $control;
     }
@@ -205,7 +215,9 @@ class DashboardPresenter extends AdminPresenter
         $control = $factory->create();
         $control->setGraphTitle($this->translator->translate('products.admin.dashboard.products_average_count.title'))
             ->setGraphHelp($this->translator->translate('products.admin.dashboard.products_average_count.tooltip'))
-            ->addGraphDataItem($graphDataItem);
+            ->addGraphDataItem($graphDataItem)
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         return $control;
     }
@@ -233,7 +245,9 @@ class DashboardPresenter extends AdminPresenter
         $control = $factory->create();
         $control->setGraphTitle($this->translator->translate('products.admin.dashboard.products_various_average_count.title'))
             ->setGraphHelp($this->translator->translate('products.admin.dashboard.products_various_average_count.tooltip'))
-            ->addGraphDataItem($graphDataItem);
+            ->addGraphDataItem($graphDataItem)
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         return $control;
     }
