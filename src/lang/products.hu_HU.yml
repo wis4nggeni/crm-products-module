@@ -105,7 +105,7 @@ frontend:
             add_to_cart: Kosárba teszem
             sold_out: elfogyott
 
-            available_at: A termék csak  %available_at% lesz elérhető, a rá következő nap postázzuk.
+            available_at: A termék csak %available_at% lesz elérhető, a rá következő nap postázzuk.
     orders:
         my_orders: Rendeléseim
         my_books: Könyveim
