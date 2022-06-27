@@ -277,6 +277,8 @@ admin:
             form_header: Delivery method
             submit: Save delivery method
             close: Close
+            activate: Activate
+            deactivate: Deactivate
             successfully_added: Delivery method was successfully saved
             successfully_deleted: Delivery method was successfully removed
             error_already_exists: The selected delivery method is already added

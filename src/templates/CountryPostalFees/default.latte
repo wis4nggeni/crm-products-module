@@ -23,7 +23,7 @@
                 <td>{$country->name}</td>
                 <td>
                     <div class="list-group">
-                        <div class="list-group-item {if !$countryPostalFee->active}disabled{/if}" n:foreach="$country->related('country_postal_fees')->order('sorting') as $countryPostalFee">
+                        <div class="list-group-item {if !$countryPostalFee->active}list-group-item-danger{/if}" n:foreach="$country->related('country_postal_fees')->order('sorting') as $countryPostalFee">
                             {$countryPostalFee->postal_fee->title} <small>/ {$countryPostalFee->postal_fee->amount|price}</small>
                             <i n:foreach="$countryPostalFee->related('country_postal_fee_conditions', 'country_postal_fee_id') as $condition"
                                   class="fa fa-question-circle"
@@ -33,9 +33,9 @@
                               ></i>
                             <a n:href="Edit! $countryPostalFee->id" class="ajax btn btn-xs btn-default"><span class="fa fa-edit"></span></a>
                             {if $countryPostalFee->active}
-                              <a n:href="Inactive! $countryPostalFee->id" class="btn btn-xs btn-default"><span class="fa fa-eye-slash"></span></a>
+                              <a n:href="Inactive! $countryPostalFee->id" class="btn btn-xs btn-default"><span class="fa fa-eye-slash"></span> {_products.admin.country_postal_fees.default.deactivate}</a>
                             {else}
-                              <a n:href="Active! $countryPostalFee->id" class="btn btn-xs btn-default"><span class="fa fa-eye"></span></a>
+                              <a n:href="Active! $countryPostalFee->id" class="btn btn-xs btn-default"><span class="fa fa-eye"></span> {_products.admin.country_postal_fees.default.activate}</a>
                             {/if}
                             <a n:href="Delete! $countryPostalFee->id" class="btn btn-xs btn-default" onclick="return alert('Are you sure?')"><span class="fa fa-trash"></span></a>
                             <small>({$countryPostalFee->sorting})</small>

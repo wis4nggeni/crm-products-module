@@ -275,6 +275,8 @@ admin:
             form_header: Způsob doručení
             submit: Ulož způsob doručení
             close: Zavřít
+            activate: Aktivovat
+            deactivate: Deaktivovat
             successfully_added: Způsob doručení byl úspěšně uložen
             successfully_deleted: Způsob doručení byl úspěšně odstraněn
             error_already_exists: Vybraný způsob doručení již je přidán
