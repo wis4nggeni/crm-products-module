@@ -53,6 +53,12 @@ class CalculateAveragesCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 "Force deleting existing data in 'user_stats' table and 'user_meta' table (where data was originally stored)"
+            )
+            ->addOption(
+                'user_id',
+                null,
+                InputOption::VALUE_REQUIRED,
+                "Compute average values for given user only."
             );
     }
 
@@ -72,18 +78,35 @@ class CalculateAveragesCommand extends Command
                 ->delete();
         }
 
+        $userId = $input->getOption('user_id');
+
         foreach ($keys as $key) {
-            $this->database->query(<<<SQL
-            -- fill empty values for new users
-            INSERT IGNORE INTO `user_stats` (`user_id`,`key`,`value`, `created_at`, `updated_at`)
-            SELECT `id`, ?, 0, NOW(), NOW()
-            FROM `users`;
+            $this->line("  * filling up 0s for '<info>{$key}</info>' stat");
+
+            if ($userId) {
+                $this->database->query(<<<SQL
+                INSERT IGNORE INTO `user_stats` (`user_id`,`key`,`value`, `created_at`, `updated_at`)
+                VALUES (?, ?, 0, NOW(), NOW())
+SQL, $userId, $key);
+            } else {
+                $this->database->query(<<<SQL
+                -- fill empty values for new users
+                INSERT IGNORE INTO `user_stats` (`user_id`,`key`,`value`, `created_at`, `updated_at`)
+                SELECT `id`, ?, 0, NOW(), NOW()
+                FROM `users`;
 SQL, $key);
+            }
         }
 
-        foreach ($this->userIdIntervals() as $interval) {
+        if ($userId) {
+            $interval = [$userId, $userId];
             $this->computeProductPaymentCounts(...$interval);
             $this->computeProductPaymentAmounts(...$interval);
+        } else {
+            foreach ($this->userIdIntervals() as $interval) {
+                $this->computeProductPaymentCounts(...$interval);
+                $this->computeProductPaymentAmounts(...$interval);
+            }
         }
 
         return Command::SUCCESS;
@@ -109,6 +132,8 @@ SQL, $key);
 
     private function computeProductPaymentCounts($minUserId, $maxUserId): void
     {
+        $this->line("  * computing '<info>product_payments</info>' for user IDs between [<info>{$minUserId}</info>, <info>{$maxUserId}</info>]");
+
         $productType = ProductPaymentItem::TYPE;
         $postalFeeType = PostalFeePaymentItem::TYPE;
 
@@ -119,7 +144,7 @@ SQL, $key);
                 FROM `payment_items`
                 INNER JOIN `payments`
                     ON `payments`.`id` = `payment_items`.`payment_id`
-                    AND `payments`.`status` = ?
+                    AND `payments`.`status` IN (?)
                 WHERE `payment_items`.`type` IN (?, ?) AND `payments`.`user_id` BETWEEN ? AND ?
                 GROUP BY `payments`.`user_id`
 SQL, self::PAYMENT_STATUSES, $productType, $postalFeeType, $minUserId, $maxUserId)
@@ -130,6 +155,8 @@ SQL, self::PAYMENT_STATUSES, $productType, $postalFeeType, $minUserId, $maxUserI
 
     private function computeProductPaymentAmounts($minUserId, $maxUserId): void
     {
+        $this->line("  * computing '<info>product_payments_amount</info>' for user IDs between [<info>{$minUserId}</info>, <info>{$maxUserId}</info>]");
+
         $productType = ProductPaymentItem::TYPE;
         $postalFeeType = PostalFeePaymentItem::TYPE;
 
@@ -140,7 +167,7 @@ SQL, self::PAYMENT_STATUSES, $productType, $postalFeeType, $minUserId, $maxUserI
                 FROM `payment_items`
                 INNER JOIN `payments`
                     ON `payments`.`id` = `payment_items`.`payment_id`
-                    AND `payments`.`status` = ?
+                    AND `payments`.`status` IN (?)
                 WHERE `payment_items`.`type` IN (?, ?) AND `payments`.`user_id` BETWEEN ? AND ?
                 GROUP BY `payments`.`user_id`
 SQL, self::PAYMENT_STATUSES, $productType, $postalFeeType, $minUserId, $maxUserId)
