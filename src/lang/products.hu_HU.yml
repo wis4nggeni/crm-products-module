@@ -102,10 +102,13 @@ frontend:
             list_of_books_to_download: Letölthető könyvek listája
         show:
             title: "%product_name% : A Denník N e-shopja - csak azt kínáljuk, amit mi is olvasunk"
+            available_at: A termék csak %available_at% lesz elérhető, a rá következő nap postázzuk.
             add_to_cart: Kosárba teszem
             sold_out: elfogyott
+        search:
+            results_title: Keresés eredménye
+            no_results: Nincs találat.
 
-            available_at: A termék csak %available_at% lesz elérhető, a rá következő nap postázzuk.
     orders:
         my_orders: Rendeléseim
         my_books: Könyveim

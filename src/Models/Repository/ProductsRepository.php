@@ -57,7 +57,7 @@ class ProductsRepository extends Repository
     {
         $all = $this->getTable()
             ->where('deleted_at', null)
-            ->order('-sorting DESC, name ASC');
+            ->order('-products.sorting DESC, name ASC');
 
         if (empty($tags) && ($search === null || empty(trim($search)))) {
             return $all;
@@ -65,9 +65,9 @@ class ProductsRepository extends Repository
 
         $searchText = "%{$search}%";
         $conditions = [
-            'name LIKE ?' => $searchText,
-            'code LIKE ?' => $searchText,
-            'user_label LIKE ?' => $searchText,
+            'products.name LIKE ?' => $searchText,
+            'products.user_label LIKE ?' => $searchText,
+            ":product_properties.value LIKE ? AND :product_properties.product_template_property.code = 'author'" => $searchText,
         ];
 
         // check if searched text is number (replace comma with period; otherwise is_numeric won't work)

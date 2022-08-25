@@ -20,12 +20,17 @@
 <div class="row filter">
   <div class="col-xs-12">
 
-    <h1 class="text-center" style="margin-top:20px; margin-bottom:50px;">
+    <h1 class="text-center" style="margin-top:20px; margin-bottom:40px;">
        {$title}
     </h1>
 
+    <div class="clearfix">
+      {control simpleWidget 'products.shop.list.after_title'}
+    </div>
+
     {control simpleWidget 'products.shop.product_list.title', $cartProducts}
 
+    {if !isset($hideMenu) || !$hideMenu}
     <ul class="nav nav-pills">
       <li role="presentation" n:class="is_null($selectedTag) ? active, is_null($selectedTag) ? disabled">
         <a n:href="default">{_products.frontend.shop.default.all} <span class="badge">{$productsCount}</span></a></li>
@@ -37,6 +42,7 @@
       {/foreach}
       {control simpleWidget 'products.shop.menu_items.after'}
     </ul>
+    {/if}
     <hr>
 
   </div>
@@ -90,5 +96,6 @@
         </div>
       </div>
     </div>
+    <div n:if="count($products) < 1" class="col-md-12 text-center">{_products.frontend.shop.search.no_results}</div>
   </div>
 </div>

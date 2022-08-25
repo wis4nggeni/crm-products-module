@@ -151,6 +151,41 @@ class ShopPresenter extends FrontendPresenter
         $this->template->cartProducts = $this->cartSession->products;
     }
 
+
+    public function renderSearchResults($q)
+    {
+        if (empty($q)) {
+            $this->redirect('default');
+        }
+
+        $products = $this->productsRepository->all($q)->where('shop')->where([
+            'products.shop' => true,
+        ]);
+
+        if ($this->isAjax()) {
+            $products->limit(10);
+
+            $data = [];
+            foreach ($products as $product) {
+                $data[] = [
+                    'value' => $product->id,
+                    'label' => $product->name,
+                ];
+            }
+            $this->sendJson($data);
+        }
+
+        $this->template->products = $products;
+        $this->template->hideMenu = true;
+        $this->template->title = $this->translator->translate('products.frontend.shop.search.results_title');
+        $this->template->searchTerm = $q;
+        $this->template->cartProducts = $this->cartSession->products;
+        $this->template->selectedTag = null;
+        $this->template->productsCount = $products->count('*');
+
+        $this->setView('productList');
+    }
+
     public function renderTag($tagCode)
     {
         $tag = $this->tagsRepository->findBy('code', $tagCode);

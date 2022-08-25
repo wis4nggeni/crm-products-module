@@ -436,6 +436,9 @@ frontend:
             available_at: 'Produkt bude dostupný až %available_at%, odesíláme ho následující den.'
             add_to_cart: vložit do košíku
             sold_out: vyprodáno
+        search:
+            results_title: Výsledky vyhledávání
+            no_results: Nebyly nalezeny žádné výsledky.
     orders:
         my_orders: Moje objednávky
         my_books: Moje knihy

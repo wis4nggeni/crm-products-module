@@ -437,6 +437,9 @@ frontend:
             available_at: 'The product will be available at %available_at%, we will send it the next day.'
             add_to_cart: add to cart
             sold_out: sold out
+        search:
+            results_title: Search results
+            no_results: No results found.
 
     orders:
         my_orders: My orders
