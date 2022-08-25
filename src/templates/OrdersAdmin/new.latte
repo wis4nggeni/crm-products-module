@@ -204,7 +204,7 @@
                             <div class="hidden-xs hidden-sm col-sm-4 text-right">{$paymentItem->amount|price}</div>
                             <div class="hidden-xs hidden-sm col-sm-4 text-right">{$paymentItem->count}</div>
                             <div class="col-sm-4 text-right">
-                                {var $amount += $paymentItem->amount * $paymentItem->count}
+                                {php $amount += $paymentItem->amount * $paymentItem->count}
                                 {$paymentItem->amount * $paymentItem->count|price}
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                             <div class="hidden-xs hidden-sm col-sm-4 text-right">&nbsp</div>
                             <div class="hidden-xs hidden-sm col-sm-4 text-right">&nbsp</div>
                             <div class="col-sm-4 text-right">{$control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->amount|price}</div>
-                            {var $amount += $control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->amount}
+                            {php $amount += $control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->amount}
                         </div>
 
                     </div>
@@ -249,7 +249,7 @@
     <script>
 		$(document).ready(function () {
             {ifset $control['checkoutForm']['shipping_address']}
-			$('#{$form['shipping_address']['country_id']->getHtmlId()|noescape}').on('change', function () {
+			$('#' + {$form['shipping_address']['country_id']->getHtmlId()}).on('change', function () {
 				$.nette.ext('loader', null);
 				$.nette.ajax({
 					type: 'GET',
@@ -267,7 +267,7 @@
 					url: {link postalFeeChange!},
 					data: {
 						'value': $(this).val(),
-						'shipping_address': { 'country_id': $('#{$form['shipping_address']['country_id']->getHtmlId()|noescape}').val() }
+						'shipping_address': { 'country_id': $('#' + {$form['shipping_address']['country_id']->getHtmlId()}).val() }
 					}
 				});
 			});

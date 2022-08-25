@@ -2,6 +2,7 @@
 
 namespace Crm\ProductsModule;
 
+use Contributte\Translation\Translator;
 use Crm\ApplicationModule\AssetsManager;
 use Crm\ApplicationModule\Commands\CommandsContainerInterface;
 use Crm\ApplicationModule\Config\ApplicationConfig;
@@ -34,7 +35,6 @@ use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
 use Crm\ProductsModule\Scenarios\OrderStatusOnScenarioEnterCriteria;
 use Crm\ProductsModule\Seeders\AddressTypesSeeder;
 use Crm\ProductsModule\Seeders\ConfigsSeeder;
-use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;

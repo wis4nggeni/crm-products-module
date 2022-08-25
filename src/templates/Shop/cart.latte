@@ -108,7 +108,7 @@
                                 </div>
                             </div></div>
                         <div class="_total"><div class="_pad">
-                                {var $amount += ($product->price * $cartProducts[$product->id])}
+                                {php $amount += ($product->price * $cartProducts[$product->id])}
                                 {($product->price * $cartProducts[$product->id])|price}
                             </div></div>
                         <div class="_remove"><div class="_pad">

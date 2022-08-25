@@ -2,8 +2,8 @@
 
 namespace Crm\ProductsModule\PostalFeeCondition;
 
+use Contributte\Translation\Translator;
 use Crm\ProductsModule\Repository\ProductsRepository;
-use Kdyby\Translation\Translator;
 use Nette\Application\UI\Form;
 use Nette\ComponentModel\IComponent;
 use Nette\Forms\Controls\TextInput;

@@ -2,9 +2,9 @@
 
 namespace Crm\ProductsModule\Forms;
 
+use Contributte\Translation\Translator;
 use Crm\ProductsModule\Repository\TagsRepository;
 use Crm\ProductsModule\TagsCache;
-use Kdyby\Translation\Translator;
 use Nette\Application\UI\Form;
 use Nette\Utils\Html;
 use Nette\Utils\Strings;

@@ -11,10 +11,10 @@ use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\PostalFeesRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
-use Kdyby\Translation\ITranslator;
 use League\Event\Emitter;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
+use Nette\Localization\Translator;
 use Nette\Utils\Json;
 
 class PaymentFormDataProvider implements PaymentFormDataProviderInterface
@@ -37,7 +37,7 @@ class PaymentFormDataProvider implements PaymentFormDataProviderInterface
         PaymentsRepository $paymentsRepository,
         PostalFeesRepository $postalFeesRepository,
         Emitter $emitter,
-        ITranslator $translator
+        Translator $translator
     ) {
         $this->productsRepository = $productsRepository;
         $this->paymentItemsRepository = $paymentItemsRepository;

@@ -2,6 +2,7 @@
 
 namespace Crm\ProductsModule\Forms;
 
+use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ProductsModule\Builder\ProductBuilder;
@@ -18,7 +19,6 @@ use Crm\ProductsModule\Repository\ProductTemplatePropertiesRepository;
 use Crm\ProductsModule\Repository\ProductTemplatesRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
-use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
