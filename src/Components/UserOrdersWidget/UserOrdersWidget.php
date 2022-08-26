@@ -2,12 +2,12 @@
 
 namespace Crm\ProductsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\ProductsModule\Repository\OrdersRepository;
 use Nette\Localization\Translator;
 
-class UserOrdersWidget extends BaseWidget
+class UserOrdersWidget extends BaseLazyWidget
 {
     private $templateName = 'user_orders_widget.latte';
 
@@ -16,11 +16,11 @@ class UserOrdersWidget extends BaseWidget
     private $ordersRepository;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         Translator $translator,
         OrdersRepository $ordersRepository
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
 
         $this->translator = $translator;
         $this->ordersRepository = $ordersRepository;

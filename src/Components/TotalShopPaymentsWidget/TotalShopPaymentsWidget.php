@@ -2,9 +2,9 @@
 
 namespace Crm\ProductsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
 
-class TotalShopPaymentsWidget extends BaseWidget
+class TotalShopPaymentsWidget extends BaseLazyWidget
 {
     private $templateName = 'total_shop_payments.latte';
 

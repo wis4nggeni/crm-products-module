@@ -2,21 +2,21 @@
 
 namespace Crm\ProductsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\ProductsModule\Repository\ProductsRepository;
 
-class RecommendedProductsWidget extends BaseWidget
+class RecommendedProductsWidget extends BaseLazyWidget
 {
     private $templateName = 'recommended_products_widget.latte';
 
     private $productsRepository;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         ProductsRepository $productsRepository
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
         $this->productsRepository = $productsRepository;
     }
 

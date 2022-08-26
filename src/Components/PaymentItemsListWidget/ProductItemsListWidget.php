@@ -2,7 +2,7 @@
 
 namespace Crm\ProductsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Nette\Database\Table\ActiveRow;
@@ -14,7 +14,7 @@ use Nette\Database\Table\ActiveRow;
  *
  * @package Crm\ProductsModule\Components
  */
-class ProductItemsListWidget extends BaseWidget
+class ProductItemsListWidget extends BaseLazyWidget
 {
     private $templateName = 'product_items_list_widget.latte';
 

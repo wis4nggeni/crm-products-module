@@ -2,15 +2,15 @@
 
 namespace Crm\ProductsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\ProductsModule\Model\ProductsTrait;
 use Crm\ProductsModule\PostalFeeCondition\PostalFeeNumericConditionInterface;
 use Crm\ProductsModule\PostalFeeCondition\PostalFeeService;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\UsersModule\Repository\CountriesRepository;
 
-class FreeShippingProgressBarWidget extends BaseWidget
+class FreeShippingProgressBarWidget extends BaseLazyWidget
 {
     use ProductsTrait;
 
@@ -23,12 +23,12 @@ class FreeShippingProgressBarWidget extends BaseWidget
     private $productsRepository;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         PostalFeeService $postalFeeService,
         CountriesRepository $countriesRepository,
         ProductsRepository $productsRepository
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
 
         $this->postalFeeService = $postalFeeService;
         $this->countriesRepository = $countriesRepository;

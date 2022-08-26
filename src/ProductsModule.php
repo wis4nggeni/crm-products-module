@@ -16,7 +16,7 @@ use Crm\ApplicationModule\Menu\MenuContainerInterface;
 use Crm\ApplicationModule\Menu\MenuItem;
 use Crm\ApplicationModule\SeederManager;
 use Crm\ApplicationModule\User\UserDataRegistrator;
-use Crm\ApplicationModule\Widget\WidgetManagerInterface;
+use Crm\ApplicationModule\Widget\LazyWidgetManagerInterface;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
 use Crm\ProductsModule\DataProvider\PaymentFormDataProvider;
 use Crm\ProductsModule\DataProvider\PaymentsAdminFilterFormDataProvider;
@@ -272,47 +272,47 @@ class ProductsModule extends CrmModule
         $eventsStorage->register('product_save', Events\ProductSaveEvent::class);
     }
 
-    public function registerWidgets(WidgetManagerInterface $widgetManager)
+    public function registerLazyWidgets(LazyWidgetManagerInterface $widgetManager)
     {
         $widgetManager->registerWidget(
             'payments.admin.payment_item_listing',
-            $this->getInstance(\Crm\ProductsModule\Components\ProductItemsListWidget::class)
+            \Crm\ProductsModule\Components\ProductItemsListWidget::class
         );
         $widgetManager->registerWidget(
             'payments.admin.total_user_payments',
-            $this->getInstance(\Crm\ProductsModule\Components\TotalShopPaymentsWidget::class)
+            \Crm\ProductsModule\Components\TotalShopPaymentsWidget::class
         );
         $widgetManager->registerWidget(
             'segment.detail.statspanel.row',
-            $this->getInstance(\Crm\ProductsModule\Components\AvgProductsPaymentWidget::class)
+            \Crm\ProductsModule\Components\AvgProductsPaymentWidget::class
         );
         $widgetManager->registerWidget(
             'admin.products.order.address',
-            $this->getInstance(\Crm\UsersModule\Components\AddressWidget::class)
+            \Crm\UsersModule\Components\AddressWidget::class
         );
         $widgetManager->registerWidget(
             'products.frontend.orders_my',
-            $this->getInstance(\Crm\ProductsModule\Components\UserOrdersWidget::class)
+            \Crm\ProductsModule\Components\UserOrdersWidget::class
         );
 
         $widgetManager->registerWidget(
             'products.shop.cart',
-            $this->getInstance(\Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class)
+            \Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class
         );
 
         $widgetManager->registerWidget(
             'products.shop.show.title',
-            $this->getInstance(\Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class)
+            \Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class
         );
 
         $widgetManager->registerWidget(
             'products.shop.product_list.title',
-            $this->getInstance(\Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class)
+            \Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class
         );
 
         $widgetManager->registerWidget(
             'products.shop.show.bottom',
-            $this->getInstance(\Crm\ProductsModule\Components\RecommendedProductsWidget::class)
+            \Crm\ProductsModule\Components\RecommendedProductsWidget::class
         );
     }
 
