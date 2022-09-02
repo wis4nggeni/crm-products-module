@@ -67,7 +67,7 @@ class ProductsRepository extends Repository
         $conditions = [
             'products.name LIKE ?' => $searchText,
             'products.user_label LIKE ?' => $searchText,
-            ":product_properties.value LIKE ? AND :product_properties.product_template_property.code = 'author'" => $searchText,
+            ':product_properties.value LIKE ? AND :product_properties.product_template_property.code = "author"' => $searchText,
         ];
 
         // check if searched text is number (replace comma with period; otherwise is_numeric won't work)
