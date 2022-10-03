@@ -110,6 +110,10 @@ class ProductsAdminPresenter extends AdminPresenter
             $this->flashMessage($this->translator->translate('products.admin.products.messages.products_sorted'));
             $this->redirect('SortShopProducts');
         };
+        $this->sortShopProductsFormFactory->onError = function ($errors) {
+            $this->flashMessage(implode(' ', $errors), 'error');
+            $this->redirect('SortShopProducts');
+        };
         return $form;
     }
 

@@ -2,6 +2,8 @@
 
 namespace Crm\ProductsModule\Forms;
 
+use Crm\ApplicationModule\DataProvider\DataProviderManager;
+use Crm\ProductsModule\DataProvider\SortShopProductsFormValidationDataProviderInterface;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Nette\Application\UI\Form;
 use Nette\Localization\Translator;
@@ -10,15 +12,21 @@ class SortShopProductsFormFactory
 {
     public ProductsRepository $productsRepository;
 
+    public DataProviderManager $dataProviderManager;
+
     public Translator $translator;
 
     public $onSave;
 
+    public $onError;
+
     public function __construct(
         ProductsRepository $productsRepository,
+        DataProviderManager $dataProviderManager,
         Translator $translator
     ) {
         $this->productsRepository = $productsRepository;
+        $this->dataProviderManager = $dataProviderManager;
         $this->translator = $translator;
     }
 
@@ -39,6 +47,23 @@ class SortShopProductsFormFactory
 
     public function formSucceeded($form)
     {
+        /** @var SortShopProductsFormValidationDataProviderInterface[] $providers */
+        $providers = $this->dataProviderManager->getProviders(
+            'products.dataprovider.sort_shop_products.validation',
+            SortShopProductsFormValidationDataProviderInterface::class
+        );
+        $errors = [];
+        foreach ($providers as $provider) {
+            $error = $provider->provide(['form' => $form]);
+            if (!empty($error)) {
+                $errors[] = $error;
+            }
+        }
+
+        if (!empty($errors)) {
+            $this->onError->__invoke($errors);
+        }
+
         $productIds = $form->getHttpData($form::DATA_TEXT, 'products[]');
 
         $sorting = $this->productsRepository->getTable()->where('id', $productIds)->fetchPairs('id', 'sorting');
