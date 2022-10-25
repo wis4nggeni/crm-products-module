@@ -279,7 +279,7 @@ class ProductsFormFactory
                     $input->setOption("id", "template_property_{$templateProperty->id}");
                     if ($templateProperty->required) {
                         $input->addConditionOn($templateId, Form::EQUAL, $template->id)
-                            ->addRule(Form::FILLED, sprintf($this->translator->trans('products.data.products.errors.template_property'), $templateProperty->title));
+                            ->addRule(Form::FILLED, sprintf($this->translator->translate('products.data.products.errors.template_property'), $templateProperty->title));
                     }
                     if ($templateProperty->type === 'date') {
                         $input->setHtmlAttribute('class', 'flatpickr');
