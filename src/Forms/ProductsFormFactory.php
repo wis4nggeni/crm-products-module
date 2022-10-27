@@ -3,7 +3,6 @@
 namespace Crm\ProductsModule\Forms;
 
 use Contributte\Translation\Translator;
-use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ProductsModule\Builder\ProductBuilder;
 use Crm\ProductsModule\DataProvider\ProductTemplatePropertiesDataProviderInterface;
@@ -28,59 +27,25 @@ use Tracy\Debugger;
 
 class ProductsFormFactory
 {
-    private $productsRepository;
-    private $productPropertiesRepository;
-    private $productTemplatesRepository;
-    private $productTemplatePropertiesRepository;
-    private $productBundlesRepository;
-    private $tagsRepository;
-    private $productTagsRepository;
-    private $distributionCentersRepository;
-    private $productsCache;
-    private $dataProviderManager;
-
-    private $translator;
-
-    private $productBuilder;
-
-    private $emitter;
-
-    private $config;
-
     public $onSave;
 
     public $onUpdate;
 
     public function __construct(
-        ProductsRepository                  $productsRepository,
-        ProductPropertiesRepository         $productPropertiesRepository,
-        ProductTemplatesRepository          $productTemplatesRepository,
-        ProductTemplatePropertiesRepository $productTemplatePropertiesRepository,
-        ProductBundlesRepository            $productBundlesRepository,
-        TagsRepository                      $tagsRepository,
-        ProductTagsRepository               $productTagsRepository,
-        DistributionCentersRepository       $distributionCentersRepository,
-        ProductsCache                       $productsCache,
-        DataProviderManager                 $dataProviderManager,
-        ProductBuilder                      $productBuilder,
-        Translator                          $translator,
-        Emitter                             $emitter,
-        ApplicationConfig                   $applicationConfig
+        private ProductsRepository $productsRepository,
+        private ProductPropertiesRepository $productPropertiesRepository,
+        private ProductTemplatesRepository $productTemplatesRepository,
+        private ProductTemplatePropertiesRepository $productTemplatePropertiesRepository,
+        private ProductBundlesRepository $productBundlesRepository,
+        private TagsRepository $tagsRepository,
+        private ProductTagsRepository $productTagsRepository,
+        private DistributionCentersRepository $distributionCentersRepository,
+        private ProductsCache $productsCache,
+        private DataProviderManager $dataProviderManager,
+        private ProductBuilder $productBuilder,
+        private Translator $translator,
+        private Emitter $emitter,
     ) {
-        $this->productsRepository = $productsRepository;
-        $this->productPropertiesRepository = $productPropertiesRepository;
-        $this->productTemplatesRepository = $productTemplatesRepository;
-        $this->productTemplatePropertiesRepository = $productTemplatePropertiesRepository;
-        $this->productBundlesRepository = $productBundlesRepository;
-        $this->tagsRepository = $tagsRepository;
-        $this->productTagsRepository = $productTagsRepository;
-        $this->distributionCentersRepository = $distributionCentersRepository;
-        $this->productsCache = $productsCache;
-        $this->dataProviderManager = $dataProviderManager;
-        $this->productBuilder = $productBuilder;
-        $this->translator = $translator;
-        $this->emitter = $emitter;
-        $this->config = $applicationConfig;
     }
 
     /**
@@ -157,6 +122,7 @@ class ProductsFormFactory
 
         $form->addText('catalog_price', 'products.data.products.fields.catalog_price')
             ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.catalog_price')
+            ->setOption('description', 'products.data.products.descriptions.catalog_price')
             ->setRequired(false)
             ->setNullable()
             ->addRule($form::FLOAT, 'products.data.products.errors.catalog_price_float_positive')

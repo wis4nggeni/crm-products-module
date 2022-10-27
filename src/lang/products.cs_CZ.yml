@@ -51,6 +51,7 @@ data:
             og_image_url: např. http://dennikn.sk/images/shop.jpg
             images: např. http://dennikn.sk/images/shop.jpg
         descriptions:
+            catalog_price: Vyšší cena než prodejní cena, která se v obchodě zobrazí přeškrtnutá.
             user_label: Používá se jen na faktuře
             image_url: Prosím dodržujte velikost obrázku 856px * 565px
             images: Seznam URL fotek. Každá URL na novém řádku.

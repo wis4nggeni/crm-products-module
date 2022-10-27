@@ -51,6 +51,7 @@ data:
             og_image_url: eg. http://dennikn.sk/images/shop.jpg
             images: eg. http://dennikn.sk/images/shop.jpg
         descriptions:
+            catalog_price: A higher price than the sale price, which will appear striked out in the store.
             user_label: Used only on invoice
             image_url: Size of picture 856px * 565px
             images: List of image URLs. Each URL is on new line.
