@@ -51,10 +51,12 @@ data:
             og_image_url: např. http://dennikn.sk/images/shop.jpg
             images: např. http://dennikn.sk/images/shop.jpg
         descriptions:
-            catalog_price: Vyšší cena než prodejní cena, která se v obchodě zobrazí přeškrtnutá.
+            catalog_price: <strong>Vyšší</strong> ze dvou cen. Zobrazí se přeškrtnutá.
             user_label: Používá se jen na faktuře
             image_url: Prosím dodržujte velikost obrázku 856px * 565px
             images: Seznam URL fotek. Každá URL na novém řádku.
+            stock: Při počtu 0 se zboží zobrazí jako VYPRODÁNO, nelze vložit do košíku.
+            available_at: Pokud je v budoucnosti, bude zobrazen v obchodě u produktu.
         errors:
             name: Položka 'Název' je povinná
             code: Položka 'Identifikátor' je povinná

@@ -55,6 +55,8 @@ data:
             user_label: Used only on invoice
             image_url: Size of picture 856px * 565px
             images: List of image URLs. Each URL is on new line.
+            stock: When the stock is 0, the product appears as SOLD OUT and is unavialable for adding to the cart.
+            available_at: If the date is in the future, it's displayed within the product description in the shop.
         errors:
             name: Field 'Name' is required
             code: Field 'Code' is required

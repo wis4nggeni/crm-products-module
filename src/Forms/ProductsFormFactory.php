@@ -122,7 +122,8 @@ class ProductsFormFactory
 
         $form->addText('catalog_price', 'products.data.products.fields.catalog_price')
             ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.catalog_price')
-            ->setOption('description', 'products.data.products.descriptions.catalog_price')
+            ->setOption('description', Html::el('span', ['class' => 'help-block'])
+                ->setHtml($this->translator->translate('products.data.products.descriptions.catalog_price')))
             ->setRequired(false)
             ->setNullable()
             ->addRule($form::FLOAT, 'products.data.products.errors.catalog_price_float_positive')
@@ -133,9 +134,11 @@ class ProductsFormFactory
 
         $form->addInteger('stock', 'products.data.products.fields.stock')
             ->setRequired('products.data.products.errors.stock_required')
+            ->setOption('description', 'products.data.products.descriptions.stock')
             ->addRule($form::MIN, 'products.data.products.errors.stock_positive', 0);
 
         $form->addText('available_at', 'products.data.products.fields.available_at')
+            ->setOption('description', 'products.data.products.descriptions.available_at')
             ->setHtmlAttribute('class', 'flatpickr');
 
         $bundle = $form->addCheckbox('bundle', 'products.data.products.fields.bundle');
