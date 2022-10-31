@@ -1,19 +1,23 @@
 <div class="row" style="margin-top: 20px;">
     <div class="col-xs-12">
-        {if $condition instanceof Crm\ProductsModule\PostalFeeCondition\PostalFeeNumericConditionInterface}
-            {var $percentage = round($actualValue / $desiredValue * 100)}
+        {if $condition instanceof Crm\ProductsModule\PostalFeeCondition\PostalFeeMessageConditionInterface}
+            <span></span>
+            {if $isReached}
+                <span>{$condition->getReachedMessage($cartProducts, $postalFeeConditionValue)|noescape}</span>
+            {else}
+                <span>{$condition->getNotReachedMessage($cartProducts, $postalFeeConditionValue)|noescape}</span>
+            {/if}
+        {elseif $condition instanceof Crm\ProductsModule\PostalFeeCondition\PostalFeeNumericConditionInterface}
             {if $isReached}
                 <span>{_products.frontend.components.free_shipping_progress_bar.reached_message, ['amount' => ($desiredValue|price)]|noescape}</span>
             {else}
                 <span>{_products.frontend.components.free_shipping_progress_bar.message, ['amount' => ($desiredValue - $actualValue|price)]|noescape}</span>
             {/if}
         {/if}
-        {if $condition instanceof Crm\ProductsModule\PostalFeeCondition\PostalFeeMessageConditionInterface}
-            <span>{$condition->getReachedMessage()}</span>
-        {/if}
     </div>
 </div>
 
+{if $condition instanceof Crm\ProductsModule\PostalFeeCondition\PostalFeeNumericConditionInterface}
 <div style="margin-top: 10px;">
     <div class="progress" style="height: 5px;">
         {if $isReached}
@@ -23,3 +27,4 @@
         {/if}
     </div>
 </div>
+{/if}

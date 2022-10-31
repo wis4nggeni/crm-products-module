@@ -294,7 +294,8 @@ admin:
                 validation_min: Sumary of products has to be a positive value
             user_segment:
                 label: Segment of users
-                message: "You have free delivery today because you are our subscriber."
+                reached_message: "You have free delivery today because you are our subscriber."
+                not_reached_message: ""
     distribution:
         shopCounts: How many orders in shop made before the payment
         shopDays: How many days passed since last order in shop

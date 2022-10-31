@@ -59,8 +59,13 @@ class UserSegmentCondition implements PostalFeeConditionInterface, PostalFeeMess
         return $selectBox;
     }
 
-    public function getReachedMessage(): string
+    public function getReachedMessage(array $products, string $value): string
     {
-        return $this->translator->translate('products.admin.country_postal_fees.conditions.user_segment.message');
+        return $this->translator->translate('products.admin.country_postal_fees.conditions.user_segment.reached_message');
+    }
+
+    public function getNotReachedMessage(array $products, string $value): string
+    {
+        return $this->translator->translate('products.admin.country_postal_fees.conditions.user_segment.not_reached_message');
     }
 }

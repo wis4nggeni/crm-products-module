@@ -5,6 +5,7 @@ namespace Crm\ProductsModule\Components;
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\ProductsModule\Model\ProductsTrait;
+use Crm\ProductsModule\PostalFeeCondition\PostalFeeMessageConditionInterface;
 use Crm\ProductsModule\PostalFeeCondition\PostalFeeNumericConditionInterface;
 use Crm\ProductsModule\PostalFeeCondition\PostalFeeService;
 use Crm\ProductsModule\Repository\ProductsRepository;
@@ -99,6 +100,11 @@ class FreeShippingProgressBarWidget extends BaseLazyWidget
         if ($condition instanceof PostalFeeNumericConditionInterface) {
             $this->template->actualValue = $condition->getActualValue($cartProducts);
             $this->template->desiredValue = $countryPostalFeeConditionRow->value;
+            $this->template->percentage = round($this->template->actualValue / $this->template->desiredValue * 100);
+        }
+        if ($condition instanceof PostalFeeMessageConditionInterface) {
+            $this->template->postalFeeConditionValue = $countryPostalFeeConditionRow->value;
+            $this->template->cartProducts = $cartProducts;
         }
 
         $this->template->setFile(__DIR__ . '/' . $this->templateName);

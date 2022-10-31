@@ -294,7 +294,8 @@ admin:
                 validation_min: Suma produktov byť kladná hodnota
             user_segment:
                 label: Segment užívateľov
-                message: "Doručenie máte dnes zadarmo, pretože ste náš predplatiteľ."
+                reached_message: "Doručenie máte dnes zadarmo, pretože ste náš predplatiteľ."
+                not_reached_message: ""
 
     distribution:
         shopCounts: Koľko objednávok v obchode spravil pred zakúpením cez toto okno
