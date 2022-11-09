@@ -4,6 +4,7 @@ namespace Crm\ProductsModule\Forms;
 
 use Contributte\Translation\Translator;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\FormFactoryDefaultsTrait;
 use Crm\ProductsModule\Builder\ProductBuilder;
 use Crm\ProductsModule\DataProvider\ProductTemplatePropertiesDataProviderInterface;
 use Crm\ProductsModule\DataProvider\ProductsFormDataProviderInterface;
@@ -27,6 +28,8 @@ use Tracy\Debugger;
 
 class ProductsFormFactory
 {
+    use FormFactoryDefaultsTrait;
+
     public $onSave;
 
     public $onUpdate;
@@ -53,7 +56,7 @@ class ProductsFormFactory
      */
     public function create($productId)
     {
-        $defaults = [];
+        $defaults = $this->getDefaults();
         $products = $this->productsRepository->getShopProducts(false, false);
         if (isset($productId)) {
             $products->where('id != ?', $productId);
@@ -202,7 +205,9 @@ class ProductsFormFactory
 
         $visible = $form->addCheckbox('visible', 'products.data.products.fields.visible')->setOption('id', 'visible');
         $unique = $form->addCheckbox('unique_per_user', 'products.data.products.fields.unique_per_user')->setOption('id', 'unique');
-        $delivery = $form->addCheckbox('has_delivery', 'products.data.products.fields.has_delivery')->setOption('id', 'delivery');
+        $delivery = $form->addCheckbox('has_delivery', 'products.data.products.fields.has_delivery')
+            ->setOption('id', 'delivery')
+            ->setDefaultValue(true);
 
         $image->addConditionOn($shop, Form::EQUAL, true)
             ->addRule(Form::FILLED, 'products.data.products.errors.image_url');
