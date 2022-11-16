@@ -293,8 +293,6 @@ admin:
             user_segment:
                 label: Segment uživatelů
                 reached_message: "Doručení máte dnes zdarma, protože jste náš předplatitel."
-                not_reached_message: ""
-
     distribution:
         shopCounts: Kolik objednávek v obchodě provedl před zakoupením prostřednictvím tohoto okna
         shopDays: "Kdy naposledy nakoupil v obchodě (počet dní před platbou v okně)"
