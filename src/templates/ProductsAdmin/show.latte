@@ -147,7 +147,7 @@
                 <li n:foreach="$product->related('product_properties') as $property" class="list-group-item">
                     <b>{$property->product_template_property->title}:</b>
                         {if $property->product_template_property->type === 'date'}
-                            {$property->value|date:'%d.%m.%Y'}
+                            {$property->value|localizedDate:true,false}
                         {else}
                             {$property->value}
                         {/if}

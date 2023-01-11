@@ -68,7 +68,7 @@
         <ul>
             <li n:foreach="$product->related('product_properties') as $property" n:if="!empty($property->value) && $property->product_template_property->visible"><span>{$property->product_template_property->title}:</span>
                 {if $property->product_template_property->type === 'date'}
-                    {$property->value|date:'%d.%m.%Y'}
+                    {$property->value|localizedDate:true,false}
                 {else}
                     {$property->value}
                 {/if}
