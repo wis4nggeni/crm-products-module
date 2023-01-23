@@ -265,17 +265,19 @@
                 </div>
             </div>
         {/if}
-        <div class="row-fluid cart-product" n:if="$control['checkoutForm']['postal_fee'] instanceof Nette\Forms\Controls\RadioList">
-            <div class="col-sm-6 col-md-8">{_products.frontend.shop.checkout.postal_fee} - {$control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->title}</div>
-            <div class="col-sm-6 col-md-4">
-                <div class="row">
-                    <div class="hidden-xs hidden-sm col-sm-4 text-right">&nbsp</div>
-                    <div class="hidden-xs hidden-sm col-sm-4 text-right">&nbsp</div>
-                    <div class="col-sm-4 text-right">{$control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->amount|price}</div>
-                    {php $amount += $control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->amount}
+        {if isset($control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value])}
+            <div class="row-fluid cart-product">
+                <div class="col-sm-6 col-md-8">{_products.frontend.shop.checkout.postal_fee} - {$control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->title}</div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="row">
+                        <div class="hidden-xs hidden-sm col-sm-4 text-right">&nbsp</div>
+                        <div class="hidden-xs hidden-sm col-sm-4 text-right">&nbsp</div>
+                        <div class="col-sm-4 text-right">{$control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->amount|price}</div>
+                        {php $amount += $control['checkoutForm']['postal_fee']->items[$control['checkoutForm']['postal_fee']->value]->amount}
+                    </div>
                 </div>
             </div>
-        </div>
+        {/if}
         <div class="row-fluid cart-summary">
             <div class="col-xs-8">{_products.frontend.shop.cart.price_with_vat}:</div>
             <div class="col-xs-4 text-right">{$amount|price}</div>
@@ -383,12 +385,16 @@
             {/ifset}
 
             $('body').on('change', '#postal-fees input[type="radio"]', function () {
+                let $checked = $(this).filter(':checked');
+                if (!$checked.length) {
+                    return;
+                }
                 $.nette.ext('loader', null);
                 $.nette.ajax({
                     type: 'POST',
                     url: {link postalFeeChange!},
                     data: {
-                        'value': $(this).val()
+                        'value': $checked.val()
                     }
                 });
             });
