@@ -48,9 +48,11 @@ class ProductsRepository extends Repository
         $this->cacheRepository = $cacheRepository;
     }
 
-    final public function find($id)
+    final public function find($id): ?\Crm\ApplicationModule\ActiveRow
     {
-        return $this->getTable()->where(['id' => $id, 'deleted_at' => null])->fetch();
+        /** @var \Crm\ApplicationModule\ActiveRow $result */
+        $result = $this->getTable()->where(['id' => $id, 'deleted_at' => null])->fetch();
+        return $result;
     }
 
     final public function all(string $search = null, array $tags = []): Selection
@@ -252,13 +254,13 @@ class ProductsRepository extends Repository
         ]);
     }
 
-    final public function totalCount($allowCached = false, $forceCacheUpdate = false)
+    final public function totalCount($allowCached = false, $forceCacheUpdate = false): int
     {
         $callable = function () {
             return parent::totalCount();
         };
         if ($allowCached) {
-            return $this->cacheRepository->loadAndUpdate(
+            return (int) $this->cacheRepository->loadAndUpdate(
                 'products_count',
                 $callable,
                 \Nette\Utils\DateTime::from(CacheRepository::REFRESH_TIME_5_MINUTES),
