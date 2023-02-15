@@ -5,7 +5,7 @@ namespace Crm\ProductsModule\Events;
 use League\Event\AbstractEvent;
 use Nette\Database\Table\ActiveRow;
 
-class CartItemAddedEvent extends AbstractEvent
+class CartItemAddedEvent extends AbstractEvent implements ProductEventInterface
 {
     private $product;
 
