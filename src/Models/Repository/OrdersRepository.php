@@ -95,7 +95,7 @@ class OrdersRepository extends Repository
         $result = parent::update($row, $data);
 
         if ($statusChanged) {
-            $this->emitter->emit(new OrderStatusChangeEvent($row->id));
+            $this->emitter->emit(new OrderStatusChangeEvent($row));
             $this->hermesEmitter->emit(new HermesMessage('order-status-change', [
                 'order_id' => $row->id,
                 'order_status' => $data['status'],

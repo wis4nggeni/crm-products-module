@@ -3,17 +3,15 @@
 namespace Crm\ProductsModule\Events;
 
 use League\Event\AbstractEvent;
+use Nette\Database\Table\ActiveRow;
 
-class NewOrderEvent extends AbstractEvent
+class NewOrderEvent extends AbstractEvent implements OrderEventInterface
 {
-    private $order;
-
-    public function __construct($order)
+    public function __construct(private ActiveRow $order)
     {
-        $this->order = $order;
     }
 
-    public function getOrder()
+    public function getOrder(): ActiveRow
     {
         return $this->order;
     }

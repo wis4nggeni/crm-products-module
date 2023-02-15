@@ -10,25 +10,25 @@ use League\Event\EventInterface;
 
 class OrderStatusChangeEventHandler extends AbstractListener
 {
-    private $ordersRepository;
-
     private $paymentItemHelper;
 
     private $productManager;
 
     public function __construct(
-        OrdersRepository $ordersRepository,
         PaymentItemHelper $paymentItemHelper,
         ProductManager $productManager
     ) {
-        $this->ordersRepository = $ordersRepository;
         $this->paymentItemHelper = $paymentItemHelper;
         $this->productManager = $productManager;
     }
 
     public function handle(EventInterface $event)
     {
-        $order = $this->ordersRepository->find($event->getOrderId());
+        if (!$event instanceof OrderEventInterface) {
+            throw new \Exception("Invalid type of event received, 'OrderEventInterface' expected: " . get_class($event));
+        }
+
+        $order = $event->getOrder();
         $payment = $order->payment;
 
         if ($order->status === OrdersRepository::STATUS_PAID) {

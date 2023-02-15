@@ -371,7 +371,7 @@ class ProductsFormFactory
             $this->productTagsRepository->setProductTags($product, $tags);
 
             try {
-                $this->emitter->emit(new ProductSaveEvent($product->id));
+                $this->emitter->emit(new ProductSaveEvent($product));
             } catch (ProductSaveEventDistributionException $e) {
                 Debugger::log($e, Debugger::EXCEPTION);
                 $form->addError($this->translator->translate('products.data.products.errors.not_stored_to_distribution_center'));
@@ -393,7 +393,7 @@ class ProductsFormFactory
             }
 
             $this->productsCache->add($product->id, $product->code);
-            $this->emitter->emit(new ProductSaveEvent($product->id));
+            $this->emitter->emit(new ProductSaveEvent($product));
 
             $callback = $this->onSave;
         }

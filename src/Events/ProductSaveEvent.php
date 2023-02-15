@@ -2,19 +2,17 @@
 
 namespace Crm\ProductsModule\Events;
 
+use Crm\ApplicationModule\ActiveRow;
 use League\Event\AbstractEvent;
 
-class ProductSaveEvent extends AbstractEvent
+class ProductSaveEvent extends AbstractEvent implements ProductEventInterface
 {
-    private $productId;
-
-    public function __construct($productId)
+    public function __construct(private ActiveRow $product)
     {
-        $this->productId = $productId;
     }
 
-    public function getProductId()
+    public function getProduct(): ActiveRow
     {
-        return $this->productId;
+        return $this->product;
     }
 }

@@ -2,19 +2,17 @@
 
 namespace Crm\ProductsModule\Events;
 
+use Crm\ApplicationModule\ActiveRow;
 use League\Event\AbstractEvent;
 
-class OrderStatusChangeEvent extends AbstractEvent
+class OrderStatusChangeEvent extends AbstractEvent implements OrderEventInterface
 {
-    private $orderId;
-
-    public function __construct($orderId)
+    public function __construct(private ActiveRow $order)
     {
-        $this->orderId = $orderId;
     }
 
-    public function getOrderId()
+    public function getOrder(): ActiveRow
     {
-        return $this->orderId;
+        return $this->order;
     }
 }
