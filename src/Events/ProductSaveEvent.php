@@ -2,8 +2,8 @@
 
 namespace Crm\ProductsModule\Events;
 
-use Crm\ApplicationModule\ActiveRow;
 use League\Event\AbstractEvent;
+use Nette\Database\Table\ActiveRow;
 
 class ProductSaveEvent extends AbstractEvent implements ProductEventInterface
 {
