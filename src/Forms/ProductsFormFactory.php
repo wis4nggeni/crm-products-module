@@ -111,6 +111,8 @@ class ProductsFormFactory
 
         $form->addText('code', 'products.data.products.fields.code')
             ->setRequired('products.data.products.errors.code')
+            ->setOption('description', Html::el('span', ['class' => 'help-block'])
+                ->setHtml($this->translator->translate('products.data.products.descriptions.code')))
             ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.code');
 
         $form->addText('user_label', 'products.data.products.fields.user_label')

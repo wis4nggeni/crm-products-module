@@ -15,6 +15,7 @@ use DateTime;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
+use Nette\Utils\Strings;
 
 class ProductsRepository extends Repository
 {
@@ -46,6 +47,26 @@ class ProductsRepository extends Repository
         $this->productDaysFromLastOrderDistribution = $productDaysFromLastOrderDistribution;
         $this->productShopCountsDistribution = $productShopCountsDistribution;
         $this->cacheRepository = $cacheRepository;
+    }
+
+    final public function insert($data)
+    {
+        if (isset($data['code'])) {
+            $data['code'] = Strings::webalize($data['code']);
+        }
+
+        return parent::insert($data);
+    }
+
+    final public function update(\Nette\Database\Table\ActiveRow &$row, $data)
+    {
+        // webalize `code` only if it was changed to something new
+        // we don't want to break current URLs
+        if (isset($data['code']) && $data['code'] !== $row->code) {
+            $data['code'] = Strings::webalize($data['code']);
+        }
+
+        return parent::update($row, $data);
     }
 
     final public function find($id): ?\Crm\ApplicationModule\ActiveRow

@@ -52,6 +52,7 @@ data:
             images: eg. http://dennikn.sk/images/shop.jpg
         descriptions:
             catalog_price: A higher price than the sale price, which will appear striked out in the store.
+            code: 'Will be used in URL. Eg.: <code>bamboo-shirt</code>. URL: <code>http://shop.crm.press/show/1/bamboo-shirt</code>.'
             user_label: Used only on invoice
             image_url: Size of picture 856px * 565px
             images: List of image URLs. Each URL is on new line.

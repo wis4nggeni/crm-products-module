@@ -8,7 +8,6 @@ use Crm\ProductsModule\Repository\ProductPropertiesRepository;
 use Crm\ProductsModule\Repository\ProductTagsRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Nette\Database\Explorer;
-use Nette\Database\Table\ActiveRow;
 
 class ProductBuilder extends Builder
 {
@@ -78,13 +77,12 @@ class ProductBuilder extends Builder
         $this->set('modified_at', new \DateTime());
     }
 
-
     protected function store($tableName)
     {
         $this->productsRepository->updateSorting($this->get('sorting'));
 
-        /** @var ActiveRow $product */
-        $product = parent::store($tableName);
+        // use Repository::insert() instead Builder::store() to enable all features (auditlog and assertSlugs)
+        $product = $this->productsRepository->insert($this->getData());
         if (!$product) {
             return false;
         }
