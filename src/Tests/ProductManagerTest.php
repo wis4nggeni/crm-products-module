@@ -72,7 +72,7 @@ class ProductManagerTest extends DatabaseTestCase
 
         /** @var ActiveRow $mainProduct */
         $mainProduct = $this->insertProduct(4);
-        /** @var ActiveRow $bundleProduct1 */
+        /** @var ActiveRow $bundleProduct */
         $bundleProduct = $this->insertProduct(10);
 
         $this->productBundlesRepository->add($mainProduct->id, $bundleProduct->id);

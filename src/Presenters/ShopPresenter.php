@@ -6,7 +6,6 @@ use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Hermes\HermesMessage;
 use Crm\ApplicationModule\Presenters\FrontendPresenter;
 use Crm\PaymentsModule\CannotProcessPayment;
-use Crm\PaymentsModule\DataProvider\CheckoutFormDataProviderInterface;
 use Crm\PaymentsModule\PaymentProcessor;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\DataProvider\TrackerDataProviderInterface;
@@ -493,7 +492,6 @@ class ShopPresenter extends FrontendPresenter
         }
         $this['checkoutForm']['postal_fee']->setDefaultValue($value);
 
-        /** @var CheckoutFormDataProviderInterface[] $providers */
         $this->template->getLatte()->addProvider('formsStack', [$this['checkoutForm']]);
 
         $this->redrawControl('cart');
