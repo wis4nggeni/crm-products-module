@@ -49,7 +49,7 @@ class OrderStatusOnScenarioEnterCriteria implements ScenariosCriteriaInterface, 
         $orderStatus = $jobParameters->order_status;
         $values = $paramValues[self::KEY];
 
-        if (in_array($orderStatus, $values->selection)) {
+        if (in_array($orderStatus, $values->selection, true)) {
             return true;
         }
         return false;
