@@ -10,6 +10,10 @@
         "production": "mix --production",
         "watch": "mix watch"
     },
+    "engines": {
+        "node": ">=18",
+        "npm": ">=8"
+    },
     "dependencies": {
         "sortablejs": "^1.14.0"
     },
@@ -17,6 +21,6 @@
         "laravel-mix": "^6.0.11",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.49.7",
-        "sass-loader": "^12.1.0"
+        "sass-loader": "^13.0"
     }
 }
