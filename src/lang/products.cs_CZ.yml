@@ -263,7 +263,7 @@ admin:
                     company_name: Název společnosti
                     ico: IČO
                     dic: DIČ
-                    icdph: IČ DPH
+                    icdph: DIČ
                     phone_number: 'Telefonní číslo'
             products:
                 header: Objednané produkty
@@ -408,11 +408,11 @@ frontend:
                 country: 'Stát (země)'
                 company_name: 'Jméno / Název společnosti'
                 company_name_required: 'Položka Jméno / Název společnosti je povinná.'
-                company_id: 'IČ0'
+                company_id: 'IČO'
                 company_id_placeholder: 'Např. 12345678'
                 company_tax_id: 'DIČ'
                 company_tax_id_placeholder: 'Např. 2020123456'
-                company_vat_id: 'IČ DPH'
+                company_vat_id: 'Registrační číslo DPH'
                 company_vat_id_placeholder: 'Např. SK2020123456'
                 toc: 'Souhlasím s <a href="%link%" class="link" target="_blank">podmínkami používání</a>'
                 toc_required: 'Musíte souhlasit s podmínkami používání'
