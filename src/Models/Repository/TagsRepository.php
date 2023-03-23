@@ -8,6 +8,8 @@ class TagsRepository extends Repository
 {
     protected $tableName = 'tags';
 
+    protected $slugs = ['code'];
+
     final public function all()
     {
         return $this->getTable()->order('sorting IS NOT NULL, sorting ASC, code ASC');
