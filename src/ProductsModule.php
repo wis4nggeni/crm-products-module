@@ -44,35 +44,17 @@ use Tomaj\Hermes\Dispatcher;
 
 class ProductsModule extends CrmModule
 {
-    private $applicationConfig;
-
-    private $configsCache;
-
-    private $productsCache;
-
-    private $productsRepository;
-
-    private $tagsCache;
-
-    private $tagsRepository;
-
     public function __construct(
         Container $container,
         Translator $translator,
-        ApplicationConfig $applicationConfig,
-        ConfigsCache $configsCache,
-        ProductsCache $productsCache,
-        ProductsRepository $productsRepository,
-        TagsCache $tagsCache,
-        TagsRepository $tagsRepository
+        private ApplicationConfig $applicationConfig,
+        private ConfigsCache $configsCache,
+        private ProductsCache $productsCache,
+        private ProductsRepository $productsRepository,
+        private TagsCache $tagsCache,
+        private TagsRepository $tagsRepository
     ) {
         parent::__construct($container, $translator);
-        $this->applicationConfig = $applicationConfig;
-        $this->configsCache = $configsCache;
-        $this->productsCache = $productsCache;
-        $this->productsRepository = $productsRepository;
-        $this->tagsCache = $tagsCache;
-        $this->tagsRepository = $tagsRepository;
     }
 
     public function registerAdminMenuItems(MenuContainerInterface $menuContainer)
@@ -197,6 +179,9 @@ class ProductsModule extends CrmModule
         }
 
         foreach ($this->tagsCache->all() as $tag) {
+            if (empty($tag)) {
+                continue;
+            }
             $router->addRoute($shopHost . "/<tagCode {$tag->code}>", "Products:Shop:tag");
         }
 

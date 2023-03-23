@@ -6,45 +6,36 @@ use Contributte\Translation\Translator;
 use Crm\ProductsModule\Repository\TagsRepository;
 use Crm\ProductsModule\TagsCache;
 use Nette\Application\UI\Form;
+use Nette\Forms\Controls\TextInput;
 use Nette\Utils\Html;
 use Nette\Utils\Strings;
 use Tomaj\Form\Renderer\BootstrapRenderer;
 
 class TagsFormFactory
 {
-    private $tagsRepository;
-
-    private $translator;
-
     public $onSave;
-
     public $onUpdate;
 
-    private $tagsCache;
-
     public function __construct(
-        TagsCache $tagsCache,
-        TagsRepository $tagsRepository,
-        Translator $translator
+        private TagsCache $tagsCache,
+        private TagsRepository $tagsRepository,
+        private Translator $translator
     ) {
-        $this->tagsRepository = $tagsRepository;
-        $this->translator = $translator;
-        $this->tagsCache = $tagsCache;
     }
 
-    /**
-     * @return Form
-     */
-    public function create($tagId)
+    public function create($tagId): Form
     {
         $defaults = [];
+        $tag = null;
         if (isset($tagId)) {
             $tag = $this->tagsRepository->find($tagId);
-            $defaults = $tag->toArray();
-            if (isset($defaults['sorting']) && $defaults['sorting'] > 1) {
-                $defaults['sorting'] = $defaults['sorting'] - 1; // select element after which current tag is displayed
-            } else {
-                $defaults['sorting'] = null;
+            if ($tag) {
+                $defaults = $tag->toArray();
+                if (isset($defaults['sorting']) && $defaults['sorting'] > 1) {
+                    $defaults['sorting'] = $defaults['sorting'] - 1; // select element after which current tag is displayed
+                } else {
+                    $defaults['sorting'] = null;
+                }
             }
         }
 
@@ -61,6 +52,17 @@ class TagsFormFactory
         $form->addText('code', 'products.data.tags.fields.code')
             ->setOption('description', 'products.data.tags.descriptions.code')
             ->setHtmlAttribute('placeholder', 'products.data.tags.placeholder.code')
+            ->setRequired('products.data.tags.errors.code')
+            ->addRule(function (TextInput $control) use ($tag) {
+                $newValue = $control->getValue();
+                if ($tag && $newValue === $tag->code) {
+                    return true;
+                }
+                return $this->tagsRepository->findBy('code', $newValue) === null;
+            }, 'products.data.tags.errors.duplicate_code')
+            ->addRule(function (TextInput $control) {
+                return !empty(Strings::webalize($control->getValue()));
+            }, 'products.data.tags.errors.code')
             ->setDisabled(isset($tagId));
 
         $form->addText('icon', 'products.data.tags.fields.icon')
@@ -94,13 +96,9 @@ class TagsFormFactory
         return $form;
     }
 
-    /**
-     * @param $form
-     * @param $values
-     */
-    public function formSucceeded($form, $values)
+    public function formSucceeded(Form $form, array $values)
     {
-        $values['sorting'] = (int)$values['sorting'] + 1; // sort after the selected element
+        $values['sorting'] = (int) $values['sorting'] + 1; // sort after the selected element
 
         if (isset($values['id'])) {
             $tag = $this->tagsRepository->find($values['id']);

@@ -91,6 +91,8 @@ data:
         errors:
             name: Položka 'Názov' je povinná.
             icon: Položka 'Ikona' je povinná.
+            duplicate_code: Tag s rovnakým kódom už existuje.
+            code: Kód nesmie byť prázdny a musí obsahovať aspoň jedno písmeno abecedy.
     postal_fees:
         fields:
             title: Názov

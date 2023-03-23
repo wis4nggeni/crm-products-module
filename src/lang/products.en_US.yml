@@ -91,6 +91,8 @@ data:
         errors:
             name: Field 'Name' is mandatory.
             icon: Field 'Icon' is mandatory.
+            duplicate_code: Tag with the same code already exists.
+            code: Code must not be empty and must contain at least one letter of the alphabet.
     postal_fees:
         fields:
             title: Name
