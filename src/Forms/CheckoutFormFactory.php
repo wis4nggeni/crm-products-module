@@ -382,9 +382,18 @@ class CheckoutFormFactory
             }
         }
 
-        $form->addSubmit('finish', 'products.frontend.shop.cart.confirm_order');
-        $form->addProtection();
+        $finishSubmit = $form->addSubmit('finish', 'products.frontend.shop.cart.confirm_order');
 
+
+        $form->onAnchor[]  = function () use ($form, $addInvoice, $sameShipping, $finishSubmit) {
+            // if invoice is not required or checkbox to "use same invoice address as shipping address" is checked,
+            // disable validation of billing address
+            if (!$addInvoice->getValue() || $sameShipping->getValue()) {
+                $finishSubmit->setValidationScope($this->validationScopeReverse($form, ['billing_address']));
+            }
+        };
+
+        $form->addProtection();
         $form->setDefaults($defaults);
 
         if ($payment) {
@@ -395,6 +404,18 @@ class CheckoutFormFactory
         }
 
         return $form;
+    }
+
+    // Inspired by https://forum.nette.org/cs/34868-setvalidationscope-validovat-vse-mimo-nekterych
+    private function validationScopeReverse(Form $form, array $noValidate): array
+    {
+        $scope = [];
+        foreach ($form->getComponents(false) as $control) {
+            if (!in_array($control->getName(), $noValidate, true)) {
+                $scope[] = $control;
+            }
+        }
+        return $scope;
     }
 
     public function addPaymentGateway($code, $label)
