@@ -2,75 +2,35 @@
 
 {block #scripts}
     <script type="text/javascript">
-        ga('ecommerce:addTransaction', {
-            'id': {$payment->variable_symbol},
-            'revenue': {$payment->amount},
-            'shipping': {$order->postal_fee_id ? $order->postal_fee->amount : 0},
-            'currency': {$currency}
-        });
-
-        ga('globalTracker.ecommerce:addTransaction', {
-            'id': {$payment->variable_symbol},
-            'revenue': {$payment->amount},
-            'shipping': {$order->postal_fee_id ? $order->postal_fee->amount : 0},
-            'currency': {$currency}
-        });
-
-        {foreach $payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\PaymentItem\ProductPaymentItem::TYPE) as $paymentItem}
-            {if $paymentItem->product->product_template}
-                {var $category = $paymentItem->product->product_template->name}
-            {elseif $paymentItem->product->bundle}
-                {var $category = 'bundle'}
-            {else}
-                {var $category = 'product'}
-            {/if}
-
-            ga('ecommerce:addItem', {
-                'id': {$payment->variable_symbol},
-                'name': {$paymentItem->name},
-                'sku': {$paymentItem->product_id},
-                'category': {$category},
-                'price': {$paymentItem->amount},
-                'quantity': {$paymentItem->count},
-                'currency': {$currency}
-            });
-
-            ga('globalTracker.ecommerce:addItem', {
-                'id': {$payment->variable_symbol},
-                'name': {$paymentItem->name},
-                'sku': {$paymentItem->product_id},
-                'category': {$category},
-                'price': {$paymentItem->amount},
-                'quantity': {$paymentItem->count},
-                'currency': {$currency}
-            });
-        {/foreach}
-
-        ga('ecommerce:send');
-        ga('globalTracker.ecommerce:send');
+        dataLayer.push({ ecommerce: null });  // Clear the previous ecommerce object.
+        dataLayer.push({
+            event: "purchase",
+            ecommerce: {
+                transaction_id: {$payment->variable_symbol},
+                value: {$payment->amount},
+                currency: {$currency},
+                shipping: {$order->postal_fee_id ? $order->postal_fee->amount : 0},
+                items: [
+                    {foreach $payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\PaymentItem\ProductPaymentItem::TYPE) as $paymentItem}
+                        {if $paymentItem->product->product_template}
+                        {var $category = $paymentItem->product->product_template->name}
+                        {elseif $paymentItem->product->bundle}
+                        {var $category = 'bundle'}
+                        {else}
+                        {var $category = 'product'}
+                        {/if}
+                    {
+                        item_id: {$paymentItem->type . ':' . \Nette\Utils\Strings::webalize($paymentItem->name)},
+                        item_name: {$paymentItem->name},
+                        item_category: {$category},
+                        price: {$paymentItem->amount},
+                        quantity: {$paymentItem->count}
+                    }{sep}, {/sep}
+                    {/foreach}
+                ]
+            }
+        })
     </script>
-
-    {if $ENV == 'dennikn'}
-    <!-- Facebook Pixel Code -->
-    <script>
-		!function(f,b,e,v,n,t,s) { if(f.fbq)return;n=f.fbq=function() { n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window,document,'script',
-			'https://connect.facebook.net/en_US/fbevents.js');
-		fbq('init', '1998209073758405');
-		fbq('track', 'PageView');
-		fbq('track', 'Purchase', { value: {$payment->amount|number:2}, currency:'EUR' });
-    </script>
-    <noscript>
-        <img height="1" width="1"
-             src="https://www.facebook.com/tr?id=1998209073758405&ev=PageView
-&noscript=1"/>
-    </noscript>
-    <!-- End Facebook Pixel Code -->
-    {/if}
 {/block}
 
 {block #content}
