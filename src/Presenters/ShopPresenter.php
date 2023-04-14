@@ -366,6 +366,12 @@ class ShopPresenter extends FrontendPresenter
 
     public function renderCheckout()
     {
+        // without products there is nothing to checkout
+        if (count($this->cartSession->products) === 0 && count($this->cartSession->freeProducts) === 0) {
+            // redirect to cart which displays info about no products in cart
+            $this->redirect('cart');
+        }
+
         $products = $this->productsRepository->findByIds(array_keys($this->cartSession->products));
         $outOfStockProducts = [];
         $littleStockProducts = [];
