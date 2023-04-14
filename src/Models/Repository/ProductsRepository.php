@@ -86,21 +86,24 @@ class ProductsRepository extends Repository
             return $all;
         }
 
-        $searchText = "%{$search}%";
-        $conditions = [
-            'products.name LIKE ?' => $searchText,
-            'products.user_label LIKE ?' => $searchText,
-            ':product_properties.value LIKE ? AND :product_properties.product_template_property.code = "author"' => $searchText,
-        ];
+        $conditions = [];
+        if (!empty($search)) {
+            $searchText = "%{$search}%";
+            $conditions = [
+                'products.name LIKE ?' => $searchText,
+                'products.user_label LIKE ?' => $searchText,
+                ':product_properties.value LIKE ? AND :product_properties.product_template_property.code = "author"' => $searchText,
+            ];
 
-        // check if searched text is number (replace comma with period; otherwise is_numeric won't work)
-        $searchNum = str_replace(',', '.', $search);
-        if (is_numeric($searchNum)) {
-            $searchFloat = (float) $searchNum;
-            $conditions = array_merge($conditions, [
-                'price = ?' => $searchFloat,
-                'catalog_price = ?' => $searchFloat,
-            ]);
+            // check if searched text is number (replace comma with period; otherwise is_numeric won't work)
+            $searchNum = str_replace(',', '.', $search);
+            if (is_numeric($searchNum)) {
+                $searchFloat = (float) $searchNum;
+                $conditions = array_merge($conditions, [
+                    'price = ?' => $searchFloat,
+                    'catalog_price = ?' => $searchFloat,
+                ]);
+            }
         }
 
         if (!empty($tags)) {
