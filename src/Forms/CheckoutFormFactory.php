@@ -344,13 +344,16 @@ class CheckoutFormFactory
             ->addRule(Form::PATTERN, 'products.frontend.shop.checkout.fields.zip_code_invalid', '\d{3} ?\d{2}');
 
         $billingAddress->addText('company_id', 'products.frontend.shop.checkout.fields.company_id')
-            ->setHtmlAttribute('placeholder', 'products.frontend.shop.checkout.fields.company_id_placeholder');
+            ->setHtmlAttribute('placeholder', 'products.frontend.shop.checkout.fields.company_id_placeholder')
+            ->setNullable();
 
         $billingAddress->addText('company_tax_id', 'products.frontend.shop.checkout.fields.company_tax_id')
-            ->setHtmlAttribute('placeholder', 'products.frontend.shop.checkout.fields.company_tax_id_placeholder');
+            ->setHtmlAttribute('placeholder', 'products.frontend.shop.checkout.fields.company_tax_id_placeholder')
+            ->setNullable();
 
         $billingAddress->addText('company_vat_id', 'products.frontend.shop.checkout.fields.company_vat_id')
-            ->setHtmlAttribute('placeholder', 'products.frontend.shop.checkout.fields.company_vat_id_placeholder');
+            ->setHtmlAttribute('placeholder', 'products.frontend.shop.checkout.fields.company_vat_id_placeholder')
+            ->setNullable();
 
         /** @var CheckoutFormDataProviderInterface[] $providers */
         $providers = $this->dataProviderManager->getProviders('products.dataprovider.checkout_form', CheckoutFormDataProviderInterface::class);

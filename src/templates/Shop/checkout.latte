@@ -24,7 +24,7 @@
             <div class="col-xs-12">
                 <div n:if="$form->getErrors()" n:inner-foreach="$form->getErrors() as $error" class="alert alert-danger" role="alert">
                     {if $error instanceof \Nette\Utils\Html}
-                      {$error->getText()}
+                      {$error->getHtml()|noescape}
                     {else}
                       {$error}
                     {/if}
@@ -214,10 +214,13 @@
                                 {input company_tax_id}
                                 {$control['checkoutForm']['billing_address']['company_tax_id']->getOption('description')}
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="company_vat_id">
                                 {label company_vat_id /}
-                                {input company_vat_id}
+                                {input company_vat_id, id => "company_vat_id_input"}
                                 {$control['checkoutForm']['billing_address']['company_vat_id']->getOption('description')}
+                            </div>
+                            <div n:ifset="$control['checkoutForm']['billing_address']['company_vat_registered']" class="form-group" id="{$control['checkoutForm']['billing_address']['company_vat_registered']->getOption('id')}">
+                                {input company_vat_registered}
                             </div>
                         {/formContainer}
                     </fieldset>

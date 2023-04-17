@@ -413,7 +413,7 @@ frontend:
                 country: Krajina
                 company_name: 'Meno / Názov spoločnosti'
                 company_name_required: 'Položka Meno / Názov spoločnosti je povinná.'
-                company_id: 'IČ0'
+                company_id: 'IČO'
                 company_id_placeholder: 'Napr. 12345678'
                 company_tax_id: 'DIČ'
                 company_tax_id_placeholder: 'Napr. 2020123456'
