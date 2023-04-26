@@ -361,7 +361,7 @@ frontend:
             continue_with_shopping: Pokračovať v nákupe
             order: objednať
             empty_cart: Váš nákupný košík je prázdny.
-            confirm_order: Záväzne objednať
+            confirm_order: Prejsť na platbu
             messages:
                 item_added_to_cart: "Položka <strong>%name%</strong> bola pridaná do košíka."
                 item_not_available: "Položka <strong>%name%</strong> nie je dostupná."
@@ -388,7 +388,7 @@ frontend:
                 email_required: Položka Email je povinná.
                 pass_required: Položka Heslo je povinná.
                 account_exists: 'Konto so zadaným emailom už existuje, prosím prihláste sa pomocou hesla'
-                phone_number: 'Telefónne číslo (pomôže nám pri doručovaní)'
+                phone_number: 'Telefónne číslo v medzinárodnom tvare (pomôže nám pri doručovaní)'
                 phone_number_placeholder: 'Napr. +421 908 123 456'
                 phone_number_required: 'Položka Telefónne číslo je povinná.'
                 phone_number_min_length: 'Telefónne číslo musí mať aspoň 9 znakov.'

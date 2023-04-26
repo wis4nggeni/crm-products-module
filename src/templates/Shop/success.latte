@@ -38,6 +38,8 @@
     <div class="col-xs-12">
         <h1>{_products.frontend.shop.success.header}</h1>
         <p>{_products.frontend.shop.success.payment_successful}</p>
+
+        {control simpleWidget 'products.frontend.success.message'}
     </div>
 </div>
 {if count($ebooks) > 0}
