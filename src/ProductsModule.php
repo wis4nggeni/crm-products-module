@@ -144,6 +144,11 @@ class ProductsModule extends CrmModule
             OrderStatusChangeEvent::class,
             $this->getInstance(OrderStatusChangeEventHandler::class)
         );
+
+        $emitter->addListener(
+            \Crm\UsersModule\Events\PreNotificationEvent::class,
+            $this->getInstance(\Crm\ProductsModule\Events\PreNotificationEventHandler::class)
+        );
     }
 
     public function registerHermesHandlers(Dispatcher $dispatcher)

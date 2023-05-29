@@ -84,3 +84,8 @@ services:
 		setup:
 			- registerCondition('products_sum', Crm\ProductsModule\PostalFeeCondition\ProductSumCondition())
 			- registerCondition('user_segment', Crm\ProductsModule\PostalFeeCondition\UserSegmentCondition())
+
+	productsPreNotificationEventHandler:
+		factory: Crm\ProductsModule\Events\PreNotificationEventHandler
+		setup:
+			- enableForNotificationHermesTypes('order-status-change')
