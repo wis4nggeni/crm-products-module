@@ -4,7 +4,7 @@ use Phinx\Migration\AbstractMigration;
 
 class AddPostalFeesFields extends AbstractMigration
 {
-    public function change()
+    public function up()
     {
         $this->table('country_postal_fees')
             ->addColumn('active', 'boolean', ['default' => true])
@@ -30,6 +30,19 @@ class AddPostalFeesFields extends AbstractMigration
             ->changeColumn('created_at', 'datetime', ['null' => false])
             ->changeColumn('updated_at', 'datetime', ['null' => false])
             ->update();
+    }
 
+    public function down()
+    {
+        $this->table('country_postal_fees')
+            ->removeColumn('active')
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+            ->update();
+
+        $this->table('postal_fees')
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+            ->update();
     }
 }
