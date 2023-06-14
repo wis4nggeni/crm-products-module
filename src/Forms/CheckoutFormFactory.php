@@ -18,6 +18,7 @@ use Crm\ProductsModule\Repository\CountryPostalFeesRepository;
 use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Repository\PostalFeesRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
+use Crm\ProductsModule\Seeders\AddressTypesSeeder;
 use Crm\UsersModule\Auth\Authorizator;
 use Crm\UsersModule\Auth\InvalidEmailException;
 use Crm\UsersModule\Auth\UserManager;
@@ -142,7 +143,7 @@ class CheckoutFormFactory
                 $user = $this->userManager->loadUser($this->user);
             }
 
-            $address = $this->addressesRepository->address($user, 'shop');
+            $address = $this->addressesRepository->address($user, AddressTypesSeeder::PRODUCTS_SHOP_ADDRESS_TYPE);
             if ($address) {
                 $defaults['shipping_address'] = $address->toArray();
                 $defaults['contact']['phone_number'] = $address->phone_number;
@@ -605,11 +606,15 @@ class CheckoutFormFactory
         $shippingAddressId = null;
         if (isset($values['shipping_address'])) {
             $values['shipping_address']['phone_number'] = $values['contact']['phone_number'] ?? null;
-            $shippingAddress = $this->addressesRepository->findByAddress($values['shipping_address'], 'shop', $user->id);
+            $shippingAddress = $this->addressesRepository->findByAddress(
+                $values['shipping_address'],
+                AddressTypesSeeder::PRODUCTS_SHOP_ADDRESS_TYPE,
+                $user->id
+            );
             if (!$shippingAddress) {
                 $shippingAddress = $this->addressesRepository->add(
                     $user,
-                    'shop',
+                    AddressTypesSeeder::PRODUCTS_SHOP_ADDRESS_TYPE,
                     $values['shipping_address']['first_name'],
                     $values['shipping_address']['last_name'],
                     $values['shipping_address']['address'],
@@ -631,11 +636,15 @@ class CheckoutFormFactory
         $licenceAddressId = null;
         if (isset($values['licence_address'])) {
             $values['licence_address']['phone_number'] = $values['contact']['phone_number'] ?? null;
-            $licenceAddress = $this->addressesRepository->findByAddress($values['licence_address'], 'licence', $user->id);
+            $licenceAddress = $this->addressesRepository->findByAddress(
+                $values['licence_address'],
+                AddressTypesSeeder::PRODUCTS_LICENCE_ADDRESS_TYPE,
+                $user->id
+            );
             if (!$licenceAddress) {
                 $licenceAddress = $this->addressesRepository->add(
                     $user,
-                    'licence',
+                    AddressTypesSeeder::PRODUCTS_LICENCE_ADDRESS_TYPE,
                     $values['licence_address']['first_name'],
                     $values['licence_address']['last_name'],
                     null,

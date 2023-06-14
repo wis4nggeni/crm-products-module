@@ -8,6 +8,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AddressTypesSeeder implements ISeeder
 {
+    public const PRODUCTS_SHOP_ADDRESS_TYPE = 'shop';
+    public const PRODUCTS_LICENCE_ADDRESS_TYPE = 'licence';
+
     private $addressTypesRepository;
 
     public function __construct(
@@ -19,8 +22,8 @@ class AddressTypesSeeder implements ISeeder
     public function seed(OutputInterface $output)
     {
         $types = [
-            'shop' => 'Doručovacia adressa pre obchod',
-            'licence' => 'Licenčná adressa pre obchod',
+            self::PRODUCTS_SHOP_ADDRESS_TYPE => 'Doručovacia adressa pre obchod',
+            self::PRODUCTS_LICENCE_ADDRESS_TYPE => 'Licenčná adressa pre obchod',
         ];
 
         foreach ($types as $type => $title) {
