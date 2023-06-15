@@ -88,7 +88,7 @@ class OrdersRepository extends Repository
     {
         $statusChanged = false;
         $data['updated_at'] = new \DateTime();
-        if ($row->status !== $data['status']) {
+        if (isset($data['status']) && $row->status !== $data['status']) {
             $statusChanged = true;
         }
 
