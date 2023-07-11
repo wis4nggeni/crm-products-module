@@ -273,7 +273,7 @@ class ProductsAdminPresenter extends AdminPresenter
         $form->addMultiSelect(
             'tags',
             $this->translator->translate('products.admin.products.default.admin_filter_form.tags'),
-            $this->tagsRepository->all()->fetchPairs('id', 'code')
+            $this->tagsRepository->userAssignable()->fetchPairs('id', 'code')
         )->getControlPrototype()->addAttributes(['class' => 'select2']);
 
         $form->addSubmit('send', $this->translator->translate('system.filter'))

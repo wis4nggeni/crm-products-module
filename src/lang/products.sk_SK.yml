@@ -77,8 +77,11 @@ data:
         fields:
             name: Názov
             code: Kód
+            html_heading: Nadpis
             icon: Ikona
             visible: Umiestniť na titulku
+            user_assignable: Priraditeľný užívateľom
+            frontend_visible: Zobrazovať pri produkte
             products: Počet produktov
             sorting: Tag zaradiť za
         placeholder:
@@ -98,7 +101,7 @@ data:
         fields:
             title: Názov
             code: Identifikátor
-            used_count: Požité
+            used_count: Použité
             amount: Suma
     country_postal_fees:
         fields:

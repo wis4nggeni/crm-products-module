@@ -171,7 +171,7 @@ class ProductsFormFactory
             ->setPrompt('products.data.products.placeholder.sorting');
         $sorting->getControlPrototype()->addAttributes(['class' => 'select2']);
 
-        $tagPairs = $this->tagsRepository->all()->fetchPairs('id', 'code');
+        $tagPairs = $this->tagsRepository->userAssignable()->fetchPairs('id', 'code');
         $tags = $form->addMultiSelect('tags', 'products.data.products.fields.tags', $tagPairs)->setOption('id', 'tags');
         $tags->getControlPrototype()->addAttributes(['class' => 'select2']);
 

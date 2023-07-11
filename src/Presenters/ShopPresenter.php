@@ -144,7 +144,7 @@ class ShopPresenter extends FrontendPresenter
         $this->setView('productList');
         $this->productListData();
 
-        $this->template->title = $this->applicationConfig->get('shop_title');
+        $this->template->title = $this->template->htmlHeading = $this->applicationConfig->get('shop_title');
         $this->template->products = $this->productsRepository->getShopProducts(true, true);
         $this->template->selectedTag = null;
         $this->template->cartProducts = $this->cartSession->products;
@@ -196,6 +196,7 @@ class ShopPresenter extends FrontendPresenter
         $this->productListData();
 
         $this->template->title = $tag->name;
+        $this->template->htmlHeading = $tag->html_heading;
         $this->template->products = $this->productsRepository->getShopProducts(false, true, $tag);
         $this->template->selectedTag = $tag;
         $this->template->cartProducts = $this->cartSession->products;

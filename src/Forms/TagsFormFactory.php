@@ -25,7 +25,10 @@ class TagsFormFactory
 
     public function create($tagId): Form
     {
-        $defaults = [];
+        $defaults = [
+            'user_assignable' => 1,
+            'frontend_visible' => 0,
+        ];
         $tag = null;
         if (isset($tagId)) {
             $tag = $this->tagsRepository->find($tagId);
@@ -65,6 +68,9 @@ class TagsFormFactory
             }, 'products.data.tags.errors.code')
             ->setDisabled(isset($tagId));
 
+        $form->addTextArea('html_heading', 'products.data.tags.fields.html_heading')
+            ->setHtmlAttribute('data-html-editor', []);
+
         $form->addText('icon', 'products.data.tags.fields.icon')
             ->setRequired('products.data.tags.errors.icon')
             ->setOption('description', Html::el('a href="https://fontawesome.io/icons/"', $this->translator->translate('products.data.tags.descriptions.icon')))
@@ -79,6 +85,10 @@ class TagsFormFactory
             ->setPrompt('products.data.tags.placeholder.sorting');
 
         $form->addCheckbox('visible', 'products.data.tags.fields.visible');
+
+        $form->addCheckbox('user_assignable', 'products.data.tags.fields.user_assignable');
+
+        $form->addCheckbox('frontend_visible', 'products.data.tags.fields.frontend_visible');
 
         $form->addSubmit('send', 'system.save')
             ->getControlPrototype()

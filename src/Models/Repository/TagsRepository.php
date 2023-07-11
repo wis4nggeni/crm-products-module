@@ -3,6 +3,7 @@
 namespace Crm\ProductsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
+use Crm\ApplicationModule\Selection;
 
 class TagsRepository extends Repository
 {
@@ -51,5 +52,10 @@ class TagsRepository extends Repository
     final public function isTagUsed(int $id): bool
     {
         return $this->getTable()->where([':product_tags.tag_id' => $id])->count() > 0;
+    }
+
+    final public function userAssignable(): Selection
+    {
+        return $this->all()->where('user_assignable', 1);
     }
 }

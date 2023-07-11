@@ -76,8 +76,11 @@ data:
         fields:
             name: Název
             code: Kód
+            html_heading: Nadpis
             icon: Ikona
             visible: Umístit na titulku
+            user_assignable: Přiřaditelný uživatelem
+            frontend_visible: Zobrazovat u produktu
             products: Počet produktů
             sorting: Tag zařadit za
         placeholder:

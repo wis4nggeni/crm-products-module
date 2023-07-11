@@ -77,8 +77,11 @@ data:
         fields:
             name: Name
             code: Code
+            html_heading: Heading
             icon: Icon
             visible: Place on homepage
+            user_assignable: Assignable by user
+            frontend_visible: Show for product
             products: Number of products
             sorting: Place tag after
         placeholder:
