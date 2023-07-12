@@ -176,7 +176,7 @@ class ShopPresenter extends FrontendPresenter
 
         $this->template->products = $products;
         $this->template->hideMenu = true;
-        $this->template->title = $this->translator->translate('products.frontend.shop.search.results_title');
+        $this->template->title = $this->template->htmlHeading = $this->translator->translate('products.frontend.shop.search.results_title');
         $this->template->searchTerm = $q;
         $this->template->cartProducts = $this->cartSession->products;
         $this->template->selectedTag = null;
