@@ -10,9 +10,8 @@ use Crm\PaymentsModule\PaymentProcessor;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\DataProvider\TrackerDataProviderInterface;
 use Crm\ProductsModule\Ebook\EbookProvider;
-use Crm\ProductsModule\Events\CartItemAddedEvent;
-use Crm\ProductsModule\Events\CartItemRemovedEvent;
 use Crm\ProductsModule\Forms\CheckoutFormFactory;
+use Crm\ProductsModule\Models\CartTrait;
 use Crm\ProductsModule\PaymentItem\PaymentItemHelper;
 use Crm\ProductsModule\PostalFeeCondition\PostalFeeService;
 use Crm\ProductsModule\Repository\PostalFeesRepository;
@@ -20,12 +19,13 @@ use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
 use Nette\Application\BadRequestException;
 use Nette\Forms\Controls\RadioList;
-use Nette\Http\Response;
 use Nette\Utils\DateTime;
 use Tomaj\Hermes\Emitter;
 
 class ShopPresenter extends FrontendPresenter
 {
+    use CartTrait;
+
     const SALES_FUNNEL_SHOP = 'shop';
 
     private $productsRepository;
@@ -49,10 +49,6 @@ class ShopPresenter extends FrontendPresenter
     private $dataProviderManager;
 
     private $postalFeeService;
-
-    private $cartSession;
-    private $cartProducts;
-    private $cartProductSum;
 
     public function __construct(
         ProductsRepository $productsRepository,
@@ -150,7 +146,6 @@ class ShopPresenter extends FrontendPresenter
         $this->template->cartProducts = $this->cartSession->products;
     }
 
-
     public function renderSearchResults($q)
     {
         if (empty($q)) {
@@ -229,111 +224,6 @@ class ShopPresenter extends FrontendPresenter
     public function actionAddToCart($id)
     {
         $this->handleAddCart($id);
-    }
-
-    public function handleAddCart($id, $redirectToCheckout = false)
-    {
-        $product = $this->productsRepository->find($id);
-        if (!$product || !$product->shop) {
-            throw new BadRequestException('Product not found.', Response::S404_NOT_FOUND);
-        }
-
-        if ($product->stock <= 0) {
-            $this->flashMessage($product->name, 'product-not-available');
-            $this->redirect('this');
-        }
-
-        if (isset($this->cartSession->products[$product->id]) && $product->stock <= $this->cartSession->products[$product->id]) {
-            $this->flashMessage($product->name, 'product-more-not-available');
-            $this->redirect('this');
-        }
-
-        if (!isset($this->cartSession->products[$product->id])) {
-            if ($this->user->isLoggedIn() && $product->unique_per_user && $this->paymentItemHelper->hasUniqueProduct($product, $this->user->getId())) {
-                $this->flashMessage($product->name, 'product-exists');
-                $this->redirect('this');
-            }
-
-            $this->cartSession->products[$product->id] = 0;
-        }
-
-        if ($product->unique_per_user) {
-            $this->cartSession->products[$product->id] = 0;
-        }
-
-        // fast checkout could mislead users if they already had something in their cart
-        if ($redirectToCheckout) {
-            $this->cartSession->products = [];
-            $this->cartSession->products[$product->id] = 0;
-            $this->cartSession->freeProducts = [];
-        }
-
-        $this->cartSession->products[$product->id]++;
-
-        $this->emitter->emit(new CartItemAddedEvent($product));
-
-        if ($this->isAjax() && !$redirectToCheckout) {
-            $this->buildSession();
-            $this->redrawControl('cart');
-            $this->redrawControl('cartIcon');
-        } else {
-            $this->flashMessage($product->name, 'add-cart');
-            $redirect = $redirectToCheckout ? 'checkout' : 'cart';
-            $this->redirect($redirect);
-        }
-    }
-
-    public function handleRemoveCart($id)
-    {
-        if ($this->request->isMethod('GET')) {
-            $this->redirect('default');
-        }
-
-        $product = $this->productsRepository->find($id);
-        if (!$product || !$product->shop) {
-            throw new BadRequestException('Product not found.', 404);
-        }
-
-        if (!isset($this->cartSession->products[$product->id])) {
-            throw new BadRequestException('Product not found.', 404);
-        }
-
-        $this->cartSession->products[$product->id]--;
-
-        if ($this->cartSession->products[$product->id] == 0) {
-            unset($this->cartSession->products[$product->id]);
-        }
-
-        $this->emitter->emit(new CartItemRemovedEvent($product));
-
-        if ($this->isAjax()) {
-            $this->buildSession();
-            $this->redrawControl('cart');
-            $this->redrawControl('cartIcon');
-        }
-    }
-
-    public function handleRemoveProductCart($id)
-    {
-        if ($this->request->isMethod('GET')) {
-            $this->redirect('default');
-        }
-
-        $product = $this->productsRepository->find($id);
-        if (!$product || !$product->shop) {
-            throw new BadRequestException('Product not found.', 404);
-        }
-
-        if (isset($this->cartSession->products[$product->id])) {
-            unset($this->cartSession->products[$product->id]);
-            $this->emitter->emit(new CartItemRemovedEvent($product));
-        }
-
-        if ($this->isAjax()) {
-            $this->buildSession();
-            $this->redrawControl('cart');
-            $this->redrawControl('cartIcon');
-        }
     }
 
     public function renderCart()
@@ -551,34 +441,6 @@ class ShopPresenter extends FrontendPresenter
     public function renderError()
     {
         $this->template->contactEmail = $this->applicationConfig->get('contact_email');
-    }
-
-    private function buildCartSession()
-    {
-        $this->cartSession = $this->getSession('cart');
-
-        if (!isset($this->cartSession->products)) {
-            $this->cartSession->products = [];
-        }
-        if (!isset($this->cartSession->freeProducts)) {
-            $this->cartSession->freeProducts = [];
-        }
-
-        // check and throw away any deleted products
-        $cartProductIds = array_merge(
-            array_keys($this->cartSession->products),
-            array_keys($this->cartSession->freeProducts),
-        );
-        $availableProductIds = array_keys($this->productsRepository->findByIds($cartProductIds));
-        $unavailableProductIds = array_diff($cartProductIds, $availableProductIds);
-
-        foreach ($unavailableProductIds as $productId) {
-            unset($this->cartSession->products[$productId]);
-            unset($this->cartSession->freeProducts[$productId]);
-        }
-
-        $this->cartProducts = $this->cartSession->products;
-        $this->cartProductSum = array_sum($this->cartProducts);
     }
 
     private function buildSession()
