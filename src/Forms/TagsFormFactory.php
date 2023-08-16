@@ -122,7 +122,16 @@ class TagsFormFactory
             $this->onUpdate->__invoke($tag);
         } else {
             $code = Strings::webalize($values['code']);
-            $tag = $this->tagsRepository->add($code, $values['name'], $values['icon'], $values['visible']);
+            $tag = $this->tagsRepository->add(
+                $code,
+                $values['name'],
+                $values['icon'],
+                $values['visible'],
+                $values['frontend_visible'],
+                $values['user_assignable'],
+                $values['html_heading']
+            );
+
             $this->tagsCache->add($tag->id, $code);
             $this->onSave->__invoke($tag);
         }

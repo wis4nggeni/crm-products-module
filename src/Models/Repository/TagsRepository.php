@@ -2,6 +2,7 @@
 
 namespace Crm\ProductsModule\Repository;
 
+use Crm\ApplicationModule\ActiveRow;
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Selection;
 
@@ -26,13 +27,23 @@ class TagsRepository extends Repository
             ->select(':product_tags.tag_id AS id, COUNT(*) AS val');
     }
 
-    final public function add($code, $name, $icon, $visible = false)
-    {
+    final public function add(
+        string $code,
+        string $name,
+        string $icon,
+        bool $visible = false,
+        bool $frontendVisible = false,
+        bool $userAssignable = false,
+        string $htmlHeading = ''
+    ) {
         return $this->insert([
             'code' => $code,
             'name' => $name,
             'icon' => $icon,
             'visible' => $visible,
+            'frontend_visible' => $frontendVisible,
+            'user_assignable' => $userAssignable,
+            'html_heading' => $htmlHeading,
         ]);
     }
 
@@ -57,5 +68,10 @@ class TagsRepository extends Repository
     final public function userAssignable(): Selection
     {
         return $this->all()->where('user_assignable', 1);
+    }
+
+    final public function findByCode(string $code): ?ActiveRow
+    {
+        return $this->findBy('code', $code);
     }
 }
