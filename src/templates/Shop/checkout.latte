@@ -291,11 +291,15 @@
 
         <div class="row button-row">
             <div class="col-sm-12 col-md-4 left"><a n:href="default" class="btn">{_products.frontend.shop.cart.continue_with_shopping}</a></div>
-            <div class="col-sm-12 col-md-8 right text-right login-hide">
-                <span n:if="$form->offsetExists('toc1')">
+            <div class="col-sm-12 col-md-8 right text-right login-hide checkout-submit">
+                {control simpleWidget 'products.checkout_form.submit', ['form' => $control['checkoutForm'], 'products' => $products]}
+
+                <div n:if="$form->offsetExists('toc1')">
                     {input toc1}
-                </span>
-                {input finish, 'class' => 'btn', 'id' => 'complete-order'}
+                </div>
+                <div style="margin-top: 1rem">
+                    {input finish, 'class' => 'btn', 'id' => 'complete-order'}
+                </div>
         </div>
     </div>
 {/form}
