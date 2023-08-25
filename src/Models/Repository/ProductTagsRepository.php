@@ -41,4 +41,12 @@ class ProductTagsRepository extends Repository
             ->where('tag_id', $tag->id)
             ->delete();
     }
+
+    final public function setProductTagsWithSorting($product, $tags): void
+    {
+        $this->getTable()->where(['product_id' => $product->id])->delete();
+        foreach ($tags as $id => $sorting) {
+            $this->add($product->id, $id, $sorting);
+        }
+    }
 }

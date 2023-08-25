@@ -92,7 +92,7 @@ class ProductsFormFactory
                 $defaults['bundle_items'][] = $pair->item_id;
             }
 
-            foreach ($product->related('product_tags') as $pair) {
+            foreach ($product->related('product_tags')->where('tag.user_assignable', 1) as $pair) {
                 $defaults['tags'][] = $pair->tag_id;
             }
         }
@@ -370,7 +370,16 @@ class ProductsFormFactory
             $this->productsCache->add($productId, $values['code']);
             $this->productBundlesRepository->setBundleItems($product, $bundleItems);
             $this->productPropertiesRepository->setProductProperties($product, $productProperties);
-            $this->productTagsRepository->setProductTags($product, $tags);
+
+            // preserve tags sorting and user's unassignable tags
+            $tagsWithSorting = [];
+            foreach ($product->related('product_tags') as $productTag) {
+                if ($productTag->tag->user_assignable === 0 || in_array($productTag->tag_id, $tags, true)) {
+                    $tagsWithSorting[$productTag->tag_id] = $productTag->sorting;
+                }
+            }
+
+            $this->productTagsRepository->setProductTagsWithSorting($product, $tagsWithSorting);
 
             try {
                 $this->emitter->emit(new ProductSaveEvent($product));
