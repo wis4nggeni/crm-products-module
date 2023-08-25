@@ -43,7 +43,7 @@ trait CartTrait
         $this->cartProductSum = array_sum($this->cartProducts);
     }
 
-    public function handleAddCart($id, $redirectToCheckout = false)
+    public function handleAddCart($id, $redirectToCheckout = false, $count = 1)
     {
         $product = $this->productsRepository->find($id);
         if (!$product || !$product->shop) {
@@ -70,6 +70,7 @@ trait CartTrait
         }
 
         if ($product->unique_per_user) {
+            $count = 1;
             $this->cartSession->products[$product->id] = 0;
         }
 
@@ -80,7 +81,7 @@ trait CartTrait
             $this->cartSession->freeProducts = [];
         }
 
-        $this->cartSession->products[$product->id]++;
+        $this->cartSession->products[$product->id] += $count;
 
         $this->emitter->emit(new CartItemAddedEvent($product));
 
