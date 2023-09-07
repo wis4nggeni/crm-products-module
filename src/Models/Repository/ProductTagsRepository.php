@@ -11,11 +11,14 @@ class ProductTagsRepository extends Repository
 
     final public function add(int $productId, int $tagId, int $sorting = null)
     {
-        return $this->insert([
+        $data = [
             'product_id' => $productId,
             'tag_id' => $tagId,
-            'sorting' => $sorting,
-        ]);
+        ];
+        if ($sorting) {
+            $data['sorting'] = $sorting;
+        }
+        return $this->insert($data);
     }
 
     final public function setProductTags($product, $tags): void

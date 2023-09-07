@@ -372,11 +372,17 @@ class ProductsFormFactory
             $this->productPropertiesRepository->setProductProperties($product, $productProperties);
 
             // preserve tags sorting and user's unassignable tags
-            $tagsWithSorting = [];
-            foreach ($product->related('product_tags') as $productTag) {
-                if ($productTag->tag->user_assignable === 0 || in_array($productTag->tag_id, $tags, true)) {
-                    $tagsWithSorting[$productTag->tag_id] = $productTag->sorting;
-                }
+            $assignable = $product->related('product_tags')
+                ->where('tag.user_assignable', 1)
+                ->fetchPairs('tag_id', 'sorting');
+
+            $unAssignable = $product->related('product_tags')
+                ->where('tag.user_assignable', 0)
+                ->fetchPairs('tag_id', 'sorting');
+
+            $tagsWithSorting = $unAssignable;
+            foreach ($tags as $tagId) {
+                $tagsWithSorting[$tagId] = isset($assignable[$tagId]) ? $assignable[$tagId] : null;
             }
 
             $this->productTagsRepository->setProductTagsWithSorting($product, $tagsWithSorting);
