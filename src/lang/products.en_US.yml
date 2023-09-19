@@ -387,6 +387,7 @@ frontend:
             choose_payment_method: Vyber spôsob platby.
             fields:
                 email_required: Field Email is required.
+                password: Password
                 pass_required: Field Password is required.
                 account_exists: 'Account with entered email already exists, please login with password'
                 phone_number: 'Phone Number'

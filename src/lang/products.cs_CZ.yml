@@ -384,6 +384,7 @@ frontend:
             choose_payment_method: Vyber způsob platby.
             fields:
                 email_required: Položka Email je povinná.
+                password: Heslo
                 pass_required: Položka Heslo je povinná.
                 account_exists: 'Účet se zadaným emailem již existuje, prosím přihlaste se pomocí hesla'
                 phone_number: 'Telefonní číslo (pomůže nám při doručování)'

@@ -213,7 +213,7 @@ class CheckoutFormFactory
                 return !$user;
             };
 
-            $password = $user->addPassword('password', 'Heslo');
+            $password = $user->addPassword('password', 'products.frontend.shop.checkout.fields.password');
             $password
                 ->addConditionOn($action, Form::EQUAL, 'login')
                 ->addRule(Form::FILLED, 'products.frontend.shop.checkout.fields.pass_required');
