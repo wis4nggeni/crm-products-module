@@ -35,7 +35,6 @@ use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
 use Crm\ProductsModule\Scenarios\OrderStatusOnScenarioEnterCriteria;
 use Crm\ProductsModule\Seeders\AddressTypesSeeder;
 use Crm\ProductsModule\Seeders\ConfigsSeeder;
-use League\Event\Emitter;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Nette\DI\Container;
@@ -133,21 +132,21 @@ class ProductsModule extends CrmModule
         $menuContainer->attachMenuItem($menuItem);
     }
 
-    public function registerEventHandlers(Emitter $emitter)
+    public function registerLazyEventHandlers(\Crm\ApplicationModule\Event\LazyEventEmitter $emitter)
     {
         $emitter->addListener(
             PaymentChangeStatusEvent::class,
-            $this->getInstance(PaymentStatusChangeHandler::class)
+            PaymentStatusChangeHandler::class
         );
 
         $emitter->addListener(
             OrderStatusChangeEvent::class,
-            $this->getInstance(OrderStatusChangeEventHandler::class)
+            OrderStatusChangeEventHandler::class
         );
 
         $emitter->addListener(
             \Crm\UsersModule\Events\PreNotificationEvent::class,
-            $this->getInstance(\Crm\ProductsModule\Events\PreNotificationEventHandler::class)
+            \Crm\ProductsModule\Events\PreNotificationEventHandler::class
         );
     }
 
