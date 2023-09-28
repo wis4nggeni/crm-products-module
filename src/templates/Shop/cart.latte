@@ -1,11 +1,16 @@
+{import 'google-tag-manager-objects.latte'}
+
 {block #title}{_products.frontend.shop.cart.header}: {$shopTitle}{/block}
 
 {block #scripts}
+    {include 'ecommerce-for-cart', $products, $cartProducts}
     <script>
         $.event.trigger('crm:shop:show:cart');
 
-        $('.increase-cart-amount').click(function () {
-            $.event.trigger('crm:shop:action:add-to-cart');
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            event: 'view_cart',
+            ecommerce: ecommerceForCart,
         });
 
         function setUpTooltip() {
@@ -17,6 +22,29 @@
         $(document).ajaxComplete(function () {
             setUpTooltip();
         });
+
+        function decreaseCartAmount(ecommerceObject) {
+            dataLayer.push({
+                event: 'remove_from_cart',
+                ecommerce: ecommerceObject,
+            });
+        }
+        function increaseCartAmount(ecommerceObject) {
+            dataLayer.push({
+                event: 'add_to_cart',
+                ecommerce: ecommerceObject,
+            });
+
+            $.event.trigger('crm:shop:action:add-to-cart');
+        }
+        function removeFromCart(ecommerceObject, quantity) {
+            ecommerceObject.items[0].quantity = quantity;
+
+            dataLayer.push({
+                event: 'remove_from_cart',
+                ecommerce: ecommerceObject,
+            });
+        }
     </script>
 {/block}
 
@@ -85,6 +113,7 @@
                 <div class="_body">
                     {var $amount = 0}
                     <div class="_item" n:foreach="$products as $product">
+                        {include 'ecommerce-for-product', $product}
                         <div class="_image"><div class="_pad">
                                 <img src="{$product->image_url}" alt="{$product->name}" class="img-responsive">
                         </div></div>
@@ -92,11 +121,14 @@
                         <div class="_price"><div class="_pad">{$product->price|price}</div></div>
                         <div class="_amount"><div class="_pad">
                                 <div class="input-group">
-                                    <a n:if="!$product->unique_per_user" class="input-group-addon ajax decrease-cart-amount" data-ajax-off="unique" n:href="removeCart! $product->id"><i class="fa fa-minus"></i></a>
+                                    <a n:if="!$product->unique_per_user" class="input-group-addon ajax decrease-cart-amount" data-ajax-off="unique" n:href="removeCart! $product->id" onclick="decreaseCartAmount(ecommerceForProduct)">
+                                        <i class="fa fa-minus"></i>
+                                    </a>
+
                                     <input type="text" class="form-control text-center" value="{$cartProducts[$product->id]}" disabled="disabled">
 
                                     {if (!$product->unique_per_user && ($product->stock > $cartProducts[$product->id]))}
-                                    <a class="input-group-addon ajax increase-cart-amount" data-ajax-off="unique" n:href="addCart! $product->id">
+                                    <a class="input-group-addon ajax increase-cart-amount" data-ajax-off="unique" n:href="addCart! $product->id" onclick="increaseCartAmount(ecommerceForProduct)">
                                         <i class="fa fa-plus"></i>
                                     </a>
                                     {else}
@@ -112,7 +144,7 @@
                                 {($product->price * $cartProducts[$product->id])|price}
                             </div></div>
                         <div class="_remove"><div class="_pad">
-                                <a class="btn ajax" data-ajax-off="unique" n:href="removeProductCart! $product->id"><i class="fa fa-times"></i></a>
+                                <a class="btn ajax" data-ajax-off="unique" n:href="removeProductCart! $product->id" onclick="removeFromCart(ecommerceForProduct, {$cartProducts[$product->id]})"><i class="fa fa-times"></i></a>
                         </div></div>
                     </div>
 

@@ -1,0 +1,54 @@
+{define 'ecommerce-for-product', $product, $quantity = 1}
+    <script type="application/javascript">
+        ecommerceForProduct = {
+            {var $category = 'product'}
+            {if $product->product_template}
+                {var $category = $product->product_template->name}
+            {elseif $product->bundle}
+                {var $category = 'bundle'}
+            {/if}
+            currency: {$currency},
+            value: {$product->price},
+            items: [
+                {
+                    item_id: 'product:' + {$product->name|webalize},
+                    item_name: {$product->name},
+                    item_category: {$category},
+                    price: {$product->price},
+                    quantity: {$quantity},
+                }
+            ],
+        };
+    </script>
+{/define}
+
+{define 'ecommerce-for-cart', $products, $cartProducts}
+    <script type="application/javascript">
+        items = [];
+        {var $amount = 0}
+        {foreach $products as $product}
+            {php $amount += ($product->price * $cartProducts[$product->id])}
+            {var $category = 'product'}
+            {if $product->product_template}
+                {var $category = $product->product_template->name}
+            {elseif $product->bundle}
+                {var $category = 'bundle'}
+            {/if}
+            items.push(
+                {
+                    item_id: 'product:' + {$product->name|webalize},
+                    item_name: {$product->name},
+                    item_category: {$category},
+                    price: {$product->price},
+                    quantity: {$cartProducts[$product->id]},
+                }
+            );
+        {/foreach}
+
+        ecommerceForCart = {
+            currency: {$currency},
+            value: {$amount},
+            items: items,
+        };
+    </script>
+{/define}
