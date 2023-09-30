@@ -366,7 +366,7 @@ class CheckoutFormFactory
             ]);
         }
 
-        /** @var AddressFormDataProviderInterface $providers */
+        /** @var AddressFormDataProviderInterface[] $providers */
         $providers = $this->dataProviderManager->getProviders('products.dataprovider.checkout_form.billing_address', AddressFormDataProviderInterface::class);
         foreach ($providers as $sorting => $provider) {
             $form = $provider->provide(['form' => $form, 'addressType' => 'invoice', 'container' => 'billing_address']);
