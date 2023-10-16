@@ -182,7 +182,8 @@ class ProductsFormFactory
             ->setOption('id', 'description');
 
         $image = $form->addText('image_url', 'products.data.products.fields.image_url')
-            ->setOption('description', 'products.data.products.descriptions.image_url')
+            ->setOption('description', Html::el('span', ['class' => 'help-block'])
+                ->setHtml($this->translator->translate('products.data.products.descriptions.image_url')))
             ->setOption('id', 'image')
             ->setHtmlAttribute('placeholder', 'products.data.products.placeholder.image_url');
 
