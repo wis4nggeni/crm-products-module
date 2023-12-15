@@ -16,6 +16,7 @@ use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
 use Faker\Provider\Uuid;
 use Nette\Utils\DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class HasProductWithTemplateNameTest extends DatabaseTestCase
 {
@@ -67,7 +68,7 @@ class HasProductWithTemplateNameTest extends DatabaseTestCase
         return $this->templates[$name] = $this->productTemplatesRepository->add($name);
     }
 
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             [
@@ -98,9 +99,7 @@ class HasProductWithTemplateNameTest extends DatabaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testHasPaymentWithTemplateName(array $shouldHave, array $has, bool $result): void
     {
         [$paymentSelection, $paymentRow] = $this->prepareData($has);

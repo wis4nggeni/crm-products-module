@@ -16,6 +16,7 @@ use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
 use Faker\Provider\Uuid;
 use Nette\Utils\DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class HasProductWithDistributionCenterCriteriaTest extends DatabaseTestCase
 {
@@ -67,7 +68,7 @@ class HasProductWithDistributionCenterCriteriaTest extends DatabaseTestCase
         return $this->centers[$name] = $this->distributionCentersRepository->add($name, $name);
     }
 
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             [
@@ -93,9 +94,7 @@ class HasProductWithDistributionCenterCriteriaTest extends DatabaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testHasPaymentWithDistributionCenter(array $shouldHave, array $has, bool $result): void
     {
         [$orderSelection, $orderRow] = $this->prepareData($has);

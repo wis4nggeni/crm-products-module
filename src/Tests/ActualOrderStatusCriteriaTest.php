@@ -7,6 +7,7 @@ use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\PaymentsModule\Tests\PaymentsTestCase;
 use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Scenarios\ActualOrderStatusCriteria;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ActualOrderStatusCriteriaTest extends PaymentsTestCase
 {
@@ -17,7 +18,7 @@ class ActualOrderStatusCriteriaTest extends PaymentsTestCase
         ]);
     }
 
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             [
@@ -38,9 +39,7 @@ class ActualOrderStatusCriteriaTest extends PaymentsTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testActualOrderStatus(string $hasStatus, array $shouldHaveStatus, bool $result)
     {
         [$orderSelection, $orderRow] = $this->prepareData($hasStatus);
