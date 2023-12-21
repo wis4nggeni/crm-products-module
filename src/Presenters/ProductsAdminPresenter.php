@@ -16,6 +16,7 @@ use Crm\ProductsModule\Manager\ProductManager;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
+use Nette\Application\Attributes\Persistent;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 use Tomaj\Form\Renderer\BootstrapInlineRenderer;
@@ -36,7 +37,7 @@ class ProductsAdminPresenter extends AdminPresenter
 
     private $distributionConfiguration;
 
-    /** @persistent */
+    #[Persistent]
     public $tags = [];
 
     private $productManager;

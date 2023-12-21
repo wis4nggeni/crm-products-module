@@ -9,23 +9,25 @@ use Crm\ApplicationModule\Graphs\Criteria;
 use Crm\ApplicationModule\Graphs\GraphDataItem;
 use Crm\ProductsModule\Components\ProductStatsFactory;
 use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
+use Nette\Application\Attributes\Persistent;
 use Nette\Application\UI\Form;
+use Nette\DI\Attributes\Inject;
 use Nette\Utils\DateTime;
 use Tomaj\Form\Renderer\BootstrapInlineRenderer;
 
 class DashboardPresenter extends AdminPresenter
 {
-    /** @persistent */
+    #[Persistent]
     public $dateFrom;
 
-    /** @persistent */
+    #[Persistent]
     public $dateTo;
 
-    /** @persistent */
+    #[Persistent]
     public $productStatsMode;
 
-    /** @var ProductStatsFactory @inject */
-    public $productStatsFactory;
+    #[Inject]
+    public ProductStatsFactory $productStatsFactory;
 
     public function startup()
     {

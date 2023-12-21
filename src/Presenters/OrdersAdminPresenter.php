@@ -10,6 +10,7 @@ use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\PostalFeeCondition\PostalFeeService;
 use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Repository\ProductsRepository;
+use Nette\Application\Attributes\Persistent;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls\RadioList;
 use Tomaj\Form\Renderer\BootstrapInlineRenderer;
@@ -27,10 +28,10 @@ class OrdersAdminPresenter extends AdminPresenter
 
     public $checkoutFormFactory;
 
-    /** @persistent */
+    #[Persistent]
     public $payment_status;
 
-    /** @persistent */
+    #[Persistent]
     public $order_status;
 
     public function __construct(
