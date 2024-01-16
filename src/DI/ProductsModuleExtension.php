@@ -3,6 +3,7 @@
 namespace Crm\ProductsModule\DI;
 
 use Contributte\Translation\DI\TranslationProviderInterface;
+use Nette\Application\IPresenterFactory;
 use Nette\DI\CompilerExtension;
 
 class ProductsModuleExtension extends CompilerExtension implements TranslationProviderInterface
@@ -24,7 +25,7 @@ class ProductsModuleExtension extends CompilerExtension implements TranslationPr
     {
         $builder = $this->getContainerBuilder();
         // load presenters from extension to Nette
-        $builder->getDefinition($builder->getByType(\Nette\Application\IPresenterFactory::class))
+        $builder->getDefinition($builder->getByType(IPresenterFactory::class))
             ->addSetup('setMapping', [['Products' => 'Crm\ProductsModule\Presenters\*Presenter']]);
     }
 

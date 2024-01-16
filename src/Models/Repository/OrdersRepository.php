@@ -153,7 +153,7 @@ class OrdersRepository extends Repository
             return (int) $this->cacheRepository->loadAndUpdate(
                 'orders_count',
                 $callable,
-                \Nette\Utils\DateTime::from(CacheRepository::REFRESH_TIME_5_MINUTES),
+                DateTime::from(CacheRepository::REFRESH_TIME_5_MINUTES),
                 $forceCacheUpdate
             );
         }

@@ -2,7 +2,7 @@
 
 namespace Crm\ProductsModule\Components;
 
-use Nette\Application\UI;
+use Nette\Application\UI\Control;
 
 /**
  * Nette listing component using bootstrap table.
@@ -11,7 +11,7 @@ use Nette\Application\UI;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class ProductStats extends UI\Control
+class ProductStats extends Control
 {
     private $templateName = 'products_stats.latte';
 

@@ -58,7 +58,7 @@ class ProductsRepository extends Repository
         return parent::insert($data);
     }
 
-    final public function update(\Nette\Database\Table\ActiveRow &$row, $data)
+    final public function update(ActiveRow &$row, $data)
     {
         // webalize `code` only if it was changed to something new
         // we don't want to break current URLs

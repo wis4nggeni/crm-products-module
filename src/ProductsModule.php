@@ -11,6 +11,7 @@ use Crm\ApplicationModule\Criteria\ScenariosCriteriaStorage;
 use Crm\ApplicationModule\CrmModule;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Event\EventsStorage;
+use Crm\ApplicationModule\Event\LazyEventEmitter;
 use Crm\ApplicationModule\LayoutManager;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
 use Crm\ApplicationModule\Menu\MenuItem;
@@ -18,11 +19,22 @@ use Crm\ApplicationModule\SeederManager;
 use Crm\ApplicationModule\User\UserDataRegistrator;
 use Crm\ApplicationModule\Widget\LazyWidgetManagerInterface;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
+use Crm\ProductsModule\Commands\CalculateAveragesCommand;
+use Crm\ProductsModule\Components\AvgProductsPaymentWidget;
+use Crm\ProductsModule\Components\FreeShippingProgressBarWidget;
+use Crm\ProductsModule\Components\ProductItemsListWidget;
+use Crm\ProductsModule\Components\RecommendedProductsWidget;
+use Crm\ProductsModule\Components\TotalShopPaymentsWidget;
+use Crm\ProductsModule\Components\UserOrdersWidget;
 use Crm\ProductsModule\DataProvider\PaymentFormDataProvider;
+use Crm\ProductsModule\DataProvider\PaymentItemTypesFilterDataProvider;
 use Crm\ProductsModule\DataProvider\PaymentsAdminFilterFormDataProvider;
+use Crm\ProductsModule\Events\NewOrderEvent;
 use Crm\ProductsModule\Events\OrderStatusChangeEvent;
 use Crm\ProductsModule\Events\OrderStatusChangeEventHandler;
 use Crm\ProductsModule\Events\PaymentStatusChangeHandler;
+use Crm\ProductsModule\Events\PreNotificationEventHandler;
+use Crm\ProductsModule\Events\ProductSaveEvent;
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Crm\ProductsModule\Repository\TagsRepository;
 use Crm\ProductsModule\Scenarios\ActualOrderStatusCriteria;
@@ -35,6 +47,9 @@ use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
 use Crm\ProductsModule\Scenarios\OrderStatusOnScenarioEnterCriteria;
 use Crm\ProductsModule\Seeders\AddressTypesSeeder;
 use Crm\ProductsModule\Seeders\ConfigsSeeder;
+use Crm\ProductsModule\User\OrdersUserDataProvider;
+use Crm\UsersModule\Components\AddressWidget;
+use Crm\UsersModule\Events\PreNotificationEvent;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Nette\DI\Container;
@@ -123,7 +138,7 @@ class ProductsModule extends CrmModule
 
     public function registerCommands(CommandsContainerInterface $commandsContainer)
     {
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ProductsModule\Commands\CalculateAveragesCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(CalculateAveragesCommand::class));
     }
 
     public function registerFrontendMenuItems(MenuContainerInterface $menuContainer)
@@ -132,7 +147,7 @@ class ProductsModule extends CrmModule
         $menuContainer->attachMenuItem($menuItem);
     }
 
-    public function registerLazyEventHandlers(\Crm\ApplicationModule\Event\LazyEventEmitter $emitter)
+    public function registerLazyEventHandlers(LazyEventEmitter $emitter)
     {
         $emitter->addListener(
             PaymentChangeStatusEvent::class,
@@ -145,8 +160,8 @@ class ProductsModule extends CrmModule
         );
 
         $emitter->addListener(
-            \Crm\UsersModule\Events\PreNotificationEvent::class,
-            \Crm\ProductsModule\Events\PreNotificationEventHandler::class
+            PreNotificationEvent::class,
+            PreNotificationEventHandler::class
         );
     }
 
@@ -164,7 +179,7 @@ class ProductsModule extends CrmModule
 
     public function registerUserData(UserDataRegistrator $dataRegistrator)
     {
-        $dataRegistrator->addUserDataProvider($this->getInstance(\Crm\ProductsModule\User\OrdersUserDataProvider::class));
+        $dataRegistrator->addUserDataProvider($this->getInstance(OrdersUserDataProvider::class));
     }
 
     public function registerRoutes(RouteList $router)
@@ -250,58 +265,58 @@ class ProductsModule extends CrmModule
         );
         $dataProviderManager->registerDataProvider(
             'payments.dataprovider.dashboard',
-            $this->getInstance(\Crm\ProductsModule\DataProvider\PaymentItemTypesFilterDataProvider::class)
+            $this->getInstance(PaymentItemTypesFilterDataProvider::class)
         );
     }
 
     public function registerEvents(EventsStorage $eventsStorage)
     {
-        $eventsStorage->register('new_order', Events\NewOrderEvent::class, true);
-        $eventsStorage->register('order_status_change', Events\OrderStatusChangeEvent::class, true);
-        $eventsStorage->register('product_save', Events\ProductSaveEvent::class);
+        $eventsStorage->register('new_order', NewOrderEvent::class, true);
+        $eventsStorage->register('order_status_change', OrderStatusChangeEvent::class, true);
+        $eventsStorage->register('product_save', ProductSaveEvent::class);
     }
 
     public function registerLazyWidgets(LazyWidgetManagerInterface $widgetManager)
     {
         $widgetManager->registerWidget(
             'payments.admin.payment_item_listing',
-            \Crm\ProductsModule\Components\ProductItemsListWidget::class
+            ProductItemsListWidget::class
         );
         $widgetManager->registerWidget(
             'payments.admin.total_user_payments',
-            \Crm\ProductsModule\Components\TotalShopPaymentsWidget::class
+            TotalShopPaymentsWidget::class
         );
         $widgetManager->registerWidget(
             'segment.detail.statspanel.row',
-            \Crm\ProductsModule\Components\AvgProductsPaymentWidget::class
+            AvgProductsPaymentWidget::class
         );
         $widgetManager->registerWidget(
             'admin.products.order.address',
-            \Crm\UsersModule\Components\AddressWidget::class
+            AddressWidget::class
         );
         $widgetManager->registerWidget(
             'products.frontend.orders_my',
-            \Crm\ProductsModule\Components\UserOrdersWidget::class
+            UserOrdersWidget::class
         );
 
         $widgetManager->registerWidget(
             'products.shop.cart',
-            \Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class
+            FreeShippingProgressBarWidget::class
         );
 
         $widgetManager->registerWidget(
             'products.shop.show.title',
-            \Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class
+            FreeShippingProgressBarWidget::class
         );
 
         $widgetManager->registerWidget(
             'products.shop.product_list.title',
-            \Crm\ProductsModule\Components\FreeShippingProgressBarWidget::class
+            FreeShippingProgressBarWidget::class
         );
 
         $widgetManager->registerWidget(
             'products.shop.show.bottom',
-            \Crm\ProductsModule\Components\RecommendedProductsWidget::class
+            RecommendedProductsWidget::class
         );
     }
 
