@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\Distribution;
+namespace Crm\ProductsModule\Models\Distribution;
 
 use Nette\Database\Explorer;
 

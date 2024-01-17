@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\Components;
+namespace Crm\ProductsModule\Components\FreeShippingProgressBarWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;

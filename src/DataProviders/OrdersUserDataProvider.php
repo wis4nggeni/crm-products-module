@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\User;
+namespace Crm\ProductsModule\DataProviders;
 
 use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\User\UserDataProviderInterface;

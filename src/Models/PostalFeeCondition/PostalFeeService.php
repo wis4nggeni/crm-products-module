@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\PostalFeeCondition;
+namespace Crm\ProductsModule\Models\PostalFeeCondition;
 
 use Crm\ApplicationModule\Selection;
 use Crm\ProductsModule\Repository\CountryPostalFeesRepository;

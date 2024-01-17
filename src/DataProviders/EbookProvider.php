@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\Ebook;
+namespace Crm\ProductsModule\DataProviders;
 
 use Nette\Database\Table\ActiveRow;
 

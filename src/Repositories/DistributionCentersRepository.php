@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\Repository;
+namespace Crm\ProductsModule\Repositories;
 
 use Crm\ApplicationModule\Repository;
 

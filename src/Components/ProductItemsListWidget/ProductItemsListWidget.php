@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\Components;
+namespace Crm\ProductsModule\Components\ProductItemsListWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;

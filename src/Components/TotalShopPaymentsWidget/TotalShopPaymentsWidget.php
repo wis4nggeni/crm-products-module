@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\Components;
+namespace Crm\ProductsModule\Components\TotalShopPaymentsWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 

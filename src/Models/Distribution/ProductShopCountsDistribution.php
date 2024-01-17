@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\Distribution;
+namespace Crm\ProductsModule\Models\Distribution;
 
 use Nette\Database\Explorer;
 
@@ -12,7 +12,7 @@ class ProductShopCountsDistribution implements DistributionInterface
     {
         $this->database = $database;
     }
-    
+
     public function distribution(int $productId, array $levels): array
     {
         $levelCount = count($levels);

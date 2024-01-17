@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\Components;
+namespace Crm\ProductsModule\Components\AvgProductsPaymentWidget;
 
 use Crm\ApplicationModule\Cache\CacheRepository;
 use Crm\ApplicationModule\Widget\BaseLazyWidget;

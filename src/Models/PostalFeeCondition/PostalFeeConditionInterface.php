@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\PostalFeeCondition;
+namespace Crm\ProductsModule\Models\PostalFeeCondition;
 
 use Nette\ComponentModel\IComponent;
 

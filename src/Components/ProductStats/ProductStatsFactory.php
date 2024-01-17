@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\Components;
+namespace Crm\ProductsModule\Components\ProductStats;
 
 use Crm\ProductsModule\Repository\ProductsRepository;
 use Nette\Localization\Translator;

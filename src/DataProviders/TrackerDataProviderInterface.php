@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\DataProvider;
+namespace Crm\ProductsModule\DataProviders;
 
 use Crm\ApplicationModule\DataProvider\DataProviderInterface;
 

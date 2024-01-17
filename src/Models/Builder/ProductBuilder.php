@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ProductsModule\Builder;
+namespace Crm\ProductsModule\Models\Builder;
 
 use Crm\ApplicationModule\Builder\Builder;
 use Crm\ProductsModule\Repository\ProductBundlesRepository;
