@@ -118,12 +118,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr n:foreach="$order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\PaymentItem\ProductPaymentItem::TYPE) as $paymentItem">
+            <tr n:foreach="$order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem::TYPE) as $paymentItem">
                 <td><a n:href="ProductsAdmin:show $paymentItem->product_id">{$paymentItem->name}</a></td>
                 <td class="text-right">{$paymentItem->amount|price}</td>
                 <td class="text-right">{$paymentItem->count}</td>
             </tr>
-            <tr n:foreach="$order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\PaymentItem\PostalFeePaymentItem::TYPE) as $feeItem">
+            <tr n:foreach="$order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\Models\PaymentItem\PostalFeePaymentItem::TYPE) as $feeItem">
                 <td>{$feeItem->name}</td>
                 <td class="text-right">{$feeItem->amount|price}</td>
                 <td class="text-right">{$feeItem->count}</td>

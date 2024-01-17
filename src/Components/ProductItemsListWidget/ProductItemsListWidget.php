@@ -3,8 +3,8 @@
 namespace Crm\ProductsModule\Components\ProductItemsListWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
-use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;
-use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
+use Crm\ProductsModule\Models\PaymentItem\PostalFeePaymentItem;
+use Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem;
 use Nette\Database\Table\ActiveRow;
 
 /**

@@ -4,11 +4,11 @@ namespace Crm\ProductsModule\Tests;
 
 use Crm\ApplicationModule\Seeders\CountriesSeeder;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
-use Crm\ProductsModule\PostalFeeCondition\PostalFeeConditionInterface;
-use Crm\ProductsModule\PostalFeeCondition\PostalFeeService;
-use Crm\ProductsModule\Repository\CountryPostalFeeConditionsRepository;
-use Crm\ProductsModule\Repository\CountryPostalFeesRepository;
-use Crm\ProductsModule\Repository\PostalFeesRepository;
+use Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeConditionInterface;
+use Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeService;
+use Crm\ProductsModule\Repositories\CountryPostalFeeConditionsRepository;
+use Crm\ProductsModule\Repositories\CountryPostalFeesRepository;
+use Crm\ProductsModule\Repositories\PostalFeesRepository;
 use Crm\UsersModule\Repository\CountriesRepository;
 use Mockery\Mock;
 use Nette\Database\Table\ActiveRow;

@@ -3,8 +3,8 @@
 namespace Crm\ProductsModule\Forms;
 
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
-use Crm\ProductsModule\DataProvider\SortShopProductsFormValidationDataProviderInterface;
-use Crm\ProductsModule\Repository\ProductsRepository;
+use Crm\ProductsModule\DataProviders\SortShopProductsFormValidationDataProviderInterface;
+use Crm\ProductsModule\Repositories\ProductsRepository;
 use Nette\Application\UI\Form;
 use Nette\Localization\Translator;
 

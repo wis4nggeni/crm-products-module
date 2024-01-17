@@ -4,7 +4,7 @@ namespace Crm\ProductsModule\Presenters;
 
 use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\ProductsModule\Forms\TagsFormFactory;
-use Crm\ProductsModule\Repository\TagsRepository;
+use Crm\ProductsModule\Repositories\TagsRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Http\Request;
 

@@ -4,9 +4,9 @@ namespace Crm\ProductsModule\Presenters;
 
 use Crm\ApplicationModule\Presenters\FrontendPresenter;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
-use Crm\ProductsModule\Ebook\EbookProvider;
-use Crm\ProductsModule\PaymentItem\PaymentItemHelper;
-use Crm\ProductsModule\Repository\OrdersRepository;
+use Crm\ProductsModule\DataProviders\EbookProvider;
+use Crm\ProductsModule\Models\PaymentItem\PaymentItemHelper;
+use Crm\ProductsModule\Repositories\OrdersRepository;
 
 class OrdersPresenter extends FrontendPresenter
 {

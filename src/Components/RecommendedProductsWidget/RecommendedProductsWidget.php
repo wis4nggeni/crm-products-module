@@ -4,7 +4,7 @@ namespace Crm\ProductsModule\Components\RecommendedProductsWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
-use Crm\ProductsModule\Repository\ProductsRepository;
+use Crm\ProductsModule\Repositories\ProductsRepository;
 
 class RecommendedProductsWidget extends BaseLazyWidget
 {

@@ -1,4 +1,4 @@
-{if $paymentItem->type === \Crm\ProductsModule\PaymentItem\ProductPaymentItem::TYPE}
+{if $paymentItem->type === \Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem::TYPE}
 
     {if !$paymentItem->product->deleted_at}
         <a href="{plink :Products:ProductsAdmin:Show $paymentItem->product_id}">
@@ -9,7 +9,7 @@
         <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" title="{_products.admin.component.payment_items_list_widget.product_deleted}"></span>
     {/if}
 
-{elseif $paymentItem->type === \Crm\ProductsModule\PaymentItem\PostalFeePaymentItem::TYPE}
+{elseif $paymentItem->type === \Crm\ProductsModule\Models\PaymentItem\PostalFeePaymentItem::TYPE}
 
     <div>
         {$paymentItem->name} <small>({$paymentItem->count} x {$paymentItem->amount|price})</small>

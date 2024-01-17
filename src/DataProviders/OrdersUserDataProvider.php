@@ -4,9 +4,9 @@ namespace Crm\ProductsModule\DataProviders;
 
 use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\User\UserDataProviderInterface;
-use Crm\ProductsModule\Model\Config;
-use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
-use Crm\ProductsModule\Repository\OrdersRepository;
+use Crm\ProductsModule\Models\Config;
+use Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem;
+use Crm\ProductsModule\Repositories\OrdersRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\User\AddressesUserDataProvider;
 use Nette\Localization\Translator;

@@ -2,7 +2,7 @@
 
 namespace Crm\ProductsModule\Components\ProductStats;
 
-use Crm\ProductsModule\Repository\ProductsRepository;
+use Crm\ProductsModule\Repositories\ProductsRepository;
 use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 

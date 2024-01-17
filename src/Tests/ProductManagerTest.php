@@ -4,9 +4,9 @@ namespace Crm\ProductsModule\Tests;
 
 use Crm\ApplicationModule\ActiveRow;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
-use Crm\ProductsModule\Manager\ProductManager;
-use Crm\ProductsModule\Repository\ProductBundlesRepository;
-use Crm\ProductsModule\Repository\ProductsRepository;
+use Crm\ProductsModule\Models\Manager\ProductManager;
+use Crm\ProductsModule\Repositories\ProductBundlesRepository;
+use Crm\ProductsModule\Repositories\ProductsRepository;
 
 class ProductManagerTest extends DatabaseTestCase
 {

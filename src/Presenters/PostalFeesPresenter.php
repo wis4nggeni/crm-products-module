@@ -3,7 +3,7 @@
 namespace Crm\ProductsModule\Presenters;
 
 use Crm\AdminModule\Presenters\AdminPresenter;
-use Crm\ProductsModule\Repository\PostalFeesRepository;
+use Crm\ProductsModule\Repositories\PostalFeesRepository;
 
 class PostalFeesPresenter extends AdminPresenter
 {

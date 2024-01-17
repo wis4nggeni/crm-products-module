@@ -4,7 +4,7 @@ namespace Crm\ProductsModule\Components\UserOrdersWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
-use Crm\ProductsModule\Repository\OrdersRepository;
+use Crm\ProductsModule\Repositories\OrdersRepository;
 use Nette\Localization\Translator;
 
 class UserOrdersWidget extends BaseLazyWidget

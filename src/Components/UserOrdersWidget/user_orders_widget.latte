@@ -52,20 +52,20 @@
                     <td colspan="3">
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
-                                {foreach $order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\PaymentItem\ProductPaymentItem::TYPE) as $productItem}
+                                {foreach $order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem::TYPE) as $productItem}
                                     {$productItem->name} <span class="text-muted">({$productItem->count}x)</span><br>
                                 {/foreach}
-                                {foreach $order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\PaymentItem\PostalFeePaymentItem::TYPE) as $productItem}
+                                {foreach $order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\Models\PaymentItem\PostalFeePaymentItem::TYPE) as $productItem}
                                     {$productItem->name}
                                 {/foreach}
                             </div>
                         </div>
                     </td>
                     <td align="right" n:class="$prepaid ? prepaid">
-                        {foreach $order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\PaymentItem\ProductPaymentItem::TYPE) as $productItem}
+                        {foreach $order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem::TYPE) as $productItem}
                             {$productItem->amount * $productItem->count|price}<br>
                         {/foreach}
-                        {foreach $order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\PaymentItem\PostalFeePaymentItem::TYPE) as $productItem}
+                        {foreach $order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\Models\PaymentItem\PostalFeePaymentItem::TYPE) as $productItem}
                             {$productItem->amount|price}
                         {/foreach}
                     </td>

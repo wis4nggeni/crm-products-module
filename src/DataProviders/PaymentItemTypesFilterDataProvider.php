@@ -4,7 +4,7 @@ namespace Crm\ProductsModule\DataProviders;
 
 use Crm\ApplicationModule\DataProvider\DataProviderException;
 use Crm\PaymentsModule\DataProvider\PaymentItemTypesFilterDataProviderInterface;
-use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
+use Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem;
 use Nette\Localization\Translator;
 
 class PaymentItemTypesFilterDataProvider implements PaymentItemTypesFilterDataProviderInterface

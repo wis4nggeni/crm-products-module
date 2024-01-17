@@ -3,8 +3,8 @@
 namespace Crm\ProductsModule\Forms;
 
 use Contributte\Translation\Translator;
-use Crm\ProductsModule\Repository\TagsRepository;
-use Crm\ProductsModule\TagsCache;
+use Crm\ProductsModule\Models\TagsCache;
+use Crm\ProductsModule\Repositories\TagsRepository;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls\TextInput;
 use Nette\Utils\Html;

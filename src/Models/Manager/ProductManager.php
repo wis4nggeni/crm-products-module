@@ -3,8 +3,8 @@
 namespace Crm\ProductsModule\Models\Manager;
 
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
-use Crm\ProductsModule\DataProvider\ProductManagerDataProviderInterface;
-use Crm\ProductsModule\Repository\ProductsRepository;
+use Crm\ProductsModule\DataProviders\ProductManagerDataProviderInterface;
+use Crm\ProductsModule\Repositories\ProductsRepository;
 use Nette\Database\Table\ActiveRow;
 
 class ProductManager

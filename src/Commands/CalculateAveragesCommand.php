@@ -4,8 +4,8 @@ namespace Crm\ProductsModule\Commands;
 
 use Crm\ApplicationModule\Commands\DecoratedCommandTrait;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
-use Crm\ProductsModule\PaymentItem\PostalFeePaymentItem;
-use Crm\ProductsModule\PaymentItem\ProductPaymentItem;
+use Crm\ProductsModule\Models\PaymentItem\PostalFeePaymentItem;
+use Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem;
 use Crm\UsersModule\Repository\UserMetaRepository;
 use Crm\UsersModule\Repository\UserStatsRepository;
 use Crm\UsersModule\Repository\UsersRepository;

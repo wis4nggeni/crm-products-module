@@ -8,7 +8,7 @@ use Crm\ApplicationModule\Config\Repository\ConfigCategoriesRepository;
 use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\Seeders\ConfigsTrait;
 use Crm\ApplicationModule\Seeders\ISeeder;
-use Crm\ProductsModule\Model\Config;
+use Crm\ProductsModule\Models\Config;
 use Nette\Localization\Translator;
 use Symfony\Component\Console\Output\OutputInterface;
 

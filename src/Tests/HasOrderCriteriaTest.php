@@ -6,7 +6,7 @@ use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Crm\PaymentsModule\PaymentItem\PaymentItemContainer;
 use Crm\PaymentsModule\Repository\PaymentGatewaysRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
-use Crm\ProductsModule\Repository\OrdersRepository;
+use Crm\ProductsModule\Repositories\OrdersRepository;
 use Crm\ProductsModule\Scenarios\HasOrderCriteria;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;

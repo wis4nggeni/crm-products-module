@@ -4,9 +4,9 @@ namespace Crm\ProductsModule\Events;
 
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
-use Crm\ProductsModule\Manager\ProductManager;
-use Crm\ProductsModule\PaymentItem\PaymentItemHelper;
-use Crm\ProductsModule\Repository\OrdersRepository;
+use Crm\ProductsModule\Models\Manager\ProductManager;
+use Crm\ProductsModule\Models\PaymentItem\PaymentItemHelper;
+use Crm\ProductsModule\Repositories\OrdersRepository;
 use League\Event\AbstractListener;
 use League\Event\EventInterface;
 use Nette\Database\Table\ActiveRow;

@@ -2,7 +2,7 @@
 
 namespace Crm\ProductsModule\Scenarios;
 
-use Crm\ProductsModule\Repository\OrdersRepository;
+use Crm\ProductsModule\Repositories\OrdersRepository;
 use Crm\ScenariosModule\Engine\Dispatcher;
 use Crm\ScenariosModule\Repositories\JobsRepository;
 use Tomaj\Hermes\Handler\HandlerInterface;

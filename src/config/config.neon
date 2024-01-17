@@ -3,44 +3,44 @@ services:
 		setup:
 			- addModule(Crm\ProductsModule\ProductsModule())
 
-	countryPostalFeesRepository: Crm\ProductsModule\Repository\CountryPostalFeesRepository
-	distributionCentersRepository: Crm\ProductsModule\Repository\DistributionCentersRepository
-	ordersRepository: Crm\ProductsModule\Repository\OrdersRepository
-	postalFeesRepository: Crm\ProductsModule\Repository\PostalFeesRepository
-	productBundlesRepository: Crm\ProductsModule\Repository\ProductBundlesRepository
-	productPropertiesRepository: Crm\ProductsModule\Repository\ProductPropertiesRepository
-	productsRepository: Crm\ProductsModule\Repository\ProductsRepository
-	productTemplatesRepository: Crm\ProductsModule\Repository\ProductTemplatesRepository
-	productTemplatePropertiesRepository: Crm\ProductsModule\Repository\ProductTemplatePropertiesRepository
-	productTagsRepository: Crm\ProductsModule\Repository\ProductTagsRepository
-	tagsRepository: Crm\ProductsModule\Repository\TagsRepository
-	postalFeeConditionsRepository: Crm\ProductsModule\Repository\CountryPostalFeeConditionsRepository
+	countryPostalFeesRepository: Crm\ProductsModule\Repositories\CountryPostalFeesRepository
+	distributionCentersRepository: Crm\ProductsModule\Repositories\DistributionCentersRepository
+	ordersRepository: Crm\ProductsModule\Repositories\OrdersRepository
+	postalFeesRepository: Crm\ProductsModule\Repositories\PostalFeesRepository
+	productBundlesRepository: Crm\ProductsModule\Repositories\ProductBundlesRepository
+	productPropertiesRepository: Crm\ProductsModule\Repositories\ProductPropertiesRepository
+	productsRepository: Crm\ProductsModule\Repositories\ProductsRepository
+	productTemplatesRepository: Crm\ProductsModule\Repositories\ProductTemplatesRepository
+	productTemplatePropertiesRepository: Crm\ProductsModule\Repositories\ProductTemplatePropertiesRepository
+	productTagsRepository: Crm\ProductsModule\Repositories\ProductTagsRepository
+	tagsRepository: Crm\ProductsModule\Repositories\TagsRepository
+	postalFeeConditionsRepository: Crm\ProductsModule\Repositories\CountryPostalFeeConditionsRepository
 
-	- Crm\ProductsModule\Builder\ProductBuilder
+	- Crm\ProductsModule\Models\Builder\ProductBuilder
 
 	- Crm\ProductsModule\Commands\CalculateAveragesCommand
 
-	- Crm\ProductsModule\Components\ProductItemsListWidget
-	- Crm\ProductsModule\Components\ProductStatsFactory
-	- Crm\ProductsModule\Components\TotalShopPaymentsWidget
-	- Crm\ProductsModule\Components\AvgProductsPaymentWidget
-	- Crm\ProductsModule\Components\UserOrdersWidget
-	- Crm\ProductsModule\Components\FreeShippingProgressBarWidget
-	- Crm\ProductsModule\Components\RecommendedProductsWidget
+	- Crm\ProductsModule\Components\ProductItemsListWidget\ProductItemsListWidget
+	- Crm\ProductsModule\Components\ProductStats\ProductStatsFactory
+	- Crm\ProductsModule\Components\TotalShopPaymentsWidget\TotalShopPaymentsWidget
+	- Crm\ProductsModule\Components\AvgProductsPaymentWidget\AvgProductsPaymentWidget
+	- Crm\ProductsModule\Components\UserOrdersWidget\UserOrdersWidget
+	- Crm\ProductsModule\Components\FreeShippingProgressBarWidget\FreeShippingProgressBarWidget
+	- Crm\ProductsModule\Components\RecommendedProductsWidget\RecommendedProductsWidget
 
-	- Crm\ProductsModule\DataProvider\PaymentFormDataProvider
-	- Crm\ProductsModule\DataProvider\PaymentsAdminFilterFormDataProvider
-	- Crm\ProductsModule\DataProvider\PaymentItemTypesFilterDataProvider
+	- Crm\ProductsModule\DataProviders\PaymentFormDataProvider
+	- Crm\ProductsModule\DataProviders\PaymentsAdminFilterFormDataProvider
+	- Crm\ProductsModule\DataProviders\PaymentItemTypesFilterDataProvider
 
-	- Crm\ProductsModule\Distribution\AmountSpentDistribution
-	- Crm\ProductsModule\Distribution\PaymentCountsDistribution
-	- Crm\ProductsModule\Distribution\ProductShopCountsDistribution
-	- Crm\ProductsModule\Distribution\ProductDaysFromLastOrderDistribution
+	- Crm\ProductsModule\Models\Distribution\AmountSpentDistribution
+	- Crm\ProductsModule\Models\Distribution\PaymentCountsDistribution
+	- Crm\ProductsModule\Models\Distribution\ProductShopCountsDistribution
+	- Crm\ProductsModule\Models\Distribution\ProductDaysFromLastOrderDistribution
 
-	productManager: Crm\ProductsModule\Manager\ProductManager
+	productManager: Crm\ProductsModule\Models\Manager\ProductManager
 
 	ebookProvider:
-		factory: Crm\ProductsModule\Ebook\EbookProvider
+		factory: Crm\ProductsModule\DataProviders\EbookProvider
 
 	- Crm\ProductsModule\Events\OrderStatusChangeEventHandler
 	- Crm\ProductsModule\Events\PaymentStatusChangeHandler
@@ -53,10 +53,10 @@ services:
 	- Crm\ProductsModule\Forms\CountryPostalFeesFormFactory
 	- Crm\ProductsModule\Forms\SortShopProductsFormFactory
 
-	- Crm\ProductsModule\PaymentItem\PaymentItemHelper
+	- Crm\ProductsModule\Models\PaymentItem\PaymentItemHelper
 
-	productsCache: Crm\ProductsModule\ProductsCache
-	tagsCache: Crm\ProductsModule\TagsCache
+	productsCache: Crm\ProductsModule\Models\ProductsCache
+	tagsCache: Crm\ProductsModule\Models\TagsCache
 
 	- Crm\ProductsModule\Seeders\AddressTypesSeeder
 	- Crm\ProductsModule\Seeders\ConfigsSeeder
@@ -70,20 +70,20 @@ services:
 	- Crm\ProductsModule\Scenarios\ActualOrderStatusCriteria
 	- Crm\ProductsModule\Scenarios\OrderStatusOnScenarioEnterCriteria
 
-	- Crm\ProductsModule\User\OrdersUserDataProvider
+	- Crm\ProductsModule\DataProviders\OrdersUserDataProvider
 
 	paymentCompleteRedirect:
 		setup:
-			- registerRedirectResolver(Crm\ProductsModule\Model\ShopPaymentCompleteRedirectResolver(), 400)
+			- registerRedirectResolver(Crm\ProductsModule\Models\ShopPaymentCompleteRedirectResolver(), 400)
 
 	productsAdminPresenter:
 		factory: Crm\ProductsModule\Presenters\ProductsAdminPresenter
 
 	postalFeeService:
-		factory: Crm\ProductsModule\PostalFeeCondition\PostalFeeService
+		factory: Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeService
 		setup:
-			- registerCondition('products_sum', Crm\ProductsModule\PostalFeeCondition\ProductSumCondition())
-			- registerCondition('user_segment', Crm\ProductsModule\PostalFeeCondition\UserSegmentCondition())
+			- registerCondition('products_sum', Crm\ProductsModule\Models\PostalFeeCondition\ProductSumCondition())
+			- registerCondition('user_segment', Crm\ProductsModule\Models\PostalFeeCondition\UserSegmentCondition())
 
 	productsPreNotificationEventHandler:
 		factory: Crm\ProductsModule\Events\PreNotificationEventHandler

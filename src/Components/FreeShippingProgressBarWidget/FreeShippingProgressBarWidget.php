@@ -4,11 +4,11 @@ namespace Crm\ProductsModule\Components\FreeShippingProgressBarWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
-use Crm\ProductsModule\Model\ProductsTrait;
-use Crm\ProductsModule\PostalFeeCondition\PostalFeeMessageConditionInterface;
-use Crm\ProductsModule\PostalFeeCondition\PostalFeeNumericConditionInterface;
-use Crm\ProductsModule\PostalFeeCondition\PostalFeeService;
-use Crm\ProductsModule\Repository\ProductsRepository;
+use Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeMessageConditionInterface;
+use Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeNumericConditionInterface;
+use Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeService;
+use Crm\ProductsModule\Models\ProductsTrait;
+use Crm\ProductsModule\Repositories\ProductsRepository;
 use Crm\UsersModule\Repository\CountriesRepository;
 
 class FreeShippingProgressBarWidget extends BaseLazyWidget

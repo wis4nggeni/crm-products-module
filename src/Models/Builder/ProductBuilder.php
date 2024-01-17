@@ -3,10 +3,10 @@
 namespace Crm\ProductsModule\Models\Builder;
 
 use Crm\ApplicationModule\Builder\Builder;
-use Crm\ProductsModule\Repository\ProductBundlesRepository;
-use Crm\ProductsModule\Repository\ProductPropertiesRepository;
-use Crm\ProductsModule\Repository\ProductTagsRepository;
-use Crm\ProductsModule\Repository\ProductsRepository;
+use Crm\ProductsModule\Repositories\ProductBundlesRepository;
+use Crm\ProductsModule\Repositories\ProductPropertiesRepository;
+use Crm\ProductsModule\Repositories\ProductTagsRepository;
+use Crm\ProductsModule\Repositories\ProductsRepository;
 use Nette\Database\Explorer;
 
 class ProductBuilder extends Builder

@@ -4,8 +4,8 @@ namespace Crm\ProductsModule\Tests;
 
 use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
-use Crm\ProductsModule\PostalFeeCondition\ProductSumCondition;
-use Crm\ProductsModule\Repository\ProductsRepository;
+use Crm\ProductsModule\Models\PostalFeeCondition\ProductSumCondition;
+use Crm\ProductsModule\Repositories\ProductsRepository;
 use Nette\Database\Table\ActiveRow;
 
 class ProductSumConditionTest extends DatabaseTestCase

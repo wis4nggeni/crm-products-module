@@ -43,13 +43,13 @@
                     <td>{$order->payment->variable_symbol}</td>
                     <td>
                         <div class="list-group">
-                            {var $productItems = $order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\PaymentItem\ProductPaymentItem::TYPE)}
+                            {var $productItems = $order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem::TYPE)}
                             <a n:foreach="$productItems as $productItem" class="list-group-item" href="{plink :Products:ProductsAdmin:Show $productItem->product_id}">
                                 {$productItem->name}
                                 <small>({$productItem->count}&nbsp;x&nbsp;{$productItem->amount|price})</small>
                             </a>
 
-                            {var $postalFeeItems = $order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\PaymentItem\PostalFeePaymentItem::TYPE)}
+                            {var $postalFeeItems = $order->payment->related('payment_items')->where('type = ?', \Crm\ProductsModule\Models\PaymentItem\PostalFeePaymentItem::TYPE)}
                             <div n:foreach="$postalFeeItems as $postalFeeItem" class="list-group-item">
                                 {$postalFeeItem->name}
                                 <small>({$postalFeeItem->count}&nbsp;x&nbsp;{$postalFeeItem->amount|price})</small>

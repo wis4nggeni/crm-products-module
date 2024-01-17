@@ -3,7 +3,7 @@
 namespace Crm\ProductsModule\Models\PostalFeeCondition;
 
 use Crm\ApplicationModule\Selection;
-use Crm\ProductsModule\Repository\CountryPostalFeesRepository;
+use Crm\ProductsModule\Repositories\CountryPostalFeesRepository;
 use Nette\Database\Table\ActiveRow;
 
 class PostalFeeService

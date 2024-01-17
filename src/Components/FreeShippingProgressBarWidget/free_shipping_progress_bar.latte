@@ -1,13 +1,13 @@
 <div class="row" style="margin-top: 20px;">
     <div class="col-xs-12">
-        {if $condition instanceof Crm\ProductsModule\PostalFeeCondition\PostalFeeMessageConditionInterface}
+        {if $condition instanceof Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeMessageConditionInterface}
             <span></span>
             {if $isReached}
                 <span>{$condition->getReachedMessage($cartProducts, $postalFeeConditionValue)|noescape}</span>
             {else}
                 <span>{$condition->getNotReachedMessage($cartProducts, $postalFeeConditionValue)|noescape}</span>
             {/if}
-        {elseif $condition instanceof Crm\ProductsModule\PostalFeeCondition\PostalFeeNumericConditionInterface}
+        {elseif $condition instanceof Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeNumericConditionInterface}
             {if $isReached}
                 <span>{_products.frontend.components.free_shipping_progress_bar.reached_message, ['amount' => ($desiredValue|price)]|noescape}</span>
             {else}
@@ -17,7 +17,7 @@
     </div>
 </div>
 
-{if $condition instanceof Crm\ProductsModule\PostalFeeCondition\PostalFeeNumericConditionInterface}
+{if $condition instanceof Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeNumericConditionInterface}
 <div style="margin-top: 10px;">
     <div class="progress" style="height: 5px;">
         {if $isReached}

@@ -8,7 +8,7 @@ use Crm\PaymentsModule\Repository\PaymentGatewaysRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\PaymentsModule\Tests\TestPaymentConfig;
 use Crm\ProductsModule\Events\OrderStatusChangeEvent;
-use Crm\ProductsModule\Repository\OrdersRepository;
+use Crm\ProductsModule\Repositories\OrdersRepository;
 use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
 use Crm\ProductsModule\Scenarios\OrderStatusOnScenarioEnterCriteria;
 use Crm\ScenariosModule\Repositories\ElementsRepository;

@@ -2,7 +2,7 @@
 
 namespace Crm\ProductsModule\Models;
 
-use Crm\ProductsModule\Repository\DistributionCentersRepository;
+use Crm\ProductsModule\Repositories\DistributionCentersRepository;
 
 trait ProductsTrait
 {

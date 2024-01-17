@@ -4,7 +4,7 @@ namespace Crm\ProductsModule\Scenarios;
 
 use Crm\ApplicationModule\Criteria\ScenarioConditionModelInterface;
 use Crm\ApplicationModule\Selection;
-use Crm\ProductsModule\Repository\OrdersRepository;
+use Crm\ProductsModule\Repositories\OrdersRepository;
 
 class OrderScenarioConditionalModel implements ScenarioConditionModelInterface
 {
