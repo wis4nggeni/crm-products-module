@@ -3,8 +3,8 @@
 namespace Crm\ProductsModule\Models\PostalFeeCondition;
 
 use Contributte\Translation\Translator;
-use Crm\SegmentModule\Repository\SegmentsRepository;
-use Crm\SegmentModule\SegmentFactoryInterface;
+use Crm\SegmentModule\Models\SegmentFactoryInterface;
+use Crm\SegmentModule\Repositories\SegmentsRepository;
 use Nette\ComponentModel\IComponent;
 use Nette\Forms\Controls\SelectBox;
 
