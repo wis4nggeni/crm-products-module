@@ -7,7 +7,7 @@ use Crm\ApplicationModule\User\UserDataProviderInterface;
 use Crm\ProductsModule\Models\Config;
 use Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repositories\OrdersRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\User\AddressesUserDataProvider;
 use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
