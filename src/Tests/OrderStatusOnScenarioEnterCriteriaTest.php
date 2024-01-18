@@ -204,7 +204,7 @@ class OrderStatusOnScenarioEnterCriteriaTest extends BaseTestCase
     protected function getSubscriptionType()
     {
         if (!$this->subscriptionType) {
-            $subscriptionTypeBuilder = $this->container->getByType('Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder');
+            $subscriptionTypeBuilder = $this->container->getByType(\Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder::class);
             $this->subscriptionType = $subscriptionTypeBuilder->createNew()
                 ->setName('my subscription type')
                 ->setUserLabel('my subscription type')
@@ -223,7 +223,7 @@ class OrderStatusOnScenarioEnterCriteriaTest extends BaseTestCase
             $this->container->addService('my_payConfig', new TestPaymentConfig());
         }
         if (!$this->paymentGateway) {
-            $paymentGatewaysRepository = $this->container->getByType('Crm\PaymentsModule\Repository\PaymentGatewaysRepository');
+            $paymentGatewaysRepository = $this->container->getByType(\Crm\PaymentsModule\Repository\PaymentGatewaysRepository::class);
             $this->paymentGateway = $paymentGatewaysRepository->add('MyPay', 'my_pay');
         }
         return $this->paymentGateway;
