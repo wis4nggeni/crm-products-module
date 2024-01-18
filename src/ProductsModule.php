@@ -50,7 +50,7 @@ use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
 use Crm\ProductsModule\Scenarios\OrderStatusOnScenarioEnterCriteria;
 use Crm\ProductsModule\Seeders\AddressTypesSeeder;
 use Crm\ProductsModule\Seeders\ConfigsSeeder;
-use Crm\UsersModule\Components\AddressWidget;
+use Crm\UsersModule\Components\AddressWidget\AddressWidget;
 use Crm\UsersModule\Events\PreNotificationEvent;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;

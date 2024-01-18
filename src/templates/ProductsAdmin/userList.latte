@@ -55,7 +55,7 @@
                 </a>
                 <span n:if="$u->invoice" class="label label-info">{_products.admin.products.users_list.invoice}</span>
                 <span n:if="$u->is_institution" class="label label-danger">{_products.admin.products.users_list.institution}</span>
-                <span n:if="$u->role === \Crm\UsersModule\Repository\UsersRepository::ROLE_ADMIN" class="label label-warning">{_products.admin.products.users_list.admin}</span>
+                <span n:if="$u->role === \Crm\UsersModule\Repositories\UsersRepository::ROLE_ADMIN" class="label label-warning">{_products.admin.products.users_list.admin}</span>
             </td>
             <td class="text-muted">{$u->source}</td>
             <td>

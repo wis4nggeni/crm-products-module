@@ -9,7 +9,7 @@ use Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeService;
 use Crm\ProductsModule\Repositories\CountryPostalFeeConditionsRepository;
 use Crm\ProductsModule\Repositories\CountryPostalFeesRepository;
 use Crm\ProductsModule\Repositories\PostalFeesRepository;
-use Crm\UsersModule\Repository\CountriesRepository;
+use Crm\UsersModule\Repositories\CountriesRepository;
 use Nette\Application\UI\Form;
 
 class CountryPostalFeesFormFactory

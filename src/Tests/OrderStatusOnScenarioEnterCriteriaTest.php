@@ -17,9 +17,9 @@ use Crm\ScenariosModule\Repositories\ScenariosRepository;
 use Crm\ScenariosModule\Repositories\TriggersRepository;
 use Crm\ScenariosModule\Tests\BaseTestCase;
 use Crm\SubscriptionsModule\Models\Builder\SubscriptionTypeBuilder;
-use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Events\UserRegisteredEvent;
-use Crm\UsersModule\Repository\UsersRepository;
+use Crm\UsersModule\Models\Auth\UserManager;
+use Crm\UsersModule\Repositories\UsersRepository;
 
 class OrderStatusOnScenarioEnterCriteriaTest extends BaseTestCase
 {

@@ -6,7 +6,7 @@ use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\ProductsModule\Forms\CountryPostalFeesFormFactory;
 use Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeService;
 use Crm\ProductsModule\Repositories\CountryPostalFeesRepository;
-use Crm\UsersModule\Repository\CountriesRepository;
+use Crm\UsersModule\Repositories\CountriesRepository;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 

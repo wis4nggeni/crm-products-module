@@ -3,7 +3,7 @@
 namespace Crm\ProductsModule\Seeders;
 
 use Crm\ApplicationModule\Seeders\ISeeder;
-use Crm\UsersModule\Repository\AddressTypesRepository;
+use Crm\UsersModule\Repositories\AddressTypesRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class AddressTypesSeeder implements ISeeder

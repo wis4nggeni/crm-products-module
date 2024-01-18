@@ -9,7 +9,7 @@ use Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeNumericConditionInterf
 use Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeService;
 use Crm\ProductsModule\Models\ProductsTrait;
 use Crm\ProductsModule\Repositories\ProductsRepository;
-use Crm\UsersModule\Repository\CountriesRepository;
+use Crm\UsersModule\Repositories\CountriesRepository;
 
 class FreeShippingProgressBarWidget extends BaseLazyWidget
 {
