@@ -2,8 +2,8 @@
 
 namespace Crm\ProductsModule\Models\PaymentItem;
 
-use Crm\PaymentsModule\Repository\PaymentItemsRepository;
-use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\PaymentsModule\Repositories\PaymentItemsRepository;
+use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Nette\Database\Table\ActiveRow;
 
 class PaymentItemHelper

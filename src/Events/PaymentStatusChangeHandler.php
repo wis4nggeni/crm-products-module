@@ -3,7 +3,7 @@
 namespace Crm\ProductsModule\Events;
 
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
-use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\ProductsModule\Models\Manager\ProductManager;
 use Crm\ProductsModule\Models\PaymentItem\PaymentItemHelper;
 use Crm\ProductsModule\Repositories\OrdersRepository;

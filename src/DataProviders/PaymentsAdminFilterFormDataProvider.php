@@ -3,7 +3,7 @@
 namespace Crm\ProductsModule\DataProviders;
 
 use Crm\ApplicationModule\DataProvider\DataProviderException;
-use Crm\PaymentsModule\DataProvider\AdminFilterFormDataProviderInterface;
+use Crm\PaymentsModule\DataProviders\AdminFilterFormDataProviderInterface;
 use Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repositories\ProductsRepository;
 use Nette\Application\UI\Form;

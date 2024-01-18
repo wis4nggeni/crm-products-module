@@ -3,7 +3,7 @@
 namespace Crm\ProductsModule\Presenters;
 
 use Crm\ApplicationModule\Presenters\FrontendPresenter;
-use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\ProductsModule\DataProviders\EbookProvider;
 use Crm\ProductsModule\Models\PaymentItem\PaymentItemHelper;
 use Crm\ProductsModule\Repositories\OrdersRepository;

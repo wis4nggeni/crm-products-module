@@ -5,7 +5,7 @@ namespace Crm\ProductsModule\Repositories;
 use Crm\ApplicationModule\Cache\CacheRepository;
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
-use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\ProductsModule\Models\Distribution\AmountSpentDistribution;
 use Crm\ProductsModule\Models\Distribution\PaymentCountsDistribution;
 use Crm\ProductsModule\Models\Distribution\ProductDaysFromLastOrderDistribution;

@@ -2,8 +2,8 @@
 
 namespace Crm\ProductsModule\Tests;
 
-use Crm\PaymentsModule\PaymentItem\PaymentItemContainer;
-use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\PaymentsModule\Models\PaymentItem\PaymentItemContainer;
+use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\PaymentsModule\Tests\PaymentsTestCase;
 use Crm\ProductsModule\Repositories\OrdersRepository;
 use Crm\ProductsModule\Scenarios\ActualOrderStatusCriteria;

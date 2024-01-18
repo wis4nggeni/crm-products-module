@@ -3,7 +3,7 @@
 namespace Crm\ProductsModule\DataProviders;
 
 use Crm\ApplicationModule\DataProvider\DataProviderException;
-use Crm\PaymentsModule\DataProvider\PaymentItemTypesFilterDataProviderInterface;
+use Crm\PaymentsModule\DataProviders\PaymentItemTypesFilterDataProviderInterface;
 use Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem;
 use Nette\Localization\Translator;
 

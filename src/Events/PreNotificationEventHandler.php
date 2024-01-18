@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Crm\ProductsModule\Events;
 
-use Crm\PaymentsModule\Repository\PaymentItemsRepository;
-use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\PaymentsModule\Repositories\PaymentItemsRepository;
+use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\UsersModule\Events\NotificationContext;
 use Crm\UsersModule\Events\PreNotificationEvent;
 use League\Event\AbstractListener;

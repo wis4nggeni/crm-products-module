@@ -3,9 +3,9 @@
 namespace Crm\ProductsModule\DataProviders;
 
 use Crm\ApplicationModule\DataProvider\DataProviderException;
-use Crm\PaymentsModule\DataProvider\PaymentFormDataProviderInterface;
-use Crm\PaymentsModule\Repository\PaymentItemsRepository;
-use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\PaymentsModule\DataProviders\PaymentFormDataProviderInterface;
+use Crm\PaymentsModule\Repositories\PaymentItemsRepository;
+use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\ProductsModule\Events\CartItemAddedEvent;
 use Crm\ProductsModule\Models\PaymentItem\PostalFeePaymentItem;
 use Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem;

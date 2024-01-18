@@ -4,7 +4,7 @@ namespace Crm\ProductsModule\Presenters;
 
 use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\ApplicationModule\Components\PreviousNextPaginator;
-use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\ProductsModule\Forms\CheckoutFormFactory;
 use Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Models\PostalFeeCondition\PostalFeeService;

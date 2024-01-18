@@ -2,7 +2,7 @@
 
 namespace Crm\ProductsModule\Models;
 
-use Crm\PaymentsModule\Model\PaymentCompleteRedirectResolver;
+use Crm\PaymentsModule\Models\SuccessPageResolver\PaymentCompleteRedirectResolver;
 use Nette\Database\Table\ActiveRow;
 
 class ShopPaymentCompleteRedirectResolver implements PaymentCompleteRedirectResolver
