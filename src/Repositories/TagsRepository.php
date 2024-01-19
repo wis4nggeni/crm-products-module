@@ -2,9 +2,9 @@
 
 namespace Crm\ProductsModule\Repositories;
 
-use Crm\ApplicationModule\ActiveRow;
-use Crm\ApplicationModule\Repository;
-use Crm\ApplicationModule\Selection;
+use Crm\ApplicationModule\Models\Database\ActiveRow;
+use Crm\ApplicationModule\Models\Database\Repository;
+use Crm\ApplicationModule\Models\Database\Selection;
 
 class TagsRepository extends Repository
 {

@@ -3,8 +3,8 @@
 namespace Crm\ProductsModule\Forms;
 
 use Contributte\Translation\Translator;
-use Crm\ApplicationModule\DataProvider\DataProviderManager;
-use Crm\ApplicationModule\FormFactoryDefaultsTrait;
+use Crm\ApplicationModule\Forms\FormFactoryDefaultsTrait;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
 use Crm\ProductsModule\DataProviders\ProductTemplatePropertiesDataProviderInterface;
 use Crm\ProductsModule\DataProviders\ProductsFormDataProviderInterface;
 use Crm\ProductsModule\Events\ProductSaveEvent;

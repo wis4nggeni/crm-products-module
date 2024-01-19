@@ -3,8 +3,8 @@
 namespace Crm\ProductsModule\Scenarios;
 
 use Contributte\Translation\Translator;
-use Crm\ApplicationModule\Criteria\ScenarioParams\StringLabeledArrayParam;
-use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
+use Crm\ApplicationModule\Models\Criteria\ScenarioParams\StringLabeledArrayParam;
+use Crm\ApplicationModule\Models\Criteria\ScenariosCriteriaInterface;
 use Crm\ProductsModule\Repositories\OrdersRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;

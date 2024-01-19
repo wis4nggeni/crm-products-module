@@ -2,10 +2,10 @@
 
 namespace Crm\ProductsModule\Repositories;
 
-use Crm\ApplicationModule\Cache\CacheRepository;
 use Crm\ApplicationModule\Hermes\HermesMessage;
-use Crm\ApplicationModule\Repository;
-use Crm\ApplicationModule\Repository\AuditLogRepository;
+use Crm\ApplicationModule\Models\Database\Repository;
+use Crm\ApplicationModule\Repositories\AuditLogRepository;
+use Crm\ApplicationModule\Repositories\CacheRepository;
 use Crm\ProductsModule\Events\NewOrderEvent;
 use Crm\ProductsModule\Events\OrderStatusChangeEvent;
 use League\Event\Emitter;

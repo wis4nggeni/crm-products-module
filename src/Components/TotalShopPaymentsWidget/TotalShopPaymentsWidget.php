@@ -2,7 +2,7 @@
 
 namespace Crm\ProductsModule\Components\TotalShopPaymentsWidget;
 
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
 
 class TotalShopPaymentsWidget extends BaseLazyWidget
 {

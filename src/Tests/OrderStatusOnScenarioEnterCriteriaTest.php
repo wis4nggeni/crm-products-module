@@ -2,7 +2,7 @@
 
 namespace Crm\ProductsModule\Tests;
 
-use Crm\ApplicationModule\Criteria\ScenariosCriteriaStorage;
+use Crm\ApplicationModule\Models\Criteria\ScenariosCriteriaStorage;
 use Crm\PaymentsModule\Models\PaymentItem\PaymentItemContainer;
 use Crm\PaymentsModule\Repositories\PaymentGatewaysRepository;
 use Crm\PaymentsModule\Repositories\PaymentsRepository;

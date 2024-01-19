@@ -2,7 +2,7 @@
 
 namespace Crm\ProductsModule\Repositories;
 
-use Crm\ApplicationModule\Repository;
+use Crm\ApplicationModule\Models\Database\Repository;
 
 class ProductTemplatesRepository extends Repository
 {

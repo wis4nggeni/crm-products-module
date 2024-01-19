@@ -2,7 +2,7 @@
 
 namespace Crm\ProductsModule\Forms;
 
-use Crm\ApplicationModule\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
 use Crm\ProductsModule\DataProviders\SortShopProductsFormValidationDataProviderInterface;
 use Crm\ProductsModule\Repositories\ProductsRepository;
 use Nette\Application\UI\Form;

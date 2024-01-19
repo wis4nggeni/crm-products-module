@@ -2,9 +2,9 @@
 
 namespace Crm\ProductsModule\Repositories;
 
-use Crm\ApplicationModule\Cache\CacheRepository;
-use Crm\ApplicationModule\Repository;
-use Crm\ApplicationModule\Repository\AuditLogRepository;
+use Crm\ApplicationModule\Models\Database\Repository;
+use Crm\ApplicationModule\Repositories\AuditLogRepository;
+use Crm\ApplicationModule\Repositories\CacheRepository;
 use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\ProductsModule\Models\Distribution\AmountSpentDistribution;
 use Crm\ProductsModule\Models\Distribution\PaymentCountsDistribution;
@@ -69,9 +69,9 @@ class ProductsRepository extends Repository
         return parent::update($row, $data);
     }
 
-    final public function find($id): ?\Crm\ApplicationModule\ActiveRow
+    final public function find($id): ?\Crm\ApplicationModule\Models\Database\ActiveRow
     {
-        /** @var \Crm\ApplicationModule\ActiveRow $result */
+        /** @var \Crm\ApplicationModule\Models\Database\ActiveRow $result */
         $result = $this->getTable()->where(['id' => $id, 'deleted_at' => null])->fetch();
         return $result;
     }

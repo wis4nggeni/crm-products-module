@@ -4,9 +4,9 @@ namespace Crm\ProductsModule\Presenters;
 
 use Crm\AdminModule\Components\DateFilterFormFactory;
 use Crm\AdminModule\Presenters\AdminPresenter;
-use Crm\ApplicationModule\Components\Graphs\GoogleBarGraphGroupControlFactoryInterface;
-use Crm\ApplicationModule\Graphs\Criteria;
-use Crm\ApplicationModule\Graphs\GraphDataItem;
+use Crm\ApplicationModule\Components\Graphs\GoogleBarGraphGroup\GoogleBarGraphGroupControlFactoryInterface;
+use Crm\ApplicationModule\Models\Graphs\Criteria;
+use Crm\ApplicationModule\Models\Graphs\GraphDataItem;
 use Crm\ProductsModule\Components\ProductStats\ProductStatsFactory;
 use Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem;
 use Nette\Application\Attributes\Persistent;

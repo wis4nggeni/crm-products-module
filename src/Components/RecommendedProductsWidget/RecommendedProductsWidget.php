@@ -2,8 +2,8 @@
 
 namespace Crm\ProductsModule\Components\RecommendedProductsWidget;
 
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
-use Crm\ApplicationModule\Widget\LazyWidgetManager;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\LazyWidgetManager;
 use Crm\ProductsModule\Repositories\ProductsRepository;
 
 class RecommendedProductsWidget extends BaseLazyWidget

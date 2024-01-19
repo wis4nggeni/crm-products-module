@@ -2,7 +2,7 @@
 
 namespace Crm\ProductsModule\Tests;
 
-use Crm\ApplicationModule\ActiveRow;
+use Crm\ApplicationModule\Models\Database\ActiveRow;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Crm\ProductsModule\Models\Manager\ProductManager;
 use Crm\ProductsModule\Repositories\ProductBundlesRepository;

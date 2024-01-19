@@ -2,8 +2,8 @@
 
 namespace Crm\ProductsModule\DataProviders;
 
-use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
-use Crm\ApplicationModule\User\UserDataProviderInterface;
+use Crm\ApplicationModule\Models\User\UserDataProviderInterface;
+use Crm\ApplicationModule\Repositories\ConfigsRepository;
 use Crm\ProductsModule\Models\Config;
 use Crm\ProductsModule\Models\PaymentItem\ProductPaymentItem;
 use Crm\ProductsModule\Repositories\OrdersRepository;
