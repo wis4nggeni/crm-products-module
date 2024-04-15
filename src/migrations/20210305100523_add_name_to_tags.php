@@ -18,21 +18,19 @@ class AddNameToTags extends AbstractMigration
             $webCode = Strings::webalize($row['code']);
 
             if (array_key_exists($webCode, $processedTags)) {
-                /** @var Query\UpdateQuery $builder */
-                $builder = $this->getQueryBuilder(Query::TYPE_UPDATE);
+                $builder = $this->getUpdateBuilder();
                 $builder->update('product_tags')
                     ->set('tag_id', $processedTags[$webCode])
                     ->where(['tag_id' => $row['id']])
                     ->execute();
 
-                /** @var Query\DeleteQuery $builder */
-                $builder = $this->getQueryBuilder(Query::TYPE_DELETE);
+                $builder = $this->getDeleteBuilder();
                 $builder->delete('tags')->where(['id' => $row['id']])->execute();
             } else {
                 $processedTags[$webCode] = $row['id'];
 
                 /** @var Query\UpdateQuery $builder */
-                $builder = $this->getQueryBuilder(Query::TYPE_UPDATE);
+                $builder = $this->getUpdateBuilder();
                 $builder->update('tags')
                     ->set('name', $row['code'])
                     ->set('code', $webCode)
