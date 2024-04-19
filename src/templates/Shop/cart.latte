@@ -56,7 +56,9 @@
         {foreach $flashes as $flash}
             <div n:if="$flash->type == 'add-cart'" class="row-fluid add-cart-message">
                 <div class="col-xs-12">
-                    {_products.frontend.shop.cart.messages.item_added_to_cart, [name => $flash->message]|noescape}
+                    {_products.frontend.shop.cart.messages.item_added_to_cart, [
+                        name => escapehtml($flash->message),
+                    ]|noescape}
                     <a n:href="default" style="text-decoration: underline;">{_products.frontend.shop.cart.continue_with_shopping}</a>.
                 </div>
                 <script>
@@ -66,13 +68,17 @@
 
             <div n:if="$flash->type == 'product-not-available'" class="row-fluid add-cart-message">
                 <div class="col-xs-12">
-                    {_products.frontend.shop.cart.messages.item_not_available, [name => $flash->message]|noescape}
+                    {_products.frontend.shop.cart.messages.item_not_available, [
+                        name => escapehtml($flash->message),
+                    ]|noescape}
                 </div>
             </div>
 
             <div n:if="$flash->type == 'product-more-not-available'" class="row-fluid add-cart-message">
                 <div class="col-xs-12">
-                    {_products.frontend.shop.cart.messages.item_more_not_available, [name => $flash->message]|noescape}
+                    {_products.frontend.shop.cart.messages.item_more_not_available, [
+                        name => escapehtml($flash->message),
+                    ]|noescape}
                 </div>
             </div>
 
@@ -80,25 +86,35 @@
 
             <div n:if="$flash->type == 'product-exists'" class="row-fluid add-cart-message">
                 <div class="col-xs-12">
-                    {_products.frontend.shop.cart.messages.item_already_purchased, [name => $flash->message, link => $linkToLibrary]|noescape}
+                    {_products.frontend.shop.cart.messages.item_already_purchased, [
+                        name => escapehtml($flash->message),
+                        link => $linkToLibrary,
+                    ]|noescape}
                 </div>
             </div>
 
             <div n:if="$flash->type == 'product-removed'" class="row-fluid add-cart-message">
                 <div class="col-xs-12">
-                    {_products.frontend.shop.cart.messages.items_removed_from_cart, [name => $flash->message, link => $linkToLibrary]|noescape}
+                    {_products.frontend.shop.cart.messages.items_removed_from_cart, [
+                        name => escapehtml($flash->message),
+                        link => $linkToLibrary,
+                    ]|noescape}
                 </div>
             </div>
 
             <div n:if="$flash->type == 'product-out-of-stock'" class="row-fluid add-cart-message">
                 <div class="col-xs-12">
-                    {_products.frontend.shop.cart.messages.items_removed_from_cart_reason_sold_out, [name => $flash->message]|noescape}
+                    {_products.frontend.shop.cart.messages.items_removed_from_cart_reason_sold_out, [
+                        name => escapehtml($flash->message),
+                    ]|noescape}
                 </div>
             </div>
 
             <div n:if="$flash->type == 'product-little-in-stock'" class="row-fluid add-cart-message">
                 <div class="col-xs-12">
-                    {_products.frontend.shop.cart.messages.items_removed_from_cart_reason_little_stock, [name => $flash->message]|noescape}
+                    {_products.frontend.shop.cart.messages.items_removed_from_cart_reason_little_stock, [
+                        name => escapehtml($flash->message),
+                    ]|noescape}
                 </div>
             </div>
         {/foreach}
@@ -133,7 +149,9 @@
                                     </a>
                                     {else}
                                     <span class="input-group-addon ajax increase-cart-amount" data-ajax-off="unique" data-toggle="tooltip"
-                                        title="{_products.frontend.shop.cart.messages.item_more_not_available, [name => $product->name]|noescape}">
+                                        title="{_products.frontend.shop.cart.messages.item_more_not_available, [
+                                            name => escapehtml($product->name),
+                                        ]|noescape}">
                                         <i class="fa fa-plus" style="color:silver"></i>
                                     </span>
                                     {/if}

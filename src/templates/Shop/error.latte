@@ -3,6 +3,8 @@
 {block #content}
 <div class="row">
     <div class="col-xs-12">
-        <p id="error_message">{_products.frontend.shop.error.text, ['contactEmail' => $contactEmail]|noescape}</p>
+        <p id="error_message">{_products.frontend.shop.error.text, [
+            'contactEmail' => escapehtml($contactEmail),
+        ]|noescape}</p>
     </div>
 </div>

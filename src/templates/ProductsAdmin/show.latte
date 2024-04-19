@@ -43,7 +43,7 @@
                 <b>{_products.data.products.fields.bundle}:</b> {$product->bundle|yesNo}
             </li>
             <li class="list-group-item">
-                <b>{_products.data.products.fields.user_label}:</b> {nl2br($product->user_label)|noescape}
+                <b>{_products.data.products.fields.user_label}:</b> {$product->user_label|breaklines|noescape}
             </li>
             <li class="list-group-item">
                 <b>{_products.data.products.fields.created_at}:</b> {$product->created_at|userDate}
