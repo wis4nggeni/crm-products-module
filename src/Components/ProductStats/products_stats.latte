@@ -19,6 +19,30 @@
   </script>
 {/block}
 
+<style>
+  td.numeric {
+    text-align: right;
+  }
+</style>
+
+{capture $totals}
+  <tr class="tablesorter-ignoreRow">
+    <td>{_products.admin.products.stats.total}</td>
+    <td class="numeric">{$totalStats['today']['count']}</td>
+    <td class="numeric">{$totalStats['today']['amount']|price}</td>
+    <td class="numeric">{$totalStats['yesterday']['count']}</td>
+    <td class="numeric">{$totalStats['yesterday']['amount']|price}</td>
+    <td class="numeric">{$totalStats['last_7days']['count']}</td>
+    <td class="numeric">{$totalStats['last_7days']['amount']|price}</td>
+    <td class="numeric">{$totalStats['current_month']['count']}</td>
+    <td class="numeric">{$totalStats['current_month']['amount']|price}</td>
+    <td class="numeric">{$totalStats['last_month']['count']}</td>
+    <td class="numeric">{$totalStats['last_month']['amount']|price}</td>
+    <td class="numeric">{$totalStats['all']['count']}</td>
+    <td class="numeric">{$totalStats['all']['amount']|price}</td>
+  </tr>
+{/capture}
+
 <table class="table table-striped table-bordered tablesorter">
   <thead>
   <tr>
@@ -44,49 +68,38 @@
     <th>{_products.admin.products.stats.count}</th>
     <th>{_products.admin.products.stats.amount}</th>
   </tr>
+  {$totals}
   </thead>
   <tbody>
   <tr n:foreach="$productStats as $product">
     <td><a href="{plink :Products:ProductsAdmin:show $product['id']}">{$product['name']}</a></td>
 
-    <td align="right">{$product['count']['today'] ?? 0}</td>
+    <td class="numeric">{$product['count']['today'] ?? 0}</td>
     {var $price = $product['amount']['today'] ?? 0}
-    <td align="right" data-text="{$price}">{$price|price}</td>
+    <td class="numeric" data-text="{$price}">{$price|price}</td>
 
-    <td align="right">{$product['count']['yesterday'] ?? 0}</td>
+    <td class="numeric">{$product['count']['yesterday'] ?? 0}</td>
     {var $price = $product['amount']['yesterday'] ?? 0}
-    <td align="right" data-text="{$price}">{$price|price}</td>
+    <td class="numeric" data-text="{$price}">{$price|price}</td>
 
-    <td align="right">{$product['count']['last_7days'] ?? 0}</td>
+    <td class="numeric">{$product['count']['last_7days'] ?? 0}</td>
     {var $price = $product['amount']['last_7days'] ?? 0}
-    <td align="right" data-text="{$price}">{$price|price}</td>
+    <td class="numeric" data-text="{$price}">{$price|price}</td>
 
-    <td align="right">{$product['count']['current_month'] ?? 0}</td>
+    <td class="numeric">{$product['count']['current_month'] ?? 0}</td>
     {var $price = $product['amount']['current_month'] ?? 0}
-    <td align="right" data-text="{$price}">{$price|price}</td>
+    <td class="numeric" data-text="{$price}">{$price|price}</td>
 
-    <td align="right">{$product['count']['last_month'] ?? 0}</td>
+    <td class="numeric">{$product['count']['last_month'] ?? 0}</td>
     {var $price = $product['amount']['last_month'] ?? 0}
-    <td align="right" data-text="{$price}">{$price|price}</td>
+    <td class="numeric" data-text="{$price}">{$price|price}</td>
 
-    <td align="right">{$product['count']['all'] ?? 0}</td>
+    <td class="numeric">{$product['count']['all'] ?? 0}</td>
     {var $price = $product['amount']['all'] ?? 0}
-    <td align="right" data-text="{$price}">{$price|price}</td>
+    <td class="numeric" data-text="{$price}">{$price|price}</td>
   </tr>
-  <tfoot>
-  <td>{_products.admin.products.stats.total}</td>
-  <td align="right">{$totalStats['today']['count']}</td>
-  <td align="right">{$totalStats['today']['amount']|price}</td>
-  <td align="right">{$totalStats['yesterday']['count']}</td>
-  <td align="right">{$totalStats['yesterday']['amount']|price}</td>
-  <td align="right">{$totalStats['last_7days']['count']}</td>
-  <td align="right">{$totalStats['last_7days']['amount']|price}</td>
-  <td align="right">{$totalStats['current_month']['count']}</td>
-  <td align="right">{$totalStats['current_month']['amount']|price}</td>
-  <td align="right">{$totalStats['last_month']['count']}</td>
-  <td align="right">{$totalStats['last_month']['amount']|price}</td>
-  <td align="right">{$totalStats['all']['count']}</td>
-  <td align="right">{$totalStats['all']['amount']|price}</td>
-  </tfoot>
   </tbody>
+  <tfoot>
+  {$totals}
+  </tfoot>
 </table>
