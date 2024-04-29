@@ -63,12 +63,13 @@ services:
 
 	- Crm\ProductsModule\Scenarios\OrderScenarioConditionalModel
 	- Crm\ProductsModule\Scenarios\HasOrderCriteria
-	- Crm\ProductsModule\Scenarios\OrderStatusChangeHandler
-	- Crm\ProductsModule\Scenarios\NewOrderHandler
 	- Crm\ProductsModule\Scenarios\HasProductWithTemplateNameCriteria
 	- Crm\ProductsModule\Scenarios\HasProductWithDistributionCenterCriteria
 	- Crm\ProductsModule\Scenarios\ActualOrderStatusCriteria
 	- Crm\ProductsModule\Scenarios\OrderStatusOnScenarioEnterCriteria
+
+	- Crm\ProductsModule\Scenarios\TriggerHandlers\NewOrderTriggerHandler
+	- Crm\ProductsModule\Scenarios\TriggerHandlers\OrderStatusChangeTriggerHandler
 
 	- Crm\ProductsModule\DataProviders\OrdersUserDataProvider
 

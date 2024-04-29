@@ -3,14 +3,15 @@
 namespace Crm\ProductsModule\Tests;
 
 use Crm\ApplicationModule\Models\Criteria\ScenariosCriteriaStorage;
+use Crm\ApplicationModule\Models\Scenario\TriggerManager;
 use Crm\PaymentsModule\Models\PaymentItem\PaymentItemContainer;
 use Crm\PaymentsModule\Repositories\PaymentGatewaysRepository;
 use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\PaymentsModule\Tests\TestPaymentConfig;
 use Crm\ProductsModule\Events\OrderStatusChangeEvent;
 use Crm\ProductsModule\Repositories\OrdersRepository;
-use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
 use Crm\ProductsModule\Scenarios\OrderStatusOnScenarioEnterCriteria;
+use Crm\ProductsModule\Scenarios\TriggerHandlers\OrderStatusChangeTriggerHandler;
 use Crm\ScenariosModule\Repositories\ElementsRepository;
 use Crm\ScenariosModule\Repositories\JobsRepository;
 use Crm\ScenariosModule\Repositories\ScenariosRepository;
@@ -59,10 +60,10 @@ class OrderStatusOnScenarioEnterCriteriaTest extends BaseTestCase
     public function testOrderStatusOnScenarioEnter()
     {
         $this->eventsStorage->register('order_status_change', OrderStatusChangeEvent::class, true);
-        $this->dispatcher->registerHandler(
-            'order-status-change',
-            $this->container->createInstance(OrderStatusChangeHandler::class)
-        );
+
+        /** @var TriggerManager $triggerManager */
+        $triggerManager = $this->inject(TriggerManager::class);
+        $triggerManager->registerTriggerHandler($this->inject(OrderStatusChangeTriggerHandler::class));
 
         $this->createScenarioWithTrigger('order_status_change');
         $orderRow = $this->prepareOrder();

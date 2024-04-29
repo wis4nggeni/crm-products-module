@@ -16,6 +16,7 @@ use Crm\ApplicationModule\Models\Event\EventsStorage;
 use Crm\ApplicationModule\Models\Event\LazyEventEmitter;
 use Crm\ApplicationModule\Models\Menu\MenuContainerInterface;
 use Crm\ApplicationModule\Models\Menu\MenuItem;
+use Crm\ApplicationModule\Models\Scenario\TriggerManager;
 use Crm\ApplicationModule\Models\User\UserDataRegistrator;
 use Crm\ApplicationModule\Models\Widget\LazyWidgetManagerInterface;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
@@ -44,10 +45,10 @@ use Crm\ProductsModule\Scenarios\ActualOrderStatusCriteria;
 use Crm\ProductsModule\Scenarios\HasOrderCriteria;
 use Crm\ProductsModule\Scenarios\HasProductWithDistributionCenterCriteria;
 use Crm\ProductsModule\Scenarios\HasProductWithTemplateNameCriteria;
-use Crm\ProductsModule\Scenarios\NewOrderHandler;
 use Crm\ProductsModule\Scenarios\OrderScenarioConditionalModel;
-use Crm\ProductsModule\Scenarios\OrderStatusChangeHandler;
 use Crm\ProductsModule\Scenarios\OrderStatusOnScenarioEnterCriteria;
+use Crm\ProductsModule\Scenarios\TriggerHandlers\NewOrderTriggerHandler;
+use Crm\ProductsModule\Scenarios\TriggerHandlers\OrderStatusChangeTriggerHandler;
 use Crm\ProductsModule\Seeders\AddressTypesSeeder;
 use Crm\ProductsModule\Seeders\ConfigsSeeder;
 use Crm\UsersModule\Components\AddressWidget\AddressWidget;
@@ -56,7 +57,6 @@ use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Nette\DI\Container;
 use Symfony\Component\Console\Output\OutputInterface;
-use Tomaj\Hermes\Dispatcher;
 
 class ProductsModule extends CrmModule
 {
@@ -167,16 +167,10 @@ class ProductsModule extends CrmModule
         );
     }
 
-    public function registerHermesHandlers(Dispatcher $dispatcher)
+    public function registerScenariosTriggers(TriggerManager $triggerManager): void
     {
-        $dispatcher->registerHandler(
-            'new-order',
-            $this->getInstance(NewOrderHandler::class)
-        );
-        $dispatcher->registerHandler(
-            'order-status-change',
-            $this->getInstance(OrderStatusChangeHandler::class)
-        );
+        $triggerManager->registerTriggerHandler($this->getInstance(NewOrderTriggerHandler::class));
+        $triggerManager->registerTriggerHandler($this->getInstance(OrderStatusChangeTriggerHandler::class));
     }
 
     public function registerUserData(UserDataRegistrator $dataRegistrator)
