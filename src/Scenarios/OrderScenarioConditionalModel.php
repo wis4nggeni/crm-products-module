@@ -8,11 +8,9 @@ use Crm\ProductsModule\Repositories\OrdersRepository;
 
 class OrderScenarioConditionalModel implements ScenarioConditionModelInterface
 {
-    private $ordersRepository;
-
-    public function __construct(OrdersRepository $ordersRepository)
-    {
-        $this->ordersRepository = $ordersRepository;
+    public function __construct(
+        private readonly OrdersRepository $ordersRepository,
+    ) {
     }
 
     public function getItemQuery($scenarioJobParameters): Selection
