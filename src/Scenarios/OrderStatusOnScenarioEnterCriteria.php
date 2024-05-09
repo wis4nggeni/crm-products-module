@@ -8,10 +8,11 @@ use Crm\ApplicationModule\Models\Criteria\ScenariosCriteriaInterface;
 use Crm\ProductsModule\Repositories\OrdersRepository;
 use Crm\ScenariosModule\Events\ConditionCheckException;
 use Crm\ScenariosModule\Scenarios\ScenariosTriggerCriteriaInterface;
+use Crm\ScenariosModule\Scenarios\ScenariosTriggerCriteriaRequirementsInterface;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 
-class OrderStatusOnScenarioEnterCriteria implements ScenariosCriteriaInterface, ScenariosTriggerCriteriaInterface
+class OrderStatusOnScenarioEnterCriteria implements ScenariosCriteriaInterface, ScenariosTriggerCriteriaInterface, ScenariosTriggerCriteriaRequirementsInterface
 {
     const KEY = 'order_status_on_scenario_enter';
 
@@ -39,6 +40,11 @@ class OrderStatusOnScenarioEnterCriteria implements ScenariosCriteriaInterface, 
     public function addConditions(Selection $selection, array $paramValues, ActiveRow $criterionItemRow): bool
     {
         return true;
+    }
+
+    public function getInputParams(): array
+    {
+        return ['order_status'];
     }
 
     public function evaluate($jobParameters, array $paramValues): bool
