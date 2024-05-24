@@ -10,7 +10,7 @@ class PostalFeePaymentItem implements PaymentItemInterface
 {
     use PaymentItemTrait;
 
-    const TYPE = 'postal_fee';
+    public const TYPE = 'postal_fee';
 
     private $postalFee;
 
