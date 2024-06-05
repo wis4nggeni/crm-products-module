@@ -381,7 +381,7 @@ frontend:
             forgot_password: "zabudli ste heslo?"
             login: Prihlásiť
             shipping_address: Adresa doručenia
-            license_address: Licenčné údaje
+            license_address: Licenčné údaje pre vašu e-knihu
             shipping_method: Spôsob dopravy
             billing_address: Fakturačná adresa
             for_free: Zadarmo
