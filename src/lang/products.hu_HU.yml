@@ -100,6 +100,9 @@ frontend:
             header: "Köszönjük!"
             payment_successful: "Sikeres fizetés."
             list_of_books_to_download: Letölthető könyvek listája
+        not_settled:
+            title: "A kifizetés nem érkezett be"
+            message: "A befizetést még nem erősítették meg, és várjuk a bank megerősítését. Megrendelését azonnal feldolgozzuk, amint a bank visszaigazolja a fizetést."
         show:
             title: "%product_name% : A Denník N e-shopja - csak azt kínáljuk, amit mi is olvasunk"
             available_at: A termék csak %available_at% lesz elérhető, a rá következő nap postázzuk.

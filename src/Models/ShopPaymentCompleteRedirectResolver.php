@@ -10,11 +10,8 @@ class ShopPaymentCompleteRedirectResolver implements PaymentCompleteRedirectReso
     public function wantsToRedirect(?ActiveRow $payment, string $status): bool
     {
         if ($payment) {
-            if ($status === self::PAID) {
-                return !empty($payment->related('order')->fetch());
-            }
-            if ($status === self::ERROR) {
-                return !empty($payment->related('order')->fetch());
+            if (in_array($status, [self::PAID, self::ERROR, self::FORM], true)) {
+                return $payment->related('order')->fetch() !== null;
             }
         }
 
@@ -33,6 +30,11 @@ class ShopPaymentCompleteRedirectResolver implements PaymentCompleteRedirectReso
             if ($status === self::ERROR) {
                 return [
                     ':Products:Shop:Error',
+                ];
+            }
+            if ($status === self::FORM) {
+                return [
+                    ':Products:Shop:NotSettled',
                 ];
             }
         }

@@ -442,6 +442,9 @@ frontend:
             header: "Thank you!"
             payment_successful: "Your payment was successful."
             list_of_books_to_download: "List of books to download"
+        not_settled:
+            title: Payment not settled
+            message: "The payment has not been confirmed yet and we are waiting for confirmation from the bank. Your order will be processed as soon as the bank confirms the payment."
         show:
             title: "%product_name% : E-shop Denník N - we only sell what we read"
             available_at: 'The product will be available at %available_at%, we will send it the next day.'

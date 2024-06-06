@@ -444,6 +444,9 @@ frontend:
             header: "Ďakujeme!"
             payment_successful: "Vaša platba bola úspešná."
             list_of_books_to_download: "Zoznam kníh na stiahnutie"
+        not_settled:
+            title: Platba nezúčtovaná
+            message: "Platba zatiaľ nebola potvrdená a čakáme na potvrdenie od banky. Vaša objednávka bude spracovaná hneď, ako nám banka platbu potvrdí."
         show:
             title: "%product_name% : Obchod Denníka N - predávame len to, čo sami čítame"
             available_at: 'Produkt bude dostupný až %available_at%, odosielame ho nasledujúci deň.'
