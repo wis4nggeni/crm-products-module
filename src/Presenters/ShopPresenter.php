@@ -26,56 +26,22 @@ class ShopPresenter extends FrontendPresenter
 {
     use CartTrait;
 
-    const SALES_FUNNEL_SHOP = 'shop';
-
-    private $productsRepository;
-
-    private $postalFeesRepository;
-
-    private $checkoutFormFactory;
-
-    private $paymentsRepository;
-
-    private $paymentItemHelper;
-
-    private $tagsRepository;
-
-    private $paymentProcessor;
-
-    private $ebookProvider;
-
-    private $hermesEmitter;
-
-    private $dataProviderManager;
-
-    private $postalFeeService;
+    private const SALES_FUNNEL_SHOP = 'shop';
 
     public function __construct(
-        ProductsRepository $productsRepository,
-        PostalFeesRepository $postalFeesRepository,
-        CheckoutFormFactory $checkoutFormFactory,
-        PaymentsRepository $paymentsRepository,
-        PaymentItemHelper $paymentItemHelper,
-        TagsRepository $tagsRepository,
-        PaymentProcessor $paymentProcessor,
-        EbookProvider $ebookProvider,
-        Emitter $hermesEmitter,
-        DataProviderManager $dataProviderManager,
-        PostalFeeService $postalFeeService
+        private readonly ProductsRepository $productsRepository,
+        private readonly PostalFeesRepository $postalFeesRepository,
+        private readonly CheckoutFormFactory $checkoutFormFactory,
+        private readonly PaymentsRepository $paymentsRepository,
+        private readonly PaymentItemHelper $paymentItemHelper,
+        private readonly TagsRepository $tagsRepository,
+        private readonly PaymentProcessor $paymentProcessor,
+        private readonly EbookProvider $ebookProvider,
+        private readonly Emitter $hermesEmitter,
+        private readonly DataProviderManager $dataProviderManager,
+        private readonly PostalFeeService $postalFeeService
     ) {
         parent::__construct();
-
-        $this->productsRepository = $productsRepository;
-        $this->postalFeesRepository = $postalFeesRepository;
-        $this->checkoutFormFactory = $checkoutFormFactory;
-        $this->paymentsRepository = $paymentsRepository;
-        $this->paymentItemHelper = $paymentItemHelper;
-        $this->tagsRepository = $tagsRepository;
-        $this->paymentProcessor = $paymentProcessor;
-        $this->ebookProvider = $ebookProvider;
-        $this->hermesEmitter = $hermesEmitter;
-        $this->dataProviderManager = $dataProviderManager;
-        $this->postalFeeService = $postalFeeService;
     }
 
     public function startup()
@@ -374,20 +340,28 @@ class ShopPresenter extends FrontendPresenter
             $this['checkoutForm']['postal_fee']
                 ->setItems($options)
                 ->setDefaultValue($this->postalFeeService->getDefaultPostalFee($value, $options));
+            $this['checkoutForm']['shipping_country_id']->setValue($value);
         }
 
         $this->template->getLatte()->addProvider('formsStack', [$this['checkoutForm']]);
 
         $this->redrawControl('postalFees');
+        $this->redrawControl('deliveryContainer');
         $this->redrawControl('cart');
     }
 
-    public function handlePostalFeeChange($value)
+    public function handlePostalFeeChange($value, $countryId)
     {
         if (!$value) {
             return;
         }
-        $this['checkoutForm']['postal_fee']->setDefaultValue($value);
+        if ($this['checkoutForm']['postal_fee'] instanceof RadioList) {
+            $options = $this->postalFeeService->getAvailablePostalFeesOptions($countryId, $this->cartProducts, $this->user->getId());
+            $this['checkoutForm']['postal_fee']
+                ->setItems($options)
+                ->setDefaultValue($this->postalFeeService->getDefaultPostalFee($countryId, $options));
+            $this['checkoutForm']['postal_fee']->setDefaultValue($value);
+        }
 
         $this->template->getLatte()->addProvider('formsStack', [$this['checkoutForm']]);
 

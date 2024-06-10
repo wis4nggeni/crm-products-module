@@ -7,6 +7,7 @@
     <script>
         $.event.trigger('crm:shop:show:checkout');
 
+        dataLayer = window.dataLayer || [];
         dataLayer.push({ ecommerce: null });
         dataLayer.push({
             event: 'begin_checkout',
@@ -90,6 +91,7 @@
                 </fieldset>
                 {/ifset}
 
+                {snippet postalFees}
                 {ifset $control['checkoutForm']['shipping_country_id']}
                 <fieldset id="delivery-country" class="login-hide">
                     <legend>{_products.frontend.shop.checkout.shipping_method}</legend>
@@ -100,7 +102,7 @@
                 </fieldset>
                 {/ifset}
 
-                {snippet postalFees}
+
                 {if isset($control['checkoutForm']['postal_fee']->items)}
                 <fieldset id="postal-fees" class="login-hide" style="margin-top: 0">
                     <div class="form-group" n:foreach="$control['checkoutForm']['postal_fee']->items as $id => $fee">
@@ -121,6 +123,7 @@
                 {/if}
                 {/snippet}
 
+                {snippet deliveryContainer}
                 <div id="delivery-container" class="login-hide">
                     {control simpleWidget 'products.checkout_form.address_form', $control['checkoutForm']}
 
@@ -174,6 +177,10 @@
 
                     {control simpleWidget 'products.checkout_form.delivery_data', ['form' => $control['checkoutForm'], 'products' => $products]}
                 </div>
+                <script n:if="$presenter->isAjax()">
+                    Nette.initOnLoad();
+                </script>
+                {/snippet}
 
                 {snippet billing}
                 <div id="billing-container" class="login-hide">
@@ -385,8 +392,8 @@
             });
 
             {ifset $control['checkoutForm']['shipping_address']}
-            var shippingCountry = $('#' + {$form['shipping_country_id']->getHtmlId()});
-            shippingCountry.on('change', function () {
+            var shippingCountry = $('#delivery-country select');
+            $('body').on('change', '#delivery-country select', function () {
                 $.nette.ext('loader', null);
                 $.nette.ajax({
                     type: 'GET',
@@ -411,7 +418,8 @@
                     type: 'POST',
                     url: {link postalFeeChange!},
                     data: {
-                        'value': $checked.val()
+                        'value': $checked.val(),
+                        'countryId': $('#delivery-country select').val()
                     }
                 });
             });

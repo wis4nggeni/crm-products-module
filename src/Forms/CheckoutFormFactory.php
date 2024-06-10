@@ -247,14 +247,14 @@ class CheckoutFormFactory
             $form->removeComponent($postalFee);
 
             $availableCountryPairs = $this->countryPostalFeesRepository->findAllAvailableCountryPairs();
-            $country = $form->addSelect('shipping_country_id', 'products.frontend.shop.checkout.fields.country', $availableCountryPairs);
+            $country = $form->addSelect('shipping_country_id', 'products.frontend.shop.checkout.fields.country', $availableCountryPairs)
+                        ->setDefaultValue($countryId);
 
             $options = $this->postalFeeService->getAvailablePostalFeesOptions($countryId, $cart, $this->user->getId());
 
             $form->addRadioList('postal_fee', null, $options)
-                ->setRequired('products.frontend.shop.checkout.fields.choose_shipping_method');
-
-            $defaults['postal_fee'] = $this->postalFeeService->getDefaultPostalFee($countryId, $options);
+                ->setRequired('products.frontend.shop.checkout.fields.choose_shipping_method')
+                ->setDefaultValue($this->postalFeeService->getDefaultPostalFee($countryId, $options));
 
             $shippingAddress = $form->addContainer('shipping_address');
             $shippingAddress->addText('first_name', 'products.frontend.shop.checkout.fields.first_name')
