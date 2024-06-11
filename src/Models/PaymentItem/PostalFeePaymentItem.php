@@ -14,6 +14,14 @@ class PostalFeePaymentItem implements PaymentItemInterface
 
     private $postalFee;
 
+    public static function fromPaymentItem(ActiveRow $paymentItem): self
+    {
+        $item = new self($paymentItem->postal_fee, $paymentItem->vat, $paymentItem->count);
+        $item->forcePrice($paymentItem->amount)
+            ->forceName($paymentItem->name);
+        return $item;
+    }
+
     public function __construct(ActiveRow $postalFee, int $vat, int $count = 1)
     {
         $this->postalFee = $postalFee;
