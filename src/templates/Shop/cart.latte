@@ -151,7 +151,7 @@
                                     <span class="input-group-addon ajax increase-cart-amount" data-ajax-off="unique" data-toggle="tooltip"
                                         title="{_products.frontend.shop.cart.messages.item_more_not_available, [
                                             name => escapehtml($product->name),
-                                        ]|noescape}">
+                                        ]|stripHtml}">
                                         <i class="fa fa-plus" style="color:silver"></i>
                                     </span>
                                     {/if}
