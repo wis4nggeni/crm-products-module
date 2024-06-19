@@ -352,7 +352,7 @@ class ShopPresenter extends FrontendPresenter
 
     public function handlePostalFeeChange($value, $countryId)
     {
-        if (!$value) {
+        if (!$value || !$countryId) {
             return;
         }
         if ($this['checkoutForm']['postal_fee'] instanceof RadioList) {
