@@ -2,6 +2,29 @@
 
 {block #title}{_products.frontend.shop.checkout.order}: {$shopTitle}{/block}
 
+{block #head}
+    <style>
+        .checkout label.has-error,
+        .checkout .has-error > label,
+        .checkout .has-error > input[type="select"],
+        .checkout .has-error > input[type="number"],
+        .checkout .has-error > input[type="text"],
+        .checkout .has-error > legend {
+            animation: bounce .8s ease-out;
+        }
+
+        .checkout .has-error > input[type="select"],
+        .checkout .has-error > input[type="number"],
+        .checkout .has-error > input[type="text"] {
+            border-color: #BF2134;
+        }
+
+        .checkout .has-error > legend {
+            color: #BF2134;
+        }
+    </style>
+{/block}
+
 {block #scripts}
     {include 'ecommerce-for-cart', $products, $cartProducts}
     <script>
@@ -382,12 +405,16 @@
             }).change();
 
             $('form').on('submit', function(e) {
+                clearFormErrors(e.target.elements)
+
                 if (Nette.validateForm(e.target, true)) {
                     return true;
                 }
                 if (e && e.stopPropagation) {
                     e.stopPropagation();
                 }
+
+                setTimeout(() => handleFormErrors(Nette.formErrors), 0)
                 return false;
             });
 
@@ -429,5 +456,25 @@
                 postalFee.change();
             }
         });
+
+        function clearFormErrors(elements) {
+            for (const elem of elements) {
+                elem.parentElement.classList.remove('has-error');
+                $(elem).closest('fieldset')?.get(0)?.classList.remove('has-error');
+            }
+        }
+
+        function handleFormErrors(errors) {
+            if (errors.length) {
+                window.parent.$('html, body').animate({
+                    scrollTop: $(errors[0].element).offset().top - 120
+                }, 400);
+
+                for (const error of errors) {
+                    error.element.parentElement.classList.add('has-error');
+                    $(error.element).closest('fieldset')?.get(0)?.classList.add('has-error');
+                }
+            }
+        }
     </script>
 {/snippetArea}
