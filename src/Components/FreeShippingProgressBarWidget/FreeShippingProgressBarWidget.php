@@ -69,6 +69,9 @@ class FreeShippingProgressBarWidget extends BaseLazyWidget
 
         foreach ($freeCountryPostalFees as $freeCountryPostalFee) {
             $countryPostalFeeConditionRow = $freeCountryPostalFee->related('country_postal_fee_conditions')->fetch();
+            if (!$countryPostalFeeConditionRow) {
+                return;
+            }
 
             $condition = $this->postalFeeService->getRegisteredConditionByCode($countryPostalFeeConditionRow->code);
 
