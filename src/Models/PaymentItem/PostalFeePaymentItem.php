@@ -12,7 +12,7 @@ class PostalFeePaymentItem implements PaymentItemInterface
 
     public const TYPE = 'postal_fee';
 
-    private $postalFee;
+    private ActiveRow $postalFee;
 
     public static function fromPaymentItem(ActiveRow $paymentItem): self
     {
@@ -40,6 +40,12 @@ class PostalFeePaymentItem implements PaymentItemInterface
     public function forceName(string $name): self
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function forceVat(int $vat): static
+    {
+        $this->vat = $vat;
         return $this;
     }
 

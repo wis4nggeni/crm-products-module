@@ -429,6 +429,7 @@ frontend:
             warnings:
                 unable_to_login_with_password: 'Nepodarilo sa prihlásiť s zadaným heslom'
                 unable_to_create_user: 'Nepodarilo sa vytvoriť užívateľa.'
+                unable_to_create_payment_one_stop_shop: "Platbu nie je možné vykonať z dôvodu konfliktu zvolených krajín (fakturačná krajina, krajina doručenia). Prosím kontaktujte podporu."
                 invalid_email: "Tento email nie je platný."
                 email_registered: "E-mail už je zaregistrovaný, prosím, zadajte heslo."
         default:

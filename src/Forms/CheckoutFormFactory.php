@@ -5,6 +5,9 @@ namespace Crm\ProductsModule\Forms;
 use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Models\Config\ApplicationConfig;
 use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
+use Crm\PaymentsModule\Models\GeoIp\GeoIpException;
+use Crm\PaymentsModule\Models\OneStopShop\OneStopShop;
+use Crm\PaymentsModule\Models\OneStopShop\OneStopShopCountryConflictException;
 use Crm\PaymentsModule\Models\PaymentItem\PaymentItemContainer;
 use Crm\PaymentsModule\Repositories\PaymentGatewaysRepository;
 use Crm\PaymentsModule\Repositories\PaymentsRepository;
@@ -107,7 +110,8 @@ class CheckoutFormFactory
         PaymentItemHelper $paymentItemHelper,
         DataProviderManager $dataProviderManager,
         CountryPostalFeesRepository $countryPostalFeesRepository,
-        PostalFeeService $postalFeeService
+        PostalFeeService $postalFeeService,
+        private OneStopShop $oneStopShop,
     ) {
         $this->applicationConfig = $applicationConfig;
         $this->paymentsRepository = $paymentsRepository;
@@ -479,6 +483,16 @@ class CheckoutFormFactory
             $user = $this->userManager->loadUser($this->user);
         }
 
+        try {
+            $this->oneStopShop->resolveCountry(
+                user: $user,
+                formParams: (array) $values,
+            );
+        } catch (OneStopShopCountryConflictException|GeoIpException $e) {
+            $form->addError('products.frontend.shop.checkout.warnings.unable_to_create_payment_one_stop_shop');
+            return;
+        }
+
         $paymentGateway = $this->paymentGatewaysRepository->find($values['payment_gateway']);
 
         $amount = 0;
@@ -539,13 +553,27 @@ class CheckoutFormFactory
             $paymentItemsContainer->addItem($postalFeeItem);
         }
 
+        // Repeat check, now with user and paymentItemContainer
+        $countryResolution = null;
+        try {
+            $countryResolution = $this->oneStopShop->resolveCountry(
+                user: $user,
+                paymentItemContainer: $paymentItemsContainer,
+                formParams: (array) $values,
+            );
+        } catch (OneStopShopCountryConflictException|GeoIpException $e) {
+            $form->addError('products.frontend.shop.checkout.warnings.unable_to_create_payment_one_stop_shop');
+            return;
+        }
+
         $payment = $this->paymentsRepository->add(
             null,
-            $paymentGateway,
-            $user,
-            $paymentItemsContainer,
-            $this->request->getUrl()->getBaseUrl(),
-            $amount
+            paymentGateway: $paymentGateway,
+            user: $user,
+            paymentItemContainer: $paymentItemsContainer,
+            referer: $this->request->getUrl()->getBaseUrl(),
+            amount: $amount,
+            paymentCountry: $countryResolution ? $this->countriesRepository->findByIsoCode($countryResolution->countryCode) : null,
         );
         $additionalColumns = [];
 

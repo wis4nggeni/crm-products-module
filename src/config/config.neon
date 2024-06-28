@@ -72,6 +72,7 @@ services:
 	- Crm\ProductsModule\Scenarios\TriggerHandlers\OrderStatusChangeTriggerHandler
 
 	- Crm\ProductsModule\DataProviders\OrdersUserDataProvider
+	- Crm\ProductsModule\DataProviders\OneStopShopCountryResolutionDataProvider
 
 	paymentCompleteRedirect:
 		setup:

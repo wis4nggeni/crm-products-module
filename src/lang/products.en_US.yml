@@ -429,6 +429,7 @@ frontend:
                 unable_to_create_user: 'Unable to create user.'
                 invalid_email: "This email is not valid."
                 email_registered: "E-mail is already registered, please enter your password."
+                unable_to_create_payment_one_stop_shop: "Due to the combination of addresses, it is not possible to create payment for the order. Please contact support."
         default:
             filter: Filter
             all: All

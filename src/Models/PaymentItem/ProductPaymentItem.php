@@ -10,9 +10,9 @@ class ProductPaymentItem implements PaymentItemInterface
 {
     use PaymentItemTrait;
 
-    const TYPE = 'product';
+    public const TYPE = 'product';
 
-    private $product;
+    private ActiveRow $product;
 
     public function __construct(ActiveRow $product, int $count)
     {
@@ -29,7 +29,7 @@ class ProductPaymentItem implements PaymentItemInterface
         return $this;
     }
 
-    public function forceVat(int $vat): self
+    public function forceVat(int $vat): static
     {
         $this->vat = $vat;
         return $this;

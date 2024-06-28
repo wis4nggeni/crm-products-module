@@ -426,6 +426,7 @@ frontend:
                 unable_to_create_user: 'Nelze vytvořit uživatele.'
                 invalid_email: "Tento email není platný."
                 email_registered: "E-mail už je zaregistrován, prosím, zadejte heslo."
+                unable_to_create_payment_one_stop_shop: "Pro objednávku není z důvodu kombinace adres možné založit platbu. Prosím kontaktujte podporu."
         default:
             filter: Vyfiltrovat
             all: Všechno

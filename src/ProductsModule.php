@@ -19,6 +19,7 @@ use Crm\ApplicationModule\Models\Menu\MenuItem;
 use Crm\ApplicationModule\Models\Scenario\TriggerManager;
 use Crm\ApplicationModule\Models\User\UserDataRegistrator;
 use Crm\ApplicationModule\Models\Widget\LazyWidgetManagerInterface;
+use Crm\PaymentsModule\DataProviders\OneStopShopCountryResolutionDataProviderInterface;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
 use Crm\ProductsModule\Commands\CalculateAveragesCommand;
 use Crm\ProductsModule\Components\AvgProductsPaymentWidget\AvgProductsPaymentWidget;
@@ -27,6 +28,7 @@ use Crm\ProductsModule\Components\ProductItemsListWidget\ProductItemsListWidget;
 use Crm\ProductsModule\Components\RecommendedProductsWidget\RecommendedProductsWidget;
 use Crm\ProductsModule\Components\TotalShopPaymentsWidget\TotalShopPaymentsWidget;
 use Crm\ProductsModule\Components\UserOrdersWidget\UserOrdersWidget;
+use Crm\ProductsModule\DataProviders\OneStopShopCountryResolutionDataProvider;
 use Crm\ProductsModule\DataProviders\OrdersUserDataProvider;
 use Crm\ProductsModule\DataProviders\PaymentFormDataProvider;
 use Crm\ProductsModule\DataProviders\PaymentItemTypesFilterDataProvider;
@@ -262,6 +264,11 @@ class ProductsModule extends CrmModule
         $dataProviderManager->registerDataProvider(
             'payments.dataprovider.dashboard',
             $this->getInstance(PaymentItemTypesFilterDataProvider::class)
+        );
+        $dataProviderManager->registerDataProvider(
+            OneStopShopCountryResolutionDataProviderInterface::PATH,
+            $this->getInstance(OneStopShopCountryResolutionDataProvider::class),
+            20,
         );
     }
 
