@@ -574,6 +574,7 @@ class CheckoutFormFactory
             referer: $this->request->getUrl()->getBaseUrl(),
             amount: $amount,
             paymentCountry: $countryResolution ? $this->countriesRepository->findByIsoCode($countryResolution->countryCode) : null,
+            paymentCountryResolutionReason: $countryResolution?->getReasonValue(),
         );
         $additionalColumns = [];
 
