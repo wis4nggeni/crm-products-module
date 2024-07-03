@@ -1,120 +1,120 @@
 frontend:
-  shop:
-    cart:
-      header: Warenkorb
-      product: Produkt
-      price: Preis
-      amount: Menge
-      together: Total
-      price_with_vat: Preis mit MwSt.
-      continue_with_shopping: Weiter einkaufen
-      order: Bestellung
-      empty_cart: Warenkorb ist leer.
-      confirm_order: Bestellung bestätigen
-      messages:
-        item_added_to_cart: "Produkt <strong>%name%</strong> zum Warenkorb hinzugefügt."
-        item_not_available: "Produkt <strong>%name%</strong> ist nicht verfügbar."
-        item_more_not_available: "Produkt <strong>%name%</strong> ist in dieser Menge nicht mehr verfügbar."
-        item_already_purchased: 'Produkt <strong>%name%</strong> wurde bereits gekauft. Der Download-Link ist im <a href="%link%" class="link">Account-Bereich</a> zu finden.'
-        items_removed_from_cart: 'Einige Produkte (<strong>%name%</strong>) wurden vom Warenkorb entfernt, da sie bereits gekauft wurden. Der Download-Link ist im <a href="%link%" class="link">Account-Bereich</a> zu finden.'
-        items_removed_from_cart_reason_sold_out: 'Einige Produkte (<strong>%name%</strong>) wurden aus dem Warenkorb entfernt, weil sie ausverkauft sind.'
-        items_removed_from_cart_reason_little_stock: 'Die Menge einiger Produkte (<strong>%name%</strong>) wurde reduziert, weil nicht genug verfügbar sind.'
-    checkout:
-      order: Bestellung
-      payment_method: Zahlungsmethode
-      contact_information: Kontaktinformationen
-      sign_under_different_account: "Mit einem anderen Account anmelden?"
-      forgot_password: "Passwort vergessen?"
-      login: Anmelden
-      shipping_address: Lieferadresse
-      license_address: Lizenzadresse
-      shipping_method: Liefermethode
-      billing_address: Rechnungsadresse
-      for_free: kostenlos
-      postal_fee: Versand
-      choose_payment_method: Bitte wählen Sie eine Zahlungsmethode aus.
-      fields:
-        email_required: E-Mail-Adresse wird benötigt.
-        pass_required: Ein Passwort muss angegeben werden.
-        account_exists: 'Ein Account mit der eingegebenen E-Mail-Adresse existiert bereits, Bitte mit Passwort anmelden.'
-        phone_number: 'Telefonnummer'
-        phone_number_placeholder: 'E.g. +49 030 123 456'
-        phone_number_required: 'Telefonnummer wird benötigt.'
-        phone_number_min_length: 'Telefonnummer muss mindestens 9 Ziffern enthalten.'
-        phone_number_wrong_format: 'Telefonnummer muss im internationalen Format angegeben werden (e.g.: +49 030 123 456).'
-        want_invoice: Ich möchte eine Rechnung
-        same_shipping: 'Rechnungsadresse ist dieselbe wie Lieferadresse'
-        choose_shipping_method: 'Liefermethode wählen'
-        first_name: Vorname
-        first_name_required: 'Vorname wird benötigt'
-        last_name: Nachname
-        last_name_required: 'Nachname wird benötigt'
-        street: Straße
-        street_required: 'Straße wird benötigt'
-        street_min_length: 'Straßenname muss mindestens 3 Zeichen lang sein.'
-        number: Hausnummer
-        number_required: 'Hausnummer wird benötigt'
-        city: Stadt
-        city_required: 'Stadt wird benötigt'
-        zip_code: Postleitzahl
-        zip_code_required: 'Postleitzahl wird benötigt'
-        zip_code_invalid: 'Die Postleitzahl muss genau 5 Ziffern enthalten.'
-        country: Land
-        company_name: 'Firmenname'
-        company_name_required: 'Firmenname wird benötigt'
-        company_id: 'Firmen ID'
-        company_id_placeholder: 'E.g. 12345678'
-        company_tax_id: 'Steuer-ID'
-        company_tax_id_placeholder: 'E.g. 2020123456'
-        company_vat_id: 'UID'
-        company_vat_id_placeholder: 'E.g. SK2020123456'
-        toc: 'Ich stimme der Geltung der <a href="%link%" class="link" target="_blank">AGB</a> zu. Die darin enthaltene Widerrufsbelehrung und Verbraucherinformationen wurden mir zur Kenntnis gegeben. Informationen zur Datenverarbeitung finde ich in der <a href="%link%" class="link" target="_blank">Datenschutzerklärung</a>. (erforderlich)'
-        toc_required: 'Sie müssen den AGB zustimmen.'
-        login: Login
-      warnings:
-        unable_to_login_with_password: 'Einloggen mit dem angegebenen Passwort nicht möglich.'
-        unable_to_create_user: 'Anlegen des Nutzers nicht möglich.'
-        invalid_email: "Dies ist keine gültige E-Mail-Adresse."
-        email_registered: "Diese E-Mail-Adresse ist bereits registriert, bitte geben Sie ihr Passwort ein."
-    default:
-      filter: Filter
-      all: Alle
-      add_to_cart: Zum Warenkorb hinzufügen
-      sold_out: ausverkauft
-    error:
-      title: "Fehler"
-      text: '<strong>Fehler:</strong> Leider war Ihre Zahlung nicht erfolgreich. Bitte versuchen Sie es noch einmal oder kontaktieren Sie unseren Support <a href="mailto:%contactEmail%." class="link">%contactEmail%</a>.'
-    success:
-      title: "Vielen Dank!"
-      header: "Vielen Dank!"
-      payment_successful: "Ihre Zahlung war erfolgreich."
-      list_of_books_to_download: "Liste der downloadbaren E-Papers"
-    show:
-      title: "%product_name% : E-Shop - Golem.de"
-      available_at: 'Das Produkt wird ab %available_at% zur Verfügung stehen und am nächsten Tag versendet.'
-      add_to_cart: zum Warenkorb hinzufügen
-      sold_out: ausverkauft
-    search:
-      results_title: Suchergebnisse
-      no_results: Keine Ergebnisse gefunden.
+    shop:
+        cart:
+            header: Warenkorb
+            product: Produkt
+            price: Preis
+            amount: Menge
+            together: Total
+            price_with_vat: Preis mit MwSt.
+            continue_with_shopping: Weiter einkaufen
+            order: Bestellung
+            empty_cart: Warenkorb ist leer.
+            confirm_order: Bestellung bestätigen
+            messages:
+                item_added_to_cart: "Produkt <strong>%name%</strong> zum Warenkorb hinzugefügt."
+                item_not_available: "Produkt <strong>%name%</strong> ist nicht verfügbar."
+                item_more_not_available: "Produkt <strong>%name%</strong> ist in dieser Menge nicht mehr verfügbar."
+                item_already_purchased: 'Produkt <strong>%name%</strong> wurde bereits gekauft. Der Download-Link ist im <a href="%link%" class="link">Account-Bereich</a> zu finden.'
+                items_removed_from_cart: 'Einige Produkte (<strong>%name%</strong>) wurden vom Warenkorb entfernt, da sie bereits gekauft wurden. Der Download-Link ist im <a href="%link%" class="link">Account-Bereich</a> zu finden.'
+                items_removed_from_cart_reason_sold_out: 'Einige Produkte (<strong>%name%</strong>) wurden aus dem Warenkorb entfernt, weil sie ausverkauft sind.'
+                items_removed_from_cart_reason_little_stock: 'Die Menge einiger Produkte (<strong>%name%</strong>) wurde reduziert, weil nicht genug verfügbar sind.'
+        checkout:
+            order: Bestellung
+            payment_method: Zahlungsmethode
+            contact_information: Kontaktinformationen
+            sign_under_different_account: "Mit einem anderen Account anmelden?"
+            forgot_password: "Passwort vergessen?"
+            login: Anmelden
+            shipping_address: Lieferadresse
+            license_address: Lizenzadresse
+            shipping_method: Liefermethode
+            billing_address: Rechnungsadresse
+            for_free: kostenlos
+            postal_fee: Versand
+            choose_payment_method: Bitte wählen Sie eine Zahlungsmethode aus.
+            fields:
+                email_required: E-Mail-Adresse wird benötigt.
+                pass_required: Ein Passwort muss angegeben werden.
+                account_exists: 'Ein Account mit der eingegebenen E-Mail-Adresse existiert bereits, Bitte mit Passwort anmelden.'
+                phone_number: 'Telefonnummer'
+                phone_number_placeholder: 'E.g. +49 030 123 456'
+                phone_number_required: 'Telefonnummer wird benötigt.'
+                phone_number_min_length: 'Telefonnummer muss mindestens 9 Ziffern enthalten.'
+                phone_number_wrong_format: 'Telefonnummer muss im internationalen Format angegeben werden (e.g.: +49 030 123 456).'
+                want_invoice: Ich möchte eine Rechnung
+                same_shipping: 'Rechnungsadresse ist dieselbe wie Lieferadresse'
+                choose_shipping_method: 'Liefermethode wählen'
+                first_name: Vorname
+                first_name_required: 'Vorname wird benötigt'
+                last_name: Nachname
+                last_name_required: 'Nachname wird benötigt'
+                street: Straße
+                street_required: 'Straße wird benötigt'
+                street_min_length: 'Straßenname muss mindestens 3 Zeichen lang sein.'
+                number: Hausnummer
+                number_required: 'Hausnummer wird benötigt'
+                city: Stadt
+                city_required: 'Stadt wird benötigt'
+                zip_code: Postleitzahl
+                zip_code_required: 'Postleitzahl wird benötigt'
+                zip_code_invalid: 'Die Postleitzahl muss genau 5 Ziffern enthalten.'
+                country: Land
+                company_name: 'Firmenname'
+                company_name_required: 'Firmenname wird benötigt'
+                company_id: 'Firmen ID'
+                company_id_placeholder: 'E.g. 12345678'
+                company_tax_id: 'Steuer-ID'
+                company_tax_id_placeholder: 'E.g. 2020123456'
+                company_vat_id: 'UID'
+                company_vat_id_placeholder: 'E.g. SK2020123456'
+                toc: 'Ich stimme der Geltung der <a href="%link%" class="link" target="_blank">AGB</a> zu. Die darin enthaltene Widerrufsbelehrung und Verbraucherinformationen wurden mir zur Kenntnis gegeben. Informationen zur Datenverarbeitung finde ich in der <a href="%link%" class="link" target="_blank">Datenschutzerklärung</a>. (erforderlich)'
+                toc_required: 'Sie müssen den AGB zustimmen.'
+                login: Login
+            warnings:
+                unable_to_login_with_password: 'Einloggen mit dem angegebenen Passwort nicht möglich.'
+                unable_to_create_user: 'Anlegen des Nutzers nicht möglich.'
+                invalid_email: "Dies ist keine gültige E-Mail-Adresse."
+                email_registered: "Diese E-Mail-Adresse ist bereits registriert, bitte geben Sie ihr Passwort ein."
+        default:
+            filter: Filter
+            all: Alle
+            add_to_cart: Zum Warenkorb hinzufügen
+            sold_out: ausverkauft
+        error:
+            title: "Fehler"
+            text: '<strong>Fehler:</strong> Leider war Ihre Zahlung nicht erfolgreich. Bitte versuchen Sie es noch einmal oder kontaktieren Sie unseren Support <a href="mailto:%contactEmail%." class="link">%contactEmail%</a>.'
+        success:
+            title: "Vielen Dank!"
+            header: "Vielen Dank!"
+            payment_successful: "Ihre Zahlung war erfolgreich."
+            list_of_books_to_download: "Liste der downloadbaren E-Papers"
+        show:
+            title: "%product_name% : E-Shop - Golem.de"
+            available_at: 'Das Produkt wird ab %available_at% zur Verfügung stehen und am nächsten Tag versendet.'
+            add_to_cart: zum Warenkorb hinzufügen
+            sold_out: ausverkauft
+        search:
+            results_title: Suchergebnisse
+            no_results: Keine Ergebnisse gefunden.
 
-  orders:
-    my_orders: Meine Bestellungen
-    my_books: Meine E-Paper
-    day: Tag
-    order_number: Bestellnummer
-    price: Preis
-    status: Status
-    invoices: Rechnungen
-    postal_fee: Versandkosten
-    no_orders: Sie haben keine Bestellungen.
-    no_books: Sie haben keine E-Paper gekauft.
-    visit_eshop: Besuchen Sie unseren E-Shop.
-    visit_eshop_ebooks: "Sie können E-Paper unter %shop_url% kaufen. Alle E-Paper werden hier zu Verfügung gestellt."
-    title: Titel
-    preparing_download: Download wird vorbereitet
+    orders:
+        my_orders: Meine Bestellungen
+        my_books: Meine E-Paper
+        day: Tag
+        order_number: Bestellnummer
+        price: Preis
+        status: Status
+        invoices: Rechnungen
+        postal_fee: Versandkosten
+        no_orders: Sie haben keine Bestellungen.
+        no_books: Sie haben keine E-Paper gekauft.
+        visit_eshop: Besuchen Sie unseren E-Shop.
+        visit_eshop_ebooks: "Sie können E-Paper unter %shop_url% kaufen. Alle E-Paper werden hier zu Verfügung gestellt."
+        title: Titel
+        preparing_download: Download wird vorbereitet
 
-  components:
-    free_shipping_progress_bar:
-      message: "Für kostenlose Lieferung kaufen Sie weitere <strong>%amount%</strong> Produkte."
-      reached_message: "Ihre Bestellung hat <strong>%amount%</strong> erreicht. Sie erhalten nun die <strong>Lieferung kostenlos</strong>."
+    components:
+        free_shipping_progress_bar:
+            message: "Für kostenlose Lieferung kaufen Sie weitere <strong>%amount%</strong> Produkte."
+            reached_message: "Ihre Bestellung hat <strong>%amount%</strong> erreicht. Sie erhalten nun die <strong>Lieferung kostenlos</strong>."

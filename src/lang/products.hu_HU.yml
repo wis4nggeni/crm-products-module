@@ -120,7 +120,7 @@ frontend:
         price: Ár
         status: Állapot
         invoices: Számlák
-        postal_fee: Postaköltség
+        postal_fee: Szállítási díj
         no_orders: Önnek nincs rendelése.
         no_books: Nincs megvásárolt könyve.
         visit_eshop: Látogasson el e-shopunkba.
