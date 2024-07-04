@@ -29,6 +29,7 @@ use Crm\UsersModule\Models\Auth\UserManager;
 use Crm\UsersModule\Repositories\AddressChangeRequestsRepository;
 use Crm\UsersModule\Repositories\AddressesRepository;
 use Crm\UsersModule\Repositories\CountriesRepository;
+use Crm\UsersModule\Repositories\UserActionsLogRepository;
 use Crm\UsersModule\Repositories\UsersRepository;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
@@ -38,100 +39,44 @@ use Nette\Security\AuthenticationException;
 use Nette\Security\User;
 use Nette\Utils\Html;
 use Nette\Utils\Json;
+use Tracy\Debugger;
+use Tracy\ILogger;
 
 class CheckoutFormFactory
 {
     use ProductsTrait;
 
-    private $applicationConfig;
+    public $onSave;
+    public $onLogin;
+    public $onAuth;
 
     private $gateways = [];
 
-    private $paymentsRepository;
-
-    private $paymentGatewaysRepository;
-
-    private $productsRepository;
-
-    private $user;
-
-    private $usersRepository;
-
-    private $userManager;
-
-    private $addressesRepository;
-
-    private $addressChangeRequestsRepository;
-
-    private $countriesRepository;
-
-    private $ordersRepository;
-
-    private $postalFeesRepository;
-
-    private $request;
-
-    private $authorizator;
-
-    private $translator;
-
-    public $onSave;
-
-    public $onLogin;
-
-    public $onAuth;
-
     private $cartFree;
 
-    private $paymentItemHelper;
-
-    private $dataProviderManager;
-
-    private $countryPostalFeesRepository;
-
-    private $postalFeeService;
-
     public function __construct(
-        ApplicationConfig $applicationConfig,
-        PaymentsRepository $paymentsRepository,
-        PaymentGatewaysRepository $paymentGatewaysRepository,
-        ProductsRepository $productsRepository,
-        User $user,
-        UsersRepository $usersRepository,
-        UserManager $userManager,
-        AddressesRepository $addressesRepository,
-        AddressChangeRequestsRepository $addressChangeRequestsRepository,
-        CountriesRepository $countriesRepository,
-        OrdersRepository $ordersRepository,
-        PostalFeesRepository $postalFeesRepository,
-        Request $request,
-        Authorizator $authorizator,
-        Translator $translator,
-        PaymentItemHelper $paymentItemHelper,
-        DataProviderManager $dataProviderManager,
-        CountryPostalFeesRepository $countryPostalFeesRepository,
-        PostalFeeService $postalFeeService,
+        private ApplicationConfig $applicationConfig,
+        private PaymentsRepository $paymentsRepository,
+        private PaymentGatewaysRepository $paymentGatewaysRepository,
+        private ProductsRepository $productsRepository,
+        private User $user,
+        private UsersRepository $usersRepository,
+        private UserManager $userManager,
+        private AddressesRepository $addressesRepository,
+        private AddressChangeRequestsRepository $addressChangeRequestsRepository,
+        private CountriesRepository $countriesRepository,
+        private OrdersRepository $ordersRepository,
+        private PostalFeesRepository $postalFeesRepository,
+        private Request $request,
+        private Authorizator $authorizator,
+        private Translator $translator,
+        private PaymentItemHelper $paymentItemHelper,
+        private DataProviderManager $dataProviderManager,
+        private CountryPostalFeesRepository $countryPostalFeesRepository,
+        private PostalFeeService $postalFeeService,
         private OneStopShop $oneStopShop,
+        private UserActionsLogRepository $userActionsLogRepository,
     ) {
-        $this->applicationConfig = $applicationConfig;
-        $this->paymentsRepository = $paymentsRepository;
-        $this->paymentGatewaysRepository = $paymentGatewaysRepository;
-        $this->productsRepository = $productsRepository;
-        $this->user = $user;
-        $this->usersRepository = $usersRepository;
-        $this->userManager = $userManager;
-        $this->addressesRepository = $addressesRepository;
-        $this->addressChangeRequestsRepository = $addressChangeRequestsRepository;
-        $this->countriesRepository = $countriesRepository;
-        $this->ordersRepository = $ordersRepository;
-        $this->postalFeesRepository = $postalFeesRepository;
-        $this->request = $request;
-        $this->authorizator = $authorizator;
-        $this->translator = $translator;
-        $this->paymentItemHelper = $paymentItemHelper;
-        $this->dataProviderManager = $dataProviderManager;
-        $this->countryPostalFeesRepository = $countryPostalFeesRepository;
-        $this->postalFeeService = $postalFeeService;
     }
 
     public function create($cart, $cartFree = [], $payment = null)
@@ -489,6 +434,8 @@ class CheckoutFormFactory
                 formParams: (array) $values,
             );
         } catch (OneStopShopCountryConflictException|GeoIpException $e) {
+            Debugger::log("Shop checkout - OSS conflict: " . $e->getMessage(), ILogger::WARNING);
+            $this->userActionsLogRepository->add($user->id, 'funnel.one_stop_shop.conflict', ['exception' => $e->getMessage()]);
             $form->addError('products.frontend.shop.checkout.warnings.unable_to_create_payment_one_stop_shop');
             return;
         }
@@ -553,7 +500,7 @@ class CheckoutFormFactory
             $paymentItemsContainer->addItem($postalFeeItem);
         }
 
-        // Repeat check, now with user and paymentItemContainer
+        // Repeat check, now with paymentItemContainer
         $countryResolution = null;
         try {
             $countryResolution = $this->oneStopShop->resolveCountry(
@@ -562,6 +509,8 @@ class CheckoutFormFactory
                 formParams: (array) $values,
             );
         } catch (OneStopShopCountryConflictException|GeoIpException $e) {
+            Debugger::log("Shop checkout - OSS conflict: " . $e->getMessage(), ILogger::WARNING);
+            $this->userActionsLogRepository->add($user->id, 'funnel.one_stop_shop.conflict', ['exception' => $e->getMessage()]);
             $form->addError('products.frontend.shop.checkout.warnings.unable_to_create_payment_one_stop_shop');
             return;
         }
