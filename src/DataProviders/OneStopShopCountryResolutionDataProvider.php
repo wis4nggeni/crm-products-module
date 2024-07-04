@@ -8,14 +8,12 @@ use Crm\PaymentsModule\Models\OneStopShop\CountryResolution;
 use Crm\PaymentsModule\Models\OneStopShop\CountryResolutionType;
 use Crm\PaymentsModule\Models\OneStopShop\OneStopShopCountryConflictException;
 use Crm\PaymentsModule\Models\PaymentItem\PaymentItemContainer;
-use Crm\UsersModule\Repositories\AddressesRepository;
 use Crm\UsersModule\Repositories\CountriesRepository;
 
 final class OneStopShopCountryResolutionDataProvider implements OneStopShopCountryResolutionDataProviderInterface
 {
     public function __construct(
         private CountriesRepository $countriesRepository,
-        private AddressesRepository $addressesRepository,
     ) {
     }
 
